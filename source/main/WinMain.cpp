@@ -56,22 +56,6 @@ WinMain::~WinMain( )
 } ;
 
 /*/
-/*	INITALIZE
-/*/
-void WinMain::Initalize( )
-{
-
-} ;
-
-/*/
-/*	FINALIZE
-/*/
-void WinMain::Finalize( )
-{
-
-} ;
-
-/*/
 /*	ウィンドウの座標変更
 /*/
 void WinMain::SetWindowPos( int arg_x , int arg_y )
