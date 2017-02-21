@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{df0265ab-a1aa-4857-9324-4c4a1c8ffcd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\main">
+      <UniqueIdentifier>{4a12cb0d-cc4f-4bf6-bd55-e3b6fd487422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\utility">
+      <UniqueIdentifier>{ae8089de-08fb-428d-a4f2-7fea5e5e4283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\sound">
+      <UniqueIdentifier>{0636e96c-3c3a-48f6-a0b5-eba63e59e19b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\scene">
+      <UniqueIdentifier>{bfc06cc5-fdfa-49c5-bbdd-3c53a56096f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\master">
+      <UniqueIdentifier>{6b220c18-e532-41c9-aa9d-5fa24bb5d0a9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main\WinMain.cpp">
+      <Filter>source\main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main\main.cpp">
+      <Filter>source\main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\main\WinMain.h">
+      <Filter>source\main</Filter>
+    </ClInclude>
+    <ClInclude Include="source\main\main.h">
+      <Filter>source\main</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
