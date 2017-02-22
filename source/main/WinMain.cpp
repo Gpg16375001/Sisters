@@ -13,7 +13,9 @@ WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
 	, bitmap_	( NULL )
 	, hDCBack_	( NULL )
 {
-	
+	// 時間の精度を上げる
+	timeBeginPeriod( 1 ) ;
+
 	//	ウィンドウクラス名とウィンドウタイトルを入れる	
 	lstrcpy( szClassName_ , arg_szClassName ) ;
 	lstrcpy( szTitleName_ , arg_szTitleName ) ;
@@ -52,6 +54,9 @@ WinMain::~WinMain( )
 	{
 		DeleteDC( hDCBack_ ) ;
 	}
+
+	// 時間の精度を戻す
+	timeEndPeriod( 1 ) ;
 
 }
 
@@ -116,6 +121,10 @@ bool WinMain::Start( )
 	ShowWindow ( hWnd_ , SW_SHOWNORMAL ) ;
 	UpdateWindow ( hWnd_ ) ;
 	
+	// 時間の初期化
+	old_time_ = timeGetTime( ) ;
+	start_time_ = old_time_ ;
+
 	// 裏画面生成
 	HDC hDC = GetDC( hWnd_ ) ;
 	hDCBack_ = CreateCompatibleDC( hDC ) ;
@@ -123,7 +132,7 @@ bool WinMain::Start( )
 	SelectObject( hDCBack_ , bitmap_ ) ;							// デストラクタで解放される
 	ReleaseDC( hWnd_ , hDC ) ;
 
-	// 初期化の呼び出し
+	// 初期化の呼び出し ( 画像やサウンドセットなど )
 	Initalize( ) ;
 
 	/* ____ メッセージチェックループ ____ */
@@ -133,8 +142,6 @@ bool WinMain::Start( )
 	{
 		if ( bmsg == -1 )
 		{
-			// 垂直動機待ち
-
 			// 継承先のメインループの呼び出し
 			Update( ) ;
 

@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include "main.h"
 #include "ConsoleWindow.h"
+#include "BitmapData.h"
+#include "BackDropScreen.h"
 
 int WINAPI WinMain( HINSTANCE , HINSTANCE , LPSTR , int )
 {
@@ -48,7 +50,8 @@ LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 /*/
 void MainApp::Initalize( )
 {
-
+	// 画像の読み込み
+	
 }
 
 /*/
@@ -90,7 +93,9 @@ void MainApp::Render_( )
 {
 	// 画面のクリア
 
+
 	// シーン描画の配置
+
 
 	// デバッグの表示
 

@@ -117,6 +117,7 @@ class WinMain {
 		HWND		hWnd_ ;
 		WNDCLASSEX	wc_ ;												// ウィンドウクラス構造体
 		HINSTANCE	hInst_ ;
+		DWORD		start_time_ , old_time_ ;
 
 		HBITMAP		bitmap_ ;
 		HDC			hDCBack_ ;
