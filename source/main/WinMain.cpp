@@ -35,7 +35,7 @@ WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
 	wc_.lpszClassName = szClassName_ ;								// ウィンドウクラスの名前
 	wc_.hIconSm = LoadIcon( NULL , IDI_APPLICATION ) ;
 
-} ;
+}
 
 /*/
 /*	デストラクタ
@@ -53,7 +53,7 @@ WinMain::~WinMain( )
 		DeleteDC( hDCBack_ ) ;
 	}
 
-} ;
+}
 
 /*/
 /*	ウィンドウの座標変更
@@ -67,7 +67,7 @@ void WinMain::SetWindowPos( int arg_x , int arg_y )
 		// ウィンドウの位置の変更
 		MoveWindow( hWnd_ , wPos_x_ , wPos_y_ , wSize_w_ , wSize_h_ , TRUE ) ;
 	}
-} ;
+}
 
 /*/
 /*	ウィンドウのサイズ変更
@@ -82,7 +82,7 @@ void WinMain::SetWindowSize( int arg_w , int arg_h )
 		SIZE size = GetClientSize_( wSize_w_, wSize_h_ ) ;
 		MoveWindow( hWnd_ , wPos_x_ , wPos_y_ , size.cx , size.cy , TRUE ) ;
 	}
-} ;
+}
 
 /*/
 /*	開始
@@ -154,7 +154,7 @@ bool WinMain::Start( )
 
 	return( true ) ;
 
-} ;
+}
 
 /*/
 /*	ウィンドプロシージャー
@@ -194,7 +194,7 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 	// 何もなかった時　処理を勝手にやる
 	return( DefWindowProc(arg_hWnd , arg_msg , arg_wParam , arg_lParam) ) ;
 
-} ;
+}
 
 /*/
 /*	クライアントサイズの取得
@@ -216,7 +216,7 @@ SIZE WinMain::GetClientSize_( int arg_w , int arg_h )
 	} ;
 
 	return( size ) ;
-} ;
+}
 
 /*/
 /*	描画処理
@@ -231,6 +231,6 @@ void WinMain::Render_( )
 
 	EndPaint( hWnd_ , &ps );
 
-} ;
+}
 
 

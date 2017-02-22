@@ -15,7 +15,7 @@ class MainApp : public WinMain
 		/*/
 		/*	<-Œp³-> ‰Šú‰»
 		/*/
-		virtual void Initialize( ) ;
+		virtual void Initalize( ) ;
 
 		/*/
 		/*	<-Œp³-> I—¹‰»

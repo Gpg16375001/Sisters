@@ -43,6 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
+    <IncludePath>C:\work\Sisters\source\scene;C:\work\Sisters\source\utility;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -79,10 +80,15 @@
   <ItemGroup>
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
+    <ClCompile Include="source\scene\SceneTitle.cpp" />
+    <ClCompile Include="source\utility\ConsoleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
+    <ClInclude Include="source\scene\SceneBase.h" />
+    <ClInclude Include="source\scene\SceneTitle.h" />
+    <ClInclude Include="source\utility\ConsoleWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
