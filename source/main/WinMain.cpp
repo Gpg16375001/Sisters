@@ -1,5 +1,6 @@
 
 #include "WinMain.h"
+#include "ConsoleWindow.h"
 
 /*/
 /*	コンストラクタ
@@ -111,6 +112,7 @@ bool WinMain::Start( )
 		NULL ,														// ウィンドウメニュー
 		hInst_ ,													// インスタンスハンドル
 		this ) ;													// WM_CREATEへ情報を渡す ( 自身のハンドルを送る )
+	printf( "ウィンドウ作成完了!\n" ) ;
 
 	if ( hWnd_ == NULL )
 	{
@@ -136,25 +138,27 @@ bool WinMain::Start( )
 	Initalize( ) ;
 
 	/* ____ メッセージチェックループ ____ */
-	BOOL	bmsg ;													// GetMessage( ) の戻り値が入ってくる
-	MSG		msg ;													// メッセージ構造体
-	while ( bmsg = GetMessage ( &msg , NULL , 0 , 0 ) )
+	while ( true )
 	{
-		if ( bmsg == -1 )
+		MSG	msg ;												// メッセージ構造体
+		if ( PeekMessage( &msg , 0 , 0 , 0 , PM_REMOVE ) )
 		{
+			if ( msg.message == WM_QUIT )
+			{
+				break ;
+			}
+			TranslateMessage ( &msg ) ;
+			DispatchMessage ( &msg ) ;
+
+		} else {
 			// 継承先のメインループの呼び出し
 			Update( ) ;
 
 			// 再描画呼び出し
 			InvalidateRect( hWnd_ , NULL , FALSE ) ;
 
-		} else {
-			TranslateMessage ( &msg ) ;
-			DispatchMessage ( &msg ) ;
-
 		}
 	}
-
 
 	// 終了化の呼び出し
 	Finalize( ) ;
@@ -187,7 +191,7 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 			if ( winm != nullptr )
 			{
 				// 描画を行う
-				winm->Render_( ) ;
+				winm->Draw_( ) ;
 			}
 			break;
 
@@ -228,8 +232,10 @@ SIZE WinMain::GetClientSize_( int arg_w , int arg_h )
 /*/
 /*	描画処理
 /*/
-void WinMain::Render_( )
+void WinMain::Draw_( )
 {
+	printf( "<- Draw ! ->\n" ) ;
+
 	PAINTSTRUCT ps ;
 	HDC hDC = BeginPaint( hWnd_ , &ps ) ;
 

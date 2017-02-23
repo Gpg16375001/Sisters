@@ -74,7 +74,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>msimg32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -84,6 +84,8 @@
     <ClCompile Include="source\utility\BackDropScreen.cpp" />
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
+    <ClCompile Include="source\utility\KeyManager.cpp" />
+    <ClCompile Include="source\utility\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\main.h" />
@@ -93,6 +95,8 @@
     <ClInclude Include="source\utility\BackDropScreen.h" />
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />
+    <ClInclude Include="source\utility\KeyManager.h" />
+    <ClInclude Include="source\utility\Renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -108,7 +108,7 @@ class WinMain {
 		/*/
 		/*	•`‰æ‚Ìˆ—
 		/*/
-		void Render_( ) ;
+		void Draw_( ) ;
 
 		TCHAR		szClassName_[256] ;
 		TCHAR		szTitleName_[256] ;

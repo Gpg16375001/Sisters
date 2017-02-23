@@ -26,11 +26,11 @@ class BackDropScreen
 		~BackDropScreen( ) ;
 
 		int selectBmp( int arg_bmpNo ) ;
-		int draw( ) ;
+		int Render( ) ;
 
 //	private :
 		int bmpNo_ ;
-		BitmapData bDataBGTable_[ 4 ] ;
+//		BitmapData bDataBGTable_[ 4 ] ;
 
 } ;
 
