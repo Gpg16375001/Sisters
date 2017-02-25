@@ -51,6 +51,7 @@ int BitmapData::clearData( int arg_bmpNo )
 	setBmpXY( arg_bmpNo , 0 , 0 ) ;
 	setBmpUV( arg_bmpNo , 0 , 0 ) ;
 	setBmpWH( arg_bmpNo , 0 , 0 ) ;
+	setBmpScale( arg_bmpNo , 0 , 0 ) ;
 
 	return( true ) ;
 }
@@ -71,6 +72,17 @@ int BitmapData::loadData( int arg_bmpNo , LPCTSTR arg_pStr , int arg_width , int
 	printf( "%S was loaded.\n" , arg_pStr ) ;
 
 	return ( true ) ;
+}
+
+
+/*/
+/*	描画するかどうかのフラグをセット
+/*/
+int BitmapData::setUseFlg( int arg_bmpNo , bool arg_useFlg )
+{
+	bmpDataTable_[ arg_bmpNo ]._useFlg = arg_useFlg ;
+
+	return( true ) ;
 }
 
 /*/
@@ -107,11 +119,12 @@ int BitmapData::setBmpWH( int arg_bmpNo , int arg_w , int arg_h )
 }
 
 /*/
-/*	描画するかどうかのフラグをセット
+/*	拡大率のセット
 /*/
-int BitmapData::setUseFlg( int arg_bmpNo , bool arg_useFlg )
+int BitmapData::setBmpScale( int arg_bmpNo , float arg_w , float arg_h )
 {
-	bmpDataTable_[ arg_bmpNo ]._useFlg = arg_useFlg ;
+	bmpDataTable_[ arg_bmpNo ]._scaleX = arg_w ;
+	bmpDataTable_[ arg_bmpNo ]._scaleY = arg_h ;
 
 	return( true ) ;
 }
@@ -123,13 +136,15 @@ int BitmapData::setBmpData(
 		int arg_bmpNo ,
 		int arg_x , int arg_y ,
 		int arg_u , int arg_v ,
-		int arg_w , int arg_h
+		int arg_w , int arg_h ,
+		float arg_scaleX , float arg_scaleY
 	) 
 {
 	setUseFlg( arg_bmpNo , true ) ;
 	setBmpXY( arg_bmpNo , arg_x , arg_y ) ;
 	setBmpUV( arg_bmpNo , arg_u , arg_v ) ;
 	setBmpWH( arg_bmpNo , arg_w , arg_h ) ;
+	setBmpScale( arg_bmpNo , arg_scaleX , arg_scaleY ) ;
 
 	return( true ) ;
 }

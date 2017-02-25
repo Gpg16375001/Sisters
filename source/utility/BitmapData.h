@@ -21,10 +21,11 @@ ________________________________________________________________________________
 
 struct BmpData {
 	HBITMAP _hBmp ;
-	bool _useFlg ;			// 描画するかどうかのフラグ
+	bool _useFlg ;				// 描画するかどうかのフラグ
 	int _x , _y ;
 	int _u , _v ;
 	int _w , _h ;
+	float _scaleX , _scaleY ;	// 拡大率
 } ;
 
 // クラスの宣言
@@ -47,11 +48,13 @@ class BitmapData
 		int setBmpXY( int arg_bmpNo , int arg_x , int arg_y ) ;			// ポジションのセット
 		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;			// 切り取り位置のセット
 		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// 幅、高さのセット
+		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;	// 拡大率のセット
 		int setBmpData(													// すべてのセット
 				int arg_bmpNo ,
 				int arg_x , int arg_y ,
 				int arg_u , int arg_v ,
-				int arg_w , int arg_h
+				int arg_w , int arg_h ,
+				float arg_scaleX , float arg_scaleY
 			) ;
 
 		/*/
@@ -117,6 +120,20 @@ class BitmapData
 		int getBmpHeight( int arg_bmpNo ) const
 		{
 			return ( bmpDataTable_[ arg_bmpNo ]._h ) ;
+		}
+		/*/
+		/*	幅の拡大率の取得
+		/*/
+		float getBmpScaleX( int arg_bmpNo ) const
+		{
+			return ( bmpDataTable_[ arg_bmpNo ]._scaleX ) ;
+		}
+		/*/
+		/*	高さの拡大率の取得
+		/*/
+		float getBmpScaleY( int arg_bmpNo ) const
+		{
+			return ( bmpDataTable_[ arg_bmpNo ]._scaleY ) ;
 		}
 
 

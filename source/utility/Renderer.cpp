@@ -38,12 +38,11 @@ Renderer::~Renderer( )
 void Renderer::Initialize( )
 {
 	bmpData_ = NULL ;
-	x_ = 0 ;
-	y_ = 0 ;
-	u_ = 0 ;
-	v_ = 0 ;
-	w_ = 0 ;
-	h_ = 0 ;
+	setPos( 0 , 0 ) ;
+	setUV( 0 , 0 ) ;
+	setWH( 0 , 0 ) ;
+	setScale( 1.0f , 1.0f ) ;
+
 }
 
 /*/
@@ -61,16 +60,18 @@ int Renderer::setHDC( HDC arg_hDCBack , HDC arg_hDCWork )
 /*	描画したいビットマップをセット
 /*/
 int Renderer::selectBmp(
-		HGDIOBJ arg_bmpData ,
-		int arg_x , int arg_y ,
-		int arg_u , int arg_v ,
-		int arg_w , int arg_h
+		HGDIOBJ arg_bmpData ,						// . 画像データ
+		int arg_x , int arg_y ,						// . 配置座標
+		int arg_u , int arg_v ,						// . 切り取り位置
+		int arg_w , int arg_h ,						// . 幅高さ
+		float arg_scaleX , float arg_scaleY			// . 拡大率
 	)
 {
 	bmpData_ = arg_bmpData ;
 	setPos( arg_x , arg_y ) ;
 	setUV( arg_u , arg_v ) ;
 	setWH( arg_w , arg_h ) ;
+	setScale( arg_scaleX , arg_scaleY ) ;
 
 	return ( true ) ;
 }
@@ -82,16 +83,14 @@ int Renderer::Render( )
 {
 	SelectObject( hDCWork_ , bmpData_ ) ;
 
-	BitBlt(
+	TransparentBlt(
 		hDCBack_ ,
-		x_ ,
-		y_ ,
-		w_ ,
-		h_ ,
+		x_ , y_ ,
+		(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
 		hDCWork_ ,
-		0 ,
-		0 ,
-		SRCCOPY
+		u_ , v_ ,
+		w_ , h_ ,
+		RGB( 0 , 255 , 0 )
 	) ;
 
 	return ( true ) ;
@@ -127,6 +126,17 @@ int Renderer::setWH( int arg_w , int arg_h )
 {
 	w_ = arg_w ;
 	h_ = arg_h ;
+
+	return( true ) ;
+}
+
+/*/
+/*	拡大率のセット
+/*/
+int Renderer::setScale( float arg_w , float arg_h )
+{
+	scaleX_ = arg_w ;
+	scaleY_ = arg_h ;
 
 	return( true ) ;
 }

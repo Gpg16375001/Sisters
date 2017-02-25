@@ -64,8 +64,10 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->Initialize( ) ;
 
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
-	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bg/bg01.bmp") , 2000 , 1000 ) ;
-	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/bg/bg01.bmp") , 2000 , 1000 ) ;
+	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;
+	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/sprites/PlayerL.bmp") , 2000 , 178 ) ;
+	BitmapData::GetInstance()->loadData( 2 , TEXT("data/image/chips/grass_default.bmp") , 64 , 64 ) ;
+
 }
 
 /*/
@@ -102,13 +104,22 @@ void MainApp::Update_( )
 			0 ,
 			0 , 0 ,
 			0 , 0 ,
-			1000 , 1000
+			1000 , 1000 ,
+			1.0f , 1.0f
 		) ;
 	BitmapData::GetInstance()->setBmpData(
 			1 ,
-			200 , 200 ,
+			0 , 200 ,
 			0 , 0 ,
-			1000 , 1000
+			2000 , 178 ,
+			1.0f , 1.0f
+		) ;
+	BitmapData::GetInstance()->setBmpData(
+			2 ,
+			200 , 378 ,
+			0 , 0 ,
+			64 , 64 ,
+			0.5f , 0.5f
 		) ;
 
 }
@@ -133,7 +144,9 @@ void MainApp::Render_( )
 					BitmapData::GetInstance()->getBmpUPos( i ) ,
 					BitmapData::GetInstance()->getBmpVPos( i ) ,
 					BitmapData::GetInstance()->getBmpWidth( i ) ,
-					BitmapData::GetInstance()->getBmpHeight( i )
+					BitmapData::GetInstance()->getBmpHeight( i ) ,
+					BitmapData::GetInstance()->getBmpScaleX( i ) ,
+					BitmapData::GetInstance()->getBmpScaleY( i )
 				) ;
 			Renderer::GetInstance()->Render( ) ;
 		}
