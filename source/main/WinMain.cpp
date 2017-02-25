@@ -6,14 +6,14 @@
 /*	コンストラクタ
 /*/
 WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
-	: wPos_x_	( 32 )
-	, wPos_y_	( 32 )
-	, wSize_w_	( 800 )
-	, wSize_h_	( 640 )
-	, hWnd_		( NULL )
-	, bitmap_	( NULL )
-	, hDCBack_	( NULL )
-	, tmf		( 0 )
+	: wPos_x_		( 32 )
+	, wPos_y_		( 32 )
+	, wSize_w_		( 800 )
+	, wSize_h_		( 640 )
+	, hWnd_			( NULL )
+	, hDCBackBmp_	( NULL )
+	, hDCBack_		( NULL )
+	, tmf			( 0 )
 {
 	// 時間の精度を上げる
 	timeBeginPeriod( 1 ) ;
@@ -47,14 +47,19 @@ WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
 WinMain::~WinMain( )
 {
 	// 裏画面で使ったものを消す
-	if ( bitmap_ != NULL )
+	if ( hDCBackBmp_ != NULL )
 	{
-		DeleteObject( bitmap_ ) ;
+		DeleteObject( hDCBackBmp_ ) ;
 	}
 
 	if ( hDCBack_ != NULL )
 	{
 		DeleteDC( hDCBack_ ) ;
+	}
+
+	if ( hDCWork_ != NULL )
+	{
+		DeleteDC( hDCWork_ ) ;
 	}
 
 	// 時間の精度を戻す
@@ -126,6 +131,18 @@ bool WinMain::Start( )
 	/* ____ ウィンドウを表示 ____ */
 	ShowWindow ( hWnd_ , SW_SHOWNORMAL ) ;
 	UpdateWindow ( hWnd_ ) ;
+
+	// 時間の初期化
+	old_time_ = timeGetTime( ) ;
+	start_time_ = old_time_ ;
+
+	// 裏画面の作成
+	HDC hDC = GetDC( hWnd_ ) ;											// 指定ウィンドウクラスのデバイスコンテキストの取得
+	hDCWork_ = CreateCompatibleDC( hDC ) ;								// 共用のデバイスコンテキスト
+	hDCBackBmp_ = CreateCompatibleBitmap( hDC , wSize_w_, wSize_h_ ) ;	// クライアント領域のビットマップを生成
+	hDCBack_ = CreateCompatibleDC( hDC ) ;								// バックバッファ用のデバイスコンテキスト
+	SelectObject( hDCBack_ , hDCBackBmp_ ) ;							// バックバッファのDCにBMPをセットする
+	ReleaseDC( hWnd_ , hDC ) ;											// デバイスコンテキストの解放
 
 	// 初期化の呼び出し ( 画像やサウンドセットなど )
 	Initalize( ) ;
@@ -237,7 +254,7 @@ void WinMain::Draw_( )
 	HDC hDC = BeginPaint( hWnd_ , &ps ) ;
 
 	printf( "WM_PAINTイベントが発行されました\n" );
-	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , g_hBackBuf , 0 , 0 , SRCCOPY ) ;
+	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , hDCBack_ , 0 , 0 , SRCCOPY ) ;
 
 	EndPaint( hWnd_ , &ps );
 	tmf = 0 ;

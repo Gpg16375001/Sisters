@@ -61,8 +61,15 @@ class WinMain {
 		/*/
 		/*	— ‰æ–Ê‚ÌHDC ‚Ìæ“¾
 		/*/
-		HDC GetBackHDC( ) const {
+		HDC GetHDCBack( ) const {
 			return hDCBack_ ;
+		} ;
+
+		/*/
+		/*	ì‹Æ—p‚ÌHDC ‚Ìæ“¾
+		/*/
+		HDC GetHDCWork( ) const {
+			return hDCWork_ ;
 		} ;
 
 		/*/
@@ -103,8 +110,7 @@ class WinMain {
 		/*/
 		virtual void Finalize( ) = 0 ;
 
-//	private :
-		
+	private :		
 		/*/
 		/*	•`‰æ‚Ìˆ—
 		/*/
@@ -120,8 +126,9 @@ class WinMain {
 		DWORD		start_time_ , old_time_ ;
 		bool		tmf ;												// •`‰æ‰Â”\flag
 
-		HBITMAP		bitmap_ ;
+		HBITMAP		hDCBackBmp_ ;
 		HDC			hDCBack_ ;
+		HDC			hDCWork_ ;
 
 } ;
 

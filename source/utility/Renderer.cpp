@@ -21,6 +21,17 @@ ________________________________________________________________________________
 /*/
 Renderer::~Renderer( )
 {
+	// ó†âÊñ Ç≈égÇ¡ÇΩÇ‡ÇÃÇè¡Ç∑
+	if ( hDCBack_ != NULL )
+	{
+		DeleteDC( hDCBack_ ) ;
+	}
+
+	if ( hDCWork_ != NULL )
+	{
+		DeleteDC( hDCWork_ ) ;
+	}
+
 }
 
 /*/
@@ -31,6 +42,17 @@ void Renderer::Initialize( )
 	bmpData_ = NULL ;
 	width_ = 0 ;
 	height_ = 0 ;
+}
+
+/*/
+/*	ó†âÊñ ÇÃï`âÊÇ…ïKóvÇ»Ç‡ÇÃÇÇ‡ÇÁÇ§
+/*/
+int Renderer::setHDC( HDC arg_hDCBack , HDC arg_hDCWork )
+{
+	hDCBack_ = arg_hDCBack ;
+	hDCWork_ = arg_hDCWork ;
+
+	return( true ) ;
 }
 
 /*/
@@ -50,15 +72,15 @@ int Renderer::selectBmp( HGDIOBJ arg_bmpData , int arg_width , int arg_height )
 /*/
 int Renderer::Render( )
 {
-	SelectObject( g_hWorkBuf , bmpData_ ) ;
+	SelectObject( hDCWork_ , bmpData_ ) ;
 
 	BitBlt(
-		g_hBackBuf ,
+		hDCBack_ ,
 		0 ,
 		0 ,
 		width_ ,
 		height_ ,
-		g_hWorkBuf ,
+		hDCWork_ ,
 		0 ,
 		0 ,
 		SRCCOPY

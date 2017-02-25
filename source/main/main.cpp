@@ -49,41 +49,22 @@ LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 
 /*/
 /*	<-継承-> 初期化
+/*	WM_CREATE と同じ。( こちらの方が早い )
 /*/
 void MainApp::Initalize( )
 {
+	// 描画場所の確保
+	Renderer::GetInstance()->Initialize( ) ;
+	Renderer::GetInstance()->setHDC( GetHDCBack( ) , GetHDCWork() ) ;
+
 	// Key 情報の取得 初期化
 	KeyManager::GetInstance()->Initialize( ) ;
-
-	// 時間の初期化
-	old_time_ = timeGetTime( ) ;
-	start_time_ = old_time_ ;
-
-	/*
-	// 裏画面生成
-	HDC hDC = GetDC( hWnd_ ) ;
-	hDCBack_ = CreateCompatibleDC( hDC ) ;
-	bitmap_ = CreateCompatibleBitmap( hDC , wSize_w_ , wSize_h_ ) ;
-	SelectObject( hDCBack_ , bitmap_ ) ;							// デストラクタで解放される
-	ReleaseDC( hWnd_ , hDC ) ;
-	*/
-
-	static HBITMAP s_hBackBufBmp ;
-	// 裏画面の作成
-	HDC hDC = GetDC( hWnd_ ) ;													// 指定ウィンドウクラスのデバイスコンテキストの取得
-	g_hWorkBuf = CreateCompatibleDC( hDC ) ;								// 共用のデバイスコンテキスト
-	s_hBackBufBmp = CreateCompatibleBitmap( hDC , wSize_w_, wSize_h_ ) ;	// クライアント領域のビットマップを生成
-	g_hBackBuf = CreateCompatibleDC( hDC ) ;								// バックバッファ用のデバイスコンテキスト
-	SelectObject( g_hBackBuf , s_hBackBufBmp ) ;							// バックバッファのDCにBMPをセットする
-	ReleaseDC( hWnd_ , hDC ) ;												// デバイスコンテキストの解放
 
 	// 画像データ庫の初期化
 	BitmapData::GetInstance()->Initialize( ) ;
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bg/bg01.bmp") , 2000 , 1000 ) ;
-
-	Renderer::GetInstance()->Initialize( ) ;
 }
 
 /*/
@@ -117,9 +98,9 @@ void MainApp::Update_( )
 {
 	// シーンの更新
 	Renderer::GetInstance()->selectBmp(
-		BitmapData::GetInstance()->getBmpData( 0 ) ,
-		BitmapData::GetInstance()->getBmpWidth( 0 ) ,
-		BitmapData::GetInstance()->getBmpHeight( 0 )
+			BitmapData::GetInstance()->getBmpData( 0 ) ,
+			BitmapData::GetInstance()->getBmpWidth( 0 ) ,
+			BitmapData::GetInstance()->getBmpHeight( 0 )
 		) ;
 
 }
