@@ -98,6 +98,18 @@ void MainApp::Update( )
 void MainApp::Update_( )
 {
 	// シーンの更新
+	BitmapData::GetInstance()->setBmpData(
+			0 ,
+			0 , 0 ,
+			0 , 0 ,
+			1000 , 1000
+		) ;
+	BitmapData::GetInstance()->setBmpData(
+			1 ,
+			200 , 200 ,
+			0 , 0 ,
+			1000 , 1000
+		) ;
 
 }
 
@@ -107,25 +119,31 @@ void MainApp::Update_( )
 void MainApp::Render_( )
 {
 	printf( "メイン描画\n" ) ;
-	// 画面のクリア
-	
 
 	// シーン描画の配置
-	Renderer::GetInstance()->selectBmp(
-			BitmapData::GetInstance()->getBmpData( 0 ) ,
-			BitmapData::GetInstance()->getBmpWidth( 0 ) ,
-			BitmapData::GetInstance()->getBmpHeight( 0 )
-		) ;
-	Renderer::GetInstance()->setPos( 0 , 0 ) ;
-	Renderer::GetInstance()->Render( ) ;
+	for ( int i = 0 ; i < BitmapData::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( BitmapData::GetInstance()->getUseFlg( i ) )
+		{
+			printf( "描画：BMP番号%4d \n" , i ) ;
+			Renderer::GetInstance()->selectBmp(
+					BitmapData::GetInstance()->getBmpData( i ) ,
+					BitmapData::GetInstance()->getBmpXPos( i ) ,
+					BitmapData::GetInstance()->getBmpYPos( i ) ,
+					BitmapData::GetInstance()->getBmpUPos( i ) ,
+					BitmapData::GetInstance()->getBmpVPos( i ) ,
+					BitmapData::GetInstance()->getBmpWidth( i ) ,
+					BitmapData::GetInstance()->getBmpHeight( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
 
-	Renderer::GetInstance()->selectBmp(
-			BitmapData::GetInstance()->getBmpData( 1 ) ,
-			BitmapData::GetInstance()->getBmpWidth( 1 ) ,
-			BitmapData::GetInstance()->getBmpHeight( 1 )
-		) ;
-	Renderer::GetInstance()->setPos( 100 , 100 ) ;
-	Renderer::GetInstance()->Render( ) ;
+	// 画面のクリア
+	for ( int i = 0 ; i < BitmapData::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		BitmapData::GetInstance()->clearData( i ) ;
+	}
 
 	// デバッグの表示
 

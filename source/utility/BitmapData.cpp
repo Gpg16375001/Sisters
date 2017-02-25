@@ -47,8 +47,12 @@ int BitmapData::clearData( int arg_bmpNo )
 	{
 		DeleteObject( bmpDataTable_[ arg_bmpNo ]._hBmp ) ;
 	}
+	setUseFlg( arg_bmpNo , false ) ;
+	setBmpXY( arg_bmpNo , 0 , 0 ) ;
+	setBmpUV( arg_bmpNo , 0 , 0 ) ;
+	setBmpWH( arg_bmpNo , 0 , 0 ) ;
 
-	return ( true ) ;
+	return( true ) ;
 }
 
 /*/
@@ -62,8 +66,7 @@ int BitmapData::loadData( int arg_bmpNo , LPCTSTR arg_pStr , int arg_width , int
 	// データの読み込みと幅と高さをセット
 	bmpDataTable_[ arg_bmpNo ]._hBmp = (HBITMAP)LoadImage( NULL , arg_pStr , IMAGE_BITMAP , 0 , 0 , LR_LOADFROMFILE ) ;
 
-	bmpDataTable_[ arg_bmpNo ]._width = arg_width ;
-	bmpDataTable_[ arg_bmpNo ]._height = arg_height ;
+	setBmpWH( arg_bmpNo , arg_width , arg_height ) ;
 
 	printf( "%S was loaded.\n" , arg_pStr ) ;
 
@@ -71,27 +74,64 @@ int BitmapData::loadData( int arg_bmpNo , LPCTSTR arg_pStr , int arg_width , int
 }
 
 /*/
-/*	ビットマップのハンドルのアクセッサ
+/*	ポジションのセット
 /*/
-HBITMAP BitmapData::getBmpData( int arg_bmpNo )
+int BitmapData::setBmpXY( int arg_bmpNo , int arg_x , int arg_y )
 {
-	return ( bmpDataTable_[ arg_bmpNo ]._hBmp ) ;
+	bmpDataTable_[ arg_bmpNo ]._x = arg_x ;
+	bmpDataTable_[ arg_bmpNo ]._y = arg_y ;
+
+	return( true ) ;
 }
 
 /*/
-/*	ビットマップ幅のアクセッサ
+/*	切り取り位置のセット
 /*/
-int BitmapData::getBmpWidth( int arg_bmpNo )
+int BitmapData::setBmpUV( int arg_bmpNo , int arg_u , int arg_v )
 {
-	return ( bmpDataTable_[ arg_bmpNo ]._width ) ;
+	bmpDataTable_[ arg_bmpNo ]._u = arg_u ;
+	bmpDataTable_[ arg_bmpNo ]._v = arg_v ;
+
+	return( true ) ;
 }
 
 /*/
-/*	ビットマップ高さのアクセッサ
+/*	幅、高さのセット
 /*/
-int BitmapData::getBmpHeight( int arg_bmpNo )
+int BitmapData::setBmpWH( int arg_bmpNo , int arg_w , int arg_h )
 {
-	return ( bmpDataTable_[ arg_bmpNo ]._height ) ;
+	bmpDataTable_[ arg_bmpNo ]._w = arg_w ;
+	bmpDataTable_[ arg_bmpNo ]._h = arg_h ;
+
+	return( true ) ;
+}
+
+/*/
+/*	描画するかどうかのフラグをセット
+/*/
+int BitmapData::setUseFlg( int arg_bmpNo , bool arg_useFlg )
+{
+	bmpDataTable_[ arg_bmpNo ]._useFlg = arg_useFlg ;
+
+	return( true ) ;
+}
+
+/*/
+/*	描画する情報をセット
+/*/
+int BitmapData::setBmpData(
+		int arg_bmpNo ,
+		int arg_x , int arg_y ,
+		int arg_u , int arg_v ,
+		int arg_w , int arg_h
+	) 
+{
+	setUseFlg( arg_bmpNo , true ) ;
+	setBmpXY( arg_bmpNo , arg_x , arg_y ) ;
+	setBmpUV( arg_bmpNo , arg_u , arg_v ) ;
+	setBmpWH( arg_bmpNo , arg_w , arg_h ) ;
+
+	return( true ) ;
 }
 
 

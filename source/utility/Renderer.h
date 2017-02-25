@@ -22,6 +22,7 @@ ________________________________________________________________________________
 				Renderer::GetInstance()->setPos( x , y ) ;
 				Renderer::GetInstance()->Render( ) ;
 			となる。
+			全体の流れとしては、clearRender -> select -> set -> Render  -> draw となる。
 
 			例1. setHDC() の方法
 			Renderer::GetInstance()->setHDC( hDCBackBuf , hDCWorkBuf ) ;
@@ -48,10 +49,16 @@ class Renderer
 		~Renderer( ) ;
 
 		int setHDC( HDC arg_hDCBack , HDC arg_hDCWork ) ;	// 裏画面の描画に必要なものをもらう
-		int selectBmp( HGDIOBJ arg_bmpData , int arg_width , int arg_height ) ;
-		int Render( ) ;
+		int selectBmp( HGDIOBJ arg_bmpData ,				// 画像データの取得
+				int arg_x , int arg_y ,
+				int arg_u , int arg_v ,
+				int arg_w , int arg_h
+			) ;
+		int Render( ) ;									// バックバッファへの出力
 
-		int setPos( int arg_x , int arg_y ) ;
+		int setPos( int arg_x , int arg_y ) ;			// 座標のセット
+		int setUV( int arg_u , int arg_v ) ;			// 切り出し座標のセット
+		int setWH( int arg_w , int arg_h ) ;			// 切り出し幅高さのセット
 
 		/*/
 		/*	Shingleton -> インスタンスの取得
@@ -68,13 +75,14 @@ class Renderer
 		/*/
 		Renderer( ) {	}
 
+	private :
 		HGDIOBJ bmpData_ ;
-		int x_ ;
-		int y_ ;
-		int width_ ;
-		int height_ ;
 		HDC hDCBack_ ;			// 裏画面
 		HDC hDCWork_ ;			// 作業用画面
+
+		int x_ , y_ ;			// 描画座標
+		int u_ , v_ ;			// 切り取り座標
+		int w_ , h_ ;			// 幅高さ
 
 } ;
 
