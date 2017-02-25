@@ -12,8 +12,8 @@ ________________________________________________________________________________
 
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
-#include "BackDropScreen.h"
-#include "Renderer.h"
+
+#include "Common.h"
 
 // コンストラクタ
 BackDropScreen::BackDropScreen( )
@@ -37,6 +37,19 @@ int BackDropScreen::selectBmp( int arg_bmpNo )
 // バックドロップ描画
 int BackDropScreen::Render( )
 {
+	SelectObject( g_hWorkBuf , g_bDataBGTable[ bmpNo_ ].getBmpData( ) ) ;
+
+	BitBlt(
+		g_hBackBuf ,
+		0 ,
+		0 ,
+		g_bDataBGTable[ bmpNo_ ].getBmpWidth( ) ,
+		g_bDataBGTable[ bmpNo_ ].getBmpWidth( ) ,
+		g_hWorkBuf ,
+		0 ,
+		0 ,
+		SRCCOPY
+	) ;
 
 	return ( true ) ;
 }

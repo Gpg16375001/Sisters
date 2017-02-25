@@ -1,6 +1,6 @@
 
 #include "WinMain.h"
-#include "ConsoleWindow.h"
+#include "Common.h"
 
 /*/
 /*	コンストラクタ
@@ -9,10 +9,11 @@ WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
 	: wPos_x_	( 32 )
 	, wPos_y_	( 32 )
 	, wSize_w_	( 800 )
-	, wSize_h_	( 600 )
+	, wSize_h_	( 640 )
 	, hWnd_		( NULL )
 	, bitmap_	( NULL )
 	, hDCBack_	( NULL )
+	, tmf		( 0 )
 {
 	// 時間の精度を上げる
 	timeBeginPeriod( 1 ) ;
@@ -103,7 +104,7 @@ bool WinMain::Start( )
 	hWnd_ = CreateWindow(
 		szClassName_ ,												// ウィンドウクラス名
 		szTitleName_ ,												// キャプション文字列
-		( WS_OVERLAPPEDWINDOW ) ,									// ウィンドウスタイル
+		( WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU ) ,				// ウィンドウスタイル
 		wPos_x_ ,													// 水平座標の位置
 		wPos_y_ ,													// 垂直座標の位置
 		size.cx ,													// 幅
@@ -122,17 +123,6 @@ bool WinMain::Start( )
 	/* ____ ウィンドウを表示 ____ */
 	ShowWindow ( hWnd_ , SW_SHOWNORMAL ) ;
 	UpdateWindow ( hWnd_ ) ;
-	
-	// 時間の初期化
-	old_time_ = timeGetTime( ) ;
-	start_time_ = old_time_ ;
-
-	// 裏画面生成
-	HDC hDC = GetDC( hWnd_ ) ;
-	hDCBack_ = CreateCompatibleDC( hDC ) ;
-	bitmap_ = CreateCompatibleBitmap( hDC , wSize_w_ , wSize_h_ ) ;
-	SelectObject( hDCBack_ , bitmap_ ) ;							// デストラクタで解放される
-	ReleaseDC( hWnd_ , hDC ) ;
 
 	// 初期化の呼び出し ( 画像やサウンドセットなど )
 	Initalize( ) ;
@@ -151,11 +141,17 @@ bool WinMain::Start( )
 			DispatchMessage ( &msg ) ;
 
 		} else {
-			// 継承先のメインループの呼び出し
-			Update( ) ;
 
-			// 再描画呼び出し
-			InvalidateRect( hWnd_ , NULL , FALSE ) ;
+			if ( tmf == 0 )
+			{
+				tmf = 1 ;
+
+				// 継承先のメインループの呼び出し
+				Update( ) ;
+
+				// 再描画呼び出し
+				InvalidateRect( hWnd_ , NULL , FALSE ) ;
+			}
 
 		}
 	}
@@ -219,7 +215,7 @@ SIZE WinMain::GetClientSize_( int arg_w , int arg_h )
 	rc.right	= arg_w ;
 	rc.top		= 0 ;
 	rc.bottom	= arg_h ;
-	AdjustWindowRect( &rc, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, FALSE ) ;
+	AdjustWindowRect( &rc, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, FALSE );
 
 	SIZE size = {
 		rc.right - rc.left ,
@@ -234,15 +230,14 @@ SIZE WinMain::GetClientSize_( int arg_w , int arg_h )
 /*/
 void WinMain::Draw_( )
 {
-	printf( "<- Draw ! ->\n" ) ;
-
 	PAINTSTRUCT ps ;
 	HDC hDC = BeginPaint( hWnd_ , &ps ) ;
 
-	//printf( "WM_PAINTイベントが発行されました\n" );
-	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , hDCBack_ , 0 , 0 , SRCCOPY ) ;
+	printf( "WM_PAINTイベントが発行されました\n" );
+	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , g_hBackBuf , 0 , 0 , SRCCOPY ) ;
 
 	EndPaint( hWnd_ , &ps );
+	tmf = 0 ;
 
 }
 

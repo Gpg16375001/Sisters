@@ -27,22 +27,16 @@
     <ClCompile Include="source\main\main.cpp">
       <Filter>source\main</Filter>
     </ClCompile>
-    <ClCompile Include="source\utility\ConsoleWindow.cpp">
-      <Filter>source\utility</Filter>
-    </ClCompile>
-    <ClCompile Include="source\scene\SceneTitle.cpp">
-      <Filter>source\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="source\utility\BackDropScreen.cpp">
-      <Filter>source\utility</Filter>
-    </ClCompile>
     <ClCompile Include="source\utility\BitmapData.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
-    <ClCompile Include="source\utility\Renderer.cpp">
+    <ClCompile Include="source\main\Common.cpp">
+      <Filter>source\main</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utility\ConsoleWindow.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
-    <ClCompile Include="source\utility\KeyManager.cpp">
+    <ClCompile Include="source\utility\BackDropScreen.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,25 +47,16 @@
     <ClInclude Include="source\main\main.h">
       <Filter>source\main</Filter>
     </ClInclude>
-    <ClInclude Include="source\utility\ConsoleWindow.h">
-      <Filter>source\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="source\scene\SceneBase.h">
-      <Filter>source\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="source\scene\SceneTitle.h">
-      <Filter>source\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="source\utility\BackDropScreen.h">
-      <Filter>source\utility</Filter>
-    </ClInclude>
     <ClInclude Include="source\utility\BitmapData.h">
       <Filter>source\utility</Filter>
     </ClInclude>
-    <ClInclude Include="source\utility\Renderer.h">
+    <ClInclude Include="source\main\Common.h">
+      <Filter>source\main</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\ConsoleWindow.h">
       <Filter>source\utility</Filter>
     </ClInclude>
-    <ClInclude Include="source\utility\KeyManager.h">
+    <ClInclude Include="source\utility\BackDropScreen.h">
       <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>

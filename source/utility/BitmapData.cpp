@@ -36,7 +36,10 @@ BitmapData::~BitmapData( )
 
 int BitmapData::clearData( )
 {
-	if( m_hBmp != NULL ) DeleteObject( m_hBmp ) ;
+	if( m_hBmp != NULL )
+	{
+		DeleteObject( m_hBmp ) ;
+	}
 
 	return ( true ) ;
 }

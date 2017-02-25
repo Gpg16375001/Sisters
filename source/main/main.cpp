@@ -1,12 +1,7 @@
 
 #include <Windows.h>
 #include "main.h"
-#include "ConsoleWindow.h"
-#include "BitmapData.h"
-#include "BackDropScreen.h"
-#include "Renderer.h"
-
-ConsoleWindow console ;
+#include "Common.h"
 
 int WINAPI WinMain( HINSTANCE , HINSTANCE , LPSTR , int )
 {
@@ -44,7 +39,10 @@ MainApp::~MainApp( )
 /*/
 LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 {
-	printf( "MainApp のプロシージャ\n" ) ;
+	/*/
+	/*	WinMainのプロシージャで処理をするのでここは関係ない
+	/*	windowが抑えられているときも回る
+	/*/
 
 	return DefWindowProc( hWnd , msg , wParam , lParam ) ;
 }
@@ -54,9 +52,31 @@ LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 /*/
 void MainApp::Initalize( )
 {
+	
+	// 時間の初期化
+	old_time_ = timeGetTime( ) ;
+	start_time_ = old_time_ ;
+
+	/*
+	// 裏画面生成
+	HDC hDC = GetDC( hWnd_ ) ;
+	hDCBack_ = CreateCompatibleDC( hDC ) ;
+	bitmap_ = CreateCompatibleBitmap( hDC , wSize_w_ , wSize_h_ ) ;
+	SelectObject( hDCBack_ , bitmap_ ) ;							// デストラクタで解放される
+	ReleaseDC( hWnd_ , hDC ) ;
+	*/
+
+	static HBITMAP s_hBackBufBmp ;
+	// 裏画面の作成
+	HDC hDC = GetDC( hWnd_ ) ;													// 指定ウィンドウクラスのデバイスコンテキストの取得
+	g_hWorkBuf = CreateCompatibleDC( hDC ) ;								// 共用のデバイスコンテキスト
+	s_hBackBufBmp = CreateCompatibleBitmap( hDC , wSize_w_, wSize_h_ ) ;	// クライアント領域のビットマップを生成
+	g_hBackBuf = CreateCompatibleDC( hDC ) ;								// バックバッファ用のデバイスコンテキスト
+	SelectObject( g_hBackBuf , s_hBackBufBmp ) ;							// バックバッファのDCにBMPをセットする
+	ReleaseDC( hWnd_ , hDC ) ;												// デバイスコンテキストの解放
+
 	// 画像の読み込み
-	Renderer::GetInstance()->setHWindow( GetHWindow( ) ) ;
-	Renderer::GetInstance()->setHDC( GetBackHDC( ) ) ;
+	g_bDataBGTable[ 0 ].loadData( TEXT("data/image/bg/bg01.bmp") , 960 , 540 ) ;
 
 }
 
@@ -88,14 +108,7 @@ void MainApp::Update( )
 /*/
 void MainApp::Update_( )
 {
-	// シーンの更新
-	Renderer::GetInstance()->setRender( 
-		(HBITMAP)LoadImage( NULL , TEXT("C:/work/Sisters/data/image/bg/bg01.bmp") , IMAGE_BITMAP , 0 , 0 , LR_LOADFROMFILE ) ,
-		0 ,
-		0 , 0 ,
-		0 , 0 ,
-		1000 , 1000
-		) ;
+	g_bds.selectBmp( 0 ) ;
 
 }
 
@@ -109,7 +122,7 @@ void MainApp::Render_( )
 
 
 	// シーン描画の配置
-	Renderer::GetInstance()->draw( ) ;
+	g_bds.Render( ) ;
 
 	// デバッグの表示
 

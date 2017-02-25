@@ -76,13 +76,13 @@ class Renderer
 		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/
-		static Renderer* GetInstance( )
+/*		static Renderer* GetInstance( )
 		{
 			static Renderer v ;
 			return &v ;
 		}
-
-	private :
+*/
+//	private :
 		Renderer( ) 
 			: bmp_( NULL )
 			, hDCBack_( NULL )
@@ -92,11 +92,6 @@ class Renderer
 		{													// コンストラクタ
 			// インスタンス化時の初期化
 			clearScreen( ) ;
-
-			// 作業用デバイスコンテキストの生成
-			HDC hDC = GetDC( hWnd_ ) ;
-			hDCWork_ = CreateCompatibleDC( hDC ) ;
-			ReleaseDC( hWnd_ , hDC ) ;
 
 		} ;
 
