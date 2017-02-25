@@ -3,7 +3,6 @@
 ______________________________________________________________________________________________
 
 	FILE	: ConsoleWindow.cpp
-	NAME	: Teacher.K
 
 	________/ Explanation of file /___________________________________________________________
        
@@ -11,6 +10,7 @@ ________________________________________________________________________________
 
 	--- å‚Èg‚¢•û ---
 	ƒvƒƒOƒ‰ƒ€Às‚É‚P‚ÂƒCƒ“ƒXƒ^ƒ“ƒX‰»‚µ‚Äg—p‚·‚éBi•¡”ì‚Á‚Ä‚à‚ ‚Ü‚èˆÓ–¡‚ª‚È‚¢j
+	•K‚¸ˆê“x‚¾‚¯Å‰‚É ConsoleWindow::GetInstance()->Initialize() ‚Å‰Šú‰»‚·‚éB
 	Šî–{“I‚É‚Íprintf‚ğg‚Á‚½ƒfƒoƒbƒO‚ğ‰Â”\‚É‚·‚é‚½‚ß‚Ég—p‚·‚éB
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
@@ -24,10 +24,30 @@ class ConsoleWindow
 {
 	// --- ŒöŠJ•Ï”‚Æƒƒ“ƒoŠÖ”
 	public:
-		ConsoleWindow( ) ;	// --- ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/*/
+		/*	‰Šú‰»
+		/*/
+		void Initialize( ) ; 
+
 		~ConsoleWindow( ) ;	// --- ƒfƒXƒgƒ‰ƒNƒ^
 
+		/*/
+		/*	Shingleton -> ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+		/*/
+		static ConsoleWindow* GetInstance( )
+		{
+			static ConsoleWindow v ;
+			return &v ;
+		}
+
 	private:
+		/*/
+		/*	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/*/
+		ConsoleWindow( ) {
+		}
+
+	private :
 		FILE *m_fIn ;
 		FILE *m_fOut ;
 };

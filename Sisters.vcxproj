@@ -81,17 +81,19 @@
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
-    <ClCompile Include="source\utility\BackDropScreen.cpp" />
+    <ClCompile Include="source\utility\Renderer.cpp" />
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
+    <ClCompile Include="source\utility\KeyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
-    <ClInclude Include="source\utility\BackDropScreen.h" />
+    <ClInclude Include="source\utility\Renderer.h" />
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />
+    <ClInclude Include="source\utility\KeyManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

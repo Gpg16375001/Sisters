@@ -14,69 +14,84 @@ ________________________________________________________________________________
 
 #include "BitmapData.h"
 
-// コンストラクタ
-BitmapData::BitmapData( LPCTSTR arg_pStr , int arg_width , int arg_height )
-{
-	loadData( arg_pStr , arg_width , arg_height ) ;
-}
-
-BitmapData::BitmapData( )
-{
-	m_hBmp = NULL ;
-	m_width = 0 ;
-	m_height = 0 ;
-}
-
-// デストラクタ
+/*/
+/*	デストラクタ
+/*/
 BitmapData::~BitmapData( )
 {
 	// --- 使用されていたらオブジェクト破棄
-	clearData( ) ; 
+	for ( int i = 0 ; i < MAX_BMP_IMAGES ; ++i )
+	{
+		clearData( i ) ; 
+	}
 }
 
-int BitmapData::clearData( )
+/*/
+/*	初期化
+/*/
+void BitmapData::Initialize( )
 {
-	if( m_hBmp != NULL )
+	// --- 使用されていたらオブジェクト破棄
+	for ( int i = 0 ; i < MAX_BMP_IMAGES ; ++i )
 	{
-		DeleteObject( m_hBmp ) ;
+		clearData( i ) ; 
+	}
+}
+
+/*/
+/*	画像データのクリア
+/*/
+int BitmapData::clearData( int arg_bmpNo )
+{
+	if( bmpDataTable_[ arg_bmpNo ]._hBmp != NULL )
+	{
+		DeleteObject( bmpDataTable_[ arg_bmpNo ]._hBmp ) ;
 	}
 
 	return ( true ) ;
 }
 
-// --- イメージ読み込み
-int BitmapData::loadData( LPCTSTR arg_pStr , int arg_width , int arg_height )
+/*/
+/*	イメージ読み込み
+/*/
+int BitmapData::loadData( int arg_bmpNo , LPCTSTR arg_pStr , int arg_width , int arg_height )
 {
-	// --- 使用されていたらオブジェクト破棄
-	clearData( ) ;
+	// 使用されていたらオブジェクト破棄
+	clearData( arg_bmpNo ) ;
 
-	// --- データの読み込みと幅と高さをセット
-	m_hBmp = (HBITMAP)LoadImage( NULL , arg_pStr , IMAGE_BITMAP , 0 , 0 , LR_LOADFROMFILE ) ;
+	// データの読み込みと幅と高さをセット
+	bmpDataTable_[ arg_bmpNo ]._hBmp = (HBITMAP)LoadImage( NULL , arg_pStr , IMAGE_BITMAP , 0 , 0 , LR_LOADFROMFILE ) ;
 
-	m_width = arg_width ;
-	m_height = arg_height ;
+	bmpDataTable_[ arg_bmpNo ]._width = arg_width ;
+	bmpDataTable_[ arg_bmpNo ]._height = arg_height ;
 
 	printf( "%S was loaded.\n" , arg_pStr ) ;
 
 	return ( true ) ;
 }
 
-// --- ビットマップのハンドルのアクセッサ
-HBITMAP BitmapData::getBmpData( )
+/*/
+/*	ビットマップのハンドルのアクセッサ
+/*/
+HBITMAP BitmapData::getBmpData( int arg_bmpNo )
 {
-	return ( m_hBmp ) ;
+	return ( bmpDataTable_[ arg_bmpNo ]._hBmp ) ;
 }
 
-// --- ビットマップ幅のアクセッサ
-int BitmapData::getBmpWidth( )
+/*/
+/*	ビットマップ幅のアクセッサ
+/*/
+int BitmapData::getBmpWidth( int arg_bmpNo )
 {
-	return ( m_width ) ;
+	return ( bmpDataTable_[ arg_bmpNo ]._width ) ;
 }
 
-// --- ビットマップ高さのアクセッサ
-int BitmapData::getBmpHeight( )
+/*/
+/*	ビットマップ高さのアクセッサ
+/*/
+int BitmapData::getBmpHeight( int arg_bmpNo )
 {
-	return ( m_height ) ;
+	return ( bmpDataTable_[ arg_bmpNo ]._height ) ;
 }
 
 

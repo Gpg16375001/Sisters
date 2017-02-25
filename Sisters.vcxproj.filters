@@ -36,7 +36,10 @@
     <ClCompile Include="source\utility\ConsoleWindow.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
-    <ClCompile Include="source\utility\BackDropScreen.cpp">
+    <ClCompile Include="source\utility\KeyManager.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utility\Renderer.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +59,10 @@
     <ClInclude Include="source\utility\ConsoleWindow.h">
       <Filter>source\utility</Filter>
     </ClInclude>
-    <ClInclude Include="source\utility\BackDropScreen.h">
+    <ClInclude Include="source\utility\KeyManager.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\Renderer.h">
       <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>

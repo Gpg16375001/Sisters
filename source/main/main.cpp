@@ -52,7 +52,9 @@ LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 /*/
 void MainApp::Initalize( )
 {
-	
+	// Key 情報の取得 初期化
+	KeyManager::GetInstance()->Initialize( ) ;
+
 	// 時間の初期化
 	old_time_ = timeGetTime( ) ;
 	start_time_ = old_time_ ;
@@ -75,9 +77,13 @@ void MainApp::Initalize( )
 	SelectObject( g_hBackBuf , s_hBackBufBmp ) ;							// バックバッファのDCにBMPをセットする
 	ReleaseDC( hWnd_ , hDC ) ;												// デバイスコンテキストの解放
 
-	// 画像の読み込み
-	g_bDataBGTable[ 0 ].loadData( TEXT("data/image/bg/bg01.bmp") , 960 , 540 ) ;
+	// 画像データ庫の初期化
+	BitmapData::GetInstance()->Initialize( ) ;
 
+	// 画像の読み込み
+	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bg/bg01.bmp") , 2000 , 1000 ) ;
+
+	Renderer::GetInstance()->Initialize( ) ;
 }
 
 /*/
@@ -93,8 +99,9 @@ void MainApp::Finalize( )
 /*/
 void MainApp::Update( )
 {
-	// キー情報更新
 	printf( "メインループ\n" ) ;
+	// キー情報更新
+	KeyManager::GetInstance()->update( ) ;
 
 	// 更新
 	Update_( ) ;
@@ -108,7 +115,12 @@ void MainApp::Update( )
 /*/
 void MainApp::Update_( )
 {
-	g_bds.selectBmp( 0 ) ;
+	// シーンの更新
+	Renderer::GetInstance()->selectBmp(
+		BitmapData::GetInstance()->getBmpData( 0 ) ,
+		BitmapData::GetInstance()->getBmpWidth( 0 ) ,
+		BitmapData::GetInstance()->getBmpHeight( 0 )
+		) ;
 
 }
 
@@ -119,10 +131,10 @@ void MainApp::Render_( )
 {
 	printf( "メイン描画\n" ) ;
 	// 画面のクリア
-
+	
 
 	// シーン描画の配置
-	g_bds.Render( ) ;
+	Renderer::GetInstance()->Render( ) ;
 
 	// デバッグの表示
 

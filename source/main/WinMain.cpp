@@ -96,6 +96,9 @@ void WinMain::SetWindowSize( int arg_w , int arg_h )
 /*/
 bool WinMain::Start( )
 {
+	// コンソールの初期化
+	ConsoleWindow::GetInstance()->Initialize( ) ;
+
 	// ウィンドウクラス登録
 	RegisterClassEx ( &wc_ ) ;
 
