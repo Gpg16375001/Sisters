@@ -22,6 +22,7 @@ ________________________________________________________________________________
 struct BmpData {
 	HBITMAP _hBmp ;
 	bool _useFlg ;				// 描画するかどうかのフラグ
+	int _anchor ;				// アンカーの位置
 	int _x , _y ;
 	int _u , _v ;
 	int _w , _h ;
@@ -49,8 +50,10 @@ class BitmapData
 		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;			// 切り取り位置のセット
 		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// 幅、高さのセット
 		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;	// 拡大率のセット
+		int setAnchor( int arg_bmpNo , int arg_anchor ) ;				// アンカーのセット
 		int setBmpData(													// すべてのセット
 				int arg_bmpNo ,
+				int arg_anchor ,
 				int arg_x , int arg_y ,
 				int arg_u , int arg_v ,
 				int arg_w , int arg_h ,
@@ -78,6 +81,13 @@ class BitmapData
 		HBITMAP getBmpData( int arg_bmpNo ) const
 		{
 			return ( bmpDataTable_[ arg_bmpNo ]._hBmp ) ;
+		}
+		/*/
+		/*	アンカーを取得
+		/*/
+		int getBmpAnchor( int arg_bmpNo ) const
+		{
+			return ( bmpDataTable_[ arg_bmpNo ]._anchor ) ;
 		}
 		/*/
 		/*	X軸の取得

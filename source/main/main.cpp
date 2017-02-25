@@ -102,6 +102,7 @@ void MainApp::Update_( )
 	// シーンの更新
 	BitmapData::GetInstance()->setBmpData(
 			0 ,
+			0 ,
 			0 , 0 ,
 			0 , 0 ,
 			1000 , 1000 ,
@@ -109,6 +110,7 @@ void MainApp::Update_( )
 		) ;
 	BitmapData::GetInstance()->setBmpData(
 			1 ,
+			0 ,
 			0 , 200 ,
 			0 , 0 ,
 			2000 , 178 ,
@@ -116,10 +118,11 @@ void MainApp::Update_( )
 		) ;
 	BitmapData::GetInstance()->setBmpData(
 			2 ,
+			0 ,
 			200 , 378 ,
 			0 , 0 ,
 			64 , 64 ,
-			0.5f , 0.5f
+			1.5f , 1.5f
 		) ;
 
 }
@@ -139,6 +142,7 @@ void MainApp::Render_( )
 			printf( "描画：BMP番号%4d \n" , i ) ;
 			Renderer::GetInstance()->selectBmp(
 					BitmapData::GetInstance()->getBmpData( i ) ,
+					BitmapData::GetInstance()->getBmpAnchor( i ) ,
 					BitmapData::GetInstance()->getBmpXPos( i ) ,
 					BitmapData::GetInstance()->getBmpYPos( i ) ,
 					BitmapData::GetInstance()->getBmpUPos( i ) ,

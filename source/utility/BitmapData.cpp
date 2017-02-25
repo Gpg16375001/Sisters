@@ -130,10 +130,21 @@ int BitmapData::setBmpScale( int arg_bmpNo , float arg_w , float arg_h )
 }
 
 /*/
+/*	アンカーをセット
+/*/
+int BitmapData::setAnchor( int arg_bmpNo , int arg_anchor )
+{
+	bmpDataTable_[ arg_bmpNo ]._anchor = arg_anchor ;
+
+	return( true ) ;
+}
+
+/*/
 /*	描画する情報をセット
 /*/
 int BitmapData::setBmpData(
 		int arg_bmpNo ,
+		int arg_anchor ,
 		int arg_x , int arg_y ,
 		int arg_u , int arg_v ,
 		int arg_w , int arg_h ,
@@ -141,6 +152,7 @@ int BitmapData::setBmpData(
 	) 
 {
 	setUseFlg( arg_bmpNo , true ) ;
+	setAnchor( arg_bmpNo , arg_anchor ) ;
 	setBmpXY( arg_bmpNo , arg_x , arg_y ) ;
 	setBmpUV( arg_bmpNo , arg_u , arg_v ) ;
 	setBmpWH( arg_bmpNo , arg_w , arg_h ) ;

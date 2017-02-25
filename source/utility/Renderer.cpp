@@ -61,6 +61,7 @@ int Renderer::setHDC( HDC arg_hDCBack , HDC arg_hDCWork )
 /*/
 int Renderer::selectBmp(
 		HGDIOBJ arg_bmpData ,						// . 画像データ
+		int arg_anchor ,							 // . アンカー
 		int arg_x , int arg_y ,						// . 配置座標
 		int arg_u , int arg_v ,						// . 切り取り位置
 		int arg_w , int arg_h ,						// . 幅高さ
@@ -68,6 +69,7 @@ int Renderer::selectBmp(
 	)
 {
 	bmpData_ = arg_bmpData ;
+	setAnchor( arg_anchor ) ;
 	setPos( arg_x , arg_y ) ;
 	setUV( arg_u , arg_v ) ;
 	setWH( arg_w , arg_h ) ;
@@ -85,8 +87,8 @@ int Renderer::Render( )
 
 	TransparentBlt(
 		hDCBack_ ,
-		x_ , y_ ,
-		(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
+		(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
+		(int)( w_ * scaleX_ ) , (int)( h_ * scaleY_ ) ,
 		hDCWork_ ,
 		u_ , v_ ,
 		w_ , h_ ,
@@ -141,5 +143,15 @@ int Renderer::setScale( float arg_w , float arg_h )
 	return( true ) ;
 }
 
+/*/
+/*	アンカーのセット
+/*/
+int Renderer::setAnchor( int arg_anchor )
+{
+	anchorX_ = arg_anchor % 3 ;
+	anchorY_ = arg_anchor / 3 ;
+
+	return( true ) ;
+}
 
 

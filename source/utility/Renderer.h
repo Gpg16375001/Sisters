@@ -50,6 +50,7 @@ class Renderer
 
 		int setHDC( HDC arg_hDCBack , HDC arg_hDCWork ) ;	// 裏画面の描画に必要なものをもらう
 		int selectBmp( HGDIOBJ arg_bmpData ,				// 画像データの取得
+				int arg_anchor ,							 // . アンカー
 				int arg_x , int arg_y ,						 // . 配置座標
 				int arg_u , int arg_v ,						 // . 切り取り位置
 				int arg_w , int arg_h ,						 // . 幅高さ
@@ -61,6 +62,7 @@ class Renderer
 		int setUV( int arg_u , int arg_v ) ;			// 切り出し座標のセット
 		int setWH( int arg_w , int arg_h ) ;			// 切り出し幅高さのセット
 		int setScale( float arg_w , float arg_h ) ;		// 拡大率のセット
+		int setAnchor( int arg_anchor ) ;				// アンカーのセット
 
 		/*/
 		/*	Shingleton -> インスタンスの取得
@@ -85,6 +87,7 @@ class Renderer
 		int x_ , y_ ;				// 描画座標
 		int u_ , v_ ;				// 切り取り座標
 		int w_ , h_ ;				// 幅高さ
+		int anchorX_ , anchorY_ ;
 		float scaleX_ , scaleY_ ;	// 拡大率
 
 } ;
