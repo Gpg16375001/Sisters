@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ConsoleWindow.h"
 #include "KeyManager.h"
 #include "BitmapData.h"

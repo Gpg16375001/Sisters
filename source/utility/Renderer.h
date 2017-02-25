@@ -12,7 +12,16 @@ ________________________________________________________________________________
 			必ずプログラムの最初に setHDC をしなければならない。
 			selectBmp に背景用ビットマップテーブル内の描画したいビットマップのデータと
 			大きさを渡すことで、描画するビットマップの変更が行える。
-			描画には Render メソッドをフレーム毎に呼び出すこと。
+			select -> set -> render が一つのオブジェクトに対しての処理となる。
+			つまり一度に二つの描画を行うときは、
+				Renderer::GetInstance()->selectBmp( BmpData , width , height ) ;
+				Renderer::GetInstance()->setPos( x , y ) ;
+				Renderer::GetInstance()->Render( ) ;
+
+				Renderer::GetInstance()->selectBmp( BmpData , width , height ) ;
+				Renderer::GetInstance()->setPos( x , y ) ;
+				Renderer::GetInstance()->Render( ) ;
+			となる。
 
 			例1. setHDC() の方法
 			Renderer::GetInstance()->setHDC( hDCBackBuf , hDCWorkBuf ) ;
@@ -42,6 +51,8 @@ class Renderer
 		int selectBmp( HGDIOBJ arg_bmpData , int arg_width , int arg_height ) ;
 		int Render( ) ;
 
+		int setPos( int arg_x , int arg_y ) ;
+
 		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/
@@ -58,6 +69,8 @@ class Renderer
 		Renderer( ) {	}
 
 		HGDIOBJ bmpData_ ;
+		int x_ ;
+		int y_ ;
 		int width_ ;
 		int height_ ;
 		HDC hDCBack_ ;			// 裏画面

@@ -12,9 +12,7 @@ ________________________________________________________________________________
 
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
-// #include "Renderer.h"
-
-#include "Common.h"
+#include "Renderer.h"
 
 /*/
 /*	デストラクタ
@@ -40,6 +38,8 @@ Renderer::~Renderer( )
 void Renderer::Initialize( )
 {
 	bmpData_ = NULL ;
+	x_ = 0 ;
+	y_ = 0 ;
 	width_ = 0 ;
 	height_ = 0 ;
 }
@@ -76,8 +76,8 @@ int Renderer::Render( )
 
 	BitBlt(
 		hDCBack_ ,
-		0 ,
-		0 ,
+		x_ ,
+		y_ ,
 		width_ ,
 		height_ ,
 		hDCWork_ ,
@@ -87,6 +87,18 @@ int Renderer::Render( )
 	) ;
 
 	return ( true ) ;
+}
+
+
+/*/
+/*	X軸 と  Y軸 をセット
+/*/
+int Renderer::setPos( int arg_x , int arg_y )
+{
+	x_ = arg_x ;
+	y_ = arg_y ;
+
+	return( true ) ;
 }
 
 
