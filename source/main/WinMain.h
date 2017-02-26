@@ -27,49 +27,49 @@ class WinMain {
 		/*	ウィンドウの X座標 の取得
 		/*/
 		int GetPostionX( ) const {
-			return wPos_x_ ;
+			return( wPos_x_ ) ;
 		} ;
 
 		/*/
 		/*	ウィンドウの Y座標 の取得
 		/*/
 		int GetPostionY( ) const {
-			return wPos_y_ ;
+			return( wPos_y_ ) ;
 		} ;
 
 		/*/
 		/*	ウィンドウの 幅 の取得
 		/*/
 		int GetWidth( ) const {
-			return wSize_w_ ;
+			return( wSize_w_ ) ;
 		} ;
 
 		/*/
 		/*	ウィンドウの 高さ の取得
 		/*/
 		int GetHeight( ) const {
-			return wSize_h_ ;
+			return( wSize_h_ ) ;
 		} ;
 
 		/*/
 		/*	ウィンドウの ハンドル の取得
 		/*/
 		HWND GetHWindow( ) const {
-			return hWnd_ ;
+			return( hWnd_ ) ;
 		} ;
 
 		/*/
 		/*	裏画面のHDC の取得
 		/*/
 		HDC GetHDCBack( ) const {
-			return hDCBack_ ;
+			return( hDCBack_ ) ;
 		} ;
 
 		/*/
 		/*	作業用のHDC の取得
 		/*/
 		HDC GetHDCWork( ) const {
-			return hDCWork_ ;
+			return( hDCWork_ ) ;
 		} ;
 
 		/*/
@@ -79,6 +79,16 @@ class WinMain {
 
 	private :
 		static LRESULT CALLBACK WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wParam , LONG arg_lPram ) ;
+
+		/*/
+		/*	タイムプロシージャ
+		/*/
+		static void CALLBACK TimerProc( UINT arg_ID , UINT arg_Msg , DWORD arg_User , DWORD arg_dw1 , DWORD arg_dw2 ) ;
+
+		/*/
+		/*	表示が可能かどうかをセット
+		/*/
+		static void SetFpsFlg( bool arg_fpsFlg ) ;
 
 		/*/
 		/*	クライアントサイズの取得 ( SIZE型で返す )
@@ -124,7 +134,9 @@ class WinMain {
 		WNDCLASSEX	wc_ ;												// ウィンドウクラス構造体
 		HINSTANCE	hInst_ ;
 		DWORD		start_time_ , old_time_ ;
-		bool		tmf ;												// 描画可能flag
+		static bool	*fpsp_ ;
+		bool		fps_ ;												// 描画可能flag
+		int			timerID_ ;											// タイムプロシージャのID
 
 		HBITMAP		hDCBackBmp_ ;
 		HDC			hDCBack_ ;

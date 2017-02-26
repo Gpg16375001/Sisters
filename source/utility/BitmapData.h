@@ -21,12 +21,16 @@ ________________________________________________________________________________
 
 struct BmpData {
 	HBITMAP _hBmp ;
-	bool _useFlg ;				// 描画するかどうかのフラグ
-	int _anchor ;				// アンカーの位置
-	int _x , _y ;
-	int _u , _v ;
-	int _w , _h ;
-	float _scaleX , _scaleY ;	// 拡大率
+	bool	_useFlg ;				// 描画するかどうかのフラグ
+	int		_anchor ;				// アンカーの位置
+	int		_x , _y ;				// 座標
+	int		_u , _v ;				// 切り取り座標
+	int		_w , _h ;				// 幅高さ
+	float	_scaleX , _scaleY ;		// 拡大率
+	bool	_useAlpha  ;			// 透明処理を行うかどうかのフラグ
+	int		_alpha ;				// 透明度
+	bool	_useRotate ;			// 回転処理を行うかどうかのフラグ
+	float	_angle ;				// 角度
 } ;
 
 // クラスの宣言
@@ -46,18 +50,24 @@ class BitmapData
 		int clearData( int arg_bmpNo ) ;
 
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
+		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// 透明処理をするかどうかのフラグをセット
+		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;		// 回転処理するかどうかのフラグをセット
 		int setBmpXY( int arg_bmpNo , int arg_x , int arg_y ) ;			// ポジションのセット
 		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;			// 切り取り位置のセット
 		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// 幅、高さのセット
 		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;	// 拡大率のセット
 		int setAnchor( int arg_bmpNo , int arg_anchor ) ;				// アンカーのセット
+		int setAlpha( int arg_bmpNo , int arg_alpha ) ;					// 透明度のセット
+		int setAngle( int arg_bmpNo , float arg_angle ) ;				// 角度のセット
 		int setBmpData(													// すべてのセット
 				int arg_bmpNo ,
 				int arg_anchor ,
 				int arg_x , int arg_y ,
 				int arg_u , int arg_v ,
 				int arg_w , int arg_h ,
-				float arg_scaleX , float arg_scaleY
+				float arg_scaleX , float arg_scaleY ,
+				int arg_alpha = 255 ,
+				float arg_angle = 0
 			) ;
 
 		/*/
@@ -73,6 +83,20 @@ class BitmapData
 		int getUseFlg( int arg_bmpNo ) const
 		{
 			return(bmpDataTable_[ arg_bmpNo ]._useFlg ) ;
+		}
+		/*/
+		/*	透明処理するかの取得
+		/*/
+		int getUseAlpha( int arg_bmpNo ) const
+		{
+			return(bmpDataTable_[ arg_bmpNo ]._useAlpha ) ;
+		}
+		/*/
+		/*	回転処理するかの取得
+		/*/
+		int getUseRotate( int arg_bmpNo ) const
+		{
+			return(bmpDataTable_[ arg_bmpNo ]._useRotate ) ;
 		}
 
 		/*/
@@ -144,6 +168,20 @@ class BitmapData
 		float getBmpScaleY( int arg_bmpNo ) const
 		{
 			return ( bmpDataTable_[ arg_bmpNo ]._scaleY ) ;
+		}
+		/*/
+		/*	透明度の取得
+		/*/
+		int getBmpAlpha( int arg_bmpNo ) const
+		{
+			return ( bmpDataTable_[ arg_bmpNo ]._alpha ) ;
+		}
+		/*/
+		/*	回転角度の取得
+		/*/
+		float getBmpAngle( int arg_bmpNo ) const
+		{
+			return ( bmpDataTable_[ arg_bmpNo ]._angle ) ;
 		}
 
 

@@ -2,6 +2,8 @@
 #include "WinMain.h"
 #include "Common.h"
 
+bool *WinMain::fpsp_ = NULL ;
+
 /*/
 /*	コンストラクタ
 /*/
@@ -13,10 +15,10 @@ WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
 	, hWnd_			( NULL )
 	, hDCBackBmp_	( NULL )
 	, hDCBack_		( NULL )
-	, tmf			( 0 )
 {
 	// 時間の精度を上げる
 	timeBeginPeriod( 1 ) ;
+	fps_  = true ;
 
 	//	ウィンドウクラス名とウィンドウタイトルを入れる	
 	lstrcpy( szClassName_ , arg_szClassName ) ;
@@ -97,6 +99,14 @@ void WinMain::SetWindowSize( int arg_w , int arg_h )
 }
 
 /*/
+/*	表示が可能かどうかをセット
+/*/
+void WinMain::SetFpsFlg( bool arg_fpsFlg )
+{
+	*fpsp_ = arg_fpsFlg ;
+}
+
+/*/
 /*	開始
 /*/
 bool WinMain::Start( )
@@ -161,16 +171,16 @@ bool WinMain::Start( )
 			DispatchMessage ( &msg ) ;
 
 		} else {
-
-			if ( tmf == 0 )
+			if ( fps_ )
 			{
-				tmf = 1 ;
+				fps_ = false ;
 
 				// 継承先のメインループの呼び出し
 				Update( ) ;
 
 				// 再描画呼び出し
 				InvalidateRect( hWnd_ , NULL , FALSE ) ;
+
 			}
 
 		}
@@ -178,16 +188,22 @@ bool WinMain::Start( )
 
 	// 終了化の呼び出し
 	Finalize( ) ;
+	timeKillEvent( timerID_ ) ;
 
 	return( true ) ;
 
 }
 
 /*/
-/*	ウィンドプロシージャー
+/*	____/ WinMainのウィンドプロシージャー /______________
+/*
+/*	MainApp ですべての処理が終了したらやってくる
+/*	MainAppのプロシージャより前に呼ばれる
 /*/
 LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wParam , LONG arg_lParam )
 {
+	printf( "WinMainのプロシージャが発行されました。\n" ) ;
+
 	WinMain* winm = reinterpret_cast<WinMain*>( GetWindowLong(arg_hWnd , GWL_USERDATA) ) ;
 	switch ( arg_msg ) {
 
@@ -197,6 +213,9 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 			data = reinterpret_cast<LPCREATESTRUCT>( arg_lParam ) ;
 			winm = reinterpret_cast<WinMain*>( data->lpCreateParams ) ;
 			SetWindowLong( arg_hWnd , GWL_USERDATA , reinterpret_cast<long>(winm) ) ;
+
+			winm->fpsp_ = &winm->fps_ ;
+			winm->timerID_ = timeSetEvent( (1000 / 60) , 1 , TimerProc , NULL , TIME_PERIODIC ) ;
 			break;
 
 		case WM_DESTROY :
@@ -221,6 +240,14 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 	// 何もなかった時　処理を勝手にやる
 	return( DefWindowProc(arg_hWnd , arg_msg , arg_wParam , arg_lParam) ) ;
 
+}
+
+/*/
+/*	タイムプロシージャ
+/*/
+void CALLBACK WinMain::TimerProc( UINT arg_ID , UINT arg_Msg , DWORD arg_User , DWORD arg_dw1 , DWORD arg_dw2 )
+{
+	SetFpsFlg( true ) ;
 }
 
 /*/
@@ -257,7 +284,6 @@ void WinMain::Draw_( )
 	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , hDCBack_ , 0 , 0 , SRCCOPY ) ;
 
 	EndPaint( hWnd_ , &ps );
-	tmf = 0 ;
 
 }
 

@@ -40,9 +40,10 @@ MainApp::~MainApp( )
 LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 {
 	/*/
-	/*	WinMainのプロシージャで処理をするのでここは関係ない
-	/*	windowが抑えられているときも回る
+	/*	WinMainのプロシージャで処理をするのでここは関係ない。
+	/*	WinMainのプロシージャが終わり次第呼ばれる。
 	/*/
+	printf( "MainAppのプロシージャが発行されました。\n" ) ;
 
 	return DefWindowProc( hWnd , msg , wParam , lParam ) ;
 }
@@ -55,7 +56,7 @@ void MainApp::Initalize( )
 {
 	// 描画場所の確保
 	Renderer::GetInstance()->Initialize( ) ;
-	Renderer::GetInstance()->setHDC( GetHDCBack( ) , GetHDCWork() ) ;
+	Renderer::GetInstance()->setHDC( GetHWindow( ) , GetHDCBack( ) , GetHDCWork() ) ;
 
 	// Key 情報の取得 初期化
 	KeyManager::GetInstance()->Initialize( ) ;
@@ -94,11 +95,29 @@ void MainApp::Update( )
 	Render_( ) ;
 }
 
+static int mkey[2] = {0,0} ;
 /*/
 /*	更新 ( セット )
 /*/
 void MainApp::Update_( )
 {
+	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
+	{
+		mkey[ 0 ]-- ;
+	}
+	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
+	{
+		mkey[ 0 ]++ ;
+	}
+	if ( KeyManager::GetInstance()->getKeyState( VK_UP ) )
+	{
+		mkey[ 1 ]-- ;
+	}
+	if ( KeyManager::GetInstance()->getKeyState( VK_DOWN ) )
+	{
+		mkey[ 1 ] ++ ;
+	}
+
 	// シーンの更新
 	BitmapData::GetInstance()->setBmpData(
 			0 ,
@@ -114,15 +133,17 @@ void MainApp::Update_( )
 			0 , 200 ,
 			0 , 0 ,
 			2000 , 178 ,
-			1.0f , 1.0f
+			1.0f , 1.0f ,
+			128 + mkey[ 1 ]
 		) ;
 	BitmapData::GetInstance()->setBmpData(
 			2 ,
 			0 ,
-			200 , 378 ,
+			200 + mkey[ 0 ] , 378 + mkey[ 1 ] ,
 			0 , 0 ,
 			64 , 64 ,
-			1.5f , 1.5f
+			0.5f , 0.5f ,
+			128
 		) ;
 
 }
@@ -139,7 +160,11 @@ void MainApp::Render_( )
 	{
 		if ( BitmapData::GetInstance()->getUseFlg( i ) )
 		{
-			printf( "描画：BMP番号%4d \n" , i ) ;
+			printf( "描画      BMP番号 ：%4d \n" , i ) ;
+			printf( "透明処理  true=1  ：%4d \n" , BitmapData::GetInstance()->getUseAlpha( i ) ) ;
+			printf( "透明度    alpha   ：%4d \n" , BitmapData::GetInstance()->getBmpAlpha( i ) ) ;
+			printf( "回転処理  true=1  ：%4d \n" , BitmapData::GetInstance()->getUseRotate( i ) ) ;
+			printf( "回転角度  angle   ：%4d \n" , BitmapData::GetInstance()->getBmpAngle( i ) ) ;
 			Renderer::GetInstance()->selectBmp(
 					BitmapData::GetInstance()->getBmpData( i ) ,
 					BitmapData::GetInstance()->getBmpAnchor( i ) ,
@@ -150,7 +175,9 @@ void MainApp::Render_( )
 					BitmapData::GetInstance()->getBmpWidth( i ) ,
 					BitmapData::GetInstance()->getBmpHeight( i ) ,
 					BitmapData::GetInstance()->getBmpScaleX( i ) ,
-					BitmapData::GetInstance()->getBmpScaleY( i )
+					BitmapData::GetInstance()->getBmpScaleY( i ) ,
+					BitmapData::GetInstance()->getBmpAlpha( i ) ,
+					BitmapData::GetInstance()->getBmpAngle( i )
 				) ;
 			Renderer::GetInstance()->Render( ) ;
 		}
