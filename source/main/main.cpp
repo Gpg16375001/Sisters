@@ -64,6 +64,7 @@ void MainApp::Initalize( )
 	// 画像データ庫の初期化
 	BitmapData::GetInstance()->Initialize( ) ;
 	BackGround::GetInstance()->Initialize( ) ;
+	Sprite::GetInstance()->Initialize( ) ;
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;
@@ -73,6 +74,9 @@ void MainApp::Initalize( )
 
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
+
+	// Sprite の読み込み
+	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 2 ) ) ;
 
 	// シーン
 
@@ -117,6 +121,15 @@ void MainApp::Update_( )
 			1.0f , 1.0f
 		) ;
 
+	Sprite::GetInstance()->setBmpData(
+			0 ,
+			0 ,
+			200 , 200 ,
+			0 , 0 ,
+			64 , 64 ,
+			1.0f , 1.0f
+		) ;
+
 }
 
 /*/
@@ -127,6 +140,10 @@ void MainApp::Render_( )
 	printf( "メイン描画\n" ) ;
 
 	// シーン描画の配置
+
+	/*/
+	/*	背景描画
+	/*/
 	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
 		if ( BackGround::GetInstance()->getUseFlg( i ) )
@@ -154,10 +171,51 @@ void MainApp::Render_( )
 		}
 	}
 
+	/*/
+	/*	Sprite 描画
+	/*/
+	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( Sprite::GetInstance()->getUseFlg( i ) )
+		{
+			printf( "描画      BMP番号 ：%4d \n" , i ) ;
+			printf( "透明処理  true=1  ：%4d \n" , Sprite::GetInstance()->getUseAlpha( i ) ) ;
+			printf( "透明度    alpha   ：%4d \n" , Sprite::GetInstance()->getBmpAlpha( i ) ) ;
+			printf( "回転処理  true=1  ：%4d \n" , Sprite::GetInstance()->getUseRotate( i ) ) ;
+			printf( "回転角度  angle   ：%4.0f \n" , Sprite::GetInstance()->getBmpAngle( i ) ) ;
+			Renderer::GetInstance()->selectBmp(
+					Sprite::GetInstance()->getBmpData( i ) ,
+					Sprite::GetInstance()->getBmpAnchor( i ) ,
+					Sprite::GetInstance()->getBmpXPos( i ) ,
+					Sprite::GetInstance()->getBmpYPos( i ) ,
+					Sprite::GetInstance()->getBmpUPos( i ) ,
+					Sprite::GetInstance()->getBmpVPos( i ) ,
+					Sprite::GetInstance()->getBmpWidth( i ) ,
+					Sprite::GetInstance()->getBmpHeight( i ) ,
+					Sprite::GetInstance()->getBmpScaleX( i ) ,
+					Sprite::GetInstance()->getBmpScaleY( i ) ,
+					Sprite::GetInstance()->getBmpAlpha( i ) ,
+					Sprite::GetInstance()->getBmpAngle( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
+
 	// 画面のクリア
+	/*/
+	/*	背景のクリア
+	/*/
 	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
 		BackGround::GetInstance()->clearData( i ) ;
+	}
+
+	/*/
+	/*	Sprite のクリア
+	/*/
+	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		Sprite::GetInstance()->clearData( i ) ;
 	}
 
 	// デバッグの表示

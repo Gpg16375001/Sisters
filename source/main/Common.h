@@ -5,5 +5,6 @@
 #include "BitmapData.h"
 #include "Renderer.h"
 #include "BackGround.h"
+#include "Sprite.h"
 
 

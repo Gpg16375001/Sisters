@@ -39,11 +39,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>source\main;source\scene;source\utility;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>C:\work\Sisters\source\main;C:\work\Sisters\source\scene;C:\work\Sisters\source\utility;$(IncludePath)</IncludePath>
+    <IncludePath>source\main;source\scene;source\utility;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -56,6 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,6 +88,7 @@
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
     <ClCompile Include="source\utility\KeyManager.cpp" />
+    <ClCompile Include="source\utility\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\Common.h" />
@@ -96,6 +99,7 @@
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />
     <ClInclude Include="source\utility\KeyManager.h" />
+    <ClInclude Include="source\utility\Sprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
