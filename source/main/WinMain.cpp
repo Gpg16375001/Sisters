@@ -162,7 +162,7 @@ bool WinMain::Start( )
 	/* ____ メッセージチェックループ ____ */
 	while ( true )
 	{
-		MSG	msg ;												// メッセージ構造体
+		MSG	msg ;														// メッセージ構造体
 		if ( PeekMessage( &msg , 0 , 0 , 0 , PM_REMOVE ) )
 		{
 			if ( msg.message == WM_QUIT )

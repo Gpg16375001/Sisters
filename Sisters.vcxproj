@@ -84,6 +84,7 @@
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
     <ClCompile Include="source\utility\BackGround.cpp" />
+    <ClCompile Include="source\utility\Chip.cpp" />
     <ClCompile Include="source\utility\Renderer.cpp" />
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
     <ClInclude Include="source\utility\BackGround.h" />
+    <ClInclude Include="source\utility\Chip.h" />
     <ClInclude Include="source\utility\Renderer.h" />
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />

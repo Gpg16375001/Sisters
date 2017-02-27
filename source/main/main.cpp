@@ -64,19 +64,26 @@ void MainApp::Initalize( )
 	// 画像データ庫の初期化
 	BitmapData::GetInstance()->Initialize( ) ;
 	BackGround::GetInstance()->Initialize( ) ;
+	Chip::GetInstance()->Initialize( ) ;
 	Sprite::GetInstance()->Initialize( ) ;
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;
 	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/sprites/PlayerL.bmp") , 2000 , 178 ) ;
-	BitmapData::GetInstance()->loadData( 2 , TEXT("data/image/chips/grass_default.bmp") , 64 , 64 ) ;
+	BitmapData::GetInstance()->loadData( 2 , TEXT("data/image/chips/all_grass.bmp") , 640 , 500 ) ;
 	BitmapData::GetInstance()->loadData( 3 , TEXT("data/image/sprites/gimic/marunoko.bmp") , 256 , 256 ) ;
 
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
 
+	// チップ読み込み
+	Chip::GetInstance()->setMapSize( 30 , 30 ) ;
+	Chip::GetInstance()->RenderMapSize( 16 , 10 ) ;
+	Chip::GetInstance()->loadBmpDataAll( BitmapData::GetInstance()->getBmpData( 2 ) ) ;
+
+
 	// Sprite の読み込み
-	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 2 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 3 ) ) ;
 
 	// シーン
 
@@ -121,12 +128,14 @@ void MainApp::Update_( )
 			1.0f , 1.0f
 		) ;
 
+	Chip::GetInstance()->Update( ) ;
+
 	Sprite::GetInstance()->setBmpData(
 			0 ,
 			0 ,
 			200 , 200 ,
 			0 , 0 ,
-			64 , 64 ,
+			256 , 256 ,
 			1.0f , 1.0f
 		) ;
 
@@ -172,6 +181,37 @@ void MainApp::Render_( )
 	}
 
 	/*/
+	/*	チップ背景描画
+	/*/
+	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( Chip::GetInstance()->getUseFlg( i ) )
+		{
+			printf( "描画      BMP番号 ：%4d \n" , i ) ;
+			printf( "透明処理  true=1  ：%4d \n" , Chip::GetInstance()->getUseAlpha( i ) ) ;
+			printf( "透明度    alpha   ：%4d \n" , Chip::GetInstance()->getBmpAlpha( i ) ) ;
+			printf( "回転処理  true=1  ：%4d \n" , Chip::GetInstance()->getUseRotate( i ) ) ;
+			printf( "回転角度  angle   ：%4.0f \n" , Chip::GetInstance()->getBmpAngle( i ) ) ;
+			Renderer::GetInstance()->selectBmp(
+					Chip::GetInstance()->getBmpData( i ) ,
+					Chip::GetInstance()->getBmpAnchor( i ) ,
+					Chip::GetInstance()->getBmpXPos( i ) ,
+					Chip::GetInstance()->getBmpYPos( i ) ,
+					Chip::GetInstance()->getBmpUPos( i ) ,
+					Chip::GetInstance()->getBmpVPos( i ) ,
+					Chip::GetInstance()->getBmpWidth( i ) ,
+					Chip::GetInstance()->getBmpHeight( i ) ,
+					Chip::GetInstance()->getBmpScaleX( i ) ,
+					Chip::GetInstance()->getBmpScaleY( i ) ,
+					Chip::GetInstance()->getBmpAlpha( i ) ,
+					Chip::GetInstance()->getBmpAngle( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
+
+
+	/*/
 	/*	Sprite 描画
 	/*/
 	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
@@ -208,6 +248,14 @@ void MainApp::Render_( )
 	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
 		BackGround::GetInstance()->clearData( i ) ;
+	}
+
+	/*/
+	/*	チップのクリア
+	/*/
+	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		Chip::GetInstance()->clearData( i ) ;
 	}
 
 	/*/

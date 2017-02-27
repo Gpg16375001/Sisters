@@ -48,6 +48,9 @@
     <ClCompile Include="source\utility\Sprite.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
+    <ClCompile Include="source\utility\Chip.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -75,6 +78,9 @@
       <Filter>source\utility</Filter>
     </ClInclude>
     <ClInclude Include="source\utility\Sprite.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\Chip.h">
       <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>

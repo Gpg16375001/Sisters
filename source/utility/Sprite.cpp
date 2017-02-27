@@ -9,9 +9,6 @@ ________________________________________________________________________________
 
 ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 */
-#include <windows.h>
-#include <stdio.h>
-
 #include "Sprite.h"
 
 /*/

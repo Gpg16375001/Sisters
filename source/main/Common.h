@@ -6,5 +6,5 @@
 #include "Renderer.h"
 #include "BackGround.h"
 #include "Sprite.h"
-
+#include "Chip.h"
 

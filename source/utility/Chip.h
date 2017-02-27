@@ -1,29 +1,27 @@
 /*
 ______________________________________________________________________________________________
 
-	FILE : Sprite.h
+	FILE : Chip.h
+	NAME : Teacher.K
 
 	________/ Explanation of file /___________________________________________________________
 
-		Sprite の描画に必要なデータを保持するするするクラス
+		チップ背景を描画するクラス
 		
 			--- 主な使い方 ---
-			1つのインスタンスで4枚の Sprite を保持することができる。
-			つまり、画像の情報を補完するクラスなのでほしい画像の番号から呼び出すことになる。
-			かならず一度だけ最初に Sprite::GetInstance( )->Initialize( ) で初期化する。
+			インスタンス1つで一枚のチップ背景を描画する。
+			もらったデータをグリッドを基準に配置する。
+			selectBmpで選択されたビットマップを CHIP_X * CHIP_Y で縦に切り取り、
+			チップテーブルの番号に従って描画を行う。
+			また m_x , m_y メンバを使用してのチップ背景スクロールが可能である。
+			これをうまく使うことにより無限スクロールや横スクロールアクション等の
+			ステージを表現できる。
 
-			例1. 画像の読み込み方法
-			Sprite::GetInstance( )->loadBmpData( bmpNo , hBITMAP ) ;
+			かならず一度だけ最初に Sprite::GetInstance( )->Initialize( ) で初期化し、
+			setMapSize( ) と RenderMapSize( ) を指定しなくてはいけない。
 
-			例2. 画像をセット
-			Sprite::GetInstance()->setBmpData(
-					bmpNo ,
-					anchor ,
-					x , y ,
-					u , v ,
-					width , height ,
-					scaleX , scaleY
-				) ;
+			setMapSize はマップデータの配列の幅と高さを指定する。
+			RenderMapSize は一画面に描画できる 横 と 縦 のグリッド数を受け取る。
 
 
 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
@@ -31,13 +29,20 @@ ________________________________________________________________________________
 #include <windows.h>
 #include <stdio.h>
 
-struct SpriteData {
+#define CHIP_X	32
+#define CHIP_Y	32
+#define CHIP_W	64
+#define CHIP_H	64
+
+struct ChipData {
 	HBITMAP _hBmp ;
+	int		_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
 	bool	_useFlg ;				// 描画するかどうかのフラグ
 	int		_anchor ;				// アンカーの位置
-	int		_x , _y ;				// 座標
+	int		_x , _y ;				// グローバル座標
 	int		_u , _v ;				// 切り取り座標
 	int		_w , _h ;				// 幅高さ
+	int		_arrayX , _arrayY ;		// 配列座標
 	float	_scaleX , _scaleY ;		// 拡大率
 	bool	_useAlpha  ;			// 透明処理を行うかどうかのフラグ
 	int		_alpha ;				// 透明度
@@ -46,9 +51,9 @@ struct SpriteData {
 } ;
 
 // クラスの宣言
-class Sprite
+class Chip
 {
-	static const int MAX_BMP_SPRITE = 256 ;
+	static const int MAX_BMP_CBG = 4096 ;
 
 	public :
 		/*/
@@ -56,9 +61,12 @@ class Sprite
 		/*/
 		void Initialize( ) ; 
 
-		~Sprite( ) ;
+		~Chip( ) ;
 
-		int loadBmpData( int arg_bmpNo , HBITMAP arg_hbmp ) ;
+		int RenderMapSize( int arg_w , int arg_h ) ;
+		int setMapSize( int arg_w , int arg_h ) ;
+		int loadBmpData( int arg_bmpNo , HBITMAP arg_hbmp ) ;			// bmp画像の読み込み
+		int loadBmpDataAll( HBITMAP arg_hbmp ) ;						// 一括読み込み
 		int clearData( int arg_bmpNo ) ;
 
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
@@ -71,9 +79,11 @@ class Sprite
 		int setAnchor( int arg_bmpNo , int arg_anchor ) ;				// アンカーのセット
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;					// 透明度のセット
 		int setAngle( int arg_bmpNo , float arg_angle ) ;				// 角度のセット
-		int setBmpData(													// すべてのセット
+		int setArray( int arg_bmpNo , int arg_ax , int arg_ay  ) ;		// 配列座標のセット
+		int setChipData(													// すべてのセット
 				int arg_bmpNo ,
 				int arg_anchor ,
+				int arg_arrayX , int arg_arrauY ,
 				int arg_x , int arg_y ,
 				int arg_u , int arg_v ,
 				int arg_w , int arg_h ,
@@ -81,34 +91,35 @@ class Sprite
 				int arg_alpha = 255 ,
 				float arg_degree = 0
 			) ;
+		void Update( ) ;
 
 		/*/
 		/*	最大描画数の取得
 		/*/
 		int getMaxBmp( ) const
 		{
-			return( MAX_BMP_SPRITE ) ;
+			return( MAX_BMP_CBG ) ;
 		}
 		/*/
 		/*	描画するかの取得
 		/*/
 		int getUseFlg( int arg_bmpNo ) const
 		{
-			return(bmpBGTable_[ arg_bmpNo ]._useFlg ) ;
+			return(bmpCBGTable_[ arg_bmpNo ]._useFlg ) ;
 		}
 		/*/
 		/*	透明処理するかの取得
 		/*/
 		int getUseAlpha( int arg_bmpNo ) const
 		{
-			return(bmpBGTable_[ arg_bmpNo ]._useAlpha ) ;
+			return(bmpCBGTable_[ arg_bmpNo ]._useAlpha ) ;
 		}
 		/*/
 		/*	回転処理するかの取得
 		/*/
 		int getUseRotate( int arg_bmpNo ) const
 		{
-			return(bmpBGTable_[ arg_bmpNo ]._useRotate ) ;
+			return(bmpCBGTable_[ arg_bmpNo ]._useRotate ) ;
 		}
 
 		/*/
@@ -116,93 +127,107 @@ class Sprite
 		/*/
 		HBITMAP getBmpData( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._hBmp ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._hBmp ) ;
 		}
 		/*/
 		/*	アンカーを取得
 		/*/
 		int getBmpAnchor( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._anchor ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._anchor ) ;
 		}
 		/*/
-		/*	X軸の取得
+		/*	グローバル座標 X軸の取得
 		/*/
 		int getBmpXPos( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._x ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._x ) ;
 		}
 		/*/
-		/*	Y軸の取得
+		/*	グローバル座標 Y軸の取得
 		/*/
 		int getBmpYPos( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._y ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._y ) ;
+		}
+		/*/
+		/*	配列座標 X軸の取得
+		/*/
+		int getArrayX( int arg_bmpNo ) const
+		{
+			return ( bmpCBGTable_[ arg_bmpNo ]._arrayX ) ;
+		}
+		/*/
+		/*	配列座標 Y軸の取得
+		/*/
+		int getArrayY( int arg_bmpNo ) const
+		{
+			return ( bmpCBGTable_[ arg_bmpNo ]._arrayY ) ;
 		}
 		/*/
 		/*	X軸の切り取り位置の取得
 		/*/
 		int getBmpUPos( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._u ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._u ) ;
 		}
 		/*/
 		/*	Y軸の切り取り位置の取得
 		/*/
 		int getBmpVPos( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._v ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._v ) ;
 		}
 		/*/
 		/*	幅の取得
 		/*/
 		int getBmpWidth( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._w ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._w ) ;
 		}
 		/*/
 		/*	高さの取得
 		/*/
 		int getBmpHeight( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._h ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._h ) ;
 		}
 		/*/
 		/*	幅の拡大率の取得
 		/*/
 		float getBmpScaleX( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._scaleX ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._scaleX ) ;
 		}
 		/*/
 		/*	高さの拡大率の取得
 		/*/
 		float getBmpScaleY( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._scaleY ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._scaleY ) ;
 		}
 		/*/
 		/*	透明度の取得
 		/*/
 		int getBmpAlpha( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._alpha ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._alpha ) ;
 		}
 		/*/
 		/*	回転角度の取得
 		/*/
 		float getBmpAngle( int arg_bmpNo ) const
 		{
-			return ( bmpBGTable_[ arg_bmpNo ]._degree ) ;
+			return ( bmpCBGTable_[ arg_bmpNo ]._degree ) ;
 		}
 
 
 		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/
-		static Sprite* GetInstance( )
+		static Chip* GetInstance( )
 		{
-			static Sprite v ;
+			static Chip v ;
 			return &v ;
 		}
 
@@ -210,10 +235,12 @@ class Sprite
 		/*/
 		/*	コンストラクタ
 		/*/
-		Sprite( ) {	} ;
+		Chip( ) {	} ;
 
-		SpriteData bmpBGTable_[ MAX_BMP_SPRITE ] ;			// 画像データ
-
+		ChipData bmpCBGTable_[ MAX_BMP_CBG ] ;							// 画像データ
+		int m_chipTable_[ CHIP_X * CHIP_Y ] ;							// ChipBgData内のマップデータ
+		int map_w_ , map_h_ ;											// マップの幅と高さ
+		int renderMap_w_ , renderMap_h_ ;								// 一画面上のマップの幅と高さ
 
 } ;
 
