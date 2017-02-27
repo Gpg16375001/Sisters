@@ -9,7 +9,8 @@ ________________________________________________________________________________
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
-#include "Chip.h"
+#include "Common.h"
+//#include "Chip.h"
 
 /*/
 /*	ƒfƒXƒgƒ‰ƒNƒ^
@@ -43,6 +44,7 @@ void Chip::Initialize( )
 	}
 	setMapSize( 0 , 0 ) ;
 	RenderMapSize( 0 , 0 ) ;
+	clearChipMap( ) ;
 
 }
 
@@ -268,20 +270,43 @@ int Chip::setChipData(
 }
 
 /*/
+/*	ƒ`ƒbƒv‚ÌƒZƒbƒg
+/*/
+int Chip::setChipMap( int arg_x , int arg_y , int arg_chipNo ) {
+	m_chipTable_[ (CHIP_X * arg_y) + arg_x ] = arg_chipNo ;
+
+	return( true ) ;
+}
+
+/*/
+/*	ƒ`ƒbƒvƒf[ƒ^‚ÌƒNƒŠƒA[
+/*/
+int Chip::clearChipMap( ) {
+	memset( m_chipTable_ , 0 , CHIP_X * CHIP_Y * sizeof(int) ) ;
+
+	return( true ) ;
+}
+
+/*/
 /*	Update
 /*
 /*	©•ª‚Ìƒ}ƒbƒvƒf[ƒ^‚ğ‚à‚Æ‚ÉƒOƒŠƒbƒh”z’u‚ÌŒvZ‚ğ‚·‚é
 /*/
 void Chip::Update( )
 {
-	for ( int i = 0 ; i < renderMap_w_ * renderMap_h_ ; ++i )	// MAP ‚Ì•‚Æ‚‚³
+	for ( int i = 0 ; i < map_w_ * map_h_ ; ++i )
+	{
+		setChipMap( i % map_w_ , i / map_w_ , g_mapData01[ i ] ) ;
+	}
+
+	for ( int i = 0 ; i < renderMap_w_ * renderMap_h_ * 4 ; ++i )
 	{
 		setChipData(
 				i ,
 				0 ,
 				i % map_w_ , i / map_h_ ,
-				(i % renderMap_w_) * 64 , (i / renderMap_w_) * 64 ,
-				64 , 0 ,
+				(i % CHIP_X) * CHIP_W , (i / CHIP_X) * CHIP_H ,
+				( m_chipTable_[ i ] ) * 64 , 0 ,
 				64 , 64 ,
 				1.0f , 1.0f
 			) ;

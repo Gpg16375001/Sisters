@@ -69,6 +69,9 @@ class Chip
 		int loadBmpDataAll( HBITMAP arg_hbmp ) ;						// 一括読み込み
 		int clearData( int arg_bmpNo ) ;
 
+		int setChipMap( int arg_x , int arg_y , int arg_chipNo ) ;		// チップマップをセット
+		int clearChipMap( ) ;											// チップマップをクリア
+
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// 透明処理をするかどうかのフラグをセット
 		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;		// 回転処理するかどうかのフラグをセット

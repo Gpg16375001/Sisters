@@ -77,8 +77,8 @@ void MainApp::Initalize( )
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
 
 	// ƒ`ƒbƒv“Ç‚Ýž‚Ý
-	Chip::GetInstance()->setMapSize( 30 , 30 ) ;
-	Chip::GetInstance()->RenderMapSize( 16 , 10 ) ;
+	Chip::GetInstance()->setMapSize( 25 , 18 ) ;
+	Chip::GetInstance()->RenderMapSize( 12 , 10 ) ;
 	Chip::GetInstance()->loadBmpDataAll( BitmapData::GetInstance()->getBmpData( 2 ) ) ;
 
 

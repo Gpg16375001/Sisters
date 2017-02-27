@@ -8,3 +8,6 @@
 #include "Sprite.h"
 #include "Chip.h"
 
+extern int g_mapData01[ 25 * 18 ] ;
+
+
