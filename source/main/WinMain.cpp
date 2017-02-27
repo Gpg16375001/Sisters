@@ -65,7 +65,9 @@ WinMain::~WinMain( )
 	}
 
 	// ŠÔ‚Ì¸“x‚ğ–ß‚·
+	timeKillEvent( timerID_ ) ;
 	timeEndPeriod( 1 ) ;
+	DeleteObject( TimerProc ) ;
 
 }
 
@@ -188,7 +190,6 @@ bool WinMain::Start( )
 
 	// I—¹‰»‚ÌŒÄ‚Ño‚µ
 	Finalize( ) ;
-	timeKillEvent( timerID_ ) ;
 
 	return( true ) ;
 

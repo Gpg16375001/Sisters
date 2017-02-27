@@ -56,7 +56,7 @@ class Renderer
 				int arg_w , int arg_h ,						 // . 幅高さ
 				float arg_scaleX , float arg_scaleY ,		 // . 拡大率
 				int arg_alpha = 255 ,						 // . 透明度
-				float arg_angle = 0							 // . 角度
+				float arg_degree = 0						 // . 角度
 			) ;
 		int Render( ) ;										// バックバッファへの出力
 
@@ -66,7 +66,7 @@ class Renderer
 		int setScale( float arg_w , float arg_h ) ;			// 拡大率のセット
 		int setAnchor( int arg_anchor ) ;					// アンカーのセット
 		int setAlpha( int arg_alpha ) ;						// 透明度のセット
-		int setAngle( float arg_angle ) ;					// 角度のセット
+		int setAngle( float arg_degree ) ;					// 角度のセット
 		int setAlphaFlg( bool arg_alphaFlg ) ;				// 透明度のフラグをセット
 		int setRotateFlg( bool arg_rotateFlg ) ;			// 角度のフラグをセット
 
@@ -97,7 +97,7 @@ class Renderer
 		int		anchorX_ , anchorY_ ;	// アンカーの位置
 		float	scaleX_ , scaleY_ ;		// 拡大率
 		int		alpha_ ;				// 透明度
-		float	angle_ ;				// 角度
+		float	degree_ ;				// 角度
 		bool	alphaFlg_ ;				// 透明処理をするかどうかのフラグ
 		bool	rotateFlg_ ;			// 回転処理をするかどうかのフラグ
 

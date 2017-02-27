@@ -1,55 +1,50 @@
 /*
 ______________________________________________________________________________________________
 
-	FILE	: SceneTitle.h
+	FILE	: SceneLoop.cpp
 
 	________/ Explanation of file /___________________________________________________________
        
-    SceneTitleƒNƒ‰ƒX
+    SceneLoopƒNƒ‰ƒX
 
-	ƒ^ƒCƒgƒ‹‚ÌƒV[ƒ“‚ğì‚Á‚Ä‚¢‚éB
+	SceneLoopƒNƒ‰ƒX‚ÌÀ‘••”
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
 #include <Windows.h>
-#include "SceneBase.h"
 
-struct SceneTitleParam : public SceneBaseParam
-{
-
-} ;
-
-/*/
-/*	 ƒV[ƒ“‚ÌŠî’êƒNƒ‰ƒX
-/*/
-class SceneTitle
-{
+class SceneLoop {
 	public :
-		~SceneTitle( ){ }
-
 		/*/
 		/*	 ‰Šú‰»
 		/*/
-		void Initialize( const SceneBaseParam* param ) ;
+		void SceneLoop::Initialize( ) ;
 
 		/*/
 		/*	 I—¹‰»
 		/*/
-		void Finalize( ) ;
+		void SceneLoop::Finalize( ) ;
 
 		/*/
 		/*	 XV
-		/*
-		/*	 @param df ‘O‚ÌƒtƒŒ[ƒ€‚Æ‚Ì·•ªŠÔ
 		/*/
-		void Update( ) ;
+		void SceneLoop::Update( ) ;
 
 		/*/
 		/*	 •`‰æ
 		/*/
-		void Render( ) ;
+		void SceneLoop::Render( ) ;
+
+	private :
+		enum Scenes {
+			SceneBlank = -1 ,
+			SceneInitTitle = 0 ,
+			ScenePlayTitle ,
+			SceneInitGame ,
+			ScenePlayGame ,
+		} ;
+		Scenes state_ ;
 
 } ;
-
 
 

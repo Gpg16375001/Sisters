@@ -12,6 +12,7 @@ ________________________________________________________________________________
 
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
+#include <math.h>
 #include "Renderer.h"
 
 /*/
@@ -71,7 +72,7 @@ int Renderer::selectBmp(
 		int arg_w , int arg_h ,						// . 幅高さ
 		float arg_scaleX , float arg_scaleY ,		// . 拡大率
 		int arg_alpha ,								// . 透明度
-		float arg_angle								// . 角度
+		float arg_degree							// . 角度
 	)
 {
 	bmpData_ = arg_bmpData ;
@@ -82,13 +83,13 @@ int Renderer::selectBmp(
 	setScale( arg_scaleX , arg_scaleY ) ;
 	if ( arg_alpha < 255 )
 	{
-		alphaFlg_ = true ;
+		setAlphaFlg( true ) ;
 		setAlpha( arg_alpha ) ;
 	}
-	if ( arg_angle != 0 )
+	if ( arg_degree != 0 )
 	{
-		rotateFlg_ = true ;
-		setAngle( arg_angle ) ;
+		setRotateFlg( true ) ;
+		setAngle( arg_degree ) ;
 	}
 
 	return ( true ) ;
@@ -107,25 +108,103 @@ int Renderer::Render( )
 	POINT rotatePoint[ 3 ] ;
 	int i ;
 
+	// 指定されているスプライトの選択
+	SelectObject( hDCWork_ , bmpData_ ) ;
+
 	if ( rotateFlg_ )
 	{
+		// 角度を radian に変換
+		radian = degree_ * 3.14f / 180.0f ;
 
+		// 左上頂点を回転変換
+		// 点の位置を求める
+		rotatePoint[ 0 ].x = -( w_ / 2 ) ;
+		rotatePoint[ 0 ].y = -( h_ / 2 ) ;
+		x = ( float )rotatePoint[ 0 ].x ;
+		y = ( float )rotatePoint[ 0 ].y ;
+		// 加法の定理
+		rotatePoint[ 0 ].x = ( int )( x * cos(radian) - y * sin(radian)  ) ;
+		rotatePoint[ 0 ].y = ( int )( x * sin(radian) + y * cos(radian)  ) ;
+
+		// 右上頂点を回転変換
+		rotatePoint[ 1 ].x = ( w_ / 2 ) ;
+		rotatePoint[ 1 ].y = -( h_ / 2 ) ;
+		x = ( float )rotatePoint[ 1 ].x ;
+		y = ( float )rotatePoint[ 1 ].y ;
+		rotatePoint[ 1 ].x = ( int )( x * cos(radian) - y * sin(radian)  ) ;
+		rotatePoint[ 1 ].y = ( int )( x * sin(radian) + y * cos(radian)  ) ;
+
+		// 左下頂点を回転変換
+		rotatePoint[ 2 ].x = -( w_ / 2 ) ;
+		rotatePoint[ 2 ].y = ( h_ / 2 ) ;
+		x = ( float )rotatePoint[ 2 ].x ;
+		y = ( float )rotatePoint[ 2 ].y ;
+		rotatePoint[ 2 ].x = ( int )( x * cos(radian) - y * sin(radian)  ) ;
+		rotatePoint[ 2 ].y = ( int )( x * sin(radian) + y * cos(radian)  ) ;
+
+		// 平行移動で中心位置を戻す
+		for ( i = 0 ; i < 3 ; i++ )
+		{
+			rotatePoint[ i ].x += ( w_ / 2 ) ;
+			rotatePoint[ i ].y += ( h_ / 2 ) ;
+		}
+
+		// 作業用デバイスコンテキストの生成 ( 大きめに作る )
+		hDC = GetDC( hWnd_ ) ;
+		s_tRBWorkHDC = CreateCompatibleDC( hDC ) ;
+		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , w_ , h_ ) ;
+		SelectObject( s_tRBWorkHDC , s_tRBWorkBmp ) ;	// 真っ白
+		ReleaseDC( hWnd_ , hDC ) ;
+
+		// 作業デバイスコンテキストをカラーキーで塗りつぶす
+		RECT fillBox ;
+		fillBox.left = 0 ;
+		fillBox.top = 0 ;
+		fillBox.right = w_ ;
+		fillBox.bottom = h_ ;
+		HBRUSH hBrush ;
+		hBrush = CreateSolidBrush( RGB(0 , 255 , 0) ) ;
+		FillRect( s_tRBWorkHDC , &fillBox , hBrush ) ;
+		DeleteObject( hBrush ) ;
+
+		// 作業用に転送
+		PlgBlt( s_tRBWorkHDC ,
+				rotatePoint ,
+				hDCWork_ ,
+				0 , 0 ,
+				w_ , h_ ,
+				NULL ,
+				0 , 0
+			) ;
+
+		// バックバッファに転送
+		TransparentBlt(
+				hDCBack_ ,
+				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
+				(int)( w_ * scaleX_ ) , (int)( h_ * scaleY_ ) ,
+				s_tRBWorkHDC ,
+				u_ , v_ ,
+				w_ , h_ ,
+				RGB( 0 , 255 , 0 )
+			) ;
+
+		// DC と ビットマップ領域の解放
+		DeleteDC( s_tRBWorkHDC ) ;
+		DeleteObject( s_tRBWorkBmp ) ;
 
 	} else if ( alphaFlg_ ) {
-		// 指定されているスプライトの選択
-		SelectObject( hDCWork_ , bmpData_ ) ;
 
 		// 新規作業用デバイスコンテキストの生成 ( 大きめに作る )
 		hDC = GetDC( hWnd_ ) ;
 		s_tRBWorkHDC = CreateCompatibleDC( hDC ) ;
-		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , (int)(w_ * scaleX_ * 1.5) , (int)(h_ * scaleY_ * 1.5) ) ;
+		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , (int)(w_ * scaleX_) , (int)(h_ * scaleY_) ) ;
 		SelectObject( s_tRBWorkHDC , s_tRBWorkBmp ) ;	// 真っ白
 		ReleaseDC( hWnd_ , hDC ) ;
 
 		// 描画からバックバッファを切り取る ( 背景 )
 		BitBlt( s_tRBWorkHDC ,
 				0 , 0 ,
-				(int)(w_ * scaleX_ * 1.5) , (int)(h_ * scaleY_ * 1.5) ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
 				hDCBack_ ,
 				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
 				SRCCOPY
@@ -147,10 +226,10 @@ int Renderer::Render( )
 		AlphaBlend(
 				hDCBack_ ,
 				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
-				(int)(w_ * scaleX_ * 1.5) , (int)(h_ * scaleY_ * 1.5) ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
 				s_tRBWorkHDC ,
 				0 , 0 ,
-				(int)(w_ * scaleX_ * 1.5) , (int)(h_ * scaleY_ * 1.5) ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
 				s_blendFunc
 			) ;
 
@@ -159,8 +238,6 @@ int Renderer::Render( )
 		DeleteObject( s_tRBWorkBmp ) ;
 
 	} else {
-		// 画像の選択
-		SelectObject( hDCWork_ , bmpData_ ) ;
 
 		// バックバッファへ転送
 		TransparentBlt(
@@ -242,6 +319,7 @@ int Renderer::setAnchor( int arg_anchor )
 /*/
 int Renderer::setAlpha( int arg_alpha )
 {
+	setAlphaFlg( true ) ;
 	alpha_ = arg_alpha ;	
 
 	return( true ) ;
@@ -250,9 +328,10 @@ int Renderer::setAlpha( int arg_alpha )
 /*/
 /*	角度のセット
 /*/
-int Renderer::setAngle( float arg_angle )
+int Renderer::setAngle( float arg_degree )
 {
-	angle_ = arg_angle ;
+	setRotateFlg( true ) ;
+	degree_ = arg_degree ;
 
 	return( true ) ;
 }

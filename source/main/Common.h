@@ -4,5 +4,6 @@
 #include "KeyManager.h"
 #include "BitmapData.h"
 #include "Renderer.h"
+#include "BackGround.h"
 
 

@@ -63,11 +63,18 @@ void MainApp::Initalize( )
 
 	// 画像データ庫の初期化
 	BitmapData::GetInstance()->Initialize( ) ;
+	BackGround::GetInstance()->Initialize( ) ;
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;
 	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/sprites/PlayerL.bmp") , 2000 , 178 ) ;
 	BitmapData::GetInstance()->loadData( 2 , TEXT("data/image/chips/grass_default.bmp") , 64 , 64 ) ;
+	BitmapData::GetInstance()->loadData( 3 , TEXT("data/image/sprites/gimic/marunoko.bmp") , 256 , 256 ) ;
+
+	// 背景読み込み
+	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
+
+	// シーン
 
 }
 
@@ -95,55 +102,19 @@ void MainApp::Update( )
 	Render_( ) ;
 }
 
-static int mkey[2] = {0,0} ;
 /*/
 /*	更新 ( セット )
 /*/
 void MainApp::Update_( )
 {
-	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
-	{
-		mkey[ 0 ]-- ;
-	}
-	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
-	{
-		mkey[ 0 ]++ ;
-	}
-	if ( KeyManager::GetInstance()->getKeyState( VK_UP ) )
-	{
-		mkey[ 1 ]-- ;
-	}
-	if ( KeyManager::GetInstance()->getKeyState( VK_DOWN ) )
-	{
-		mkey[ 1 ] ++ ;
-	}
-
 	// シーンの更新
-	BitmapData::GetInstance()->setBmpData(
+	BackGround::GetInstance()->setBmpData(
 			0 ,
 			0 ,
+			-200 , -200 ,
 			0 , 0 ,
-			0 , 0 ,
-			1000 , 1000 ,
+			2000 , 1000 ,
 			1.0f , 1.0f
-		) ;
-	BitmapData::GetInstance()->setBmpData(
-			1 ,
-			0 ,
-			0 , 200 ,
-			0 , 0 ,
-			2000 , 178 ,
-			1.0f , 1.0f ,
-			128 + mkey[ 1 ]
-		) ;
-	BitmapData::GetInstance()->setBmpData(
-			2 ,
-			0 ,
-			200 + mkey[ 0 ] , 378 + mkey[ 1 ] ,
-			0 , 0 ,
-			64 , 64 ,
-			0.5f , 0.5f ,
-			128
 		) ;
 
 }
@@ -156,37 +127,37 @@ void MainApp::Render_( )
 	printf( "メイン描画\n" ) ;
 
 	// シーン描画の配置
-	for ( int i = 0 ; i < BitmapData::GetInstance()->getMaxBmp( ) ; ++i )
+	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
-		if ( BitmapData::GetInstance()->getUseFlg( i ) )
+		if ( BackGround::GetInstance()->getUseFlg( i ) )
 		{
 			printf( "描画      BMP番号 ：%4d \n" , i ) ;
-			printf( "透明処理  true=1  ：%4d \n" , BitmapData::GetInstance()->getUseAlpha( i ) ) ;
-			printf( "透明度    alpha   ：%4d \n" , BitmapData::GetInstance()->getBmpAlpha( i ) ) ;
-			printf( "回転処理  true=1  ：%4d \n" , BitmapData::GetInstance()->getUseRotate( i ) ) ;
-			printf( "回転角度  angle   ：%4d \n" , BitmapData::GetInstance()->getBmpAngle( i ) ) ;
+			printf( "透明処理  true=1  ：%4d \n" , BackGround::GetInstance()->getUseAlpha( i ) ) ;
+			printf( "透明度    alpha   ：%4d \n" , BackGround::GetInstance()->getBmpAlpha( i ) ) ;
+			printf( "回転処理  true=1  ：%4d \n" , BackGround::GetInstance()->getUseRotate( i ) ) ;
+			printf( "回転角度  angle   ：%4.0f \n" , BackGround::GetInstance()->getBmpAngle( i ) ) ;
 			Renderer::GetInstance()->selectBmp(
-					BitmapData::GetInstance()->getBmpData( i ) ,
-					BitmapData::GetInstance()->getBmpAnchor( i ) ,
-					BitmapData::GetInstance()->getBmpXPos( i ) ,
-					BitmapData::GetInstance()->getBmpYPos( i ) ,
-					BitmapData::GetInstance()->getBmpUPos( i ) ,
-					BitmapData::GetInstance()->getBmpVPos( i ) ,
-					BitmapData::GetInstance()->getBmpWidth( i ) ,
-					BitmapData::GetInstance()->getBmpHeight( i ) ,
-					BitmapData::GetInstance()->getBmpScaleX( i ) ,
-					BitmapData::GetInstance()->getBmpScaleY( i ) ,
-					BitmapData::GetInstance()->getBmpAlpha( i ) ,
-					BitmapData::GetInstance()->getBmpAngle( i )
+					BackGround::GetInstance()->getBmpData( i ) ,
+					BackGround::GetInstance()->getBmpAnchor( i ) ,
+					BackGround::GetInstance()->getBmpXPos( i ) ,
+					BackGround::GetInstance()->getBmpYPos( i ) ,
+					BackGround::GetInstance()->getBmpUPos( i ) ,
+					BackGround::GetInstance()->getBmpVPos( i ) ,
+					BackGround::GetInstance()->getBmpWidth( i ) ,
+					BackGround::GetInstance()->getBmpHeight( i ) ,
+					BackGround::GetInstance()->getBmpScaleX( i ) ,
+					BackGround::GetInstance()->getBmpScaleY( i ) ,
+					BackGround::GetInstance()->getBmpAlpha( i ) ,
+					BackGround::GetInstance()->getBmpAngle( i )
 				) ;
 			Renderer::GetInstance()->Render( ) ;
 		}
 	}
 
 	// 画面のクリア
-	for ( int i = 0 ; i < BitmapData::GetInstance()->getMaxBmp( ) ; ++i )
+	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
-		BitmapData::GetInstance()->clearData( i ) ;
+		BackGround::GetInstance()->clearData( i ) ;
 	}
 
 	// デバッグの表示
