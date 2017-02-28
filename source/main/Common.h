@@ -7,7 +7,8 @@
 #include "BackGround.h"
 #include "Sprite.h"
 #include "Chip.h"
+#include "SceneManager.h"
 
-extern int g_mapData01[ 25 * 18 ] ;
+extern int g_mapData01[ 64 * 12 ] ;
 
 

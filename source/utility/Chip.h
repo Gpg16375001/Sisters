@@ -29,7 +29,7 @@ ________________________________________________________________________________
 #include <windows.h>
 #include <stdio.h>
 
-#define CHIP_X	32
+#define CHIP_X	128
 #define CHIP_Y	32
 #define CHIP_W	64
 #define CHIP_H	64
@@ -83,7 +83,7 @@ class Chip
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;					// 透明度のセット
 		int setAngle( int arg_bmpNo , float arg_angle ) ;				// 角度のセット
 		int setArray( int arg_bmpNo , int arg_ax , int arg_ay  ) ;		// 配列座標のセット
-		int setChipData(													// すべてのセット
+		int setChipData(												// すべてのセット
 				int arg_bmpNo ,
 				int arg_anchor ,
 				int arg_arrayX , int arg_arrauY ,
@@ -94,7 +94,8 @@ class Chip
 				int arg_alpha = 255 ,
 				float arg_degree = 0
 			) ;
-		void Update( ) ;
+		void Update( ) ;												// チップの更新
+		int setScrollSize( int arg_x , int arg_y ) ;					// スクロール
 
 		/*/
 		/*	最大描画数の取得
@@ -223,6 +224,34 @@ class Chip
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._degree ) ;
 		}
+		/*/
+		/*	スクロールの取得
+		/*/
+		int getScrollX( ) const
+		{
+			return ( scrollX_ ) ;
+		}
+		/*/
+		/*	スクロールの取得
+		/*/
+		int getScrollY( ) const
+		{
+			return ( scrollY_ ) ;
+		}
+		/*/
+		/*	MAP SIZE X の取得
+		/*/
+		int getMapSizeX( ) const
+		{
+			return ( map_w_ ) ;
+		}
+		/*/
+		/*	MAP SIZE Y の取得
+		/*/
+		int getMapSizeY( ) const
+		{
+			return ( map_h_ ) ;
+		}
 
 
 		/*/
@@ -244,6 +273,7 @@ class Chip
 		int m_chipTable_[ CHIP_X * CHIP_Y ] ;							// ChipBgData内のマップデータ
 		int map_w_ , map_h_ ;											// マップの幅と高さ
 		int renderMap_w_ , renderMap_h_ ;								// 一画面上のマップの幅と高さ
+		int scrollX_ , scrollY_ ;										// スクロール座標
 
 } ;
 

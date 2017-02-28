@@ -21,7 +21,7 @@ Sprite::~Sprite( )
 	{
 		if( bmpBGTable_[ i ]._hBmp != NULL )
 		{
-			DeleteObject( bmpBGTable_[ i ]._hBmp ) ;
+			bmpBGTable_[ i ]._hBmp = NULL ;
 		}
 		clearData( i ) ; 
 	}
@@ -37,7 +37,7 @@ void Sprite::Initialize( )
 	{
 		if( bmpBGTable_[ i ]._hBmp != NULL )
 		{
-			DeleteObject( bmpBGTable_[ i ]._hBmp ) ;
+			bmpBGTable_[ i ]._hBmp = NULL ;
 		}
 		clearData( i ) ; 
 	}

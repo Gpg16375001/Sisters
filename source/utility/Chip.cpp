@@ -9,8 +9,7 @@ ________________________________________________________________________________
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
-#include "Common.h"
-//#include "Chip.h"
+#include "Chip.h"
 
 /*/
 /*	ƒfƒXƒgƒ‰ƒNƒ^
@@ -22,7 +21,7 @@ Chip::~Chip( )
 	{
 		if( bmpCBGTable_[ i ]._hBmp != NULL )
 		{
-			DeleteObject( bmpCBGTable_[ i ]._hBmp ) ;
+			bmpCBGTable_[ i ]._hBmp = NULL ;
 		}
 		clearData( i ) ; 
 	}
@@ -44,6 +43,8 @@ void Chip::Initialize( )
 	}
 	setMapSize( 0 , 0 ) ;
 	RenderMapSize( 0 , 0 ) ;
+	scrollX_ = 0 ;
+	scrollY_ = 0 ;
 	clearChipMap( ) ;
 
 }
@@ -288,28 +289,43 @@ int Chip::clearChipMap( ) {
 }
 
 /*/
+/*	ƒXƒNƒ[ƒ‹‚Ì’l‚ğƒZƒbƒg
+/*/
+int Chip::setScrollSize( int arg_x , int arg_y  )
+{
+	scrollX_ += arg_x ;
+	scrollY_ += arg_y ;
+
+	if ( scrollX_ >= 32 )
+	{
+		scrollX_ = 32 ;
+	}
+
+	return( true ) ;
+}
+
+/*/
 /*	Update
 /*
 /*	©•ª‚Ìƒ}ƒbƒvƒf[ƒ^‚ğ‚à‚Æ‚ÉƒOƒŠƒbƒh”z’u‚ÌŒvZ‚ğ‚·‚é
 /*/
 void Chip::Update( )
 {
-	for ( int i = 0 ; i < map_w_ * map_h_ ; ++i )
-	{
-		setChipMap( i % map_w_ , i / map_w_ , g_mapData01[ i ] ) ;
-	}
-
-	for ( int i = 0 ; i < renderMap_w_ * renderMap_h_ * 4 ; ++i )
+	printf( "	%d , %d \n" , scrollX_ , -(scrollX_ / 25) ) ;
+	for ( int i = 0 - (scrollX_ / map_w_) ; i < renderMap_w_ * renderMap_h_ - (scrollX_ / map_w_) ; ++i )
 	{
 		setChipData(
 				i ,
 				0 ,
 				i % map_w_ , i / map_h_ ,
-				(i % CHIP_X) * CHIP_W , (i / CHIP_X) * CHIP_H ,
-				( m_chipTable_[ i ] ) * 64 , 0 ,
+				((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+				((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+				(m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] * CHIP_W) ,
+				0 ,
 				64 , 64 ,
 				1.0f , 1.0f
 			) ;
+
 	}
 
 }

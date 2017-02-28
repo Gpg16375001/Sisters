@@ -83,24 +83,29 @@
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
+    <ClCompile Include="source\scene\SceneBlank.cpp" />
     <ClCompile Include="source\utility\BackGround.cpp" />
     <ClCompile Include="source\utility\Chip.cpp" />
     <ClCompile Include="source\utility\Renderer.cpp" />
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
     <ClCompile Include="source\utility\KeyManager.cpp" />
+    <ClCompile Include="source\utility\SceneManager.cpp" />
     <ClCompile Include="source\utility\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
+    <ClInclude Include="source\scene\SceneBase.h" />
+    <ClInclude Include="source\scene\SceneBlank.h" />
     <ClInclude Include="source\utility\BackGround.h" />
     <ClInclude Include="source\utility\Chip.h" />
     <ClInclude Include="source\utility\Renderer.h" />
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />
     <ClInclude Include="source\utility\KeyManager.h" />
+    <ClInclude Include="source\utility\SceneManager.h" />
     <ClInclude Include="source\utility\Sprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
