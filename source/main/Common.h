@@ -10,5 +10,6 @@
 #include "SceneManager.h"
 
 extern int g_mapData01[ 64 * 12 ] ;
+extern int g_state ;
 
 

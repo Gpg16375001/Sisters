@@ -28,6 +28,7 @@ ________________________________________________________________________________
 */
 #include <windows.h>
 #include <stdio.h>
+#include <math.h>
 
 #define CHIP_X	128
 #define CHIP_Y	32
@@ -253,6 +254,20 @@ class Chip
 			return ( map_h_ ) ;
 		}
 
+		/*/
+		/*	sin の取得
+		/*/
+		float sinWave( float arg_time , int arg_width , int arg_strength = 180 )
+		{
+			return( (float)(sin( arg_time * 3.14 / arg_strength ) * arg_width) ) ;
+		}
+		/*/
+		/*	cos の取得
+		/*/
+		float cosWave( float arg_time , int arg_width , int arg_strength = 180 )
+		{
+			return( (float)(cos( arg_time * 3.14 / arg_strength ) * arg_width) ) ;
+		}
 
 		/*/
 		/*	Shingleton -> インスタンスの取得

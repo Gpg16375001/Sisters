@@ -10,6 +10,8 @@ ________________________________________________________________________________
 ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 */
 #include "Chip.h"
+#include "Sprite.h"
+#include "KeyManager.h"
 
 /*/
 /*	ÉfÉXÉgÉâÉNÉ^
@@ -314,17 +316,229 @@ void Chip::Update( )
 	printf( "	%d , %d \n" , scrollX_ , -(scrollX_ / 25) ) ;
 	for ( int i = 0 - (scrollX_ / map_w_) ; i < renderMap_w_ * renderMap_h_ - (scrollX_ / map_w_) ; ++i )
 	{
-		setChipData(
-				i ,
-				0 ,
-				i % map_w_ , i / map_h_ ,
-				((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-				((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
-				(m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] * CHIP_W) ,
-				0 ,
-				64 , 64 ,
-				1.0f , 1.0f
-			) ;
+		/*/
+		/*	É`ÉbÉvÉfÅ[É^
+		/*/
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 8 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					(m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] * CHIP_W) ,
+					0 ,
+					64 , 64 ,
+					1.0f , 1.0f
+				) ;
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 9 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 9) * CHIP_W) ,
+					128 ,
+					128 , 128 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 10 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 4) * CHIP_W) ,
+					128 ,
+					128 , 128 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 11 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 11) * CHIP_W) ,
+					64 ,
+					256 , 128 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 12 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 8) * CHIP_W) ,
+					64 ,
+					256 , 128 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 13 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 13) * CHIP_W) ,
+					64 + 128 ,
+					256 , 256 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 14 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 10) * CHIP_W) ,
+					64 + 128 ,
+					256 , 256 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+
+		/*/
+		/*	ÉXÉvÉâÉCÉgÉfÅ[É^
+		/*/
+
+		// í èÌÇÃä€ãò
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 50 )
+		{
+			static float spin = 0.0f ;
+
+			Sprite::GetInstance()->setBmpData(
+					1 ,
+					4 ,
+					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					spin += 2.0f
+				) ;
+
+		}
+
+		// â°à⁄ìÆÇÃä€ãò
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 51 )
+		{
+			static float spin = 0.0f ;
+			static float move = 0.0f ;
+
+			move++ ;
+			Sprite::GetInstance()->setBmpData(
+					1 ,
+					4 ,
+					(int)(((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( move , 128 , 360 ) ) ,
+					(int)(((i / renderMap_w_) * CHIP_H - 128) + scrollY_) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					spin += 2.0f
+				) ;
+
+		}
+
+		// â~à⁄ìÆÇÃä€ãò
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 52 )
+		{
+			static float	spin = 0.0f ;
+			static float	moveX = 0.0f ;
+			static float	moveY = 0.0f ;
+
+			moveX++ ;
+			moveY++ ;
+			Sprite::GetInstance()->setBmpData(
+					1 ,
+					4 ,
+					(int)(((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 128 , 128 ) ) ,
+					(int)(((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + cosWave( moveY , 128 , 128 ) ) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					spin += 2.0f
+				) ;
+
+		}
+
+		// â~à⁄ìÆÇÃä€ãò
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 53 )
+		{
+			static float	spin = 0.0f ;
+			static float	moveX = 0.0f ;
+			static float	moveY = 0.0f ;
+			static int		sinX = 0 ;
+			static int		cosY = 0 ;
+
+			printf( "x = %d y = %d \n" , sinX , cosY ) ;
+
+/*
+			if ( KeyManager::GetInstance()->getKeyState( VK_UP ) )
+				sinX++ ;
+
+			if ( KeyManager::GetInstance()->getKeyState( VK_DOWN ) )
+				sinX-- ;
+
+			if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
+				cosY++ ;
+
+			if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
+				cosY-- ;
+*/
+
+			moveX += 0.2f ;
+			moveY += 0.2f ;
+			Sprite::GetInstance()->setBmpData(
+					1 ,
+					4 ,
+					(int)(((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 200 , sinX ) ) ,
+					(int)(((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + sinWave( moveY , 100 , cosY ) ) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					spin += 2.0f
+				) ;
+
+		}
+
 
 	}
 

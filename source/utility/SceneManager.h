@@ -33,17 +33,17 @@ class SceneManager
 		/*/
 		/*	 初期化
 		/*/
-		static void SceneManager::Initialize( ) ;
+		static void Initialize( ) ;
 
 		/*/
 		/*	 終了化
 		/*/
-		static void SceneManager::Finalize( ) ;
+		static void Finalize( ) ;
 
 		/*/
 		/*	 更新 シーン変更
 		/*/
-		static void SceneManager::Update( int arg_state ) ;
+		static void Update( int arg_state ) ;
 
 		/*/
 		/*	Shingleton -> インスタンスの取得

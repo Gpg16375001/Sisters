@@ -1,14 +1,13 @@
 /*
 ______________________________________________________________________________________________
 
-	FILE	: SceneBlank.cpp
+	FILE	: SceneTitle.cpp
 
 	________/ Explanation of file /___________________________________________________________
        
-    SceneBlankƒNƒ‰ƒX
+    SceneTitleƒNƒ‰ƒX
 
-	SceneBlankƒNƒ‰ƒX‚ÌÀ‘••”
-
+	SceneTitleƒNƒ‰ƒX‚ÌÀ‘••”
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
@@ -16,18 +15,18 @@ ________________________________________________________________________________
 #include <stdio.h>
 #include "Common.h"
 
-class SceneBlank
+class SceneTitle
 {
 	public :
 		/*/
 		/*	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 		/*/
-		SceneBlank( ) ;
+		SceneTitle( ) ;
 
 		/*/
 		/*	ƒfƒXƒgƒ‰ƒNƒ^
 		/*/
-		~SceneBlank( ) ;
+		~SceneTitle( ) ;
 
 		/*/
 		/*	 ‰Šú‰»

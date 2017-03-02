@@ -13,6 +13,7 @@ ________________________________________________________________________________
 */
 #include <windows.h>
 #include "SceneBlank.h"
+#include "SceneTitle.h"
 
 /*/
 /*	 ‰Šú‰»
@@ -21,6 +22,7 @@ void SceneManager::Initialize( )
 {
 	Finalize( ) ;
 	printf( "SceneManager\n" ) ;
+	g_state = -1 ;						// ------------------------- Gvl
 }
 
 /*/
@@ -45,6 +47,7 @@ SceneManager::~SceneManager( )
 void SceneManager::Update( int arg_state )
 {
 	SceneBlank blank ;
+	SceneTitle title ;
 
 	// ƒV[ƒ““à—e
 	switch ( arg_state )
@@ -55,6 +58,8 @@ void SceneManager::Update( int arg_state )
 			break ;
 
 		case S_InitTitle :
+			title.Update( ) ;
+			title.Render( ) ;
 			break ;
 
 		case S_PlayTitle :

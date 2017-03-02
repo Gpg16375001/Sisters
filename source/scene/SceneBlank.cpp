@@ -48,18 +48,7 @@ void SceneBlank::Initialize( )
 /*/
 void SceneBlank::Update( )
 {
-	static float spin = 0.0f ;
-
 	// シーン内容
-	for ( int i = 0 ; i < Chip::GetInstance()->getMapSizeX() * Chip::GetInstance()->getMapSizeY() ; ++i )
-	{
-		Chip::GetInstance()->setChipMap( 
-				(i % Chip::GetInstance()->getMapSizeX()) ,
-				(i / Chip::GetInstance()->getMapSizeX()) ,
-				g_mapData01[ i ]
-			) ;
-	}
-
 	BackGround::GetInstance()->setBmpData(
 			0 ,
 			0 ,
@@ -69,24 +58,8 @@ void SceneBlank::Update( )
 			1.0f , 1.0f
 		) ;
 
-	Chip::GetInstance()->Update( ) ;
-
-	Sprite::GetInstance()->setBmpData(
-			0 ,
-			0 ,
-			500 , 300 ,
-			0 , 0 ,
-			128 , 128 ,
-			1.0f , 1.0f ,
-			255 ,
-			spin += 2.0f
-		) ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
-		Chip::GetInstance()->setScrollSize( -2 , 0 ) ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
-		Chip::GetInstance()->setScrollSize( 2 , 0 ) ;
+	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) )
+		g_state = 0 ;												// ------------------------------- Gvl
 
 }
 
@@ -122,62 +95,6 @@ void SceneBlank::Render( )
 		}
 	}
 
-	/*/
-	/*	チップ背景描画
-	/*/
-	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		if ( Chip::GetInstance()->getUseFlg( i ) )
-		{
-			Renderer::GetInstance()->selectBmp(
-					Chip::GetInstance()->getBmpData( i ) ,
-					Chip::GetInstance()->getBmpAnchor( i ) ,
-					Chip::GetInstance()->getBmpXPos( i ) ,
-					Chip::GetInstance()->getBmpYPos( i ) ,
-					Chip::GetInstance()->getBmpUPos( i ) ,
-					Chip::GetInstance()->getBmpVPos( i ) ,
-					Chip::GetInstance()->getBmpWidth( i ) ,
-					Chip::GetInstance()->getBmpHeight( i ) ,
-					Chip::GetInstance()->getBmpScaleX( i ) ,
-					Chip::GetInstance()->getBmpScaleY( i ) ,
-					Chip::GetInstance()->getBmpAlpha( i ) ,
-					Chip::GetInstance()->getBmpAngle( i )
-				) ;
-			Renderer::GetInstance()->Render( ) ;
-		}
-	}
-
-
-	/*/
-	/*	Sprite 描画
-	/*/
-	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		if ( Sprite::GetInstance()->getUseFlg( i ) )
-		{
-			//printf( "描画      BMP番号 ：%4d \n" , i ) ;
-			//printf( "透明処理  true=1  ：%4d \n" , Sprite::GetInstance()->getUseAlpha( i ) ) ;
-			//printf( "透明度    alpha   ：%4d \n" , Sprite::GetInstance()->getBmpAlpha( i ) ) ;
-			//printf( "回転処理  true=1  ：%4d \n" , Sprite::GetInstance()->getUseRotate( i ) ) ;
-			//printf( "回転角度  angle   ：%4.0f \n" , Sprite::GetInstance()->getBmpAngle( i ) ) ;
-			Renderer::GetInstance()->selectBmp(
-					Sprite::GetInstance()->getBmpData( i ) ,
-					Sprite::GetInstance()->getBmpAnchor( i ) ,
-					Sprite::GetInstance()->getBmpXPos( i ) ,
-					Sprite::GetInstance()->getBmpYPos( i ) ,
-					Sprite::GetInstance()->getBmpUPos( i ) ,
-					Sprite::GetInstance()->getBmpVPos( i ) ,
-					Sprite::GetInstance()->getBmpWidth( i ) ,
-					Sprite::GetInstance()->getBmpHeight( i ) ,
-					Sprite::GetInstance()->getBmpScaleX( i ) ,
-					Sprite::GetInstance()->getBmpScaleY( i ) ,
-					Sprite::GetInstance()->getBmpAlpha( i ) ,
-					Sprite::GetInstance()->getBmpAngle( i )
-				) ;
-			Renderer::GetInstance()->Render( ) ;
-		}
-	}
-
 	// 画面のクリア
 	/*/
 	/*	背景のクリア
@@ -186,23 +103,6 @@ void SceneBlank::Render( )
 	{
 		BackGround::GetInstance()->clearData( i ) ;
 	}
-
-	/*/
-	/*	チップのクリア
-	/*/
-	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		Chip::GetInstance()->clearData( i ) ;
-	}
-
-	/*/
-	/*	Sprite のクリア
-	/*/
-	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		Sprite::GetInstance()->clearData( i ) ;
-	}
-
 
 }
 

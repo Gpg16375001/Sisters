@@ -72,7 +72,7 @@ void MainApp::Initalize( )
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData( 0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;
-	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/sprites/PlayerL.bmp") , 2000 , 178 ) ;
+	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/sprites/PlayerR.bmp") , 2000 , 178 ) ;
 	BitmapData::GetInstance()->loadData( 2 , TEXT("data/image/chips/all_grass.bmp") , 640 , 500 ) ;
 	BitmapData::GetInstance()->loadData( 3 , TEXT("data/image/sprites/gimic/marunoko.bmp") , 128 , 128 ) ;
 
@@ -86,7 +86,8 @@ void MainApp::Initalize( )
 
 
 	// Sprite の読み込み
-	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 3 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 3 ) ) ;
 
 	// シーン
 	SceneManager::GetInstance()->Initialize() ;
@@ -122,7 +123,7 @@ void MainApp::Update( )
 void MainApp::Update_( )
 {
 	// シーンの更新
-	SceneManager::GetInstance()->Update( -1 ) ;
+	SceneManager::GetInstance()->Update( g_state ) ;			// -------------------------------------- Gvl
 
 }
 

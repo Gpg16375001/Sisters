@@ -57,6 +57,9 @@
     <ClCompile Include="source\scene\SceneBlank.cpp">
       <Filter>source\scene</Filter>
     </ClCompile>
+    <ClCompile Include="source\scene\SceneTitle.cpp">
+      <Filter>source\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -96,6 +99,9 @@
       <Filter>source\scene</Filter>
     </ClInclude>
     <ClInclude Include="source\scene\SceneBase.h">
+      <Filter>source\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scene\SceneTitle.h">
       <Filter>source\scene</Filter>
     </ClInclude>
   </ItemGroup>
