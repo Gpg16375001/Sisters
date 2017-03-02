@@ -67,7 +67,7 @@ int Renderer::setHDC( HWND arg_hWnd , HDC arg_hDCBack , HDC arg_hDCWork )
 int Renderer::selectBmp(
 		HGDIOBJ arg_bmpData ,						// . 画像データ
 		int arg_anchor ,							// . アンカー
-		int arg_x , int arg_y ,						// . 配置座標
+		float arg_x , float arg_y ,					// . 配置座標
 		int arg_u , int arg_v ,						// . 切り取り位置
 		int arg_w , int arg_h ,						// . 幅高さ
 		float arg_scaleX , float arg_scaleY ,		// . 拡大率
@@ -262,7 +262,7 @@ int Renderer::Render( )
 /*/
 /*	X軸 と  Y軸 をセット
 /*/
-int Renderer::setPos( int arg_x , int arg_y )
+int Renderer::setPos( float arg_x , float arg_y )
 {
 	x_ = arg_x ;
 	y_ = arg_y ;

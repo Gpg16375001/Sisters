@@ -19,6 +19,9 @@
     <Filter Include="source\master">
       <UniqueIdentifier>{6b220c18-e532-41c9-aa9d-5fa24bb5d0a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\character">
+      <UniqueIdentifier>{ae9b86cd-4693-4444-84b8-7922f50dc81b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main\WinMain.cpp">
@@ -59,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="source\scene\SceneTitle.cpp">
       <Filter>source\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utility\Physics.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\characters\Player.cpp">
+      <Filter>source\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="source\scene\SceneTitle.h">
       <Filter>source\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\Physics.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\characters\Player.h">
+      <Filter>source\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

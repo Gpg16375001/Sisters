@@ -40,7 +40,7 @@ struct ChipData {
 	int		_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
 	bool	_useFlg ;				// 描画するかどうかのフラグ
 	int		_anchor ;				// アンカーの位置
-	int		_x , _y ;				// グローバル座標
+	float	_x , _y ;				// グローバル座標
 	int		_u , _v ;				// 切り取り座標
 	int		_w , _h ;				// 幅高さ
 	int		_arrayX , _arrayY ;		// 配列座標
@@ -76,7 +76,7 @@ class Chip
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// 透明処理をするかどうかのフラグをセット
 		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;		// 回転処理するかどうかのフラグをセット
-		int setBmpXY( int arg_bmpNo , int arg_x , int arg_y ) ;			// ポジションのセット
+		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;		// ポジションのセット
 		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;			// 切り取り位置のセット
 		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// 幅、高さのセット
 		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;	// 拡大率のセット
@@ -88,7 +88,7 @@ class Chip
 				int arg_bmpNo ,
 				int arg_anchor ,
 				int arg_arrayX , int arg_arrauY ,
-				int arg_x , int arg_y ,
+				float arg_x , float arg_y ,
 				int arg_u , int arg_v ,
 				int arg_w , int arg_h ,
 				float arg_scaleX , float arg_scaleY ,
@@ -144,14 +144,14 @@ class Chip
 		/*/
 		/*	グローバル座標 X軸の取得
 		/*/
-		int getBmpXPos( int arg_bmpNo ) const
+		float getBmpXPos( int arg_bmpNo ) const
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._x ) ;
 		}
 		/*/
 		/*	グローバル座標 Y軸の取得
 		/*/
-		int getBmpYPos( int arg_bmpNo ) const
+		float getBmpYPos( int arg_bmpNo ) const
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._y ) ;
 		}
@@ -289,6 +289,7 @@ class Chip
 		int map_w_ , map_h_ ;											// マップの幅と高さ
 		int renderMap_w_ , renderMap_h_ ;								// 一画面上のマップの幅と高さ
 		int scrollX_ , scrollY_ ;										// スクロール座標
+
 
 } ;
 

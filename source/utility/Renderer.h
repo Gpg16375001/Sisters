@@ -51,7 +51,7 @@ class Renderer
 		int setHDC( HWND arg_hWnd , HDC arg_hDCBack , HDC arg_hDCWork ) ;	// 裏画面の描画に必要なものをもらう
 		int selectBmp( HGDIOBJ arg_bmpData ,				// 画像データの取得
 				int arg_anchor ,							 // . アンカー
-				int arg_x , int arg_y ,						 // . 配置座標
+				float arg_x , float arg_y ,					 // . 配置座標
 				int arg_u , int arg_v ,						 // . 切り取り位置
 				int arg_w , int arg_h ,						 // . 幅高さ
 				float arg_scaleX , float arg_scaleY ,		 // . 拡大率
@@ -60,7 +60,7 @@ class Renderer
 			) ;
 		int Render( ) ;										// バックバッファへの出力
 
-		int setPos( int arg_x , int arg_y ) ;				// 座標のセット
+		int setPos( float arg_x , float arg_y ) ;				// 座標のセット
 		int setUV( int arg_u , int arg_v ) ;				// 切り出し座標のセット
 		int setWH( int arg_w , int arg_h ) ;				// 切り出し幅高さのセット
 		int setScale( float arg_w , float arg_h ) ;			// 拡大率のセット
@@ -91,7 +91,7 @@ class Renderer
 		HDC		hDCWork_ ;				// 作業用画面
 		HWND	hWnd_ ;					// 親のウィンドウハンドル
 
-		int		x_ , y_ ;				// 描画座標
+		float	x_ , y_ ;				// 描画座標
 		int		u_ , v_ ;				// 切り取り座標
 		int		w_ , h_ ;				// 幅高さ
 		int		anchorX_ , anchorY_ ;	// アンカーの位置

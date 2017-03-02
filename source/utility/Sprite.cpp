@@ -49,7 +49,7 @@ void Sprite::Initialize( )
 int Sprite::clearData( int arg_bmpNo )
 {
 	setUseFlg( arg_bmpNo , false ) ;
-	setBmpXY( arg_bmpNo , 0 , 0 ) ;
+	setBmpXY( arg_bmpNo , 0.0f , 0.0f ) ;
 	setBmpUV( arg_bmpNo , 0 , 0 ) ;
 	setBmpWH( arg_bmpNo , 0 , 0 ) ;
 	setBmpScale( arg_bmpNo , 0 , 0 ) ;
@@ -82,7 +82,7 @@ int Sprite::loadBmpDataFor( int arg_bmpNo , HBITMAP arg_hbmp , int arg_no )
 {
 	for ( int i = arg_bmpNo ; i < arg_bmpNo + arg_no ; ++i )
 	{
-		loadBmpData( arg_bmpNo , arg_hbmp ) ;
+		loadBmpData( i , arg_hbmp ) ;
 	}
 
 	return ( true ) ;
@@ -122,7 +122,7 @@ int Sprite::setUseRotate( int arg_bmpNo , bool arg_useRotate )
 /*/
 /*	ポジションのセット
 /*/
-int Sprite::setBmpXY( int arg_bmpNo , int arg_x , int arg_y )
+int Sprite::setBmpXY( int arg_bmpNo , float arg_x , float arg_y )
 {
 	bmpBGTable_[ arg_bmpNo ]._x = arg_x ;
 	bmpBGTable_[ arg_bmpNo ]._y = arg_y ;
@@ -199,7 +199,7 @@ int Sprite::setAngle( int arg_bmpNo , float arg_degree )
 int Sprite::setBmpData(
 		int arg_bmpNo ,
 		int arg_anchor ,
-		int arg_x , int arg_y ,
+		float arg_x , float arg_y ,
 		int arg_u , int arg_v ,
 		int arg_w , int arg_h ,
 		float arg_scaleX , float arg_scaleY ,

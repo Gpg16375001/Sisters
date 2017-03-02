@@ -87,7 +87,7 @@ void MainApp::Initalize( )
 
 	// Sprite ‚Ì“Ç‚Ýž‚Ý
 	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 3 ) ) ;
+	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 20 ) ;		// 10 ~ 29 ‚Ü‚Å@‚Ü‚é‚Ì‚±
 
 	// ƒV[ƒ“
 	SceneManager::GetInstance()->Initialize() ;

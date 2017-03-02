@@ -31,26 +31,25 @@ ________________________________________________________________________________
 #include <windows.h>
 #include <stdio.h>
 
-struct SpriteData {
-	HBITMAP _hBmp ;
-	bool	_useFlg ;				// 描画するかどうかのフラグ
-	int		_anchor ;				// アンカーの位置
-	int		_x , _y ;				// 座標
-	int		_u , _v ;				// 切り取り座標
-	int		_w , _h ;				// 幅高さ
-	float	_scaleX , _scaleY ;		// 拡大率
-	bool	_useAlpha  ;			// 透明処理を行うかどうかのフラグ
-	int		_alpha ;				// 透明度
-	bool	_useRotate ;			// 回転処理を行うかどうかのフラグ
-	float	_degree ;				// 角度
-} ;
-
 // クラスの宣言
 class Sprite
 {
 	static const int MAX_BMP_SPRITE = 256 ;
 
 	public :
+	struct SpriteData {
+		HBITMAP _hBmp ;
+		bool	_useFlg ;				// 描画するかどうかのフラグ
+		int		_anchor ;				// アンカーの位置
+		float	_x , _y ;				// 座標
+		int		_u , _v ;				// 切り取り座標
+		int		_w , _h ;				// 幅高さ
+		float	_scaleX , _scaleY ;		// 拡大率
+		bool	_useAlpha  ;			// 透明処理を行うかどうかのフラグ
+		int		_alpha ;				// 透明度
+		bool	_useRotate ;			// 回転処理を行うかどうかのフラグ
+		float	_degree ;				// 角度
+	} ;
 		/*/
 		/*	初期化
 		/*/
@@ -65,7 +64,7 @@ class Sprite
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;						// 描画するかどうかのフラグをセット
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;					// 透明処理をするかどうかのフラグをセット
 		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;				// 回転処理するかどうかのフラグをセット
-		int setBmpXY( int arg_bmpNo , int arg_x , int arg_y ) ;					// ポジションのセット
+		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;				// ポジションのセット
 		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;					// 切り取り位置のセット
 		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;					// 幅、高さのセット
 		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;			// 拡大率のセット
@@ -75,7 +74,7 @@ class Sprite
 		int setBmpData(															// すべてのセット
 				int arg_bmpNo ,
 				int arg_anchor ,
-				int arg_x , int arg_y ,
+				float arg_x , float arg_y ,
 				int arg_u , int arg_v ,
 				int arg_w , int arg_h ,
 				float arg_scaleX , float arg_scaleY ,
@@ -129,14 +128,14 @@ class Sprite
 		/*/
 		/*	X軸の取得
 		/*/
-		int getBmpXPos( int arg_bmpNo ) const
+		float getBmpXPos( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._x ) ;
 		}
 		/*/
 		/*	Y軸の取得
 		/*/
-		int getBmpYPos( int arg_bmpNo ) const
+		float getBmpYPos( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._y ) ;
 		}

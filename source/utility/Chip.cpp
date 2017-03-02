@@ -152,7 +152,7 @@ int Chip::setUseRotate( int arg_bmpNo , bool arg_useRotate )
 /*/
 /*	ポジションのセット
 /*/
-int Chip::setBmpXY( int arg_bmpNo , int arg_x , int arg_y )
+int Chip::setBmpXY( int arg_bmpNo , float arg_x , float arg_y )
 {
 	bmpCBGTable_[ arg_bmpNo ]._x = arg_x ;
 	bmpCBGTable_[ arg_bmpNo ]._y = arg_y ;
@@ -242,7 +242,7 @@ int Chip::setChipData(
 		int arg_bmpNo ,
 		int arg_anchor ,
 		int arg_arrayX , int arg_arrayY ,
-		int arg_x , int arg_y ,
+		float arg_x , float arg_y ,
 		int arg_u , int arg_v ,
 		int arg_w , int arg_h ,
 		float arg_scaleX , float arg_scaleY ,
@@ -325,8 +325,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
 					(m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] * CHIP_W) ,
 					0 ,
 					64 , 64 ,
@@ -340,8 +340,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 9) * CHIP_W) ,
 					128 ,
 					128 , 128 ,
@@ -356,8 +356,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 4) * CHIP_W) ,
 					128 ,
 					128 , 128 ,
@@ -372,8 +372,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 11) * CHIP_W) ,
 					64 ,
 					256 , 128 ,
@@ -388,8 +388,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 8) * CHIP_W) ,
 					64 ,
 					256 , 128 ,
@@ -404,8 +404,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 13) * CHIP_W) ,
 					64 + 128 ,
 					256 , 256 ,
@@ -420,8 +420,8 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
+					( float )((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 10) * CHIP_W) ,
 					64 + 128 ,
 					256 , 256 ,
@@ -434,17 +434,32 @@ void Chip::Update( )
 		/*/
 		/*	スプライトデータ
 		/*/
+		int useBmpNo = 0 ;
 
-		// 通常の丸鋸
+		/*/
+		/*	___/ まるのこ /___________________
+		/*/
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 50 )
 		{
 			static float spin = 0.0f ;
 
+			for ( int b = 10 ; b < 30 ; ++b )
+			{
+				/*/
+				/*	・使ってない丸鋸を選択する
+				/*/
+				if ( Sprite::GetInstance()->getUseFlg( b ) )
+				{
+				} else {
+					useBmpNo = b ;
+				}
+			}
+			printf( "useBmpNo = %d \n" , useBmpNo ) ;
 			Sprite::GetInstance()->setBmpData(
-					1 ,
+					useBmpNo ,
 					4 ,
-					((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
-					((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					( float )( ((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) ,
 					0 , 0 ,
 					128 , 128 ,
 					1.0f , 1.0f ,
@@ -460,12 +475,23 @@ void Chip::Update( )
 			static float spin = 0.0f ;
 			static float move = 0.0f ;
 
+			for ( int b = 10 ; b < 30 ; ++b )
+			{
+				/*/
+				/*	・使ってない丸鋸を選択する
+				/*/
+				if ( Sprite::GetInstance()->getUseFlg( b ) )
+				{
+				} else {
+					useBmpNo = b ;
+				}
+			}
 			move++ ;
 			Sprite::GetInstance()->setBmpData(
-					1 ,
+					useBmpNo ,
 					4 ,
-					(int)(((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( move , 128 , 360 ) ) ,
-					(int)(((i / renderMap_w_) * CHIP_H - 128) + scrollY_) ,
+					( float )( ((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave(move , 128 , 360) ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) ,
 					0 , 0 ,
 					128 , 128 ,
 					1.0f , 1.0f ,
@@ -482,13 +508,24 @@ void Chip::Update( )
 			static float	moveX = 0.0f ;
 			static float	moveY = 0.0f ;
 
+			for ( int b = 10 ; b < 30 ; ++b )
+			{
+				/*/
+				/*	・使ってない丸鋸を選択する
+				/*/
+				if ( Sprite::GetInstance()->getUseFlg( b ) )
+				{
+				} else {
+					useBmpNo = b ;
+				}
+			}
 			moveX++ ;
 			moveY++ ;
 			Sprite::GetInstance()->setBmpData(
-					1 ,
+					useBmpNo ,
 					4 ,
-					(int)(((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 128 , 128 ) ) ,
-					(int)(((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + cosWave( moveY , 128 , 128 ) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 128 , 128 ) ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + cosWave( moveY , 128 , 128 ) ) ,
 					0 , 0 ,
 					128 , 128 ,
 					1.0f , 1.0f ,
@@ -523,13 +560,24 @@ void Chip::Update( )
 				cosY-- ;
 */
 
+			for ( int b = 10 ; b < 30 ; ++b )
+			{
+				/*/
+				/*	・使ってない丸鋸を選択する
+				/*/
+				if ( Sprite::GetInstance()->getUseFlg( b ) )
+				{
+				} else {
+					useBmpNo = b ;
+				}
+			}
 			moveX += 0.2f ;
 			moveY += 0.2f ;
 			Sprite::GetInstance()->setBmpData(
-					1 ,
+					useBmpNo ,
 					4 ,
-					(int)(((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 200 , sinX ) ) ,
-					(int)(((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + sinWave( moveY , 100 , cosY ) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W - 32) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 200 , sinX ) ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + sinWave( moveY , 100 , cosY ) ) ,
 					0 , 0 ,
 					128 , 128 ,
 					1.0f , 1.0f ,

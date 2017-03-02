@@ -14,6 +14,7 @@ ________________________________________________________________________________
 */
 #include <windows.h>
 #include "SceneTitle.h"
+#include "Physics.h"
 
 /*/
 /*	コンストラクタ
@@ -41,24 +42,11 @@ SceneTitle::~SceneTitle( )
 void SceneTitle::Initialize( )
 {
 	printf( "SceneTitle -> " ) ;
+	Physics::GetInstance()->Initialize( ) ;
 
-}
-
-/*/
-/*	 更新
-/*/
-void SceneTitle::Update( )
-{
-	// シーン内容
-	for ( int i = 0 ; i < Chip::GetInstance()->getMapSizeX() * Chip::GetInstance()->getMapSizeY() ; ++i )
-	{
-		Chip::GetInstance()->setChipMap( 
-				(i % Chip::GetInstance()->getMapSizeX()) ,
-				(i / Chip::GetInstance()->getMapSizeX()) ,
-				g_mapData01[ i ]
-			) ;
-	}
-
+	/*/
+	/*	___/ 背景 /___________________
+	/*/
 	BackGround::GetInstance()->setBmpData(
 			0 ,
 			0 ,
@@ -68,15 +56,44 @@ void SceneTitle::Update( )
 			1.0f , 1.0f
 		) ;
 
+	/*/
+	/*	___/ キャラクター /___________________
+	/*/
+	Sprite::GetInstance()->setBmpData(
+			0 ,
+			0 ,
+			200 , 200 ,
+			0 , 0 ,
+			200 , 178 ,
+			0.5f , 0.5f ,
+			255 ,
+			0
+		) ;
+
+}
+
+/*/
+/*	 更新
+/*/
+void SceneTitle::Update( )
+{
+	static Player player ;
+
+	// シーン内容
+	// 画面内だけチップを配置
+	for ( int i = 0 ; i < Chip::GetInstance()->getMapSizeX() * Chip::GetInstance()->getMapSizeY() ; ++i )
+	{
+		Chip::GetInstance()->setChipMap(
+				(i % Chip::GetInstance()->getMapSizeX()) ,
+				(i / Chip::GetInstance()->getMapSizeX()) ,
+				g_mapData01[ i ]
+			) ;
+	}
+
 	// チップのマップ読み込み
 	Chip::GetInstance()->Update( ) ;
-
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
-		Chip::GetInstance()->setScrollSize( 2 , 0 ) ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
-		Chip::GetInstance()->setScrollSize( -2 , 0 ) ;
+	
+	player.Update( ) ;
 
 }
 
