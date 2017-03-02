@@ -75,6 +75,19 @@ int Sprite::loadBmpData( int arg_bmpNo , HBITMAP arg_hbmp )
 	return ( true ) ;
 }
 
+/*/
+/*	イメージ読み込み
+/*/
+int Sprite::loadBmpDataFor( int arg_bmpNo , HBITMAP arg_hbmp , int arg_no )
+{
+	for ( int i = arg_bmpNo ; i < arg_bmpNo + arg_no ; ++i )
+	{
+		loadBmpData( arg_bmpNo , arg_hbmp ) ;
+	}
+
+	return ( true ) ;
+}
+
 
 /*/
 /*	描画するかどうかのフラグをセット

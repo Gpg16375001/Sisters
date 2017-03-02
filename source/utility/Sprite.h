@@ -59,19 +59,20 @@ class Sprite
 		~Sprite( ) ;
 
 		int loadBmpData( int arg_bmpNo , HBITMAP arg_hbmp ) ;
+		int loadBmpDataFor( int arg_bmpNo , HBITMAP arg_hbmp , int arg_no ) ;	// いくつまで入れるかの指定
 		int clearData( int arg_bmpNo ) ;
 
-		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
-		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// 透明処理をするかどうかのフラグをセット
-		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;		// 回転処理するかどうかのフラグをセット
-		int setBmpXY( int arg_bmpNo , int arg_x , int arg_y ) ;			// ポジションのセット
-		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;			// 切り取り位置のセット
-		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// 幅、高さのセット
-		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;	// 拡大率のセット
-		int setAnchor( int arg_bmpNo , int arg_anchor ) ;				// アンカーのセット
-		int setAlpha( int arg_bmpNo , int arg_alpha ) ;					// 透明度のセット
-		int setAngle( int arg_bmpNo , float arg_angle ) ;				// 角度のセット
-		int setBmpData(													// すべてのセット
+		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;						// 描画するかどうかのフラグをセット
+		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;					// 透明処理をするかどうかのフラグをセット
+		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;				// 回転処理するかどうかのフラグをセット
+		int setBmpXY( int arg_bmpNo , int arg_x , int arg_y ) ;					// ポジションのセット
+		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;					// 切り取り位置のセット
+		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;					// 幅、高さのセット
+		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;			// 拡大率のセット
+		int setAnchor( int arg_bmpNo , int arg_anchor ) ;						// アンカーのセット
+		int setAlpha( int arg_bmpNo , int arg_alpha ) ;							// 透明度のセット
+		int setAngle( int arg_bmpNo , float arg_angle ) ;						// 角度のセット
+		int setBmpData(															// すべてのセット
 				int arg_bmpNo ,
 				int arg_anchor ,
 				int arg_x , int arg_y ,
