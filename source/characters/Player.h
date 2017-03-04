@@ -45,6 +45,9 @@ class Player
 		void Pjinit( ) ;	// ジャンプ初期化
 		void Pjump( ) ;		// ジャンプと落下
 
+		bool FootCheck( ) ;	// 足元チェック
+		bool Collision( ) ;	// あたり判定
+
 		/*/
 		/*	 更新
 		/*/
@@ -60,6 +63,13 @@ class Player
 			P_drop ,
 		} ;
 		PlayerMode Pmode_ ;
+
+		float	Player_xpos_ ;
+		float	Player_ypos_ ;
+		float	Player_xspd_ ;
+		float	Player_yspd_ ;
+		int		arrayX_ ;
+		int		arrayY_ ;
 
 } ;
 

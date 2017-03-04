@@ -99,6 +99,14 @@ class Chip
 		int setScrollSize( int arg_x , int arg_y ) ;					// スクロール
 
 		/*/
+		/*	チップテーブルの取得
+		/*/
+		int* getChipTable( )
+		{
+			return( m_chipTable_ ) ;
+		}
+
+		/*/
 		/*	最大描画数の取得
 		/*/
 		int getMaxBmp( ) const
@@ -238,6 +246,20 @@ class Chip
 		int getScrollY( ) const
 		{
 			return ( scrollY_ ) ;
+		}
+		/*/
+		/*	RENDER MAP SIZE X の取得
+		/*/
+		int getRenderMapSizeX( ) const
+		{
+			return ( renderMap_w_ ) ;
+		}
+		/*/
+		/*	RENDER MAP SIZE Y の取得
+		/*/
+		int getRenderMapSizeY( ) const
+		{
+			return ( renderMap_h_ ) ;
 		}
 		/*/
 		/*	MAP SIZE X の取得

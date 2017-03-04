@@ -16,11 +16,19 @@ ________________________________________________________________________________
 #include "Common.h"
 #include "Physics.h"
 
+#define	PLAYER	0
+
 /*/
 /*	コンストラクタ
 /*/
 Player::Player( )
 	: Pmode_( P_init )
+	, Player_xpos_( 200.0f )
+	, Player_ypos_( 200.0f )
+	, Player_xspd_( 0.0f )
+	, Player_yspd_( 0.0f )
+	, arrayX_( 0 )
+	, arrayY_( 0 )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -52,6 +60,12 @@ void Player::Initialize( )
 /*/
 void Player::PlayerAction( )
 {
+
+	printf( "Player : Xpos = %8.4f \n" , Player_xpos_ ) ;
+	printf( "Player : Ypos = %8.4f \n" , Player_ypos_ ) ;
+	printf( "Player : Xspd = %8.4f \n" , Player_xspd_ ) ;
+	printf( "Player : Yspd = %8.4f \n" , Player_yspd_ ) ;
+
 	// 各アクションへ
 	switch( Pmode_ )
 	{
@@ -97,9 +111,9 @@ void Player::Pinit( )
 	/*	___/ キャラクター /___________________
 	/*/
 	Sprite::GetInstance()->setBmpData(
-			0 ,
-			0 ,
-			200 , 200 ,
+			PLAYER ,
+			7 ,
+			Player_xpos_ , Player_ypos_ ,
 			0 , 0 ,
 			200 , 178 ,
 			0.5f , 0.5f ,
@@ -108,6 +122,7 @@ void Player::Pinit( )
 		) ;
 
 	Pmode_ = P_stop ;
+
 }
 
 /*/
@@ -115,29 +130,35 @@ void Player::Pinit( )
 /*/
 void Player::Pstop( )
 {
-	/*/
-	/*	___/ プレイヤー /___________________
-	/*/
-	static float pYPos = 0.0f ;
-	pYPos += Physics::GetInstance()->getGravity( ) ;
+	Player_yspd_ = 0.0f ;
+
+	if ( FootCheck() )
+	{
+
+	} else {
+		Pmode_ = P_jinit ;
+	}
+
+	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
+	{
+		Pmode_ = P_walk ;
+	}
+	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
+	{
+		Pmode_ = P_walk ;
+	}
+
 	Sprite::GetInstance()->setBmpData(
-			0 ,
-			0 ,
-			Sprite::GetInstance()->getBmpXPos( 0 ) ,
-			pYPos ,
+			PLAYER ,
+			7 ,
+			Player_xpos_ ,
+			Player_ypos_ ,
 			0 , 0 ,
 			200 , 178 ,
 			0.5f , 0.5f ,
 			255 ,
 			0
 		) ;
-	printf( "Y Position = %d\n" , Sprite::GetInstance()->getBmpYPos( 0 ) ) ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
-		Chip::GetInstance()->setScrollSize( 2 , 0 ) ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
-		Chip::GetInstance()->setScrollSize( -2 , 0 ) ;
 
 }
 
@@ -147,6 +168,58 @@ void Player::Pstop( )
 void Player::Pwalk( )
 {
 
+	if ( FootCheck() )
+	{
+
+	} else {
+		Pmode_ = P_jinit ;
+	}
+
+	// 左右チェック
+	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
+	{
+		if ( Collision() )
+		{
+			Player_xspd_ = -0.0f ;
+			if ( Chip::GetInstance()->getScrollX() < 32 )
+			{
+				Player_xpos_ += 2 ;
+				Chip::GetInstance()->setScrollSize( 2 , 0 ) ;
+			}
+		}
+	}
+
+	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
+	{
+		if ( Collision() )
+		{
+			Player_xspd_ = 0.0f ;
+			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			{
+				Player_xpos_ += -2 ;
+				Chip::GetInstance()->setScrollSize( -2 , 0 ) ;
+			}
+		}
+	}
+
+	Player_xpos_ += Player_xspd_ ;
+	Player_ypos_ += Player_yspd_ ;
+	Sprite::GetInstance()->setBmpData(
+			PLAYER ,
+			7 ,
+			Player_xpos_ ,
+			Player_ypos_ ,
+			0 , 0 ,
+			200 , 178 ,
+			0.5f , 0.5f ,
+			255 ,
+			0
+		) ;
+
+	Player_xspd_ = 0.0f ;
+	Player_yspd_ = 0.0f ;
+	Pmode_ = P_stop ;		
+
 }
 
 /*/
@@ -155,6 +228,7 @@ void Player::Pwalk( )
 void Player::Pjinit( )
 {
 
+	Pmode_ = P_jump ;
 }
 
 /*/
@@ -162,7 +236,87 @@ void Player::Pjinit( )
 /*/
 void Player::Pjump( )
 {
+	Player_yspd_ = 0.0f ;
+	/*/
+	/*	___/ プレイヤー /___________________
+	/*/
+	Player_yspd_ += Physics::GetInstance()->getGravity( ) ;
+	Player_xpos_ += Player_xspd_ ;
+	Player_ypos_ += Player_yspd_ ;
+	Sprite::GetInstance()->setBmpData(
+			PLAYER ,
+			7 ,
+			Player_xpos_ ,
+			Player_ypos_ ,
+			0 , 0 ,
+			200 , 178 ,
+			0.5f , 0.5f ,
+			255 ,
+			0
+		) ;
 
+	if ( FootCheck() )
+	{
+		Pmode_ = P_stop ;
+	}
+
+}
+
+/*/
+/*	足元チェック
+/*/
+bool Player::FootCheck( )
+{
+	bool iRet = false ;
+
+	// あたり判定をとるためのチップデータ
+	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
+
+	arrayX_ = ( int )( Player_xpos_ / CHIP_W + 1 ) ;	// 配列座標を求める x
+	arrayY_ = ( int )( Player_ypos_ / CHIP_H + 1 ) ;	// 配列座標を求める y
+
+	printf( "arrayX = %d  arrayY = %d \n" , arrayX_ , arrayY_ - 1 ) ;			// 自分の座標位置
+	printf( "chipTable = %d \n" ,												// 自分の座標位置の番号
+			chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ]
+		) ;
+
+	// プレイヤーの足元の配列座標
+	if ( chipTable[ (CHIP_X * (arrayY_ + 1)) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ] != NULL )
+	{
+		iRet = true ;
+		printf( "foot check was true! \n" ) ;
+	}
+
+	return( iRet ) ;
+}
+
+/*/
+/*	あたり判定
+/*/
+bool Player::Collision( )
+{
+	bool iRet = false ;
+
+	// あたり判定をとるためのチップデータ
+	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
+
+	arrayX_ = ( int )( Player_xpos_ / CHIP_W + 1 ) ;	// 配列座標を求める x
+	arrayY_ = ( int )( Player_ypos_ / CHIP_H + 1 ) ;	// 配列座標を求める y
+
+	// プレイヤーの配列座標
+	if (	(chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ - 1) ] != 1)
+		||	(chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ - 1) ] != 2) )
+	{
+		iRet = true ;
+		printf( "fCollision check was true! \n" ) ;
+	} else if ( (chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ + 1) ] != 1)
+			||	(chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ + 1) ] != 2) )
+	{
+		iRet = true ;
+		printf( "fCollision check was true! \n" ) ;
+	}
+
+	return( iRet ) ;
 }
 
 /*/
@@ -170,6 +324,7 @@ void Player::Pjump( )
 /*/
 void Player::Update( )
 {
+	printf( "Player : Action = %d\n" , Pmode_ ) ;
 	PlayerAction( ) ;
 }
 

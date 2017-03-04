@@ -88,6 +88,7 @@
     <ClCompile Include="source\scene\SceneTitle.cpp" />
     <ClCompile Include="source\utility\BackGround.cpp" />
     <ClCompile Include="source\utility\Chip.cpp" />
+    <ClCompile Include="source\utility\Collider.cpp" />
     <ClCompile Include="source\utility\Physics.cpp" />
     <ClCompile Include="source\utility\Renderer.cpp" />
     <ClCompile Include="source\utility\BitmapData.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="source\scene\SceneTitle.h" />
     <ClInclude Include="source\utility\BackGround.h" />
     <ClInclude Include="source\utility\Chip.h" />
+    <ClInclude Include="source\utility\Collider.h" />
     <ClInclude Include="source\utility\Physics.h" />
     <ClInclude Include="source\utility\Renderer.h" />
     <ClInclude Include="source\utility\BitmapData.h" />
