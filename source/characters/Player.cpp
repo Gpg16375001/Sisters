@@ -29,6 +29,7 @@ Player::Player( )
 	, Player_yspd_( 0.0f )
 	, arrayX_( 0 )
 	, arrayY_( 0 )
+	, flyCheck_( false )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -134,8 +135,21 @@ void Player::Pstop( )
 
 	if ( FootCheck() )
 	{
+		flyCheck_ = false ;
+		Sprite::GetInstance()->setBmpData(
+				PLAYER ,
+				7 ,
+				Player_xpos_ ,
+				Player_ypos_ ,
+				0 , 0 ,
+				200 , 178 ,
+				0.5f , 0.5f ,
+				255 ,
+				0
+			) ;
 
 	} else {
+		flyCheck_ = true ;
 		Pmode_ = P_jinit ;
 	}
 
@@ -147,18 +161,10 @@ void Player::Pstop( )
 	{
 		Pmode_ = P_walk ;
 	}
-
-	Sprite::GetInstance()->setBmpData(
-			PLAYER ,
-			7 ,
-			Player_xpos_ ,
-			Player_ypos_ ,
-			0 , 0 ,
-			200 , 178 ,
-			0.5f , 0.5f ,
-			255 ,
-			0
-		) ;
+	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
+	{
+		Pmode_ = P_jinit ;
+	}
 
 }
 
@@ -227,7 +233,6 @@ void Player::Pwalk( )
 /*/
 void Player::Pjinit( )
 {
-
 	Pmode_ = P_jump ;
 }
 
@@ -236,29 +241,32 @@ void Player::Pjinit( )
 /*/
 void Player::Pjump( )
 {
-	Player_yspd_ = 0.0f ;
-	/*/
-	/*	___/ プレイヤー /___________________
-	/*/
-	Player_yspd_ += Physics::GetInstance()->getGravity( ) ;
-	Player_xpos_ += Player_xspd_ ;
-	Player_ypos_ += Player_yspd_ ;
-	Sprite::GetInstance()->setBmpData(
-			PLAYER ,
-			7 ,
-			Player_xpos_ ,
-			Player_ypos_ ,
-			0 , 0 ,
-			200 , 178 ,
-			0.5f , 0.5f ,
-			255 ,
-			0
-		) ;
-
-	if ( FootCheck() )
+	if ( flyCheck_ )
 	{
-		Pmode_ = P_stop ;
+		/*/
+		/*	___/ プレイヤー /___________________
+		/*/
+		Player_yspd_ += Physics::GetInstance()->getGravity( ) ;
+		Player_xpos_ += Player_xspd_ ;
+		Player_ypos_ += Player_yspd_ ;
+		Sprite::GetInstance()->setBmpData(
+				PLAYER ,
+				7 ,
+				Player_xpos_ ,
+				Player_ypos_ ,
+				0 , 0 ,
+				200 , 178 ,
+				0.5f , 0.5f ,
+				255 ,
+				0
+			) ;
+
+		if ( FootCheck() )
+		{
+			Pmode_ = P_stop ;
+		}
 	}
+	Player_yspd_ = 0.0f ;
 
 }
 

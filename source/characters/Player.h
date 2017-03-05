@@ -70,6 +70,7 @@ class Player
 		float	Player_yspd_ ;
 		int		arrayX_ ;
 		int		arrayY_ ;
+		bool	flyCheck_ ;		// 空中かどうかのチェック
 
 } ;
 
