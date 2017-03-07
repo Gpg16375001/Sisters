@@ -14,7 +14,6 @@ ________________________________________________________________________________
 */
 #include <windows.h>
 #include "SceneTitle.h"
-#include "Physics.h"
 
 /*/
 /*	コンストラクタ
@@ -42,7 +41,6 @@ SceneTitle::~SceneTitle( )
 void SceneTitle::Initialize( )
 {
 	printf( "SceneTitle -> " ) ;
-	Physics::GetInstance()->Initialize( ) ;
 
 	/*/
 	/*	___/ 背景 /___________________
@@ -54,20 +52,6 @@ void SceneTitle::Initialize( )
 			0 , 0 ,
 			2000 , 1000 ,
 			1.0f , 1.0f
-		) ;
-
-	/*/
-	/*	___/ キャラクター /___________________
-	/*/
-	Sprite::GetInstance()->setBmpData(
-			0 ,
-			0 ,
-			200 , 200 ,
-			0 , 0 ,
-			200 , 178 ,
-			0.5f , 0.5f ,
-			255 ,
-			0
 		) ;
 
 }
@@ -93,6 +77,7 @@ void SceneTitle::Update( )
 	// チップのマップ読み込み
 	Chip::GetInstance()->Update( ) ;
 	
+	// プレイヤーのアップデート
 	player.Update( ) ;
 
 }

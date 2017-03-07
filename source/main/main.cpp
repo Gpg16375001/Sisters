@@ -124,6 +124,9 @@ void MainApp::Update_( )
 {
 	// シーンの更新
 	SceneManager::GetInstance()->Update( g_state ) ;			// -------------------------------------- Gvl
+		
+	fpscnt++ ;
+	fpscnt %= 60 ;
 
 }
 

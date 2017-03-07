@@ -1,0 +1,137 @@
+/*
+______________________________________________________________________________________________
+
+	FILE	: Physics.cpp
+
+	________/ Explanation of file /___________________________________________________________
+    
+		Physicsクラスの実装部
+
+￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
+*/
+
+#include <windows.h>
+#include <stdio.h>
+#include <math.h>
+
+#include "Physics.h"
+
+
+/*/
+/*	デストラクタ
+/*/
+Physics::~Physics( )
+{
+	// 終了を出力
+	printf( "Management of a physics is ended.\n" ) ;
+}
+
+/*/
+/*	初期化
+/*/
+void Physics::Initialize( )
+{
+
+	// 開始を出力
+	printf( "Management of a physics is started.\n" ) ;
+//	printf( "gravity = %8.4f\n" , Physics::GetInstance()->getGravity( ) ) ;
+
+}
+
+/*/
+/*	使い方：2点間をつなぐ直線を求める
+/*	引数　：座標をあらわすfloat配列２つ
+/*	返り値：直線の傾き
+/*/
+float Physics::slopePoint( float *arg_point1 , float *arg_point2  )
+{
+	return( (arg_point2[ 1 ] - arg_point1[ 1 ]) / (arg_point2[ 0 ] - arg_point1[ 0 ]) ) ;
+}
+
+/*/
+/*	使い方：ベクトルを polar から component に変換
+/*	引数　：polar 表示のベクトル
+/*	返り値：component 表示のベクトル
+/*/
+Vector2D_compo Physics::PolarToCompo( Vector2D_polar arg_vector2d )
+{
+	Vector2D_compo temp2d ;
+
+	temp2d.x = arg_vector2d.mag * cos( arg_vector2d.deg * Pi / 180 ) ;
+	temp2d.y = arg_vector2d.mag * sin( arg_vector2d.deg * Pi / 180 ) ;
+
+	return( temp2d ) ;
+}
+
+/*/
+/*	使い方：ベクトルを component から polar に変換
+/*	引数　：component 表示のベクトル
+/*	返り値：polar 表示のベクトル
+/*/
+Vector2D_polar Physics::CompoToPolar( Vector2D_compo arg_vector2d )
+{
+	Vector2D_polar temp2d = { 0 , 0 } ;
+
+	// ピタゴラスの定理で C2 を求める
+	temp2d.mag = (arg_vector2d.x * arg_vector2d.x) + (arg_vector2d.y * arg_vector2d.y) ;
+	temp2d.mag = temp2d.mag / temp2d.mag ;
+
+	// バグ回避 0 で割らないように
+	if ( temp2d.mag == 0 )
+	{
+		return( temp2d ) ;
+	}
+
+	// 角度を計算 ( asin() は (90)~(-90)度 を返す )
+	temp2d.deg = (180 / Pi) * asin( arg_vector2d.y / temp2d.mag ) ;
+
+	// 上の計算で (90)~(-90)度 ではなかったとき
+	if ( arg_vector2d.x < 0 )
+	{
+		temp2d.deg = 180 - temp2d.deg ;
+	}
+	// (0)~(-90)度にあった場合
+	else if ( (arg_vector2d.x > 0) && (arg_vector2d.y < 0) ) {
+		temp2d.deg += 360 ;
+	}
+
+	return( temp2d ) ;
+}
+
+/*/
+/*	使い方：重さ のベクトルに変換
+/*	引数　：質量 と 加速度
+/*	返り値：その物体に働く 重さ のベクトル
+/*/
+Vector2D_compo Physics::Weight2D( float arg_mass , float arg_grav )
+{
+	if ( (arg_mass == 1.0f) && (arg_grav == 0.0f) )
+	{
+		weight_.y = mass_ * gravity_ ;
+
+	} else {
+		weight_.y = arg_mass * arg_grav ;
+	}
+	return( weight_ ) ;
+}
+
+
+/*/
+/*	質量の代入
+/*/
+int Physics::setMass( float arg_mass )
+{
+	mass_ = arg_mass ;
+	return( true ) ;
+}
+
+/*/
+/*	キー情報の更新
+/*/
+void Physics::update( )
+{
+
+}
+
+
+		

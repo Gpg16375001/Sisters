@@ -12,6 +12,7 @@ ________________________________________________________________________________
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
 #include <windows.h>
+#include "Common.h"
 #include <stdio.h>
 
 class Player
@@ -39,14 +40,14 @@ class Player
 
 		void PlayerAction( ) ;
 
-		void Pinit( ) ;		// ‰Šú
-		void Pstop( ) ;		// ~‚Ü‚è
-		void Pwalk( ) ;		// ¶‰E•à‚«
-		void Pjinit( ) ;	// ƒWƒƒƒ“ƒv‰Šú‰»
-		void Pjump( ) ;		// ƒWƒƒƒ“ƒv‚Æ—‰º
+		void Pinit( ) ;			// ‰Šú
+		void Pstop( ) ;			// ~‚Ü‚è
+		void Pwalk( ) ;			// ¶‰E•à‚«
+		void Pjinit( ) ;		// ƒWƒƒƒ“ƒv‰Šú‰»
+		void Pjump( ) ;			// ƒWƒƒƒ“ƒv
 
-		bool FootCheck( ) ;	// ‘«Œ³ƒ`ƒFƒbƒN
-		bool Collision( ) ;	// ‚ ‚½‚è”»’è
+		float FootCheck( ) ;	// ‘«Œ³ƒ`ƒFƒbƒN ( ‘«Œ³‚ÌÀ•W‚ğ•Ô‚· )
+		float Collision( ) ;		// ‚ ‚½‚è”»’è
 
 		/*/
 		/*	 XV
@@ -68,9 +69,12 @@ class Player
 		float	Player_ypos_ ;
 		float	Player_xspd_ ;
 		float	Player_yspd_ ;
+		float	Player_jspd_ ;
 		int		arrayX_ ;
 		int		arrayY_ ;
-		bool	flyCheck_ ;		// ‹ó’†‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒbƒN
+		bool	lrflg_ ;
+
+		Physics Player_ ;
 
 } ;
 

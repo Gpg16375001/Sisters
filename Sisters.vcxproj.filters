@@ -63,14 +63,14 @@
     <ClCompile Include="source\scene\SceneTitle.cpp">
       <Filter>source\scene</Filter>
     </ClCompile>
-    <ClCompile Include="source\utility\Physics.cpp">
-      <Filter>source\utility</Filter>
-    </ClCompile>
     <ClCompile Include="source\characters\Player.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
     <ClCompile Include="source\utility\Collider.cpp">
       <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\characters\Physics.cpp">
+      <Filter>source\character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,14 +116,14 @@
     <ClInclude Include="source\scene\SceneTitle.h">
       <Filter>source\scene</Filter>
     </ClInclude>
-    <ClInclude Include="source\utility\Physics.h">
-      <Filter>source\utility</Filter>
-    </ClInclude>
     <ClInclude Include="source\characters\Player.h">
       <Filter>source\character</Filter>
     </ClInclude>
     <ClInclude Include="source\utility\Collider.h">
       <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\characters\Physics.h">
+      <Filter>source\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\characters\Physics.cpp" />
     <ClCompile Include="source\characters\Player.cpp" />
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
@@ -89,7 +90,6 @@
     <ClCompile Include="source\utility\BackGround.cpp" />
     <ClCompile Include="source\utility\Chip.cpp" />
     <ClCompile Include="source\utility\Collider.cpp" />
-    <ClCompile Include="source\utility\Physics.cpp" />
     <ClCompile Include="source\utility\Renderer.cpp" />
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
@@ -98,6 +98,7 @@
     <ClCompile Include="source\utility\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\characters\Physics.h" />
     <ClInclude Include="source\characters\Player.h" />
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
@@ -108,7 +109,6 @@
     <ClInclude Include="source\utility\BackGround.h" />
     <ClInclude Include="source\utility\Chip.h" />
     <ClInclude Include="source\utility\Collider.h" />
-    <ClInclude Include="source\utility\Physics.h" />
     <ClInclude Include="source\utility\Renderer.h" />
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />
