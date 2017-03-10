@@ -65,6 +65,12 @@ class Physics
 		void Finalize( ) ;
 
 		/*/
+		/*	使い方：加速度を求める
+		/*	引数　：変化前のスピード , 変化後のスピード , 時間(秒)
+		/*	返り値：加速度
+		/*/
+		float AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  ) ;
+		/*/
 		/*	使い方：2点間をつなぐ直線を求める
 		/*	引数　：座標をあらわすfloat配列２つ
 		/*	返り値：直線の傾き

@@ -386,6 +386,11 @@ float Player::FootCheck( )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
+							footY = bt - ((int)px % CHIP_W) ;
+
+							printf( "chipTable = %d _ x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+
 						}
 					}
 					break ;
