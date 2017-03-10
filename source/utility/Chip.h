@@ -61,6 +61,10 @@ class Chip
 		/*	‰Šú‰»
 		/*/
 		void Initialize( ) ; 
+		/*/
+		/*	I—¹‰»
+		/*/
+		void Finalize( ) ; 
 
 		~Chip( ) ;
 

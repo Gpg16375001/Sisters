@@ -52,6 +52,16 @@ void Chip::Initialize( )
 }
 
 /*/
+/*	終了化
+/*/
+void Chip::Finalize( )
+{
+	scrollX_ = 0 ;
+	scrollY_ = 0 ;
+
+}
+
+/*/
 /*	画像データのクリア
 /*/
 int Chip::clearData( int arg_bmpNo )

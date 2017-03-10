@@ -62,6 +62,13 @@ void SceneTitle::Initialize( )
 void SceneTitle::Update( )
 {
 	static Player player ;
+		
+	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )
+	{
+		player.Finalize( ) ;
+		player.Initialize( ) ;
+		g_state = -1 ;
+	}
 
 	// シーン内容
 	// 画面内だけチップを配置

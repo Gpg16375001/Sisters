@@ -60,6 +60,11 @@ class Physics
 		void Initialize( ) ;
 
 		/*/
+		/*	終了化
+		/*/
+		void Finalize( ) ;
+
+		/*/
 		/*	使い方：2点間をつなぐ直線を求める
 		/*	引数　：座標をあらわすfloat配列２つ
 		/*	返り値：直線の傾き

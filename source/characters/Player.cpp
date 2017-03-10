@@ -41,7 +41,7 @@ Player::Player( )
 /*/
 Player::~Player( )
 {
-	Initialize( ) ;
+	Finalize( ) ;
 	printf( "End.\n" ) ;
 
 }
@@ -51,10 +51,43 @@ Player::~Player( )
 /*/
 void Player::Initialize( )
 {
+	Finalize( ) ;
 	printf( "Player -> " ) ;
+	Pmode_		 = P_init ;
+	Player_xpos_ = 200.0f ;
+	Player_ypos_ = 200.0f ;
+	Player_xspd_ = 0.0f ;
+	Player_yspd_ = 0.0f ;
+	Player_jspd_ = 0.0f ;
+	arrayX_		 = 0 ;
+	arrayY_		 = 0 ;
+	lrflg_		 = true ;
+
+	Player_.Finalize( ) ;
 	Player_.Initialize( ) ;
 
+	Chip::GetInstance()->Finalize( ) ;
+
 	Player_.setMass( 0.08f ) ;
+
+}
+
+/*/
+/*	 終了化
+/*/
+void Player::Finalize( )
+{
+	Player_.Finalize( ) ;
+
+	Player_xpos_ = 0.0f ;
+	Player_ypos_ = 0.0f ;
+	Player_xspd_ = 0.0f ;
+	Player_yspd_ = 0.0f ;
+	Player_jspd_ = 0.0f ;
+	arrayX_ = 0 ;
+	arrayY_ = 0 ;
+	lrflg_ = false ;
+	Pmode_ = P_init ;
 
 }
 
@@ -129,11 +162,8 @@ void Player::Pinit( )
 void Player::Pstop( )
 {
 	float fcheck = FootCheck() ;
-	if ( fcheck == 0 )
+	if ( fcheck != 0 )
 	{
-		Pmode_ = P_drop ;
-	} else {
-
 		if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 		{
 			Pmode_ = P_walk ;
@@ -146,6 +176,9 @@ void Player::Pstop( )
 		{
 			Pmode_ = P_jinit ;
 		}
+
+	} else {
+		Pmode_ = P_drop ;
 	}
 
 }
@@ -279,7 +312,8 @@ void Player::Pjump( )
 		float fcheck = FootCheck() ;
 		if ( fcheck != 0 )
 		{
-			Player_jspd_ = 0 ;
+			Player_jspd_ = 0.0f ;
+			Player_yspd_ = 0.0f ;
 			Player_ypos_ = fcheck ;
 			Pmode_ = P_stop ;
 		}
@@ -294,6 +328,8 @@ void Player::Pjump( )
 float Player::FootCheck( )
 {
 	float footY = 0.0f ;
+	float px = 0.0f , py = 0.0f ;
+	float bl = 0.0f , br = 0.0f , bt = 0.0f , bb = 0.0f ;
 
 	g_bx1 = g_bx2 = g_bx3 = g_bx4 = g_bx5 = g_bx6 = g_bx7 = g_bx8 = g_bx9 = 0 ;
 
@@ -301,94 +337,63 @@ float Player::FootCheck( )
 	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
 
 	printf( "arrayX = %d  arrayY = %d \n" , arrayX_ , arrayY_ - 1 ) ;	// 次のフレームの自分の座標位置
-	printf( "chipTable = %d \n" ,										// 自分の座標位置の番号
+/*	printf( "chipTable = %d \n" ,										// 自分の座標位置の番号
 			chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ]
 		) ;
+*/
 
-	// プレイヤーの足元の配列座標
-	if ( (chipTable[ (CHIP_X * (arrayY_ + 1)) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ + 0) ] != 0) )
+	px = Player_xpos_ - Chip::GetInstance()->getScrollX() ;
+	py = Player_ypos_ - Chip::GetInstance()->getScrollY() ;
+
+	if ( Player_yspd_ < 0.0f )
 	{
-		// 通常の土
-		if ( (chipTable[ (CHIP_X * (arrayY_ + 1)) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ] == 1)
-			|| (chipTable[ (CHIP_X * (arrayY_ + 1)) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ] == 5) )
+		return( 0 ) ;
+	}
+
+	// 判定をとる範囲　今は全体
+	for( int i = 0 ; i < (CHIP_X * CHIP_Y) ; ++i )
+	{
+		// 何か情報が入っているとき
+		if ( chipTable[ i ] != NULL )
 		{
-			// ↓ が通常ブロックだったら
-			if ( chipTable[ (CHIP_X * (arrayY_ + 1)) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ] == 1 )
+			bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
+			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
+			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
+
+			switch ( chipTable[ i ] )
 			{
-				g_bx1 = ( arrayX_ * CHIP_W + 0 ) + Chip::GetInstance()->getScrollX() - ( (Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W ) ;			
-				g_by1 = ( (arrayY_ + 1) * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ;
+				// 通常ブロックの場合
+				case 1 :
+				case 2 :
+				case 5 :
+				case 6 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+							footY = bt ;
 
-				g_bx2 = ( arrayX_ * CHIP_W + 32 ) + Chip::GetInstance()->getScrollX() - ( (Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W ) ;			
-				g_by2 = ( (arrayY_ + 1) * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ;
+							printf( "chipTable = %d _ x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
-				g_bx3 = ( arrayX_ * CHIP_W + 64 ) + Chip::GetInstance()->getScrollX() - ( (Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W ) ;			
-				g_by3 = ( (arrayY_ + 1) * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ;
+						}
+					}
+					break ;
 
-				printf( "bX = %d  bY = %d \n" , g_bx1 , g_by1 ) ;	// blockの座標位置
+				case 7 :
+					if ( (bt <= py) && (py <= bb) )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+						}
+					}
+					break ;
+
+				default :
+					break ;
 			}
-
-			float blockL[ ] = {
-				( float )( (arrayX_ * CHIP_W + 0) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ) ,
-				( float )( (arrayY_ * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ) ,
-			} ;
-			float blockR[ ] = {
-				( float )( (arrayX_ * CHIP_W + 64) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ) ,
-				( float )( (arrayY_ * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ) ,
-			} ;
-			
-			float py ;
-			py = Player_.slopePoint( blockL , blockR ) ;
-			py = blockL[ 1 ] - py * (Player_xpos_ - blockL[ 0 ]) ;
-			footY = py + 128 ;
-			printf( "footY = %8.4f \n" , footY ) ;	// blockの座標位置
 		}
-
-
-		// プレイヤーの ↓ の配列座標
-		if ( (chipTable[ (CHIP_X * arrayY_ + 1) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ + 0) ] != 0) )
-		{
-			POINT sropeTable[64] ;
-			for ( int i = 0 ; i < 64 ; ++i )
-			{
-				sropeTable[ i ].x = i ;
-				sropeTable[ i ].y = i ;
-			}
-
-			// プレイヤーの ↓ の配列座標
-			if ( (chipTable[ (CHIP_X * arrayY_ - 0) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ + 0) ] == 7) )
-			{
-				g_bx1 = (arrayX_ * CHIP_W + 0) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ;			
-				g_by1 = ((arrayY_) * CHIP_H - 64 - 0) + Chip::GetInstance()->getScrollY() ;
-						 
-				g_bx2 = (arrayX_ * CHIP_W + 32) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ;			
-				g_by2 = ((arrayY_) * CHIP_H - 64 - 32) + Chip::GetInstance()->getScrollY() ;
-						 
-				g_bx3 = (arrayX_ * CHIP_W + 64) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ;			
-				g_by3 = ((arrayY_) * CHIP_H - 64 - 64) + Chip::GetInstance()->getScrollY() ;
-
-				float blockL[ ] = {
-					( float )( (arrayX_ * CHIP_W + 0) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ) ,
-					( float )( (arrayY_ * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ) ,
-				} ;
-				float blockR[ ] = {
-					( float )( (arrayX_ * CHIP_W + 64) + Chip::GetInstance()->getScrollX() - ((Chip::GetInstance()->getScrollX() - 32) / CHIP_W * CHIP_W) ) ,
-					( float )( (arrayY_ * CHIP_H - 128) + Chip::GetInstance()->getScrollY() ) ,
-				} ;
-
-				float py ;
-				py = Player_.slopePoint( blockL , blockR ) ;
-				py = blockL[ 1 ] - py * (Player_xpos_ - blockL[ 0 ]) ;
-				if ( (blockL[ 1 ] + 64) > py )
-				{
-					footY = py + 64 ;
-				}
-//				printf( "bX = %d \n" , stno ) ;	// blockの座標位置
-			}
-
-		}
-
-		Player_yspd_ = 0 ;
-
 	}
 
 	return( footY ) ;
@@ -435,14 +440,17 @@ void Player::Update( )
 	PlayerAction( ) ;
 
 	Player_xpos_ += Player_xspd_ ;
-	Player_ypos_ += Player_yspd_ ;
-	if ( Player_ypos_ <= -100 )
+	if ( (-128 < Player_ypos_) && (Player_ypos_ < 800))
 	{
-		Player_ypos_ = 0 ;
-	}
-	arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
-	arrayY_ = ( int )( (Player_ypos_) / CHIP_H ) ;		// 配列座標を求める y
+		Player_ypos_ += Player_yspd_ ;
+		if ( Player_ypos_ <= -64 )
+		{
+			Player_ypos_ = 0 ;
+		}
 
+		arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
+		arrayY_ = ( int )( (Player_ypos_) / CHIP_H ) ;		// 配列座標を求める y
+	}
 	Sprite::GetInstance()->setBmpData(
 			PLAYER ,
 			7 ,

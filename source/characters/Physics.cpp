@@ -31,6 +31,28 @@ Physics::~Physics( )
 /*/
 void Physics::Initialize( )
 {
+	Pi		 = 3.141592654f ;
+	RadToDeg = 57.29577951f ;
+	DegToRad = 0.017453293f ;
+	gravity_ = 9.81f ;
+	mass_	 = 1.0f ;
+
+	// 開始を出力
+	printf( "Management of a physics is started.\n" ) ;
+//	printf( "gravity = %8.4f\n" , Physics::GetInstance()->getGravity( ) ) ;
+
+}
+
+/*/
+/*	終了化
+/*/
+void Physics::Finalize( )
+{
+	Pi		 = 0.0f ;
+	RadToDeg = 0.0f ;
+	DegToRad = 0.0f ;
+	gravity_ = 0.0f ;
+	mass_	 = 0.0f ;
 
 	// 開始を出力
 	printf( "Management of a physics is started.\n" ) ;
