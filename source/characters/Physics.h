@@ -73,6 +73,18 @@ class Physics
 		/*/
 		float AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  ) ;
 		/*/
+		/*	使い方：２点間の傾きを求める
+		/*	引数　：点１ と 点２
+		/*	返り値：傾き
+		/*/
+		float slopeTilt( float *arg_p1 , float *arg_p2 ) ;
+		/*/
+		/*	使い方：２つの直線の交点を求める
+		/*	引数　：点１ , 点１の傾き と 点２ , 点2の傾き
+		/*	返り値：交点
+		/*/
+		float *linePoint( float *arg_p1 , float arg_a1 , float *arg_p2 , float arg_a2 ) ;
+		/*/
 		/*	使い方：傾きから高さを求める
 		/*	引数　：x方向のベクトル と 移動移動方向のベクトル
 		/*	返り値：Y軸の高さ

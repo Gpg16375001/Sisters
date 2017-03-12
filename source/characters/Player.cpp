@@ -72,7 +72,7 @@ void Player::Initialize( )
 
 	Chip::GetInstance()->Finalize( ) ;
 
-	Player_.setMass( 0.08f ) ;
+	Player_.setMass( 4.5f ) ;
 
 	/*/
 	/*	アニメーションセット
@@ -312,7 +312,7 @@ void Player::Pjinit( )
 void Player::Pjump( )
 {
 	Player_yspd_ += Player_jspd_ ;
-	Player_jspd_ += Player_.Weight2D().y ;
+	Player_jspd_ += Player_.Weight2D().y / 60 ;
 
 	if ( Pmode_ == P_jump )
 	{
@@ -426,7 +426,7 @@ float Player::FootCheck( )
 	{
 		//  false : 左向き
 		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 8 ;
-		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
+		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 12 ;
 		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
 		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() ;
 	}
@@ -469,102 +469,135 @@ float Player::FootCheck( )
 					break ;
 
 				case 5 :
-				case 7 :
-					int slopePosU[ 64 ] ;
-
-					for ( int v = 0 ; v < 64 ; ++v )
+					if ( (bt <= py) && (py < bb) )
 					{
-						slopePosU[ v ] = v + 12 ;
-					}
-					slopePosU[ 56 ] = 4 ;
-					slopePosU[ 60 ] = 4 ;
-
-					if ( bb - slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] <= Player_ypos_ )
-					{
-						if ( (bl <= px) && (px <= br) )
+						if ( (bl+12 <= pr) && (pl <= br) )
 						{
-							footY = bb - slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ;
+							footY = bt - 8 ;
 
-							printf( "slope[ %d ] : %d\n" , Chip::GetInstance()->getScrollX() % 64 * -1 , slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ) ;
 							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
 							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
-					} else if ( (Player_xspd_ <= 0) && (bl <= px) && (px <= br) ) {
-						slopePosU[ 56 ] = 56 ;
-						slopePosU[ 60 ] = 8 ;
-						footY = bb - 64 - slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ;
+					}
+					break ;
+
+				case 7 :
+					float radY ;			// 坂の右下からの高さ( Y軸 )
+					Vector2D_compo P1 , P3 ;
+					Vector2D_compo P2 ;		// 基準点 (br,bb)
+					Vector2D_compo P4 ;		// プレイヤーの座標
+					float s1 , s2 ;			// 面積
+					float cross[ 2 ] ;		// 交点
+					float ax , ay ;
+					float P2a ;				// 交点までの距離
+					float P2p ;				// プレイヤーまでの距離
+
+					// それぞれに代入
+					P1.x = bl - 4 ;
+					P1.y = bb ;
+					P2.x = br - 4 ;
+					P2.y = bb ;
+					P3.x = br - 4 ;
+					P3.y = bt ;
+					P4.x = px ;
+					P4.y = py ;
+
+					// それぞれの面積を求める
+					s1 = ((P4.x - P2.x) * (P1.y - P2.y) - (P4.y - P2.y) * (P1.x - P2.x)) * 0.5f ;
+					s2 = ((P4.x - P2.x) * (P2.y - P3.y) - (P4.y - P2.y) * (P2.x - P3.x)) * 0.5f ;
+
+					// 交点を求める
+					cross[ 0 ] = P1.x + (P3.x - P1.x) * s1 / (s1 + s2) ;
+					cross[ 1 ] = P1.y + (P3.y - P1.y) * s1 / (s1 + s2) ;
+
+					// 基準点から交点までの距離
+					ax = P2.x - cross[ 0 ] ;
+					ay = P2.y - cross[ 1 ] ;
+					P2a = ax * ax + ay * ay ;
+					P2a = sqrt( P2a ) ;
+
+					// 基準点からプレイヤーまでの距離
+					ax = P2.x - P4.x ;
+					ay = P2.y - P4.y ;
+					P2p = ax * ax + ay * ay ;
+					P2p = sqrt( P2a ) ;
+
+					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br) && (bt-14 <= py) )
+					{
+						footY = cross[ 1 ] ;
 					}
 					break  ;
 
 				case 6 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= pr) && (pl <= br-12) )
+						{
+							footY = bt - 8 ;
+
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+
+						}
+					}
+					break ;
+
 				case 8 :
-					int slopePosD[ 64 ] ;
+					// それぞれに代入
+					P1.x = br - 4 ;
+					P1.y = bb ;
+					P2.x = bl - 4 ;
+					P2.y = bb ;
+					P3.x = bl - 4 ;
+					P3.y = bt ;
+					P4.x = px ;
+					P4.y = py ;
 
-					for ( int v = 0 ; v < 64 ; ++v )
+					// それぞれの面積を求める
+					s1 = ((P4.x - P2.x) * (P1.y - P2.y) - (P4.y - P2.y) * (P1.x - P2.x)) * 0.5f ;
+					s2 = ((P4.x - P2.x) * (P2.y - P3.y) - (P4.y - P2.y) * (P2.x - P3.x)) * 0.5f ;
+
+					// 交点を求める
+					cross[ 0 ] = P1.x + (P3.x - P1.x) * s1 / (s1 + s2) ;
+					cross[ 1 ] = P1.y + (P3.y - P1.y) * s1 / (s1 + s2) ;
+
+					// 基準点から交点までの距離
+					ax = P2.x - cross[ 0 ] ;
+					ay = P2.y - cross[ 1 ] ;
+					P2a = ax * ax + ay * ay ;
+					P2a = sqrt( P2a ) ;
+
+					// 基準点からプレイヤーまでの距離
+					ax = P2.x - P4.x ;
+					ay = P2.y - P4.y ;
+					P2p = ax * ax + ay * ay ;
+					P2p = sqrt( P2a ) ;
+
+					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br) && (bt-14 <= py) )
 					{
-						slopePosD[ v ] = 64 - v ;
-					}
-					slopePosD[ 56 ] = 4 ;
-					slopePosD[ 60 ] = 60 ;
-
-					if ( bb - slopePosD[ Chip::GetInstance()->getScrollX() % 64 * -1 ] <= Player_ypos_ )
-					{
-						if ( (bl <= px) && (px <= br) )
-						{
-							footY = bb - slopePosD[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ;
-
-							printf( "slope[ %d ] : %d\n" , Chip::GetInstance()->getScrollX() % 64 * -1 , slopePosD[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ) ;
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
-
-						}
-					}
-					break ;
-
-/*
-				case 7 :
-					float b_top ;
-					Vector2D_compo temp_x ;
-					Vector2D_compo temp_y ;
-
-					temp_x.x = ( float )-Chip::GetInstance()->getScrollX() ;
-					temp_x.y = 0 ;
-					temp_y.x = 64 ;
-					temp_y.y = 64 ;
-					b_top = Player_.slopePoint( temp_x , temp_y ) + Player_ypos_ + 60 ;
-
-					if ( (b_top - Player_ypos_ - 60 <= 0) && ( Player_xspd_ >= 0 ) )
-					{
-						if ( (bl <= px) && (px <= br) )
-						{
-							footY = b_top ;
-
-							printf( "slope : %f\n" , Player_.slopePoint( temp_x , temp_y ) ) ;
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
-
-						}
+						footY = cross[ 1 ] ;
 					}
 					break ;
-*/
+
 				case 50 :
-					float brad ;
+					float brad ;	// 丸鋸の半径
 					float x ;
 					float y ;
 					float c2 ;
-					float c ;
-					float rad ;
+					float c ;		// プレイヤーと丸鋸の距離
+					float rad ;		// 丸鋸の中心からの高さ( Y軸 )
 
-					brad = br - bl ;
-					x = br - (br - bl) - px ;
-					y = bb - (bb - bt) - py ;
-					c2 = x * x + y * y ;
-					c = sqrt( c2 ) ;
+					brad = br - bl ;			// 丸鋸の半径を求める
+					x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+					y = bb - (bb - bt) - py ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
+					// 半径よりもプレイヤーまでの距離が短い場合
 					if ( brad >= c )
 					{
-						rad = sqrt( (c2 - x * x) ) ;
+						rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 						footY = bt + c - rad - 60 ;
 						printf( "px  : %f \n" , px ) ;
 						printf( "rad : %f \n" , rad ) ;
@@ -611,7 +644,7 @@ float Player::HeadCheck( )
 	{
 		//  false : 左向き
 		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 8 ;
-		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
+		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 12 ;
 		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
 		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() - 64 ;
 	}
