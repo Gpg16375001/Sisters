@@ -46,7 +46,7 @@ LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 	/*	WinMainのプロシージャで処理をするのでここは関係ない。
 	/*	WinMainのプロシージャが終わり次第呼ばれる。
 	/*/
-	printf( "MainAppのプロシージャが発行されました。\n" ) ;
+//	printf( "MainAppのプロシージャが発行されました。\n" ) ;
 
 	return DefWindowProc( hWnd , msg , wParam , lParam ) ;
 }
@@ -75,7 +75,8 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 1 , TEXT("data/image/sprites/PlayerR.bmp") , 2000 , 178 ) ;
 	BitmapData::GetInstance()->loadData( 2 , TEXT("data/image/chips/all_grass.bmp") , 640 , 500 ) ;
 	BitmapData::GetInstance()->loadData( 3 , TEXT("data/image/sprites/gimic/marunoko.bmp") , 128 , 128 ) ;
-
+	BitmapData::GetInstance()->loadData( 4 , TEXT("data/image/sprites/PlayerL.bmp") , 2000 , 178 ) ;
+	
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
 
@@ -86,7 +87,8 @@ void MainApp::Initalize( )
 
 
 	// Sprite の読み込み
-	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 4 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
 	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 20 ) ;		// 10 ~ 29 まで　まるのこ
 
 	// シーン
@@ -135,7 +137,7 @@ void MainApp::Update_( )
 /*/
 void MainApp::Render_( )
 {
-	printf( "メイン描画\n" ) ;
+	printf( "Main::Render_ が発行されました\n" ) ;
 
 	// シーン描画の配置
 //	SceneManager::GetInstance()->Render( ) ;

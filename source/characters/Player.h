@@ -41,6 +41,7 @@ class Player
 		void PlayerAction( ) ;
 
 		void Pinit( ) ;			// 初期
+		void Psinit( ) ;			// 止まり時 初期セット
 		void Pstop( ) ;			// 止まり時
 		void Pwalk( ) ;			// 左右歩き
 		void Pjinit( ) ;		// ジャンプ初期化
@@ -57,7 +58,8 @@ class Player
 	private :
 		enum PlayerMode {
 			P_init = -1 ,
-			P_stop = 0 ,
+			P_sinit = 0 ,
+			P_stop ,
 			P_walk ,
 			P_jinit ,
 			P_jump ,
@@ -65,6 +67,7 @@ class Player
 		} ;
 		PlayerMode Pmode_ ;
 
+		// プレイヤーのデータ
 		float	Player_xpos_ ;
 		float	Player_ypos_ ;
 		float	Player_xspd_ ;
@@ -74,7 +77,16 @@ class Player
 		int		arrayY_ ;
 		bool	lrflg_ ;
 
+		// プレイヤーの物理的なもの
 		Physics Player_ ;
+		float	Player_acceration ;
+
+		// アニメーション
+		Animation		PlayerAnim_ ;
+		AnimationData	Panim_stop_[ 4 ] ;
+		AnimationData	Panim_walk_[ 4 ] ;
+		AnimationData	Panim_jump_[ 1 ] ;
+		AnimationData	Panim_drop_[ 1 ] ;
 
 } ;
 

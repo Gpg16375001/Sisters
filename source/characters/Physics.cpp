@@ -36,6 +36,8 @@ void Physics::Initialize( )
 	DegToRad = 0.017453293f ;
 	gravity_ = 9.81f ;
 	mass_	 = 1.0f ;
+	r2_		 = 1.414213562f ;
+	r3_		 = 1.732050807f ;
 
 	// 開始を出力
 	printf( "Management of a physics is started.\n" ) ;
@@ -53,6 +55,8 @@ void Physics::Finalize( )
 	DegToRad = 0.0f ;
 	gravity_ = 0.0f ;
 	mass_	 = 0.0f ;
+	r2_		 = 0.0f ;
+	r3_		 = 0.0f ;
 
 	// 開始を出力
 	printf( "Management of a physics is started.\n" ) ;
@@ -71,13 +75,14 @@ float AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  )
 }
 
 /*/
-/*	使い方：2点間をつなぐ直線を求める
-/*	引数　：座標をあらわすfloat配列２つ
-/*	返り値：直線の傾き
+/*	使い方：傾きから高さを求める
+/*	引数　：x方向のベクトル と 移動先のベクトル( 角度があるほう )
+/*	返り値：Y軸の高さ
 /*/
-float Physics::slopePoint( float *arg_point1 , float *arg_point2  )
+float Physics::slopePoint( Vector2D_compo arg_Xvector , Vector2D_compo arg_Yvector  )
 {
-	return( (arg_point2[ 1 ] - arg_point1[ 1 ]) / (arg_point2[ 0 ] - arg_point1[ 0 ]) ) ;
+	if ( CompoToPolar(arg_Xvector).mag == 0 ) return( 0 ) ;
+	return( (arg_Yvector.x * arg_Xvector.y - arg_Yvector.y * arg_Xvector.x) / (CompoToPolar(arg_Xvector).mag) ) ;
 }
 
 /*/
@@ -106,7 +111,7 @@ Vector2D_polar Physics::CompoToPolar( Vector2D_compo arg_vector2d )
 
 	// ピタゴラスの定理で C2 を求める
 	temp2d.mag = (arg_vector2d.x * arg_vector2d.x) + (arg_vector2d.y * arg_vector2d.y) ;
-	temp2d.mag = temp2d.mag / temp2d.mag ;
+	temp2d.mag = sqrt( temp2d.mag ) ;
 
 	// バグ回避 0 で割らないように
 	if ( temp2d.mag == 0 )

@@ -72,6 +72,9 @@
     <ClCompile Include="source\characters\Physics.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
+    <ClCompile Include="source\characters\Animation.cpp">
+      <Filter>source\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -123,6 +126,9 @@
       <Filter>source\utility</Filter>
     </ClInclude>
     <ClInclude Include="source\characters\Physics.h">
+      <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="source\characters\Animation.h">
       <Filter>source\character</Filter>
     </ClInclude>
   </ItemGroup>

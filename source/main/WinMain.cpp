@@ -203,7 +203,7 @@ bool WinMain::Start( )
 /*/
 LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wParam , LONG arg_lParam )
 {
-	printf( "WinMainのプロシージャが発行されました。\n" ) ;
+//	printf( "WinMainのプロシージャが発行されました。\n" ) ;
 
 	WinMain* winm = reinterpret_cast<WinMain*>( GetWindowLong(arg_hWnd , GWL_USERDATA) ) ;
 	switch ( arg_msg ) {
@@ -285,68 +285,23 @@ void WinMain::Draw_( )
 	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , hDCBack_ , 0 , 0 , SRCCOPY ) ;
 
 	// プレイヤーの座標位置の点
-	SetPixel( hDC , (int)g_px   , (int)g_py   , RGB(255 , 255 , 0) ) ;
-	SetPixel( hDC , (int)g_px-1 , (int)g_py   , RGB(255 , 255 , 0) ) ;
-	SetPixel( hDC , (int)g_px+1 , (int)g_py   , RGB(255 , 255 , 0) ) ;
-	SetPixel( hDC , (int)g_px   , (int)g_py-1 , RGB(255 , 255 , 0) ) ;
-	SetPixel( hDC , (int)g_px   , (int)g_py+1 , RGB(255 , 255 , 0) ) ;
+	SetPixel( hDC , (int)g_px   , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px-1 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px+1 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   , (int)g_py-1 , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   , (int)g_py+1 , RGB(255 , 0 , 0) ) ;
 
-	// ↓ のブロックのあたり判定の座標位置の点
-	SetPixel( hDC , (int)g_bx1   , (int)g_by1   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx1-1 , (int)g_by1   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx1+1 , (int)g_by1   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx1   , (int)g_by1-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx1   , (int)g_by1+1 , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   - 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px-1 - 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px+1 - 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   - 16 , (int)g_py-1 , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   - 16 , (int)g_py+1 , RGB(255 , 0 , 0) ) ;
 
-	SetPixel( hDC , (int)g_bx2   , (int)g_by2   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx2-1 , (int)g_by2   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx2+1 , (int)g_by2   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx2   , (int)g_by2-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx2   , (int)g_by2+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_bx3   , (int)g_by3   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx3-1 , (int)g_by3   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx3+1 , (int)g_by3   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx3   , (int)g_by3-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx3   , (int)g_by3+1 , RGB(255 , 0 , 0) ) ;
-
-	// ← のブロックのあたり判定の座標位置の点
-	SetPixel( hDC , (int)g_bx4   , (int)g_by4   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx4-1 , (int)g_by4   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx4+1 , (int)g_by4   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx4   , (int)g_by4-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx4   , (int)g_by4+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_bx5   , (int)g_by5   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx5-1 , (int)g_by5   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx5+1 , (int)g_by5   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx5   , (int)g_by5-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx5   , (int)g_by5+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_bx6   , (int)g_by6   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx6-1 , (int)g_by6   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx6+1 , (int)g_by6   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx6   , (int)g_by6-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx6   , (int)g_by6+1 , RGB(255 , 0 , 0) ) ;
-
-	// → のブロックのあたり判定の座標位置の点
-	SetPixel( hDC , (int)g_bx7   , (int)g_by7   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx7-1 , (int)g_by7   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx7+1 , (int)g_by7   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx7   , (int)g_by7-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx7   , (int)g_by7+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_bx8   , (int)g_by8   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx8-1 , (int)g_by8   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx8+1 , (int)g_by8   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx8   , (int)g_by8-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx8   , (int)g_by8+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_bx9   , (int)g_by9   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx9-1 , (int)g_by9   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx9+1 , (int)g_by9   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx9   , (int)g_by9-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_bx9   , (int)g_by9+1 , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   + 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px-1 + 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px+1 + 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   + 16 , (int)g_py-1 , RGB(255 , 0 , 0) ) ;
+	SetPixel( hDC , (int)g_px   + 16 , (int)g_py+1 , RGB(255 , 0 , 0) ) ;
 
 	EndPaint( hWnd_ , &ps );
 

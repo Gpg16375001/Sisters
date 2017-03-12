@@ -47,6 +47,8 @@ class Physics
 			, DegToRad	( 0.017453293f )
 			, gravity_	( 9.81f )
 			, mass_		( 1.0f )
+			, r2_		( 1.414213562f )
+			, r3_		( 1.732050807f )
 		{
 			
 		} ;
@@ -71,11 +73,11 @@ class Physics
 		/*/
 		float AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  ) ;
 		/*/
-		/*	使い方：2点間をつなぐ直線を求める
-		/*	引数　：座標をあらわすfloat配列２つ
-		/*	返り値：直線の傾き
+		/*	使い方：傾きから高さを求める
+		/*	引数　：x方向のベクトル と 移動移動方向のベクトル
+		/*	返り値：Y軸の高さ
 		/*/
-		float slopePoint( float *arg_point1 , float *arg_point2  ) ;
+		float slopePoint( Vector2D_compo arg_Xvector , Vector2D_compo arg_Yvector ) ;
 		/*/
 		/*	使い方：ベクトルを polar から component に変換
 		/*	引数　：polar 表示のベクトル
@@ -101,10 +103,27 @@ class Physics
 		/*/
 		int setMass( float arg_mass ) ;
 
+		/*/
+		/*	√2 を取得
+		/*/
+		float r2( ) const {
+			return( r2_ ) ;
+		} ;
+
+		/*/
+		/*	√3 を取得
+		/*/
+		float r3( ) const {
+			return( r3_ ) ;
+		} ;
+
 	private :
 		float Pi ;
 		float RadToDeg ;
 		float DegToRad ;
+
+		float r2_ ;
+		float r3_ ;
 
 		float gravity_ ;	// 重力加速度
 		float mass_ ;		// 質量

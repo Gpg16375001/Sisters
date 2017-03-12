@@ -15,21 +15,20 @@ ________________________________________________________________________________
 #include <windows.h>
 #include "Common.h"
 
-#define	PLAYER	0
-
 /*/
 /*	コンストラクタ
 /*/
 Player::Player( )
-	: Pmode_( P_init )
-	, Player_xpos_( 200.0f )
-	, Player_ypos_( 200.0f )
-	, Player_xspd_( 0.0f )
-	, Player_yspd_( 0.0f )
-	, Player_jspd_( 0.0f )
+	: Pmode_( P_init )					// 初期アクションモード
+	, Player_xpos_( 0.0f )				// 描画する X ポジション
+	, Player_ypos_( 0.0f )				// 描画する Y ポジション
+	, Player_xspd_( 0.0f )				// X方向のスピード
+	, Player_yspd_( 0.0f )				// Y方向のスピード
+	, Player_jspd_( 0.0f )				// ジャンプの初速
 	, arrayX_( 0 )
 	, arrayY_( 0 )
-	, lrflg_( true )
+	, lrflg_( false )					// false : 左	true : 右
+	, Player_acceration( 0.0f )			// プレイヤーの加速度
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -53,15 +52,20 @@ void Player::Initialize( )
 {
 	Finalize( ) ;
 	printf( "Player -> " ) ;
-	Pmode_		 = P_init ;
-	Player_xpos_ = 200.0f ;
-	Player_ypos_ = 200.0f ;
-	Player_xspd_ = 0.0f ;
-	Player_yspd_ = 0.0f ;
-	Player_jspd_ = 0.0f ;
-	arrayX_		 = 0 ;
-	arrayY_		 = 0 ;
-	lrflg_		 = true ;
+
+	/*/
+	/*	プレイヤー 初期セット
+	/*/
+	Pmode_				= P_init ;		// 初期アクションモード
+	Player_xpos_		= 200.0f ;		// 描画する X ポジション
+	Player_ypos_		= 200.0f ;		// 描画する Y ポジション
+	Player_xspd_		= 0.0f ;		// X方向のスピード
+	Player_yspd_		= 0.0f ;		// Y方向のスピード
+	Player_jspd_		= 0.0f ;		// ジャンプの初速
+	arrayX_				= 0 ;
+	arrayY_				= 0 ;
+	lrflg_				= true ;		// false : 左	true : 右
+	Player_acceration	= 4.0f ;		// プレイヤーの加速度
 
 	Player_.Finalize( ) ;
 	Player_.Initialize( ) ;
@@ -69,6 +73,34 @@ void Player::Initialize( )
 	Chip::GetInstance()->Finalize( ) ;
 
 	Player_.setMass( 0.08f ) ;
+
+	/*/
+	/*	アニメーションセット
+	/*	RECT ( left , top , right , bottom )
+	/*/
+	AnimationData P_stop[ ] = {
+		{ 0 , 8 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 0 , 8 , {200 * 1 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 0 , 8 , {200 * 2 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 0 , 8 , {200 * 3 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
+	AnimationData P_walk[ ] = {
+		{ 0 , 8 , {200 * 4 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 0 , 8 , {200 * 5 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 0 , 8 , {200 * 6 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 0 , 8 , {200 * 7 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
+	AnimationData P_jump[ ] = {
+		{ 0 , 4 , {200 * 8 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
+	AnimationData P_drop[ ] = {
+		{ 0 , 4 , {200 * 9 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
+
+	memcpy( &Panim_stop_ , P_stop , 4 * sizeof( AnimationData ) ) ;
+	memcpy( &Panim_walk_ , P_walk , 4 * sizeof( AnimationData ) ) ;
+	memcpy( &Panim_jump_ , P_jump , 1 * sizeof( AnimationData ) ) ;
+	memcpy( &Panim_drop_ , P_drop , 1 * sizeof( AnimationData ) ) ;
 
 }
 
@@ -88,6 +120,13 @@ void Player::Finalize( )
 	arrayY_ = 0 ;
 	lrflg_ = false ;
 	Pmode_ = P_init ;
+	Player_acceration = 0.0f ;
+
+	// アニメーション
+	memset( &Panim_stop_ , 0 , 4 * sizeof( AnimationData ) ) ;
+	memset( &Panim_walk_ , 0 , 4 * sizeof( AnimationData ) ) ;
+	memset( &Panim_jump_ , 0 , 1 * sizeof( AnimationData ) ) ;
+	memset( &Panim_drop_ , 0 , 1 * sizeof( AnimationData ) ) ;
 
 }
 
@@ -103,6 +142,11 @@ void Player::PlayerAction( )
 		// 初期セット
 		case P_init :
 			Pinit( ) ;
+			break ;
+
+		// 静止アクション 初期セット
+		case P_sinit :
+			Psinit( ) ;
 			break ;
 
 		// 静止アクション
@@ -139,10 +183,10 @@ void Player::PlayerAction( )
 void Player::Pinit( )
 {
 	/*/
-	/*	___/ キャラクター /___________________
+	/*	___/ キャラクター 初期セット /___________________
 	/*/
 	Sprite::GetInstance()->setBmpData(
-			PLAYER ,
+			0 ,
 			7 ,
 			Player_xpos_ , Player_ypos_ ,
 			0 , 0 ,
@@ -152,49 +196,61 @@ void Player::Pinit( )
 			0
 		) ;
 
+	PlayerAnim_.setAnimData( Panim_stop_ ) ;
+
+	Pmode_ = P_sinit ;
+
+}
+
+/*/
+/*	0 : 止まり時 初期セット
+/*/
+void Player::Psinit( )
+{
+	PlayerAnim_.setAnimData( Panim_stop_ ) ;
+
 	Pmode_ = P_stop ;
 
 }
 
 /*/
-/*	0 : 止まり時
+/*	1 : 止まり時
 /*/
 void Player::Pstop( )
 {
+	PlayerAnim_.setAnimData( Panim_stop_ ) ;
 	float fcheck = FootCheck() ;
 	if ( fcheck != 0 )
 	{
 		if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 		{
+			PlayerAnim_.setAnimData( Panim_walk_ ) ;
 			Pmode_ = P_walk ;
 		}
 		if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 		{
+			PlayerAnim_.setAnimData( Panim_walk_ ) ;
 			Pmode_ = P_walk ;
 		}
+
 		if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 		{
 			Pmode_ = P_jinit ;
 		}
 
 	} else {
+		PlayerAnim_.setAnimData( Panim_drop_ ) ;
 		Pmode_ = P_drop ;
 	}
 
 }
 
 /*/
-/*	1 : 左右歩き
+/*	2 : 左右歩き
 /*/
 void Player::Pwalk( )
 {
-	float fcheck = FootCheck() ;
-	if ( fcheck != 0 )
-	{
-		Player_ypos_ = fcheck ;
-	} else {
-		Pmode_ = P_drop ;
-	}
+	Pmode_ = P_sinit ;
 
 	// 左右チェック
 	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
@@ -203,42 +259,55 @@ void Player::Pwalk( )
 		{
 			if ( Chip::GetInstance()->getScrollX() <= 32 )
 			{
-				Player_xspd_ = -8.0f ;
+				Player_xspd_ = -Player_acceration ;
 				Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-				Player_xspd_ = 0.0f ;
+				Pmode_ = P_walk ;		
 			}
 		}
 	}
-
 	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 	{
 		if ( Collision() )
 		{
 			if ( Chip::GetInstance()->getScrollX() <= 32 )
 			{
-				Player_xspd_ = 8.0f ;
+				Player_xspd_ = Player_acceration ;
 				Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-				Player_xspd_ = 0.0f ;
+				Pmode_ = P_walk ;		
 			}
 		}
 	}
 
-	Pmode_ = P_stop ;		
+	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
+	{
+		Pmode_ = P_jinit ;
+	}
+
+	float fcheck = FootCheck() ;
+	if ( fcheck != 0 )
+	{
+		Player_ypos_ = fcheck ;
+	} else {
+		PlayerAnim_.setAnimData( Panim_drop_ ) ;
+		Pmode_ = P_drop ;
+	}
 
 }
 
 /*/
-/*	2 : ジャンプ初期化
+/*	3 : ジャンプ初期化
 /*/
 void Player::Pjinit( )
 {
 	Player_jspd_ = -18 ;
+	PlayerAnim_.setAnimData( Panim_jump_ ) ;
 	Pmode_ = P_jump ;
+
 }
 
 /*/
-/*	3 : ジャンプ
-/*	4 : 落下
+/*	4 : ジャンプ
+/*	5 : 落下
 /*/
 void Player::Pjump( )
 {
@@ -254,9 +323,8 @@ void Player::Pjump( )
 			{
 				if ( Chip::GetInstance()->getScrollX() <= 32 )
 				{
-					Player_xspd_ = -4.0f ;
+					Player_xspd_ = -Player_acceration ;
 					Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-					Player_xspd_ = 0.0f ;
 				}
 			}
 		}
@@ -267,15 +335,15 @@ void Player::Pjump( )
 			{
 				if ( Chip::GetInstance()->getScrollX() <= 32 )
 				{
-					Player_xspd_ = 4.0f ;
+					Player_xspd_ = Player_acceration ;
 					Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-					Player_xspd_ = 0.0f ;
 				}
 			}
 		}
 
 		if ( Player_yspd_ >= 0 )
 		{
+			PlayerAnim_.setAnimData( Panim_drop_ ) ;
 			Pmode_ = P_drop ;
 		}
 	}
@@ -289,9 +357,8 @@ void Player::Pjump( )
 			{
 				if ( Chip::GetInstance()->getScrollX() <= 32 )
 				{
-					Player_xspd_ = -4.0f ;
+					Player_xspd_ = -Player_acceration ;
 					Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-					Player_xspd_ = 0.0f ;
 				}
 			}
 		}
@@ -302,9 +369,8 @@ void Player::Pjump( )
 			{
 				if ( Chip::GetInstance()->getScrollX() <= 32 )
 				{
-					Player_xspd_ = 4.0f ;
+					Player_xspd_ = Player_acceration ;
 					Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-					Player_xspd_ = 0.0f ;
 				}
 			}
 		}
@@ -315,7 +381,7 @@ void Player::Pjump( )
 			Player_jspd_ = 0.0f ;
 			Player_yspd_ = 0.0f ;
 			Player_ypos_ = fcheck ;
-			Pmode_ = P_stop ;
+			Pmode_ = P_sinit ;
 		}
 	}
 
@@ -329,22 +395,42 @@ float Player::FootCheck( )
 {
 	float footY = 0.0f ;
 	float px = 0.0f , py = 0.0f ;
+	float pl = 0.0f , pr = 0.0f ;
 	float bl = 0.0f , br = 0.0f , bt = 0.0f , bb = 0.0f ;
-
-	g_bx1 = g_bx2 = g_bx3 = g_bx4 = g_bx5 = g_bx6 = g_bx7 = g_bx8 = g_bx9 = 0 ;
 
 	// あたり判定をとるためのチップデータ
 	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
 
 	printf( "arrayX = %d  arrayY = %d \n" , arrayX_ , arrayY_ - 1 ) ;	// 次のフレームの自分の座標位置
-/*	printf( "chipTable = %d \n" ,										// 自分の座標位置の番号
+
+/*
+	printf( "chipTable = %d \n" ,										// 自分の座標位置の番号
 			chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ]
 		) ;
 */
+	/*/
+	/*	player 判定位置の調整
+	/*/
+	if ( lrflg_ )
+	{
+		//  true : 右向き
+		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() ;
+		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
+		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() ;
+	}
+	else
+	{
+		//  false : 左向き
+		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 8 ;
+		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
+		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() ;
+	}
+	g_px = px + Chip::GetInstance()->getScrollX() ;
+	g_py = py - 54 - 8 ;
 
-	px = Player_xpos_ - Chip::GetInstance()->getScrollX() ;
-	py = Player_ypos_ - Chip::GetInstance()->getScrollY() ;
-
+	// ジャンプ中
 	if ( Player_yspd_ < 0.0f )
 	{
 		return( 0 ) ;
@@ -363,40 +449,128 @@ float Player::FootCheck( )
 
 			switch ( chipTable[ i ] )
 			{
+
 				// 通常ブロックの場合
 				case 1 :
-				case 2 :
-				case 5 :
-				case 6 :
 					if ( (bt <= py) && (py < bb) )
 					{
-						if ( (bl <= px) && (px <= br) )
+						if ( (bl <= pr) && (pl <= br) )
 						{
 							footY = bt ;
 
-							printf( "chipTable = %d _ x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
 							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
 					}
 					break ;
 
+				case 5 :
 				case 7 :
-					if ( (bt <= py) && (py <= bb) )
+					int slopePosU[ 64 ] ;
+
+					for ( int v = 0 ; v < 64 ; ++v )
+					{
+						slopePosU[ v ] = v + 12 ;
+					}
+					slopePosU[ 56 ] = 4 ;
+					slopePosU[ 60 ] = 4 ;
+
+					if ( bb - slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] <= Player_ypos_ )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-							footY = bt - ((int)px % CHIP_W) ;
+							footY = bb - slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ;
 
-							printf( "chipTable = %d _ x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "slope[ %d ] : %d\n" , Chip::GetInstance()->getScrollX() % 64 * -1 , slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ) ;
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+
+						}
+					} else if ( (Player_xspd_ <= 0) && (bl <= px) && (px <= br) ) {
+						slopePosU[ 56 ] = 56 ;
+						slopePosU[ 60 ] = 8 ;
+						footY = bb - 64 - slopePosU[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ;
+					}
+					break  ;
+
+				case 6 :
+				case 8 :
+					int slopePosD[ 64 ] ;
+
+					for ( int v = 0 ; v < 64 ; ++v )
+					{
+						slopePosD[ v ] = 64 - v ;
+					}
+					slopePosD[ 56 ] = 4 ;
+					slopePosD[ 60 ] = 60 ;
+
+					if ( bb - slopePosD[ Chip::GetInstance()->getScrollX() % 64 * -1 ] <= Player_ypos_ )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+							footY = bb - slopePosD[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ;
+
+							printf( "slope[ %d ] : %d\n" , Chip::GetInstance()->getScrollX() % 64 * -1 , slopePosD[ Chip::GetInstance()->getScrollX() % 64 * -1 ] ) ;
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
 							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
 					}
+					break ;
+
+/*
+				case 7 :
+					float b_top ;
+					Vector2D_compo temp_x ;
+					Vector2D_compo temp_y ;
+
+					temp_x.x = ( float )-Chip::GetInstance()->getScrollX() ;
+					temp_x.y = 0 ;
+					temp_y.x = 64 ;
+					temp_y.y = 64 ;
+					b_top = Player_.slopePoint( temp_x , temp_y ) + Player_ypos_ + 60 ;
+
+					if ( (b_top - Player_ypos_ - 60 <= 0) && ( Player_xspd_ >= 0 ) )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+							footY = b_top ;
+
+							printf( "slope : %f\n" , Player_.slopePoint( temp_x , temp_y ) ) ;
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+
+						}
+					}
+					break ;
+*/
+				case 50 :
+					float brad ;
+					float x ;
+					float y ;
+					float c2 ;
+					float c ;
+					float rad ;
+
+					brad = br - bl ;
+					x = br - (br - bl) - px ;
+					y = bb - (bb - bt) - py ;
+					c2 = x * x + y * y ;
+					c = sqrt( c2 ) ;
+
+					if ( brad >= c )
+					{
+						rad = sqrt( (c2 - x * x) ) ;
+						footY = bt - rad ;
+						printf( "On Hit !! \n" ) ;
+					}
+
 					break ;
 
 				default :
 					break ;
+
 			}
 		}
 	}
@@ -440,11 +614,21 @@ void Player::Update( )
 	printf( "Player : Action = %d\n" , Pmode_ ) ;
 
 	/*/
-	/*	___/ プレイヤー /___________________
+	/*	___/ プレイヤー 描画 /___________________
 	/*/
 	PlayerAction( ) ;
 
-	Player_xpos_ += Player_xspd_ ;
+	// 左右チェック
+	if ( Player_xspd_ < 0 )
+	{
+		lrflg_ = false ;
+	}
+	else if ( Player_xspd_ > 0 )
+	{
+		lrflg_ = true ;
+	}
+
+	// プレイヤー位置調整
 	if ( (-128 < Player_ypos_) && (Player_ypos_ < 800))
 	{
 		Player_ypos_ += Player_yspd_ ;
@@ -456,29 +640,37 @@ void Player::Update( )
 		arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
 		arrayY_ = ( int )( (Player_ypos_) / CHIP_H ) ;		// 配列座標を求める y
 	}
+
+	// プレイヤー描画	アニメーション
+	PlayerAnim_.playAnim( ) ;
+	AnimationData *nowAnim = PlayerAnim_.getNowAnim( ) ;
 	Sprite::GetInstance()->setBmpData(
-			PLAYER ,
+			nowAnim->bmpNo + lrflg_ ,
 			7 ,
 			Player_xpos_ + 4 ,		// 中心位置を調整
 			Player_ypos_ - 54 ,		// 中心位置を調整
-			0 , 0 ,
-			200 , 178 ,
+			nowAnim->cutRect.left ,
+			nowAnim->cutRect.top  ,
+			nowAnim->cutRect.right ,
+			nowAnim->cutRect.bottom ,
 			0.5f , 0.5f ,
 			255 ,
 			0
 		) ;
 
+	// デバッグ用
+	printf( "Player : left   = %d \n" , nowAnim->cutRect.left ) ;
+	printf( "Player : top    = %d \n" , nowAnim->cutRect.top ) ;
+	printf( "Player : right  = %d \n" , nowAnim->cutRect.right ) ;
+	printf( "Player : bottom = %d \n" , nowAnim->cutRect.bottom ) ;
+	printf( "Player : Xpos   = %8.4f \n" , Player_xpos_ ) ;
+	printf( "Player : Ypos   = %8.4f \n" , Player_ypos_ ) ;
+	printf( "Player : Xspd   = %8.4f \n" , Player_xspd_ ) ;
+	printf( "Player : Yspd   = %8.4f \n" , Player_yspd_ ) ;
+
 	// クリア
 	Player_xspd_ = 0.0f ;
 	Player_yspd_ = 0.0f ;
-
-	// デバッグ用
-	printf( "Player : Xpos = %8.4f \n" , Player_xpos_ ) ;
-	printf( "Player : Ypos = %8.4f \n" , Player_ypos_ ) ;
-	printf( "Player : Xspd = %8.4f \n" , Player_xspd_ ) ;
-	printf( "Player : Yspd = %8.4f \n" , Player_yspd_ ) ;
-	g_px = Player_xpos_ ;
-	g_py = Player_ypos_ - 54 - 8 ;
 
 }
 
