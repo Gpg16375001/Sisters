@@ -48,7 +48,8 @@ class Player
 		void Pjump( ) ;			// ジャンプ
 
 		float FootCheck( ) ;	// 足元チェック ( 足元の座標を返す )
-		float Collision( ) ;		// あたり判定
+		float HeadCheck( ) ;	// 頭の値判定 ( 頭の座標を返す )
+		float Collision( ) ;	// あたり判定
 
 		/*/
 		/*	 更新

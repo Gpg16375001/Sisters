@@ -12,7 +12,10 @@
 #include "../characters/Physics.h"
 #include "../characters/Player.h"
 
-extern int g_mapData01[ 64 * 12 ] ;
+#define CHIP_MAP_SIZE_X		256
+#define CHIP_MAP_SIZE_Y		12
+
+extern int g_mapData01[ CHIP_MAP_SIZE_X * CHIP_MAP_SIZE_Y ] ;
 extern int g_state ;
 
 extern float g_px , g_py ;		// デバッグ用 プレイヤーの座標

@@ -3,9 +3,6 @@
 #include "main.h"
 #include "Common.h"
 
-#define CHIP_MAP_SIZE_X	64
-#define CHIP_MAP_SIZE_Y	12
-
 int WINAPI WinMain( HINSTANCE , HINSTANCE , LPSTR , int )
 {
 	// クラス名とタイトルの設定

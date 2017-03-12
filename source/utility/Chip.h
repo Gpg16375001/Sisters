@@ -30,7 +30,7 @@ ________________________________________________________________________________
 #include <stdio.h>
 #include <math.h>
 
-#define CHIP_X	128
+#define CHIP_X	1024
 #define CHIP_Y	32
 #define CHIP_W	64
 #define CHIP_H	64

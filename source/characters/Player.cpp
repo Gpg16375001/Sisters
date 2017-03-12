@@ -341,6 +341,14 @@ void Player::Pjump( )
 			}
 		}
 
+		float hcheck = HeadCheck() ;
+		if ( hcheck != 0 )
+		{
+			Player_jspd_ = 0.0f ;
+			Player_yspd_ = 0.0f ;
+			Player_ypos_ = hcheck ;
+		}
+
 		if ( Player_yspd_ >= 0 )
 		{
 			PlayerAnim_.setAnimData( Panim_drop_ ) ;
@@ -403,11 +411,6 @@ float Player::FootCheck( )
 
 	printf( "arrayX = %d  arrayY = %d \n" , arrayX_ , arrayY_ - 1 ) ;	// 次のフレームの自分の座標位置
 
-/*
-	printf( "chipTable = %d \n" ,										// 自分の座標位置の番号
-			chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + arrayX_ ]
-		) ;
-*/
 	/*/
 	/*	player 判定位置の調整
 	/*/
@@ -562,10 +565,11 @@ float Player::FootCheck( )
 					if ( brad >= c )
 					{
 						rad = sqrt( (c2 - x * x) ) ;
-						footY = bt - rad ;
+						footY = bt + c - rad - 60 ;
+						printf( "px  : %f \n" , px ) ;
+						printf( "rad : %f \n" , rad ) ;
 						printf( "On Hit !! \n" ) ;
 					}
-
 					break ;
 
 				default :
@@ -576,6 +580,115 @@ float Player::FootCheck( )
 	}
 
 	return( footY ) ;
+}
+
+/*/
+/*	頭のあたり判定
+/*	頭の座標を返す
+/*/
+float Player::HeadCheck( )
+{
+	float headY = 0.0f ;
+	float px = 0.0f , py = 0.0f ;
+	float pl = 0.0f , pr = 0.0f ;
+	float bl = 0.0f , br = 0.0f , bt = 0.0f , bb = 0.0f ;
+
+	// あたり判定をとるためのチップデータ
+	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
+
+	/*/
+	/*	player 判定位置の調整
+	/*/
+	if ( lrflg_ )
+	{
+		//  true : 右向き
+		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() ;
+		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
+		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() - 64 ;
+	}
+	else
+	{
+		//  false : 左向き
+		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 8 ;
+		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
+		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() - 64 ;
+	}
+	g_px = px + Chip::GetInstance()->getScrollX() ;
+	g_py = py - 54 - 8 ;
+
+	// ジャンプ中
+	if ( Player_yspd_ > 0.0f )
+	{
+		return( 0 ) ;
+	}
+
+	// 判定をとる範囲　今は全体
+	for( int i = 0 ; i < (CHIP_X * CHIP_Y) ; ++i )
+	{
+		// 何か情報が入っているとき
+		if ( chipTable[ i ] != NULL )
+		{
+			bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
+			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
+			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
+
+			switch ( chipTable[ i ] )
+			{
+
+				// 通常ブロックの場合
+				case 1 :
+				case 5 :
+				case 7 :
+				case 6 :
+				case 8 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= pr) && (pl <= br) )
+						{
+							headY = bb + 64 ;
+
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , headY ) ;		// blockの座標位置
+
+						}
+					}
+					break ;
+
+				case 50 :
+					float brad ;
+					float x ;
+					float y ;
+					float c2 ;
+					float c ;
+					float rad ;
+
+					brad = br - bl ;
+					x = br - (br - bl) - px ;
+					y = bb - (bb - bt) - py ;
+					c2 = x * x + y * y ;
+					c = sqrt( c2 ) ;
+
+					if ( brad >= c )
+					{
+						rad = sqrt( (c2 - x * x) ) ;
+						headY = bt + c + rad ;
+						printf( "px  : %f \n" , px ) ;
+						printf( "rad : %f \n" , rad ) ;
+						printf( "On Hit !! \n" ) ;
+					}
+					break ;
+
+				default :
+					break ;
+
+			}
+		}
+	}
+
+	return( headY ) ;
 }
 
 /*/
