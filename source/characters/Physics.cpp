@@ -65,11 +65,63 @@ void Physics::Finalize( )
 }
 
 /*/
+/*	使い方：斜面をすべるかどうかを調べる
+/*	引数　：地面の角度 , 物体の重さ , 摩擦係数
+/*	返り値：true or false
+/*/
+bool Physics::checkMotion( float arg_angle , float arg_weight , float arg_coeff  )
+{
+	bool iRet = false ;
+
+	// 斜面の垂直抗力の計算
+	float normal = arg_weight * cosf( arg_angle * Pi / 180 ) ;
+
+	// 垂直抗力に垂直な力の計算
+	float perpForce = arg_weight * sinf( arg_angle * Pi / 180 ) ;
+
+	// 物体を静止させておこうとする最大静止摩擦力の計算
+	float stat_friction = arg_coeff * normal ;
+
+	// 物体が滑り出す場合は true
+	if ( perpForce > stat_friction )
+	{
+		iRet = true ;
+	}
+
+	return( iRet ) ;
+
+}
+
+/*/
+/*	使い方：斜面をすべる
+/*	引数　：地面の角度 , 物体の重さ , 動摩擦係数 , 質量
+/*	返り値：物体の加速度
+/*/
+float Physics::calcAccel( float arg_angle , float arg_weight , float arg_coeff , float arg_mass )
+{
+	// 斜面の垂直抗力の計算
+	float normal = arg_weight * cosf( arg_angle * Pi / 180 ) ;
+
+	// 垂直抗力に垂直な力の計算
+	float perpForce = arg_weight * sinf( arg_angle * Pi / 180 ) ;
+
+	// 部隊の運動を阻止しようとする運動摩擦力
+	float kin_friction = arg_coeff * normal ;
+
+	// 物体には当たらく合力の計算
+	float total_force = perpForce - kin_friction ;
+
+	// 物体の加速度を返す
+	return( total_force / arg_mass ) ;
+
+}
+
+/*/
 /*	使い方：加速度を求める
 /*	引数　：変化前のスピード , 変化後のスピード , 時間(秒)
 /*	返り値：加速度
 /*/
-float AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  )
+float Physics::AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  )
 {
 	return( (arg_v2 - arg_v1) / arg_time ) ;
 }

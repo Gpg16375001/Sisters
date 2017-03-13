@@ -80,7 +80,8 @@ class Player
 
 		// プレイヤーの物理的なもの
 		Physics Player_ ;
-		float	Player_acceration ;
+		float	Player_acceration_ ;
+		float	Player_mag_ ;
 
 		// アニメーション
 		Animation		PlayerAnim_ ;

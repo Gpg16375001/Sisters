@@ -67,6 +67,18 @@ class Physics
 		void Finalize( ) ;
 
 		/*/
+		/*	使い方：斜面をすべるかどうかを調べる
+		/*	引数　：地面の角度 , 物体の重さ , 摩擦係数
+		/*	返り値：true or false
+		/*/
+		bool checkMotion( float arg_angle , float arg_weight , float arg_coeff ) ;
+		/*/
+		/*	使い方：斜面をすべる
+		/*	引数　：地面の角度 , 物体の重さ , 動摩擦係数 , 質量
+		/*	返り値：物体の加速度
+		/*/
+		float calcAccel( float arg_angle , float arg_weight , float arg_coeff , float arg_mass ) ;
+		/*/
 		/*	使い方：加速度を求める
 		/*	引数　：変化前のスピード , 変化後のスピード , 時間(秒)
 		/*	返り値：加速度
@@ -114,6 +126,12 @@ class Physics
 		/*	質量の代入
 		/*/
 		int setMass( float arg_mass ) ;
+		/*/
+		/*	質量を取得
+		/*/
+		float getMass( ) const {
+			return( mass_ ) ;
+		} ;
 
 		/*/
 		/*	√2 を取得
