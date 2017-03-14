@@ -6,19 +6,20 @@
 #include <stdio.h>	// --- コンソール用
 
 #include "Common.h"	// --- 全ファイルでの共通ヘッダー
+#include "LoadMapData.h"
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
 	HDC					hDC;			// ディスプレイデバイスコンテキスト
 	PAINTSTRUCT			ps;				// 描画構造体
 	static HBITMAP s_hBackBufBmp ;		// バックバッファ
-	TCHAR s[512] ;						// デバッグ用
-
-	static 	int mouseX , mouseY ;
+	static OPENFILENAME	 ofn ;			// ファイルの保存
+	char s[512] ;						// デバッグ用
 	static 	int arrayX , arrayY ;
 	static 	int index ;
 	static	bool dragF = false ;
 
+	g_lParam = lParam ;
 
 	// --- メッセージで分岐
 	switch ( message )
@@ -50,27 +51,21 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			g_bDataBGTable[ 3 ].loadData( TEXT("source/cg/background03.bmp") , WINDOW_W , WINDOW_H ) ;
 
 			// スプライトの読み込み
-			g_bDataSprTable[ 0 ].loadData( TEXT("source/cg/Player.bmp") , 256 , 256 ) ;
-			g_bDataSprTable[ 1 ].loadData( TEXT("source/cg/Test.bmp") , 64 , 64 ) ;
-			g_bDataSprTable[ 2 ].loadData( TEXT("source/cg/Test.bmp") , 64 , 64 ) ;
-			g_bDataSprTable[ 3 ].loadData( TEXT("source/cg/Test.bmp") , 64 , 64 ) ;
-
-			// 画像のセット
-			g_bScreen.selectBmp( 0 ) ;
-			g_bgScreen[ 0 ].selectBmp( 2 ) ;
-			g_bgScreen[ 1 ].selectBmp( 3 ) ;
-			g_bgScreen[ 2 ].selectBmp( 1 ) ;
+			g_bDataSprTable[ 0 ].loadData( TEXT("source/cg/bg01.bmp") , 1000 , 1000 ) ;
+			g_bDataSprTable[ 1 ].loadData( TEXT("source/cg/chips/all_grass.bmp") , 320 , 256 ) ;
+			g_bDataSprTable[ 2 ].loadData( TEXT("source/cg/arrow.bmp") , 32 , 32 ) ;
+//			g_bDataSprTable[ 2 ].loadData( TEXT("source/cg/.bmp") , 64 , 64 ) ;
+//			g_bDataSprTable[ 3 ].loadData( TEXT("source/cg/.bmp") , 64 , 64 ) ;
 
 			// チップのセット
-			g_bDataCBGTable[ 0 ].loadData( TEXT("source/cg/Block.bmp") , 32 , 256 ) ;
-
-			// BGMのセット
-			g_sBGM.play( BGM_FILE_PASS_01 ) ;
+			g_bDataCBGTable[ 0 ].loadData( TEXT("source/cg/chips/all_grass.bmp") , 320 , 256 ) ;
 			
-			// アニメーションの初期セット
-			enum AnimName {
-				A_STANDBY ,
-			} ;
+			// pen
+			g_redPen = CreatePen( 0 , 1 , RGB(255 , 0 , 0) ) ;
+
+			// brush
+			g_brush[ 0 ] = CreateSolidBrush( RGB(153 , 153 , 153) ) ; // グレー
+			g_brush[ 1 ] = CreateSolidBrush( RGB(100 , 100 , 100) ) ; // 黒いグレー
 
 			break;
 
@@ -82,7 +77,14 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			g_key.update( );	// --- キー情報の更新
 
 			// --------------
-			SceneLoop( ) ;
+			if ( g_key.getKeyState( VK_F2 ) )
+			{
+				LoadMapData::ReLoad( ) ;
+			}
+
+			SetLoop( ) ;
+
+			// 描画
 			DrawLoop( ) ;
 
 			// --------------
@@ -91,46 +93,43 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			InvalidateRect( hWnd, NULL, FALSE );
 			break;
 
-		case MM_MCINOTIFY :
-			if ( wParam == MCI_NOTIFY_SUCCESSFUL ) {
-				printf( "SE再生終了\n" ) ;
-				g_sSE.stop( ) ;
-			}
-			break ;
-
 		/* -------------------------
 		|		WM_LBUTTONDOWN
 		+ ----------------------- */
 		case WM_LBUTTONDOWN :
+			// チップ変更
+			actionLoop( ) ;
+
 			// ドラッグフラグを立てる
 			dragF = true ;
 
 			// マウスのクリック座標の取得
-			mouseX = LOWORD( lParam ) ;
-			mouseY = HIWORD( lParam ) ;
+			g_mouseX = LOWORD( lParam ) ;
+			g_mouseY = HIWORD( lParam ) ;
 
-			// クリック座標を配列座標に直す
-			arrayX = (mouseX - 738 / 2) / (CHIP_X / 2) ;
-			arrayY = (mouseY - 64 / 2) / (CHIP_Y / 2) ;
+			// クリック座標を配列座標に直す-
+			arrayX = (g_mouseX - 32) / CHIP_W + g_scroll ;
+			arrayY = (g_mouseY - 32) / CHIP_H ;
 
 			// 配列座標を一次元座標に直す
 			index = arrayY * MAP_X + arrayX ;
 
 			if ( (index <= (MAP_X * MAP_Y))					// 要素数が配列のサイズ内で収まっていたら
-					&& (MAP_X >= arrayX) && (arrayX >= 0)	// 横幅が座標内
-					&& (MAP_Y >= arrayY) && (arrayY >= 0)	// 
+					&& (cell(2) < g_mouseX) && (g_mouseX < cell(48))	// 横幅が座標内
+					&& (cell(2) < g_mouseY) && (g_mouseY < cell(26))	// 
 				)
 			{
 				// 配列内の値を判定
 				if ( g_mapData01[ index ] == 0 ) {
 					// ブロックを表す値を代入
-					g_mapData01[ index ] = 1 ;
+					g_mapData01[ index ] = g_chip ;
 					printf( "X = %4d , Y = %4d  Set Chip\n" , arrayX , arrayY ) ;
 
 				} else {
 					// ブロックを消す
 					g_mapData01[ index ] = 0 ;
 					printf( "X = %4d , Y = %4d  Delete Chip\n" , arrayX , arrayY ) ;
+					dragF = false ;
 				}
 			}
 			break ;
@@ -143,36 +142,68 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			break ;
 
 		case WM_MOUSEMOVE :
-			if ( dragF ) {
-				// マウスのクリック座標の取得
-				mouseX = LOWORD( lParam ) ;
-				mouseY = HIWORD( lParam ) ;
+			if ( (cell(2) < g_mouseX) && (g_mouseX < cell(48))	// 横幅が座標内
+				&&(cell(2) < g_mouseY) && (g_mouseY < cell(26))	// 
+				)
+			{
+			} else {
+				dragF = false ;
+			}
 
-				// クリック座標を配列座標に直す
-				arrayX = mouseX / CHIP_X ;
-				arrayY = mouseY / CHIP_Y ;
+			// マウスのクリック座標の取得
+			g_mouseX = LOWORD( lParam ) ;
+			g_mouseY = HIWORD( lParam ) ;
 
-				// 配列座標を一次元座標に直す
-				index = arrayY * MAP_X + arrayX ;
+			// クリック座標を配列座標に直す
+			arrayX = (g_mouseX - 32) / CHIP_W + g_scroll ;
+			arrayY = (g_mouseY - 32) / CHIP_H ;
 
+			// 配列座標を一次元座標に直す
+			index = arrayY * MAP_X + arrayX ;
+
+			if ( dragF )
+			{
 				// 要素数が配列のサイズ内で収まっていたら
-				if ( index <= (MAP_X * MAP_Y) ) {
+				if ( (index <= (MAP_X * MAP_Y))					// 要素数が配列のサイズ内で収まっていたら
+						&& (cell(2) < g_mouseX) && (g_mouseX < cell(48))	// 横幅が座標内
+						&& (cell(2) < g_mouseY) && (g_mouseY < cell(26))	// 
+					)
+				{
 					// 配列内の値を判定
 					if ( g_mapData01[ index ] == 0 ) {
 						// ブロックを表す値を代入
-						g_mapData01[ index ] = 1 ;
+						g_mapData01[ index ] = g_chip ;
 						printf( "X = %4d , Y = %4d  Set Chip\n" , arrayX , arrayY ) ;
 					}
-				} 
+				}
+
+			} else if ( (g_mapData01[ index ] != 0) && (g_key.getKeyState(VK_SPACE)) ) {
+				// ブロックを消す
+				g_mapData01[ index ] = 0 ;
+				printf( "X = %4d , Y = %4d  Delete Chip\n" , arrayX , arrayY ) ;
 			}
+
+
 			break ;
 
 		/* -------------------------
 		|		WM_RBUTTONDOWN
 		+ ----------------------- */
 		case WM_RBUTTONDOWN :
-			g_cmap.CreateMapData( "map01" ) ;
+			funcFileSave( hWnd ) ;
 			printf( "Created MapData\n" ) ;
+			break ;
+
+		/* -------------------------
+		|		WM_KEYDOWN
+		+ ----------------------- */
+		case WM_KEYDOWN :
+			break ;
+
+		/* -------------------------
+		|		WM_KEYUP
+		+ ----------------------- */
+		case WM_KEYUP :
 			break ;
 
 		/* -------------------------
@@ -184,16 +215,6 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 
 			BitBlt( hDC , 0 , 0 , WINDOW_W , WINDOW_H , g_hBackBuf , 0 , 0 , SRCCOPY ) ;
 
-			// グリッド
-			for ( int x = 0 ; x < 32 ; x++ ) {
-				MoveToEx( hDC , (x * 32) , 0 , 0 ) ;
-				LineTo( hDC , (x * 32) , WINDOW_H ) ;
-			}
-			for ( int y = 0 ; y < 32 ; y++ ) {
-				MoveToEx( hDC , 0, (y * 32) , 0 ) ;
-				LineTo( hDC , WINDOW_W , (y * 32) ) ;
-			}
-
 			EndPaint( hWnd, &ps );
 			break;
 
@@ -202,6 +223,10 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 		+ ----------------------- */
 		case WM_DESTROY:
 			printf( "WM_DESTROYイベントが発行されました\n" );
+
+			// オブジェクトの削除
+			DeleteObject( g_redPen ) ;
+			DeleteObject( g_brush ) ;
 
 			// --- タイマーの削除
 			KillTimer( hWnd, 1 );
@@ -222,3 +247,7 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 
 	return 0;
 }
+
+
+
+

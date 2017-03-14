@@ -19,18 +19,11 @@
 #include "KeyManager.h"		// --- キーマネージャー
 
 #include "BitmapData.h"
-#include "BackDropScreen.h"
-#include "BackGround.h"
 #include "Sprite.h"
 #include <math.h>
-#include "SoundBGM.h"
-#include "SoundSE.h"
-#include "SceneLoop.h"
 #include "DrawLoop.h"
 #include "ChipBackGround.h"
 #include "TimeProc.h"
-#include "Player.h"
-#include "Animation.h"
 #include "CreateData.h"
 
 /* -----------------------------------------------------------------------------------------
@@ -48,14 +41,12 @@
 #define BMP_DATA_BG_MAX		8
 #define BMP_DATA_CBG_MAX	8
 
-#define BGM_FILE_PASS_01 ( TEXT( "source/sound/bgm01.wav" ) )
-#define SE_FILE_PASS_01 ( TEXT( "open source/sound/se01.wav alias se" ) )
-#define SE_FILE_PASS_02 ( TEXT( "open source/sound/bomb1.wav alias se" ) )
-
-#define MAP_X	25
-#define MAP_Y	18
+#define MAP_X	1024
+#define MAP_Y	12
 
 #define ANIM_DATA_MAX	128
+
+#define		cell( arg_cell )	(arg_cell * 16)
 
 /* -----------------------------------------------------------------------------------------
 |
@@ -68,6 +59,9 @@
 |       プロトタイプ宣言
 |
 + --------------------------------------------------------------------------------------- */
+VOID funcFileSave( HWND hWnd ) ;
+void SetLoop( ) ;
+void actionLoop( ) ;
 
 /* -----------------------------------------------------------------------------------------
 |
@@ -78,17 +72,20 @@
 extern ConsoleWindow g_cWin;	
 
 // --- ウィンドウなどのタイトル
-extern TCHAR g_szAppTitle[ ];
-extern TCHAR g_szWndClass[ ];
+extern TCHAR g_szAppTitle[ ] ;
+extern TCHAR g_szWndClass[ ] ;
 
 // --- インスタンスハンドル
-extern HINSTANCE g_hInstance;
+extern HINSTANCE g_hInstance ;
 
 // --- ウインドウハンドル
-extern HWND g_hWindow;	
+extern HWND g_hWindow ;	
+
+// --- lParam
+extern LPARAM g_lParam ;	
 
 // --- キーマネージャー
-extern KeyManager g_key;
+extern KeyManager g_key ;
 
 // ビットマップデータ
 extern BitmapData g_bDataSprTable[ BMP_DATA_SPR_MAX ] ;	// スプライト用
@@ -100,23 +97,8 @@ extern HDC g_hBackBuf ;
 // 共有のデバイスコンテキスト
 extern HDC g_hWorkBuf ;
 
-// バックドロップ
-extern BackDropScreen g_bScreen ;
-
-// バックグラウンド
-extern BackGround g_bgScreen[ BMP_DATA_BG_MAX ] ;
-
 // スプライト
 extern Sprite g_Spr[ BMP_DATA_SPR_MAX ] ;
-
-// BGM
-extern SoundBGM g_sBGM ;
-
-// SE
-extern SoundSE g_sSE ;
-
-// シーンループ
-extern int g_sceneNo ;
 
 // マップデータ
 extern int g_mapData01[ MAP_X * MAP_Y ] ;
@@ -127,10 +109,22 @@ extern BitmapData g_bDataCBGTable[ BMP_DATA_CBG_MAX ] ;
 // チップテーブル
 extern ChipBackGround g_CBG ;
 
-// プレイヤー
-extern Player g_player ;
-
 // マップデータ吐き出し
 extern CreateData g_cmap ;
+
+// pen
+extern HPEN g_redPen ;
+
+// brush
+extern HBRUSH g_brush[ 4 ] ;
+
+// scroll
+extern int g_scroll ;
+
+// chip select
+extern int g_chip ;
+
+// mouse
+extern int g_mouseX, g_mouseY ;
 
 

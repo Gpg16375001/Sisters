@@ -22,8 +22,8 @@ ________________________________________________________________________________
 ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 */
 
-#define CHIP_X	32
-#define CHIP_Y	32
+#define CHIP_X	1024
+#define CHIP_Y	12
 #define CHIP_W	32
 #define CHIP_H	32
 

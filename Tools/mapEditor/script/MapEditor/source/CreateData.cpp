@@ -9,7 +9,7 @@
 #include "Common.h"
 
 void CreateData::CreateMapData( const char* fname ) {
-	sprintf( buf , "source/MapData/%s.txt" , fname ) ;
+	sprintf( buf , "%s" , fname ) ;
 	FILE *fp = fopen( buf , "w" ) ;
 
 	if ( fp == nullptr )
@@ -17,14 +17,14 @@ void CreateData::CreateMapData( const char* fname ) {
 		return ;
 	}
 
-	fprintf( fp , "int g_mapData01[ MAP_X * MAP_Y ] = {\n") ;
+//	fprintf( fp , "int g_mapData01[ %d * %d ] = {\n" , MAP_X , MAP_Y) ;
 	for ( int i = 0 ; i < (MAP_X * MAP_Y) ; i++ ) {
 		fprintf( fp , "%3d," , g_mapData01[ i ] ) ;
-		if ( (i % MAP_X) == 24 ) {
+		if ( (i % MAP_X) == (MAP_X - 1) ) {
 			fprintf( fp , "\n" ) ;
 		}
 	}
-	fprintf( fp , "} ;\n") ;
+//	fprintf( fp , "} ;\n") ;
 
 	fclose( fp ) ;
 

@@ -19,9 +19,10 @@ ________________________________________________________________________________
 // コンストラクタ
 ChipBackGround::ChipBackGround( ) {
 	// インスタンス化時の初期化
-	m_bmpNo = 0 ;
+	m_bmpNo	= 0 ;
 	m_x		= 0 ;
 	m_y		= 0 ;
+
 	clearChip( ) ;
 }
 
@@ -64,20 +65,20 @@ int ChipBackGround::clearChip( ) {
 int ChipBackGround::draw( ) {
 	int i ;
 	
-	m_x = 738 ;
-	m_y = 64 ;
+	m_x = 32 ;
+	m_y = 32 ;
 	SelectObject( g_hWorkBuf , g_bDataCBGTable[ m_bmpNo ].getBmpData( ) ) ;
 	for ( i = 0 ; i < ( CHIP_X * CHIP_Y ) ; i++ ) {
 		if ( m_chipTable[ i ] != 0 ) {
 			TransparentBlt(
 				g_hBackBuf ,
-				(( i % CHIP_X ) * CHIP_W + m_x) / 2 ,
-				(( i / CHIP_Y ) * CHIP_H + m_y) / 2 ,
-				CHIP_W / 2 ,
-				CHIP_H / 2 ,
+				(( (i - g_scroll) % CHIP_X ) * CHIP_W + m_x) ,
+				(( i / CHIP_X ) * CHIP_H + m_y) ,
+				CHIP_W ,
+				CHIP_H ,
 				g_hWorkBuf ,
+				m_chipTable[ i ] * CHIP_W ,
 				0 ,
-				m_chipTable[ i ] * CHIP_H ,
 				CHIP_W ,
 				CHIP_H ,
 				RGB( 0 , 255 , 0 )

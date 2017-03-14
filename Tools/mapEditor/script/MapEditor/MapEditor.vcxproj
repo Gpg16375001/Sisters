@@ -42,6 +42,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -65,19 +66,18 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>winmm.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Animation.cpp" />
-    <ClCompile Include="source\BackDropScreen.cpp" />
-    <ClCompile Include="source\BackGround.cpp" />
     <ClCompile Include="source\BitmapData.cpp" />
     <ClCompile Include="source\ChipBackGround.cpp" />
     <ClCompile Include="source\Common.cpp" />
@@ -85,19 +85,13 @@
     <ClCompile Include="source\CreateData.cpp" />
     <ClCompile Include="source\DrawLoop.cpp" />
     <ClCompile Include="source\KeyManager.cpp" />
-    <ClCompile Include="source\Player.cpp" />
-    <ClCompile Include="source\SceneLoop.cpp" />
-    <ClCompile Include="source\SoundBGM.cpp" />
-    <ClCompile Include="source\SoundSE.cpp" />
+    <ClCompile Include="source\LoadMapData.cpp" />
     <ClCompile Include="source\Sprite.cpp" />
     <ClCompile Include="source\TimeProc.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
     <ClCompile Include="source\WndProc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Animation.h" />
-    <ClInclude Include="source\BackDropScreen.h" />
-    <ClInclude Include="source\BackGround.h" />
     <ClInclude Include="source\BitmapData.h" />
     <ClInclude Include="source\ChipBackGround.h" />
     <ClInclude Include="source\Common.h" />
@@ -105,10 +99,7 @@
     <ClInclude Include="source\CreateData.h" />
     <ClInclude Include="source\DrawLoop.h" />
     <ClInclude Include="source\KeyManager.h" />
-    <ClInclude Include="source\Player.h" />
-    <ClInclude Include="source\SceneLoop.h" />
-    <ClInclude Include="source\SoundBGM.h" />
-    <ClInclude Include="source\SoundSE.h" />
+    <ClInclude Include="source\LoadMapData.h" />
     <ClInclude Include="source\Sprite.h" />
     <ClInclude Include="source\TimeProc.h" />
     <ClInclude Include="source\WndProc.h" />
