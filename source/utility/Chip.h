@@ -316,7 +316,6 @@ class Chip
 		int renderMap_w_ , renderMap_h_ ;								// 一画面上のマップの幅と高さ
 		int scrollX_ , scrollY_ ;										// スクロール座標
 
-
 } ;
 
 

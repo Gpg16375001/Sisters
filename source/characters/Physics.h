@@ -27,7 +27,7 @@ struct Vector2D_compo {
 /*	ベクトル：大きさと向き polar
 /*/
 struct Vector2D_polar {
-	// magnitude , degree
+	// magnitude , degree 度
 	float mag , deg ;
 } ;
 

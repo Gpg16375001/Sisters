@@ -22,14 +22,11 @@ Player::Player( )
 	: Pmode_( P_init )					// 初期アクションモード
 	, Player_xpos_( 0.0f )				// 描画する X ポジション
 	, Player_ypos_( 0.0f )				// 描画する Y ポジション
-	, Player_xspd_( 0.0f )				// X方向のスピード
-	, Player_yspd_( 0.0f )				// Y方向のスピード
-	, Player_jspd_( 0.0f )				// ジャンプの初速
 	, arrayX_( 0 )
 	, arrayY_( 0 )
 	, lrflg_( false )					// false : 左	true : 右
-	, Player_acceration_( 0.0f )			// プレイヤーの加速度
-	, Player_mag_( 0.0f )				// プレイヤーの移動量
+	, Player_acceration_( 0.0f )		// プレイヤーの加速度
+	, scrollx( 0 )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -60,14 +57,19 @@ void Player::Initialize( )
 	Pmode_				= P_init ;		// 初期アクションモード
 	Player_xpos_		= 200.0f ;		// 描画する X ポジション
 	Player_ypos_		= 200.0f ;		// 描画する Y ポジション
-	Player_xspd_		= 0.0f ;		// X方向のスピード
-	Player_yspd_		= 0.0f ;		// Y方向のスピード
-	Player_jspd_		= 0.0f ;		// ジャンプの初速
 	arrayX_				= 0 ;
 	arrayY_				= 0 ;
 	lrflg_				= true ;		// false : 左	true : 右
 	Player_acceration_	= 0.098f ;		// プレイヤーの加速度
-	Player_mag_			= 0.0f ;
+	Player_mag_.x		= 0.0f ;		// プレイヤーの移動量 x
+	Player_mag_.y		= 0.0f ;		// プレイヤーの移動量 y
+	Player_spd_.x		= 0.0f ;
+	Player_spd_.y		= 0.0f ;
+	Player_vec_.deg		= 0.0f ;
+	Player_vec_.mag		= 0.0f ;
+	scrollflg[ 0 ]		= false ;
+	scrollflg[ 1 ]		= false ;
+	scrollx				= 0 ;
 
 	Player_.Finalize( ) ;
 	Player_.Initialize( ) ;
@@ -75,6 +77,9 @@ void Player::Initialize( )
 	Chip::GetInstance()->Finalize( ) ;
 
 	Player_.setMass( 4.5f ) ;
+
+	// 開始地点の設定
+	Chip::GetInstance()->setScrollSize( -600 , 0 ) ;
 
 	/*/
 	/*	アニメーションセット
@@ -115,15 +120,20 @@ void Player::Finalize( )
 
 	Player_xpos_		= 0.0f ;
 	Player_ypos_		= 0.0f ;
-	Player_xspd_		= 0.0f ;
-	Player_yspd_		= 0.0f ;
-	Player_jspd_		= 0.0f ;
 	arrayX_				= 0 ;
 	arrayY_				= 0 ;
 	lrflg_				= false ;
 	Pmode_				= P_init ;
 	Player_acceration_	= 0.0f ;
-	Player_mag_			= 0.0f ;
+	Player_mag_.x		= 0.0f ;		// プレイヤーの移動量 x
+	Player_mag_.y		= 0.0f ;		// プレイヤーの移動量 y
+	Player_spd_.x		= 0.0f ;
+	Player_spd_.y		= 0.0f ;
+	Player_vec_.deg		= 0.0f ;
+	Player_vec_.mag		= 0.0f ;
+	scrollflg[ 0 ]		= false ;
+	scrollflg[ 1 ]		= false ;
+	scrollx				= 0 ;
 
 	// アニメーション
 	memset( &Panim_stop_ , 0 , 4 * sizeof( AnimationData ) ) ;
@@ -210,7 +220,10 @@ void Player::Pinit( )
 /*/
 void Player::Psinit( )
 {
-	PlayerAnim_.setAnimData( Panim_stop_ ) ;
+	if ( (-1.0f < Player_spd_.x) && (Player_spd_.x < 1.0f) )
+	{
+		PlayerAnim_.setAnimData( Panim_stop_ ) ;
+	}
 
 	Pmode_ = P_stop ;
 
@@ -221,8 +234,12 @@ void Player::Psinit( )
 /*/
 void Player::Pstop( )
 {
-	Player_mag_ *= 0.98f ;
-	PlayerAnim_.setAnimData( Panim_stop_ ) ;
+	if ( (-1.0f < Player_spd_.x) && (Player_spd_.x < 1.0f) )
+	{
+		PlayerAnim_.setAnimData( Panim_stop_ ) ;
+	}
+
+	Player_mag_.x *= 0.98f ;
 	float fcheck = FootCheck() ;
 	if ( fcheck != 0 )
 	{
@@ -261,38 +278,32 @@ void Player::Pwalk( )
 	// 左右チェック
 	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 	{
-		if ( Collision() )
+		if ( Chip::GetInstance()->getScrollX() <= 32 )
 		{
-			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			Player_mag_.x += -Player_acceration_ ;
+			// もし右に動いていたら
+			if ( Player_spd_.x > 0 )
 			{
-				Player_mag_ += -Player_acceration_ ;
-				// もし右に動いていたら
-				if ( Player_xspd_ > 0 )
-				{
-					Player_mag_ *= 0.98f ;
-				}
-				// 左右チェック
-				lrflg_ = false ;
-				Pmode_ = P_walk ;
+				Player_mag_.x *= 0.98f ;
 			}
+			// 左右チェック
+			lrflg_ = false ;
+			Pmode_ = P_walk ;
 		}
 	}
 	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 	{
-		if ( Collision() )
+		if ( Chip::GetInstance()->getScrollX() <= 32 )
 		{
-			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			Player_mag_.x += Player_acceration_ ;
+			// もし左に動いていたら
+			if ( Player_spd_.x < 0 )
 			{
-				Player_mag_ += Player_acceration_ ;
-				// もし左に動いていたら
-				if ( Player_xspd_ < 0 )
-				{
-					Player_mag_ *= 0.98f ;
-				}
-				// 左右チェック
-				lrflg_ = true ;
-				Pmode_ = P_walk ;		
+				Player_mag_.x *= 0.98f ;
 			}
+			// 左右チェック
+			lrflg_ = true ;
+			Pmode_ = P_walk ;		
 		}
 	}
 
@@ -317,7 +328,7 @@ void Player::Pwalk( )
 /*/
 void Player::Pjinit( )
 {
-	Player_jspd_ = -18 ;
+	Player_mag_.y = -18 ;
 	PlayerAnim_.setAnimData( Panim_jump_ ) ;
 	Pmode_ = P_jump ;
 
@@ -329,48 +340,41 @@ void Player::Pjinit( )
 /*/
 void Player::Pjump( )
 {
-	Player_yspd_ += Player_jspd_ ;
-	Player_jspd_ += Player_.Weight2D().y / 60 ;
+	Player_mag_.y += Player_.Weight2D().y / 60 ;
 
 	if ( Pmode_ == P_jump )
 	{
 		// 左右チェック
 		if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 		{
-			if ( Collision() )
+			if ( Chip::GetInstance()->getScrollX() <= 32 )
 			{
-				if ( Chip::GetInstance()->getScrollX() <= 32 )
-				{
-					// 左右チェック
-					lrflg_ = false ;
+				// 左右チェック
+				lrflg_ = false ;
 
-					Player_mag_ += -Player_acceration_ ;
-				}
+				Player_mag_.x += -Player_acceration_ ;
 			}
 		}
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 		{
-			if ( Collision() )
+			if ( Chip::GetInstance()->getScrollX() <= 32 )
 			{
-				if ( Chip::GetInstance()->getScrollX() <= 32 )
-				{
-					// 左右チェック
-					lrflg_ = true ;
-					Player_mag_ += Player_acceration_ ;
-				}
+				// 左右チェック
+				lrflg_ = true ;
+				Player_mag_.x += Player_acceration_ ;
 			}
 		}
 
 		float hcheck = HeadCheck() ;
 		if ( hcheck != 0 )
 		{
-			Player_jspd_ = 0.0f ;
-			Player_yspd_ = 0.0f ;
+			Player_mag_.y = 0.0f ;
+			Player_spd_.y = 0.0f ;
 			Player_ypos_ = hcheck ;
 		}
 
-		if ( Player_yspd_ >= 0 )
+		if ( Player_mag_.y >= 0 )
 		{
 			PlayerAnim_.setAnimData( Panim_drop_ ) ;
 			Pmode_ = P_drop ;
@@ -382,32 +386,27 @@ void Player::Pjump( )
 		// 左右チェック
 		if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 		{
-			if ( Collision() )
+			if ( Chip::GetInstance()->getScrollX() <= 32 )
 			{
-				if ( Chip::GetInstance()->getScrollX() <= 32 )
-				{
-					Player_mag_ += -Player_acceration_ ;
-				}
+				Player_mag_.x += -Player_acceration_ ;
 			}
 		}
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 		{
-			if ( Collision() )
+			if ( Chip::GetInstance()->getScrollX() <= 32 )
 			{
-				if ( Chip::GetInstance()->getScrollX() <= 32 )
-				{
-					Player_mag_ += Player_acceration_ ;
-				}
+				Player_mag_.x += Player_acceration_ ;
 			}
 		}
 
 		float fcheck = FootCheck() ;
 		if ( fcheck != 0 )
 		{
-			Player_jspd_ = 0.0f ;
-			Player_yspd_ = 0.0f ;
+			Player_mag_.y = 0.0f ;
+			Player_spd_.y = 0.0f ;
 			Player_ypos_ = fcheck ;
+			PlayerAnim_.setAnimData( Panim_walk_ ) ;
 			Pmode_ = P_sinit ;
 		}
 	}
@@ -436,24 +435,24 @@ float Player::FootCheck( )
 	if ( lrflg_ )
 	{
 		//  true : 右向き
-		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() ;
-		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
-		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() ;
+		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
+		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 16 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() ;
 	}
 	else
 	{
 		//  false : 左向き
-		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 8 ;
-		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 12 ;
-		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() ;
+		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
+		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 12 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() ;
 	}
 	g_px = px + Chip::GetInstance()->getScrollX() ;
 	g_py = py - 54 - 8 ;
 
 	// ジャンプ中
-	if ( Player_yspd_ < 0.0f )
+	if ( Player_spd_.y < 0.0f )
 	{
 		return( 0 ) ;
 	}
@@ -478,6 +477,7 @@ float Player::FootCheck( )
 					{
 						if ( (bl <= pr) && (pl <= br) )
 						{
+							Player_vec_.deg = 0.0f ;
 							footY = bt ;
 
 							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
@@ -502,7 +502,6 @@ float Player::FootCheck( )
 					break ;
 
 				case 7 :
-					float radY ;			// 坂の右下からの高さ( Y軸 )
 					Vector2D_compo P1 , P3 ;
 					Vector2D_compo P2 ;		// 基準点 (br,bb)
 					Vector2D_compo P4 ;		// プレイヤーの座標
@@ -542,13 +541,14 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br) && (bt-14 <= py) )
+					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br) && (bt-14+Player_mag_.x <= py) )
 					{
 						footY = cross[ 1 ] ;
 
 						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.55f ) )
 						{
-							Player_mag_ -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							Player_vec_.deg = -45.0f ;
+							Player_mag_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -601,7 +601,14 @@ float Player::FootCheck( )
 
 					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br) && (bt-14 <= py) )
 					{
+						Player_vec_.deg = 45.0f ;
 						footY = cross[ 1 ] ;
+
+						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.55f ) )
+						{
+							Player_mag_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							printf( "Motion was true. \n" ) ;
+						}
 					}
 					break ;
 
@@ -627,6 +634,27 @@ float Player::FootCheck( )
 						printf( "px  : %f \n" , px ) ;
 						printf( "rad : %f \n" , rad ) ;
 						printf( "On Hit !! \n" ) ;
+					}
+					break ;
+
+				// 動く床ブロックの場合
+				case 70 :
+					bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
+					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( 30 ) - 448 ) ;
+					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( 30 ) - 448 + CHIP_H ) ;
+
+					if ( (bt-8 <= py) && (py < bb-32) )
+					{
+						if ( (bl <= pr) && (pl <= br+64) )
+						{
+							Player_vec_.deg = 0.0f ;
+							footY = bt-2 ;
+
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+
+						}
 					}
 					break ;
 
@@ -660,24 +688,24 @@ float Player::HeadCheck( )
 	if ( lrflg_ )
 	{
 		//  true : 右向き
-		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() ;
-		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 16 ;
-		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() - 64 ;
+		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
+		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 16 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 64 ;
 	}
 	else
 	{
 		//  false : 左向き
-		px = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 8 ;
-		pl = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() - 12 ;
-		pr = Player_xpos_ + Player_xspd_ - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_yspd_ - Chip::GetInstance()->getScrollY() - 64 ;
+		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
+		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 12 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 64 ;
 	}
 	g_px = px + Chip::GetInstance()->getScrollX() ;
 	g_py = py - 54 - 8 ;
 
 	// ジャンプ中
-	if ( Player_yspd_ > 0.0f )
+	if ( Player_spd_.y > 0.0f )
 	{
 		return( 0 ) ;
 	}
@@ -703,7 +731,7 @@ float Player::HeadCheck( )
 				case 6 :
 				case 7 :
 				case 8 :
-					if ( (bt <= py) && (py < bb) )
+					if ( (bt-32 <= py) && (py < bb) )
 					{
 						if ( (bl <= pr) && (pl <= br) )
 						{
@@ -755,26 +783,99 @@ float Player::HeadCheck( )
 /*/
 float Player::Collision( )
 {
-	bool iRet = false ;
+	float collisionX = 0.0f ;
+	float px = 0.0f , py = 0.0f ;
+	float pl = 0.0f , pr = 0.0f ;
+	float bl = 0.0f , br = 0.0f , bt = 0.0f , bb = 0.0f ;
 
 	// あたり判定をとるためのチップデータ
 	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
 
-	// プレイヤーの配列座標
-	if ( chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ - 1) ] == 0 )
+	/*/
+	/*	player 判定位置の調整
+	/*/
+	if ( lrflg_ )
 	{
-		iRet = true ;
-		printf( "fCollision check was true! \n" ) ;
+		//  true : 右向き
+		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
+		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 24 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 32 ;
+	}
+	else
+	{
+		//  false : 左向き
+		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
+		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 32 ;
 	}
 
-	// プレイヤーの配列座標
-	if ( chipTable[ (CHIP_X * arrayY_) - (Chip::GetInstance()->getScrollX() / CHIP_W) + (arrayX_ + 1) ] == 0 )
+	// 判定をとる範囲　今は全体
+	for( int i = 0 ; i < (CHIP_X * CHIP_Y) ; ++i )
 	{
-		iRet = true ;
-		printf( "fCollision check was true! \n" ) ;
+		// 何か情報が入っているとき
+		if ( chipTable[ i ] != NULL )
+		{
+			bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
+			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
+			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
+			float center = bl + (br - bl) / 2 ;
+
+			switch ( chipTable[ i ] )
+			{
+
+				// 通常ブロックの場合
+				case 1 :
+				case 2 :
+					if ( Player_vec_.deg == 0 )
+					{
+						if ( (bt <= py) && (py < bb) )
+						{
+							if ( (bl <= pr) && (pl <= br) )
+							{
+								if ( center < px )
+								{
+									collisionX = br + Chip::GetInstance()->getScrollX() + 20 ;
+								} else if ( px < center ) {
+									collisionX = bl + Chip::GetInstance()->getScrollX() - 24 ;
+								}
+							}
+						}
+					}
+					break ;
+
+
+				/*/
+				/*	敵対オブジェクト : ダメージ
+				/*/
+				case 50 :
+					float brad ;
+					float x ;
+					float y ;
+					float c2 ;
+					float c ;
+
+					brad = br - bl ;
+					x = br - (br - bl) - px ;
+					y = bb - (bb - bt) - py ;
+					c2 = x * x + y * y ;
+					c = sqrt( c2 ) ;
+
+					if ( brad >= c )
+					{
+					}
+					break ;
+
+				default :
+					break ;
+
+			}
+		}
 	}
 	
-	return( iRet ) ;
+	return( collisionX ) ;
 
 }
 
@@ -790,21 +891,82 @@ void Player::Update( )
 	/*/
 	PlayerAction( ) ;
 
-	// プレイヤー位置調整
-	if ( (-128 < Player_ypos_) && (Player_ypos_ < 800))
+	// コリジョンチェック
+	float collisionCheck = Collision( ) ;
+	if ( collisionCheck != 0 )
 	{
-		Player_ypos_ += Player_yspd_ ;
-		if ( Player_ypos_ <= -64 )
-		{
-			Player_ypos_ = 0 ;
-		}
+		Player_mag_.x = 0.0f ;
+		Player_spd_.x = 0.0f ;
+		Player_xpos_ = collisionCheck ;
+	}
+
+	// プレイヤー位置調整
+	if ( -128 < Player_ypos_ )
+	{
+		Player_spd_.y += Player_mag_.y ;
+		Player_ypos_ += Player_spd_.y ;
 
 		arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
 		arrayY_ = ( int )( (Player_ypos_) / CHIP_H ) ;		// 配列座標を求める y
+
+	} else {
+		arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
+		arrayY_ = 0 ;										// 配列座標を求める y
 	}
-	Player_xspd_ = Player_mag_ ;
-	Chip::GetInstance()->setScrollSize( ( int )-Player_xspd_ , 0 ) ;
-	Player_mag_ *= 0.995f ;
+	Player_spd_.x = Player_mag_.x ;
+	Chip::GetInstance()->setScrollSize( ( int )-Player_spd_.x , 0 ) ;
+	Player_mag_.x *= 0.995f ;			// 減速率
+
+	// カメラの位置調整
+	if ( lrflg_ )
+	{
+		// 右向き
+		scrollflg[ 1 ] = true ;
+		if ( scrollflg[ 0 ] )
+		{
+			scrollx-- ;
+			Chip::GetInstance()->setScrollSize( scrollx , 0 ) ;
+			Player_xpos_ += scrollx ;
+			if ( Player_xpos_ <= 200 )
+			{
+				Player_xpos_ = 200 ;
+				scrollflg[ 0 ] = false ;
+			}
+		} else {
+			scrollx = 0 ;
+		}
+
+	} else {
+		//左向き
+		scrollflg[ 0 ] = true ;
+		if ( scrollflg[ 1 ] )
+		{
+			scrollx++ ;
+			if ( Chip::GetInstance()->getScrollX() > -600 )
+			{
+				scrollflg[ 0 ] = false ;
+			}
+			Chip::GetInstance()->setScrollSize( scrollx , 0 ) ;
+			Player_xpos_ += scrollx ;
+			if ( Player_xpos_ >= 600 )
+			{
+				Player_xpos_ = 600 ;
+				scrollflg[ 1 ] = false ;
+			}
+
+		} else {
+			scrollx = 0 ;
+		}
+
+	}
+
+	// ゲームオーバー判定
+	if ( Player_ypos_ >= 1000 )
+	{
+		Finalize( ) ;
+		Initialize( ) ;
+		g_state = -1 ;
+	}
 
 	// プレイヤー描画	アニメーション
 	PlayerAnim_.playAnim( ) ;
@@ -830,13 +992,14 @@ void Player::Update( )
 	printf( "Player : bottom = %d \n" , nowAnim->cutRect.bottom ) ;
 	printf( "Player : Xpos   = %8.4f \n" , Player_xpos_ ) ;
 	printf( "Player : Ypos   = %8.4f \n" , Player_ypos_ ) ;
-	printf( "Player : Xspd   = %8.4f \n" , Player_xspd_ ) ;
-	printf( "Player : Yspd   = %8.4f \n" , Player_yspd_ ) ;
-	printf( "Player : mag    = %8.4f \n" , Player_mag_ ) ;
+	printf( "Player : Xspd   = %8.4f \n" , Player_spd_.x ) ;
+	printf( "Player : Yspd   = %8.4f \n" , Player_spd_.y ) ;
+	printf( "Player : Xmag   = %8.4f \n" , Player_mag_.x ) ;
+	printf( "Player : Ymag   = %8.4f \n" , Player_mag_.y ) ;
 
 	// クリア
-//	Player_xspd_ = 0.0f ;
-	Player_yspd_ = 0.0f ;
+	Player_spd_.x = 0.0f ;
+	Player_spd_.y = 0.0f ;
 
 }
 

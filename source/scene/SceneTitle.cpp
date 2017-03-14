@@ -99,6 +99,15 @@ void SceneTitle::Render( )
 	/*/
 	/*	”wŒi•`‰æ
 	/*/
+	BackGround::GetInstance()->setBmpData(
+			1 ,
+			0 ,
+			(Chip::GetInstance()->getScrollX() / 4) % 856 ,
+			0 ,
+			0 , 0 ,
+			2000 , 1000 ,
+			1.0f , 1.0f
+		) ;
 	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
 		if ( BackGround::GetInstance()->getUseFlg( i ) )

@@ -69,19 +69,20 @@ class Player
 		PlayerMode Pmode_ ;
 
 		// プレイヤーのデータ
-		float	Player_xpos_ ;
-		float	Player_ypos_ ;
-		float	Player_xspd_ ;
-		float	Player_yspd_ ;
-		float	Player_jspd_ ;
-		int		arrayX_ ;
-		int		arrayY_ ;
-		bool	lrflg_ ;
+		Vector2D_polar	Player_vec_ ;	// 向きと大きさを持った
+		Vector2D_compo	Player_spd_ ;	// 成分にしたデータ
+		float			Player_xpos_ ;
+		float			Player_ypos_ ;
+		int				arrayX_ ;
+		int				arrayY_ ;
+		bool			lrflg_ ;
+		bool			scrollflg[ 2 ] ;
+		int				scrollx ;
 
 		// プレイヤーの物理的なもの
-		Physics Player_ ;
-		float	Player_acceration_ ;
-		float	Player_mag_ ;
+		Physics			Player_ ;
+		float			Player_acceration_ ;
+		Vector2D_compo	Player_mag_ ;
 
 		// アニメーション
 		Animation		PlayerAnim_ ;

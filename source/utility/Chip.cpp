@@ -597,6 +597,49 @@ void Chip::Update( )
 
 		}
 
+		/*/
+		/*	___/ ìÆÇ≠è∞ /___________________
+		/*/
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 70 )
+		{
+			static float	moveX = 0.0f ;
+			static float	moveY = 0.0f ;
+
+			for ( int b = 30 ; b < 50 ; ++b )
+			{
+				/*/
+				/*	ÅEégÇ¡ÇƒÇ»Ç¢ìÆÇ≠è∞ÇëIëÇ∑ÇÈ
+				/*/
+				if ( Sprite::GetInstance()->getUseFlg( b ) )
+				{
+				} else {
+					useBmpNo = b ;
+					break ;
+				}
+			}
+
+			moveY++ ;
+			Sprite::GetInstance()->setBmpXY(
+					useBmpNo ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128 ) 
+				) ;
+
+			Sprite::GetInstance()->setBmpData(
+					useBmpNo ,
+					0 ,
+					Sprite::GetInstance()->getBmpXPos( useBmpNo ) ,
+					Sprite::GetInstance()->getBmpYPos( useBmpNo ) ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+
+		}
+
+
 
 	}
 
