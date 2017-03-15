@@ -12,7 +12,7 @@
 #include "../characters/Physics.h"
 #include "../characters/Player.h"
 
-#define CHIP_MAP_SIZE_X		256
+#define CHIP_MAP_SIZE_X		1024
 #define CHIP_MAP_SIZE_Y		12
 
 extern int g_mapData01[ CHIP_MAP_SIZE_X * CHIP_MAP_SIZE_Y ] ;

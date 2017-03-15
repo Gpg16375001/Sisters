@@ -79,7 +79,7 @@ void Player::Initialize( )
 	Player_.setMass( 4.5f ) ;
 
 	// 開始地点の設定
-	Chip::GetInstance()->setScrollSize( -600 , 0 ) ;
+	Chip::GetInstance()->setScrollSize( -600 + RenderScale , 0 ) ;
 
 	/*/
 	/*	アニメーションセット
@@ -278,7 +278,7 @@ void Player::Pwalk( )
 	// 左右チェック
 	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 	{
-		if ( Chip::GetInstance()->getScrollX() <= 32 )
+		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += -Player_acceration_ ;
 			// もし右に動いていたら
@@ -293,7 +293,7 @@ void Player::Pwalk( )
 	}
 	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 	{
-		if ( Chip::GetInstance()->getScrollX() <= 32 )
+		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += Player_acceration_ ;
 			// もし左に動いていたら
@@ -347,7 +347,7 @@ void Player::Pjump( )
 		// 左右チェック
 		if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 		{
-			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				// 左右チェック
 				lrflg_ = false ;
@@ -358,7 +358,7 @@ void Player::Pjump( )
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 		{
-			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				// 左右チェック
 				lrflg_ = true ;
@@ -386,7 +386,7 @@ void Player::Pjump( )
 		// 左右チェック
 		if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
 		{
-			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				Player_mag_.x += -Player_acceration_ ;
 			}
@@ -394,7 +394,7 @@ void Player::Pjump( )
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
 		{
-			if ( Chip::GetInstance()->getScrollX() <= 32 )
+			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				Player_mag_.x += Player_acceration_ ;
 			}
@@ -463,8 +463,8 @@ float Player::FootCheck( )
 		// 何か情報が入っているとき
 		if ( chipTable[ i ] != NULL )
 		{
-			bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
-			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+			bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
+			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
 			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
 			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
 
@@ -490,7 +490,7 @@ float Player::FootCheck( )
 				case 5 :
 					if ( (bt <= py) && (py < bb) )
 					{
-						if ( (bl+12 <= px) && (px <= br) )
+						if ( (bl+4 <= px) && (px <= br) )
 						{
 							footY = bt - 8 ;
 
@@ -512,12 +512,12 @@ float Player::FootCheck( )
 					float P2p ;				// プレイヤーまでの距離
 
 					// それぞれに代入
-					P1.x = bl - 4 ;
-					P1.y = bb ;
-					P2.x = br - 4 ;
-					P2.y = bb ;
-					P3.x = br - 4 ;
-					P3.y = bt ;
+					P1.x = bl - 64 ;
+					P1.y = bb + 64 ;
+					P2.x = br + 64 ;
+					P2.y = bb + 64 ;
+					P3.x = br + 64 ;
+					P3.y = bt - 64 ;
 					P4.x = px ;
 					P4.y = py ;
 
@@ -541,7 +541,7 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br) && (bt-14+Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 16 <= px) && (px <= br+12) && (bt-14+Player_mag_.x <= py) )
 					{
 						footY = cross[ 1 ] ;
 
@@ -557,7 +557,7 @@ float Player::FootCheck( )
 				case 6 :
 					if ( (bt <= py) && (py < bb) )
 					{
-						if ( (bl <= pr) && (pl <= br-12) )
+						if ( (bl - 8 <= px) && (px <= br-12) )
 						{
 							footY = bt - 8 ;
 
@@ -570,12 +570,12 @@ float Player::FootCheck( )
 
 				case 8 :
 					// それぞれに代入
-					P1.x = br - 4 ;
-					P1.y = bb ;
-					P2.x = bl - 4 ;
-					P2.y = bb ;
-					P3.x = bl - 4 ;
-					P3.y = bt ;
+					P1.x = br + 64 ;
+					P1.y = bb + 64 ;
+					P2.x = bl - 64 ;
+					P2.y = bb + 64 ;
+					P3.x = bl - 64 ;
+					P3.y = bt - 64 ;
 					P4.x = px ;
 					P4.y = py ;
 
@@ -599,7 +599,7 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br) && (bt-14 <= py) )
+					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br+16) && (bt-14-Player_mag_.x <= py) )
 					{
 						Player_vec_.deg = 45.0f ;
 						footY = cross[ 1 ] ;
@@ -611,6 +611,94 @@ float Player::FootCheck( )
 						}
 					}
 					break ;
+
+				case 11 :
+					// それぞれに代入
+					P1.x = bl - 4 ;
+					P1.y = bb ;
+					P2.x = br + 196 - 4 ;
+					P2.y = bb ;
+					P3.x = br + 196 - 4 ;
+					P3.y = bt - 64 ;
+					P4.x = px ;
+					P4.y = py ;
+
+					// それぞれの面積を求める
+					s1 = ((P4.x - P2.x) * (P1.y - P2.y) - (P4.y - P2.y) * (P1.x - P2.x)) * 0.5f ;
+					s2 = ((P4.x - P2.x) * (P2.y - P3.y) - (P4.y - P2.y) * (P2.x - P3.x)) * 0.5f ;
+
+					// 比率から交点を求める
+					cross[ 0 ] = P1.x + (P3.x - P1.x) * s1 / (s1 + s2) ;
+					cross[ 1 ] = P1.y + (P3.y - P1.y) * s1 / (s1 + s2) ;
+
+					// 基準点から交点までの距離
+					ax = P2.x - cross[ 0 ] ;
+					ay = P2.y - cross[ 1 ] ;
+					P2a = ax * ax + ay * ay ;
+					P2a = sqrt( P2a ) ;
+
+					// 基準点からプレイヤーまでの距離
+					ax = P2.x - P4.x ;
+					ay = P2.y - P4.y ;
+					P2p = ax * ax + ay * ay ;
+					P2p = sqrt( P2a ) ;
+
+					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br + 196) && (bt-128+Player_mag_.x <= py) )
+					{
+						footY = cross[ 1 ] ;
+
+						if ( Player_.checkMotion( 30.0f , Player_.Weight2D().y , 0.55f ) )
+						{
+							Player_vec_.deg = -30.0f ;
+							Player_mag_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							printf( "Motion was true. \n" ) ;
+						}
+					}
+					break  ;
+
+				case 12 :
+					// それぞれに代入
+					P1.x = bl + 260 - 4 ;
+					P1.y = bb ;
+					P2.x = br - 4 ;
+					P2.y = bb ;
+					P3.x = br - 4 ;
+					P3.y = bt - 32 ;
+					P4.x = px ;
+					P4.y = py ;
+
+					// それぞれの面積を求める
+					s1 = ((P4.x - P2.x) * (P1.y - P2.y) - (P4.y - P2.y) * (P1.x - P2.x)) * 0.5f ;
+					s2 = ((P4.x - P2.x) * (P2.y - P3.y) - (P4.y - P2.y) * (P2.x - P3.x)) * 0.5f ;
+
+					// 比率から交点を求める
+					cross[ 0 ] = P1.x + (P3.x - P1.x) * s1 / (s1 + s2) ;
+					cross[ 1 ] = P1.y + (P3.y - P1.y) * s1 / (s1 + s2) ;
+
+					// 基準点から交点までの距離
+					ax = P2.x - cross[ 0 ] ;
+					ay = P2.y - cross[ 1 ] ;
+					P2a = ax * ax + ay * ay ;
+					P2a = sqrt( P2a ) ;
+
+					// 基準点からプレイヤーまでの距離
+					ax = P2.x - P4.x ;
+					ay = P2.y - P4.y ;
+					P2p = ax * ax + ay * ay ;
+					P2p = sqrt( P2a ) ;
+
+					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br + 228) && (bt-128+Player_mag_.x <= py) )
+					{
+						footY = cross[ 1 ] ;
+
+						if ( Player_.checkMotion( 30.0f , Player_.Weight2D().y , 0.55f ) )
+						{
+							Player_vec_.deg = -30.0f ;
+							Player_mag_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							printf( "Motion was true. \n" ) ;
+						}
+					}
+					break  ;
 
 				case 50 :
 					float brad ;	// 丸鋸の半径
@@ -639,10 +727,10 @@ float Player::FootCheck( )
 
 				// 動く床ブロックの場合
 				case 70 :
-					bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
-					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
-					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( 30 ) - 448 ) ;
-					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( 30 ) - 448 + CHIP_H ) ;
+					bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
+					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
+					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( 30 ) - 384 ) ;
+					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( 30 ) - 384 + CHIP_H ) ;
 
 					if ( (bt-8 <= py) && (py < bb-32) )
 					{
@@ -716,8 +804,8 @@ float Player::HeadCheck( )
 		// 何か情報が入っているとき
 		if ( chipTable[ i ] != NULL )
 		{
-			bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
-			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+			bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
+			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
 			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
 			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
 
@@ -817,8 +905,8 @@ float Player::Collision( )
 		// 何か情報が入っているとき
 		if ( chipTable[ i ] != NULL )
 		{
-			bl = ( float )( (i % CHIP_X) * CHIP_W ) ;
-			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) ;
+			bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
+			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
 			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
 			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
 			float center = bl + (br - bl) / 2 ;
@@ -942,7 +1030,7 @@ void Player::Update( )
 		if ( scrollflg[ 1 ] )
 		{
 			scrollx++ ;
-			if ( Chip::GetInstance()->getScrollX() > -600 )
+			if ( Chip::GetInstance()->getScrollX() > (-600 - RenderScale) )
 			{
 				scrollflg[ 0 ] = false ;
 			}

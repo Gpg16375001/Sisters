@@ -75,6 +75,9 @@
     <ClCompile Include="source\characters\Animation.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
+    <ClCompile Include="source\utility\LoadMapData.cpp">
+      <Filter>source\utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="source\characters\Animation.h">
       <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\LoadMapData.h">
+      <Filter>source\utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

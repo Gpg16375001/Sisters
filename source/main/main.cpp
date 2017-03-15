@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "main.h"
 #include "Common.h"
+#include "LoadMapData.h"
 
 int WINAPI WinMain( HINSTANCE , HINSTANCE , LPSTR , int )
 {
@@ -54,6 +55,9 @@ LRESULT MainApp::WndProc( HWND hWnd , UINT msg , UINT wParam , LONG lParam )
 /*/
 void MainApp::Initalize( )
 {
+	printf( "//-----------------------------------\n" ) ;
+	printf( "Initialize が発行されました\n" );
+
 	// 描画場所の確保
 	Renderer::GetInstance()->Initialize( ) ;
 	Renderer::GetInstance()->setHDC( GetHWindow( ) , GetHDCBack( ) , GetHDCWork() ) ;
@@ -82,7 +86,7 @@ void MainApp::Initalize( )
 
 	// チップ読み込み
 	Chip::GetInstance()->setMapSize( CHIP_MAP_SIZE_X , CHIP_MAP_SIZE_Y ) ;
-	Chip::GetInstance()->RenderMapSize( 12 + 4 , 10 + 4 ) ;
+	Chip::GetInstance()->RenderMapSize( 12 + 10 , 10 + 4 ) ;
 	Chip::GetInstance()->loadBmpDataAll( BitmapData::GetInstance()->getBmpData( 2 ) ) ;
 
 	// Sprite の読み込み
@@ -90,6 +94,9 @@ void MainApp::Initalize( )
 	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
 	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 20 ) ;		// 10 ~ 29 まで　まるのこ
 	Sprite::GetInstance()->loadBmpDataFor( 30 , BitmapData::GetInstance()->getBmpData( 5 ) , 20 ) ;		// 10 ~ 29 まで　まるのこ
+
+	// マップ読み込み
+	LoadMapData::ReLoad( ) ;
 
 	// シーン
 	SceneManager::GetInstance()->Initialize() ;
@@ -108,7 +115,8 @@ void MainApp::Finalize( )
 /*/
 void MainApp::Update( )
 {
-	printf( "メインループ\n" ) ;
+	printf( "//-----------------------------------\n" ) ;
+	printf( "メインループ : Updateイベントが発行されました\n" );
 	// キー情報更新
 	KeyManager::GetInstance()->update( ) ;
 

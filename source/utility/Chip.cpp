@@ -308,9 +308,9 @@ int Chip::setScrollSize( int arg_x , int arg_y  )
 	scrollX_ += arg_x ;
 	scrollY_ += arg_y ;
 
-	if ( scrollX_ >= 0 )
+	if ( scrollX_ >= RenderScale )
 	{
-		scrollX_ = 0 ;
+		scrollX_ = RenderScale ;
 	}
 
 	return( true ) ;
@@ -335,7 +335,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
 					(m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] * CHIP_W) ,
 					0 ,
@@ -350,7 +350,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 9) * CHIP_W) ,
 					128 ,
@@ -366,7 +366,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 4) * CHIP_W) ,
 					128 ,
@@ -382,7 +382,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 11) * CHIP_W) ,
 					64 ,
@@ -398,7 +398,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 8) * CHIP_W) ,
 					64 ,
@@ -414,7 +414,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 13) * CHIP_W) ,
 					64 + 128 ,
@@ -430,7 +430,7 @@ void Chip::Update( )
 					i ,
 					0 ,
 					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 10) * CHIP_W) ,
 					64 + 128 ,
@@ -468,7 +468,7 @@ void Chip::Update( )
 			Sprite::GetInstance()->setBmpData(
 					useBmpNo ,
 					4 ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale ,
 					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) ,
 					0 , 0 ,
 					128 , 128 ,
@@ -500,7 +500,7 @@ void Chip::Update( )
 			Sprite::GetInstance()->setBmpData(
 					useBmpNo ,
 					4 ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave(move , 128 , 360) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave(move , 128 , 360) ) - RenderScale ,
 					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) ,
 					0 , 0 ,
 					128 , 128 ,
@@ -534,7 +534,7 @@ void Chip::Update( )
 			Sprite::GetInstance()->setBmpData(
 					useBmpNo ,
 					4 ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 128 , 128 ) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 128 , 128 ) ) - RenderScale ,
 					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + cosWave( moveY , 128 , 128 ) ) ,
 					0 , 0 ,
 					128 , 128 ,
@@ -586,7 +586,7 @@ void Chip::Update( )
 			Sprite::GetInstance()->setBmpData(
 					useBmpNo ,
 					4 ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 200 , sinX ) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) + sinWave( moveX , 200 , sinX ) ) - RenderScale ,
 					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + sinWave( moveY , 100 , cosY ) ) ,
 					0 , 0 ,
 					128 , 128 ,
@@ -621,7 +621,7 @@ void Chip::Update( )
 			moveY++ ;
 			Sprite::GetInstance()->setBmpXY(
 					useBmpNo ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale ,
 					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128 ) 
 				) ;
 
