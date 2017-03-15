@@ -638,6 +638,46 @@ void Chip::Update( )
 				) ;
 
 		}
+		// 動く床：円
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 71 )
+		{
+			static float	moveX = 0.0f ;
+			static float	moveY = 0.0f ;
+
+			for ( int b = 30 ; b < 50 ; ++b )
+			{
+				/*/
+				/*	・使ってない動く床を選択する
+				/*/
+				if ( Sprite::GetInstance()->getUseFlg( b ) )
+				{
+				} else {
+					useBmpNo = b ;
+					break ;
+				}
+			}
+
+			moveX++ ;
+			moveY++ ;
+			Sprite::GetInstance()->setBmpXY(
+					useBmpNo ,
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale + cosWave( moveX  , 128 ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128 ) 
+				) ;
+
+			Sprite::GetInstance()->setBmpData(
+					useBmpNo ,
+					0 ,
+					Sprite::GetInstance()->getBmpXPos( useBmpNo ) ,
+					Sprite::GetInstance()->getBmpYPos( useBmpNo ) ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+
+		}
 
 
 
