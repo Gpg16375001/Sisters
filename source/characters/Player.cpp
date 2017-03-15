@@ -727,23 +727,24 @@ float Player::FootCheck( )
 
 				// 動く床ブロックの場合
 				case 70 :
-					int useBmpNo ;
-					for ( int b = 30 ; b < 50 ; ++b )
+					int useBmpNo1 ;
+					useBmpNo1 =  0 ;
+					for ( int b = 50 ; b < 60 ; ++b )
 					{
 						/*/
 						/*	・使ってる動く床を選択する
 						/*/
 						if ( Sprite::GetInstance()->getUseFlg( b ) )
 						{
-							useBmpNo = b ;
+							useBmpNo1 = b ;
 							break ;
 						}
 					}
 
 					bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
 					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo ) - 384 ) ;
-					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo ) - 384 + CHIP_H ) ;
+					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 384 ) ;
+					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 384 + CHIP_H ) ;
 
 					if ( (bt-8 <= py) && (py < bb-32) )
 					{
@@ -759,24 +760,34 @@ float Player::FootCheck( )
 					}
 					break ;
 
-				// 動く床ブロックの場合
+				// 回る動く床ブロックの場合
 				case 71 :
-					for ( int b = 30 ; b < 50 ; ++b )
+					int useBmpNo2 ;
+					useBmpNo2 =  0 ;
+					for ( int b = 60 ; b < 65 ; ++b )
 					{
 						/*/
 						/*	・使ってる動く床を選択する
 						/*/
 						if ( Sprite::GetInstance()->getUseFlg( b ) )
 						{
-							useBmpNo = b ;
+							useBmpNo2 = b ;
 							break ;
 						}
 					}
 
-					bl = ( float )( (i % CHIP_X) * CHIP_W ) + Sprite::GetInstance()->getBmpXPos( useBmpNo ) - RenderScale ;
-					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) + Sprite::GetInstance()->getBmpXPos( useBmpNo ) - RenderScale ;
-					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo ) - 384 ) ;
-					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo ) - 384 + CHIP_H ) ;
+					bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
+					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
+					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo2 ) - 320 ) ;
+					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo2 ) - 320 + CHIP_H ) ;
+
+					// デバッグ
+					g_ac.left	= (LONG)bl ;
+					g_ac.top	= (LONG)bt ;
+					g_ac.right	= (LONG)px-64 ;
+					g_ac.bottom	= (LONG)py-64 ;
+
+					printf( "sprite : %f \n" , bl ) ;
 
 					if ( (bt-8 <= py) && (py < bb-32) )
 					{

@@ -22,5 +22,7 @@ extern float g_px , g_py ;		// デバッグ用 プレイヤーの座標
 
 extern int fpscnt ;
 
+extern RECT g_ac ;
+
 
 

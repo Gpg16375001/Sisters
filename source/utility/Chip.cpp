@@ -453,7 +453,7 @@ void Chip::Update( )
 		{
 			static float spin = 0.0f ;
 
-			for ( int b = 10 ; b < 30 ; ++b )
+			for ( int b = 10 ; b < 15 ; ++b )
 			{
 				/*/
 				/*	・使ってない丸鋸を選択する
@@ -485,7 +485,7 @@ void Chip::Update( )
 			static float spin = 0.0f ;
 			static float move = 0.0f ;
 
-			for ( int b = 10 ; b < 30 ; ++b )
+			for ( int b = 15 ; b < 20 ; ++b )
 			{
 				/*/
 				/*	・使ってない丸鋸を選択する
@@ -518,7 +518,7 @@ void Chip::Update( )
 			static float	moveX = 0.0f ;
 			static float	moveY = 0.0f ;
 
-			for ( int b = 10 ; b < 30 ; ++b )
+			for ( int b = 20 ; b < 25 ; ++b )
 			{
 				/*/
 				/*	・使ってない丸鋸を選択する
@@ -570,7 +570,7 @@ void Chip::Update( )
 				cosY-- ;
 */
 
-			for ( int b = 10 ; b < 30 ; ++b )
+			for ( int b = 25 ; b < 30 ; ++b )
 			{
 				/*/
 				/*	・使ってない丸鋸を選択する
@@ -605,7 +605,7 @@ void Chip::Update( )
 			static float	moveX = 0.0f ;
 			static float	moveY = 0.0f ;
 
-			for ( int b = 30 ; b < 50 ; ++b )
+			for ( int b = 50 ; b < 60 ; ++b )
 			{
 				/*/
 				/*	・使ってない動く床を選択する
@@ -644,7 +644,7 @@ void Chip::Update( )
 			static float	moveX = 0.0f ;
 			static float	moveY = 0.0f ;
 
-			for ( int b = 30 ; b < 50 ; ++b )
+			for ( int b = 60 ; b < 65 ; ++b )
 			{
 				/*/
 				/*	・使ってない動く床を選択する
@@ -661,8 +661,8 @@ void Chip::Update( )
 			moveY++ ;
 			Sprite::GetInstance()->setBmpXY(
 					useBmpNo ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale + cosWave( moveX  , 128 ) ,
-					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128 ) 
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale + cosWave( moveX  , 128 , 300 ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128  , 300 ) 
 				) ;
 
 			Sprite::GetInstance()->setBmpData(

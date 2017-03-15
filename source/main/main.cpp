@@ -92,8 +92,8 @@ void MainApp::Initalize( )
 	// Sprite の読み込み
 	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 4 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
-	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 20 ) ;		// 10 ~ 29 まで　まるのこ
-	Sprite::GetInstance()->loadBmpDataFor( 30 , BitmapData::GetInstance()->getBmpData( 5 ) , 20 ) ;		// 10 ~ 29 まで　まるのこ
+	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 40 ) ;		// 10 ~ 49 まで　まるのこ
+	Sprite::GetInstance()->loadBmpDataFor( 50 , BitmapData::GetInstance()->getBmpData( 5 ) , 40 ) ;		// 50 ~ 89 まで　動く床
 
 	// マップ読み込み
 	LoadMapData::ReLoad( ) ;

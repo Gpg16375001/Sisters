@@ -70,6 +70,9 @@ class Renderer
 		int setAlphaFlg( bool arg_alphaFlg ) ;				// 透明度のフラグをセット
 		int setRotateFlg( bool arg_rotateFlg ) ;			// 角度のフラグをセット
 
+		HDC getHDCBack( ) const {
+			return( hDCBack_ ) ;
+		}
 		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/
