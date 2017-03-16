@@ -29,13 +29,13 @@ int DrawLoop( )
 	/*/
 	// ƒOƒŠƒbƒh
 	SelectObject( g_hBackBuf , g_redPen ) ;
-	for ( int x = 0 ; x < 64 ; x++ ) {
-		MoveToEx( g_hBackBuf , (x * 16) , 0 , 0 ) ;
-		LineTo( g_hBackBuf , (x * 16) , WINDOW_H ) ;
+	for ( int x = 0 ; x < 32 ; x++ ) {
+		MoveToEx( g_hBackBuf , (x * 32) , 0 , 0 ) ;
+		LineTo( g_hBackBuf , (x * 32) , WINDOW_H ) ;
 	}
-	for ( int y = 0 ; y < 64 ; y++ ) {
-		MoveToEx( g_hBackBuf , 0, (y * 16) , 0 ) ;
-		LineTo( g_hBackBuf , WINDOW_W , (y * 16) ) ;
+	for ( int y = 0 ; y < 32 ; y++ ) {
+		MoveToEx( g_hBackBuf , 0, (y * 32) , 0 ) ;
+		LineTo( g_hBackBuf , WINDOW_W , (y * 32) ) ;
 	}
 	//				Left		Top			Right		Bottom
 	RECT rc2 = { cell( 0 ) , cell( 0 ) , cell( 2 ) , cell( 38 ) }  ;

@@ -35,6 +35,11 @@ class SceneBlank
 		void Initialize( ) ;
 
 		/*/
+		/*	 èIóπâª
+		/*/
+		void Finalize( ) ;
+
+		/*/
 		/*	 çXêV
 		/*/
 		void Update( ) ;

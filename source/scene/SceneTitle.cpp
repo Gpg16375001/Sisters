@@ -30,7 +30,6 @@ SceneTitle::SceneTitle( )
 /*/
 SceneTitle::~SceneTitle( )
 {
-	Initialize( ) ;
 	printf( "End.\n" ) ;
 
 }
@@ -53,6 +52,18 @@ void SceneTitle::Initialize( )
 			2000 , 1000 ,
 			1.0f , 1.0f
 		) ;
+
+}
+
+/*/
+/*	 終了化
+/*/
+void SceneTitle::Finalize( )
+{
+	Initialize( ) ;
+	g_state = -1 ;
+
+	printf( "SceneBlank -> " ) ;
 
 }
 
@@ -83,7 +94,7 @@ void SceneTitle::Update( )
 
 	// チップのマップ読み込み
 	Chip::GetInstance()->Update( ) ;
-	
+
 	// プレイヤーのアップデート
 	player.Update( ) ;
 
@@ -192,7 +203,7 @@ void SceneTitle::Render( )
 	HBRUSH brush_red ;
 	brush_red = CreateSolidBrush( RGB(255 , 0 , 0) ) ;
 	FillRect( Renderer::GetInstance()->getHDCBack() , &g_ac , brush_red ) ;
-
+	DeleteObject( brush_red ) ;
 
 	// 画面のクリア
 	/*/

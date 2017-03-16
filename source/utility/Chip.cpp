@@ -329,7 +329,7 @@ void Chip::Update( )
 		/*/
 		/*	チップデータ
 		/*/
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 8 )
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 11 )
 		{
 			setChipData(
 					i ,
@@ -344,39 +344,7 @@ void Chip::Update( )
 				) ;
 		}
 
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 9 )
-		{
-			setChipData(
-					i ,
-					0 ,
-					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
-					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
-					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 9) * CHIP_W) ,
-					128 ,
-					128 , 128 ,
-					1.0f , 1.0f
-				) ;
-
-		}
-
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 10 )
-		{
-			setChipData(
-					i ,
-					0 ,
-					i % map_w_ , i / map_h_ ,
-					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
-					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
-					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 4) * CHIP_W) ,
-					128 ,
-					128 , 128 ,
-					1.0f , 1.0f
-				) ;
-
-		}
-
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 11 )
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 12 )
 		{
 			setChipData(
 					i ,
@@ -392,7 +360,7 @@ void Chip::Update( )
 
 		}
 
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 12 )
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 13 )
 		{
 			setChipData(
 					i ,
@@ -408,7 +376,7 @@ void Chip::Update( )
 
 		}
 
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 13 )
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 14 )
 		{
 			setChipData(
 					i ,
@@ -424,7 +392,7 @@ void Chip::Update( )
 
 		}
 
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 14 )
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 15 )
 		{
 			setChipData(
 					i ,

@@ -8,8 +8,6 @@ int g_state ;
 
 float g_px , g_py ;		// デバッグ用 プレイヤーの座標
 
-int fpscnt = 0 ;
-
 RECT g_ac ;
 
 

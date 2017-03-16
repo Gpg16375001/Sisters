@@ -34,6 +34,11 @@ class SceneTitle
 		void Initialize( ) ;
 
 		/*/
+		/*	 I—¹‰»
+		/*/
+		void Finalize( ) ;
+
+		/*/
 		/*	 XV
 		/*/
 		void Update( ) ;

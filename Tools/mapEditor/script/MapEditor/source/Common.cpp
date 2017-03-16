@@ -178,7 +178,7 @@ void SetLoop( )
 	/*/
 	g_Spr[ 1 ].setSprite(
 		1  ,
-		cell( 6 ) ,
+		cell( 4 ) ,
 		cell( 28 ) ,
 		1 * CHIP_W ,
 		0 * CHIP_H ,
@@ -186,7 +186,7 @@ void SetLoop( )
 	) ;
 	g_Spr[ 2 ].setSprite(
 		1  ,
-		cell( 10 ) ,
+		cell( 8 ) ,
 		cell( 28 ) ,
 		2 * CHIP_W ,
 		0 * CHIP_H ,
@@ -194,7 +194,7 @@ void SetLoop( )
 	) ;
 	g_Spr[ 3 ].setSprite(
 		1  ,
-		cell( 14 ) ,
+		cell( 12 ) ,
 		cell( 28 ) ,
 		3 * CHIP_W ,
 		0 * CHIP_H ,
@@ -202,7 +202,7 @@ void SetLoop( )
 	) ;
 	g_Spr[ 4 ].setSprite(
 		1  ,
-		cell( 18 ) ,
+		cell( 16 ) ,
 		cell( 28 ) ,
 		4 * CHIP_W ,
 		0 * CHIP_H ,
@@ -210,7 +210,7 @@ void SetLoop( )
 	) ;
 	g_Spr[ 5 ].setSprite(
 		1  ,
-		cell( 22 ) ,
+		cell( 20 ) ,
 		cell( 28 ) ,
 		5 * CHIP_W ,
 		0 * CHIP_H ,
@@ -218,7 +218,7 @@ void SetLoop( )
 	) ;
 	g_Spr[ 6 ].setSprite(
 		1  ,
-		cell( 26 ) ,
+		cell( 24 ) ,
 		cell( 28 ) ,
 		6 * CHIP_W ,
 		0 * CHIP_H ,
@@ -226,7 +226,7 @@ void SetLoop( )
 	) ;
 	g_Spr[ 7 ].setSprite(
 		1  ,
-		cell( 30 ) ,
+		cell( 28 ) ,
 		cell( 28 ) ,
 		7 * CHIP_W ,
 		0 * CHIP_H ,
@@ -234,13 +234,37 @@ void SetLoop( )
 	) ;
 	g_Spr[ 8 ].setSprite(
 		1  ,
-		cell( 34 ) ,
+		cell( 32 ) ,
 		cell( 28 ) ,
 		8 * CHIP_W ,
 		0 * CHIP_H ,
 		CHIP_W , CHIP_H
 	) ;
 	g_Spr[ 9 ].setSprite(
+		1  ,
+		cell( 36 ) ,
+		cell( 28 ) ,
+		9 * CHIP_W ,
+		0 * CHIP_H ,
+		CHIP_W , CHIP_H
+	) ;
+	g_Spr[ 10 ].setSprite(
+		1  ,
+		cell( 40 ) ,
+		cell( 28 ) ,
+		10 * CHIP_W ,
+		0 * CHIP_H ,
+		CHIP_W , CHIP_H
+	) ;
+	g_Spr[ 11 ].setSprite(
+		1  ,
+		cell( 44 ) ,
+		cell( 28 ) ,
+		11 * CHIP_W ,
+		0 * CHIP_H ,
+		CHIP_W , CHIP_H
+	) ;
+	g_Spr[ 12 ].setSprite(
 		1  ,
 		cell( 6 ) ,
 		cell( 32 ) ,
@@ -249,7 +273,7 @@ void SetLoop( )
 		4 * CHIP_W ,
 		2 * CHIP_H
 	) ;
-	g_Spr[ 10 ].setSprite(
+	g_Spr[ 13 ].setSprite(
 		1  ,
 		cell( 16 ) ,
 		cell( 32 ) ,
@@ -262,8 +286,8 @@ void SetLoop( )
 	// Arrow
 	g_Spr[ 30 ].setSprite(
 		2  ,
-		cell( (2 + g_chip * 4) ) ,
-		cell( 30 ) ,
+		cell( (g_chip * 4) ) ,
+		cell( (30 + (g_chip / 32)) ) ,
 		0 , 0 ,
 		32 , 32
 	) ;
@@ -283,54 +307,14 @@ void actionLoop( )
 	g_mouseX = LOWORD( g_lParam ) ;
 	g_mouseY = HIWORD( g_lParam ) ;
 
-	if ( (cell( 6 ) < g_mouseX) && (g_mouseX < cell( 8 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
+	for ( int i = 0 ; i <= 11 ; ++i )
 	{
-		g_chip = 1 ;
+		if ( (cell( (i * 4) ) < g_mouseX) && (g_mouseX < cell( (i * 4 + 2) ))
+			&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
+		{
+			g_chip = i ;
+		}
 	}
-
-	if ( (cell( 10 ) < g_mouseX) && (g_mouseX < cell( 12 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 2 ;
-	}
-
-	if ( (cell( 14 ) < g_mouseX) && (g_mouseX < cell( 16 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 3 ;
-	}
-
-	if ( (cell( 18 ) < g_mouseX) && (g_mouseX < cell( 20 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 4 ;
-	}
-
-	if ( (cell( 22 ) < g_mouseX) && (g_mouseX < cell( 24 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 5 ;
-	}
-
-	if ( (cell( 26 ) < g_mouseX) && (g_mouseX < cell( 28 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 6 ;
-	}
-
-	if ( (cell( 30 ) < g_mouseX) && (g_mouseX < cell( 32 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 7 ;
-	}
-
-	if ( (cell( 34 ) < g_mouseX) && (g_mouseX < cell( 36 ))
-		&& (cell( 28 ) < g_mouseY) && (g_mouseY < cell( 30 )) )
-	{
-		g_chip = 8 ;
-	}
-
 }
 
 

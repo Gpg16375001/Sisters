@@ -56,7 +56,7 @@ void Player::Initialize( )
 	/*/
 	Pmode_				= P_init ;		// 初期アクションモード
 	Player_xpos_		= 200.0f ;		// 描画する X ポジション
-	Player_ypos_		= 200.0f ;		// 描画する Y ポジション
+	Player_ypos_		= 0.0f ;		// 描画する Y ポジション
 	arrayX_				= 0 ;
 	arrayY_				= 0 ;
 	lrflg_				= true ;		// false : 左	true : 右
@@ -448,6 +448,8 @@ float Player::FootCheck( )
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
 		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() ;
 	}
+
+	// ---+ デバッグ +----------------------------------------------------------------------------------------------- debug
 	g_px = px + Chip::GetInstance()->getScrollX() ;
 	g_py = py - 54 - 8 ;
 
@@ -470,9 +472,26 @@ float Player::FootCheck( )
 
 			switch ( chipTable[ i ] )
 			{
+				// テレポート
+				case -1 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= pr) && (pl <= br) )
+						{
+							Player_vec_.deg = 0.0f ;
+							Chip::GetInstance()->setScrollSize( -896 , 0 ) ;
+							footY = 1 ;
+
+							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+
+						}
+					}
+					break ;
 
 				// 通常ブロックの場合
 				case 1 :
+				case 9 :
 					if ( (bt <= py) && (py < bb) )
 					{
 						if ( (bl <= pr) && (pl <= br) )
@@ -487,6 +506,7 @@ float Player::FootCheck( )
 					}
 					break ;
 
+				case 3 :
 				case 5 :
 					if ( (bt <= py) && (py < bb) )
 					{
@@ -502,6 +522,7 @@ float Player::FootCheck( )
 					break ;
 
 				case 7 :
+				case 10 :
 					Vector2D_compo P1 , P3 ;
 					Vector2D_compo P2 ;		// 基準点 (br,bb)
 					Vector2D_compo P4 ;		// プレイヤーの座標
@@ -554,6 +575,7 @@ float Player::FootCheck( )
 					}
 					break  ;
 
+				case 4 :
 				case 6 :
 					if ( (bt <= py) && (py < bb) )
 					{
@@ -569,6 +591,7 @@ float Player::FootCheck( )
 					break ;
 
 				case 8 :
+				case 11 :
 					// それぞれに代入
 					P1.x = br + 64 ;
 					P1.y = bb + 64 ;
@@ -612,7 +635,7 @@ float Player::FootCheck( )
 					}
 					break ;
 
-				case 11 :
+				case 12 :
 					// それぞれに代入
 					P1.x = bl - 4 ;
 					P1.y = bb ;
@@ -656,7 +679,7 @@ float Player::FootCheck( )
 					}
 					break  ;
 
-				case 12 :
+				case 13 :
 					// それぞれに代入
 					P1.x = bl + 260 - 4 ;
 					P1.y = bb ;
@@ -760,7 +783,7 @@ float Player::FootCheck( )
 					}
 					break ;
 
-				// 回る動く床ブロックの場合
+				// 回る動く床ブロックの場合 // ----------------------------------- 終わってない
 				case 71 :
 					int useBmpNo2 ;
 					useBmpNo2 =  0 ;
@@ -784,8 +807,8 @@ float Player::FootCheck( )
 					// デバッグ
 					g_ac.left	= (LONG)bl ;
 					g_ac.top	= (LONG)bt ;
-					g_ac.right	= (LONG)px-64 ;
-					g_ac.bottom	= (LONG)py-64 ;
+					g_ac.right	= (LONG)br ;
+					g_ac.bottom	= (LONG)bb ;
 
 					printf( "sprite : %f \n" , bl ) ;
 
@@ -846,8 +869,6 @@ float Player::HeadCheck( )
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
 		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 64 ;
 	}
-	g_px = px + Chip::GetInstance()->getScrollX() ;
-	g_py = py - 54 - 8 ;
 
 	// ジャンプ中
 	if ( Player_spd_.y > 0.0f )
@@ -872,10 +893,14 @@ float Player::HeadCheck( )
 				// 通常ブロックの場合
 				case 1 :
 				case 2 :
+				case 4 :
 				case 5 :
 				case 6 :
 				case 7 :
 				case 8 :
+				case 9 :
+				case 10 :
+				case 11 :
 					if ( (bt-32 <= py) && (py < bb) )
 					{
 						if ( (bl <= pr) && (pl <= br) )
@@ -1069,6 +1094,11 @@ void Player::Update( )
 		scrollflg[ 1 ] = true ;
 		if ( scrollflg[ 0 ] )
 		{
+			if ( scrollx > 0 )
+			{
+				scrollx = 0 ;
+			}
+
 			scrollx-- ;
 			Chip::GetInstance()->setScrollSize( scrollx , 0 ) ;
 			Player_xpos_ += scrollx ;
@@ -1086,6 +1116,11 @@ void Player::Update( )
 		scrollflg[ 0 ] = true ;
 		if ( scrollflg[ 1 ] )
 		{
+			if ( scrollx < 0 )
+			{
+				scrollx = 0 ;
+			}
+
 			scrollx++ ;
 			if ( Chip::GetInstance()->getScrollX() > (-600 - RenderScale) )
 			{
@@ -1101,6 +1136,11 @@ void Player::Update( )
 
 		} else {
 			scrollx = 0 ;
+		}
+
+		if ( Chip::GetInstance()->getScrollX() >= RenderScale )
+		{
+			Player_mag_.x = 0 ;
 		}
 
 	}

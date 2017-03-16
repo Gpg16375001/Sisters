@@ -29,7 +29,6 @@ SceneBlank::SceneBlank( )
 /*/
 SceneBlank::~SceneBlank( )
 {
-	Initialize( ) ;
 	printf( "End.\n" ) ;
 
 }
@@ -39,6 +38,23 @@ SceneBlank::~SceneBlank( )
 /*/
 void SceneBlank::Initialize( )
 {
+	printf( "SceneBlank -> " ) ;
+
+}
+
+/*/
+/*	 I—¹‰»
+/*/
+void SceneBlank::Finalize( )
+{
+	/*/
+	/*	”wŒi‚ÌƒNƒŠƒA
+	/*/
+	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		BackGround::GetInstance()->clearData( i ) ;
+	}
+
 	printf( "SceneBlank -> " ) ;
 
 }
