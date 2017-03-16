@@ -49,6 +49,7 @@ class Sprite
 		int		_alpha ;				// 透明度
 		bool	_useRotate ;			// 回転処理を行うかどうかのフラグ
 		float	_degree ;				// 角度
+		bool	_useRender ;			// スプライトが描画されているか
 	} ;
 		/*/
 		/*	初期化
@@ -71,6 +72,7 @@ class Sprite
 		int setAnchor( int arg_bmpNo , int arg_anchor ) ;						// アンカーのセット
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;							// 透明度のセット
 		int setAngle( int arg_bmpNo , float arg_angle ) ;						// 角度のセット
+		int setUseRender( int arg_bmpNo , bool arg_flg ) ;
 		int setBmpData(															// すべてのセット
 				int arg_bmpNo ,
 				int arg_anchor ,
@@ -194,6 +196,13 @@ class Sprite
 		float getBmpAngle( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._degree ) ;
+		}
+		/*/
+		/*	UseRenderの取得
+		/*/
+		bool getUseRender( int arg_bmpNo ) const
+		{
+			return ( bmpBGTable_[ arg_bmpNo ]._useRender ) ;
 		}
 
 

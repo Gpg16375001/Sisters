@@ -765,13 +765,19 @@ float Player::FootCheck( )
 					}
 
 					bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
-					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 384 ) ;
-					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 384 + CHIP_H ) ;
+					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) + 64 - RenderScale ;
+					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 196 ) ;
+					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 196 + CHIP_H ) ;
+
+					// デバッグ
+					g_ac.left	= (LONG)bl ;
+					g_ac.top	= (LONG)bt ;
+					g_ac.right	= (LONG)br ;
+					g_ac.bottom	= (LONG)bb ;
 
 					if ( (bt-8 <= py) && (py < bb-32) )
 					{
-						if ( (bl <= pr) && (pl <= br+64) )
+						if ( (bl <= pr) && (pl <= br) )
 						{
 							Player_vec_.deg = 0.0f ;
 							footY = bt-2 ;
@@ -803,12 +809,6 @@ float Player::FootCheck( )
 					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
 					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo2 ) - 320 ) ;
 					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo2 ) - 320 + CHIP_H ) ;
-
-					// デバッグ
-					g_ac.left	= (LONG)bl ;
-					g_ac.top	= (LONG)bt ;
-					g_ac.right	= (LONG)br ;
-					g_ac.bottom	= (LONG)bb ;
 
 					printf( "sprite : %f \n" , bl ) ;
 
@@ -893,6 +893,7 @@ float Player::HeadCheck( )
 				// 通常ブロックの場合
 				case 1 :
 				case 2 :
+				case 3 :
 				case 4 :
 				case 5 :
 				case 6 :
@@ -1071,11 +1072,10 @@ void Player::Update( )
 	}
 
 	// プレイヤー位置調整
+	Player_spd_.y += Player_mag_.y ;
+	Player_ypos_ += Player_spd_.y ;
 	if ( -128 < Player_ypos_ )
 	{
-		Player_spd_.y += Player_mag_.y ;
-		Player_ypos_ += Player_spd_.y ;
-
 		arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
 		arrayY_ = ( int )( (Player_ypos_) / CHIP_H ) ;		// 配列座標を求める y
 

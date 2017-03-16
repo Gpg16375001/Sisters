@@ -57,6 +57,7 @@ int Sprite::clearData( int arg_bmpNo )
 	setUseAlpha( arg_bmpNo , false ) ;
 	setAngle( arg_bmpNo , 0 ) ;
 	setUseRotate( arg_bmpNo , false ) ;
+	setUseRender( arg_bmpNo , false ) ;
 
 	return( true ) ;
 }
@@ -189,6 +190,16 @@ int Sprite::setAlpha( int arg_bmpNo , int arg_alpha )
 int Sprite::setAngle( int arg_bmpNo , float arg_degree )
 {
 	bmpBGTable_[ arg_bmpNo ]._degree = arg_degree ;
+
+	return( true ) ;
+}
+
+/*/
+/*	角度のセット
+/*/
+int Sprite::setUseRender( int arg_bmpNo , bool arg_flg )
+{
+	bmpBGTable_[ arg_bmpNo ]._useRender = arg_flg ;
 
 	return( true ) ;
 }

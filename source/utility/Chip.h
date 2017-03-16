@@ -51,6 +51,7 @@ struct ChipData {
 	int		_alpha ;				// 透明度
 	bool	_useRotate ;			// 回転処理を行うかどうかのフラグ
 	float	_degree ;				// 角度
+	float	_off[ 2 ] ;				// スピード
 } ;
 
 // クラスの宣言

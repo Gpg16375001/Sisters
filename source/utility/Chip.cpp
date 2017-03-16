@@ -570,8 +570,7 @@ void Chip::Update( )
 		/*/
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 70 )
 		{
-			static float	moveX = 0.0f ;
-			static float	moveY = 0.0f ;
+			static float moveY[ 10 ] ;
 
 			for ( int b = 50 ; b < 60 ; ++b )
 			{
@@ -580,17 +579,25 @@ void Chip::Update( )
 				/*/
 				if ( Sprite::GetInstance()->getUseFlg( b ) )
 				{
-				} else {
+				}
+				else if ( Sprite::GetInstance()->getUseRender( b ) == false )
+				{
 					useBmpNo = b ;
+					Sprite::GetInstance()->setUseRender( useBmpNo , true ) ;
 					break ;
+
 				}
 			}
 
-			moveY++ ;
+			if ( Sprite::GetInstance()->getUseRender( useBmpNo ) )
+			{
+				moveY[ useBmpNo - 50 ]++ ;
+			}
+
 			Sprite::GetInstance()->setBmpXY(
 					useBmpNo ,
 					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale ,
-					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128 ) 
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY[ useBmpNo - 50 ] , 128 , 360 ) 
 				) ;
 
 			Sprite::GetInstance()->setBmpData(
@@ -609,8 +616,8 @@ void Chip::Update( )
 		// ìÆÇ≠è∞ÅFâ~
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 71 )
 		{
-			static float	moveX = 0.0f ;
-			static float	moveY = 0.0f ;
+			static float moveX[ 5 ] ;
+			static float moveY[ 5 ] ;
 
 			for ( int b = 60 ; b < 65 ; ++b )
 			{
@@ -621,16 +628,26 @@ void Chip::Update( )
 				{
 				} else {
 					useBmpNo = b ;
+					Sprite::GetInstance()->setUseRender( useBmpNo , true ) ;
 					break ;
 				}
 			}
 
-			moveX++ ;
-			moveY++ ;
+			for ( int b = 0 ; b < 5 ; ++b )
+			{
+				if ( Sprite::GetInstance()->getUseRender( useBmpNo ) )
+				{
+				} else {
+					moveY[ b ] = 0 ;
+				}
+			}
+
+			moveX[ useBmpNo - 60 ]++ ;
+			moveY[ useBmpNo - 60 ]++ ;
 			Sprite::GetInstance()->setBmpXY(
 					useBmpNo ,
-					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale + cosWave( moveX  , 128 , 300 ) ,
-					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY  , 128  , 300 ) 
+					( float )( ((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) ) - RenderScale + cosWave( moveX[ useBmpNo - 60 ]  , 128 , 300 ) ,
+					( float )( ((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ) + sinWave( moveY[ useBmpNo - 60 ]  , 128  , 300 ) 
 				) ;
 
 			Sprite::GetInstance()->setBmpData(
