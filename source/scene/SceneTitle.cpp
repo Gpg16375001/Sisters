@@ -72,12 +72,14 @@ void SceneTitle::Finalize( )
 /*/
 void SceneTitle::Update( )
 {
-	static Player player ;
+	static Player	player ;
 		
 	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )
 	{
 		player.Finalize( ) ;
 		player.Initialize( ) ;
+		Gimmick::GetInstance()->Finalize( ) ;
+		Gimmick::GetInstance()->Initialize( ) ;
 		g_state = -1 ;
 	}
 
@@ -94,6 +96,9 @@ void SceneTitle::Update( )
 
 	// チップのマップ読み込み
 	Chip::GetInstance()->Update( ) ;
+
+	// ギミックの読み込み
+	Gimmick::GetInstance()->Update( ) ;
 
 	// プレイヤーのアップデート
 	player.Update( ) ;
@@ -165,7 +170,6 @@ void SceneTitle::Render( )
 			Renderer::GetInstance()->Render( ) ;
 		}
 	}
-
 
 	/*/
 	/*	Sprite 描画

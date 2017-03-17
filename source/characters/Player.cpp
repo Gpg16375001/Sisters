@@ -748,90 +748,33 @@ float Player::FootCheck( )
 					}
 					break ;
 
-				// 動く床ブロックの場合
-				case 70 :
-					int useBmpNo1 ;
-					useBmpNo1 =  0 ;
-					for ( int b = 50 ; b < 60 ; ++b )
-					{
-						/*/
-						/*	・使ってる動く床を選択する
-						/*/
-						if ( Sprite::GetInstance()->getUseFlg( b ) )
-						{
-							useBmpNo1 = b ;
-							break ;
-						}
-					}
-
-					bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
-					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) + 64 - RenderScale ;
-					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 196 ) ;
-					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo1 ) - 196 + CHIP_H ) ;
-
-					// デバッグ
-					g_ac.left	= (LONG)bl ;
-					g_ac.top	= (LONG)bt ;
-					g_ac.right	= (LONG)br ;
-					g_ac.bottom	= (LONG)bb ;
-
-					if ( (bt-8 <= py) && (py < bb-32) )
-					{
-						if ( (bl <= pr) && (pl <= br) )
-						{
-							Player_vec_.deg = 0.0f ;
-							footY = bt-2 ;
-
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
-
-						}
-					}
-					break ;
-
-				// 回る動く床ブロックの場合 // ----------------------------------- 終わってない
-				case 71 :
-					int useBmpNo2 ;
-					useBmpNo2 =  0 ;
-					for ( int b = 60 ; b < 65 ; ++b )
-					{
-						/*/
-						/*	・使ってる動く床を選択する
-						/*/
-						if ( Sprite::GetInstance()->getUseFlg( b ) )
-						{
-							useBmpNo2 = b ;
-							break ;
-						}
-					}
-
-					bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
-					br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-					bt = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo2 ) - 320 ) ;
-					bb = ( float )( (i / CHIP_X) * CHIP_H + Sprite::GetInstance()->getBmpYPos( useBmpNo2 ) - 320 + CHIP_H ) ;
-
-					printf( "sprite : %f \n" , bl ) ;
-
-					if ( (bt-8 <= py) && (py < bb-32) )
-					{
-						if ( (bl <= pr) && (pl <= br+64) )
-						{
-							Player_vec_.deg = 0.0f ;
-							footY = bt-2 ;
-
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
-
-						}
-					}
-					break ;
-
 				default :
 					break ;
 
 			}
 		}
 	}
+
+	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
+	{
+		bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+		br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 128 ;
+		bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) + 64 ;
+		bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) + 96 ;
+
+		if ( (bt-8 <= py) && (py < bb) )
+		{
+			if ( (bl-2 <= pr) && (pl <= br+2) )
+			{
+				Player_vec_.deg = 0.0f ;
+
+				footY = bt-2 ;
+
+			}
+		}
+
+	}
+
 	return( footY ) ;
 
 }

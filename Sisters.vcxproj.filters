@@ -78,6 +78,9 @@
     <ClCompile Include="source\utility\LoadMapData.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
+    <ClCompile Include="source\characters\Gimmick.cpp">
+      <Filter>source\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="source\utility\LoadMapData.h">
       <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\characters\Gimmick.h">
+      <Filter>source\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

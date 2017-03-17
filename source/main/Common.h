@@ -11,6 +11,7 @@
 #include "../characters/Animation.h"
 #include "../characters/Physics.h"
 #include "../characters/Player.h"
+#include "../characters/Gimmick.h"
 
 #define CHIP_MAP_SIZE_X		1024
 #define CHIP_MAP_SIZE_Y		12
