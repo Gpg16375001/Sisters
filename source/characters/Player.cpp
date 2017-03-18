@@ -757,24 +757,66 @@ float Player::FootCheck( )
 
 	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
 	{
-		bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
-		br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 128 ;
-		bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) + 64 ;
-		bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getMoveBlock( g )._bmpNo ) + 96 ;
-
-		if ( (bt-8 <= py) && (py < bb) )
+		/*/
+		/*	ぎっみっくの種類分け
+		/*/
+		switch ( Gimmick::GetInstance( )->getGimmickData( g )._Gimmick )
 		{
-			if ( (bl-2 <= pr) && (pl <= br+2) )
-			{
-				Player_vec_.deg = 0.0f ;
+			/*/
+			/*	___/ まるのこ /___________________
+			/*/
+			case GIMMICK_NAME_CIRCULARSAWS :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
 
-				footY = bt-2 ;
+				float brad ;	// 丸鋸の半径
+				float x ;
+				float y ;
+				float c2 ;
+				float c ;		// プレイヤーと丸鋸の距離
+				float rad ;		// 丸鋸の中心からの高さ( Y軸 )
 
-			}
+				brad = br - bl ;			// 丸鋸の半径を求める
+				x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+				y = bb - (bb - bt) - py ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+				c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+				c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
+
+				// 半径よりもプレイヤーまでの距離が短い場合
+				if ( brad >= c )
+				{
+					rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
+					footY = bt + c - rad - 60 ;
+					printf( "px  : %f \n" , px ) ;
+					printf( "rad : %f \n" , rad ) ;
+					printf( "On Hit !! \n" ) ;
+				}
+				break ;
+
+			/*/
+			/*	___/ 動く床 /___________________
+			/*/
+			case GIMMICK_NAME_MOVEFLOOR :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 128 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 ;
+
+				if ( (bt-8 <= py) && (py < bb) )
+				{
+					if ( (bl-2 <= pr) && (pl <= br+2) )
+					{
+						Player_vec_.deg = 0.0f ;
+
+						footY = bt-2 ;
+
+					}
+				}
+				break ;
 		}
-
 	}
-
 	return( footY ) ;
 
 }

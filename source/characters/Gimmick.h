@@ -16,16 +16,16 @@ ________________________________________________________________________________
 #include <stdio.h>
 #include <math.h>
 
-#define		MAX_GIMMICK_NO			256
+#define		MAX_GIMMICK_NO				256
 
-#define		GIMMICK_MODE_STAY		1
-#define		GIMMICK_MODE_UPDOWN		2
-#define		GIMMICK_MODE_LEFTRIGHT	3
-#define		GIMMICK_MODE_CYCLE		4
-#define		GIMMICK_MODE_WAVE		5
+#define		GIMMICK_MODE_STAY			1
+#define		GIMMICK_MODE_UPDOWN			2
+#define		GIMMICK_MODE_LEFTRIGHT		3
+#define		GIMMICK_MODE_CYCLE			4
+#define		GIMMICK_MODE_WAVE			5
 
-#define		GIMMICK_NAME_MARU		1
-#define		GIMMICK_NAME_MOVEFLOOR	2
+#define		GIMMICK_NAME_CIRCULARSAWS	1
+#define		GIMMICK_NAME_MOVEFLOOR		2
 
 struct GimmickData {
 	int		_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
@@ -59,17 +59,20 @@ class Gimmick
 		void Update( ) ;												// チップの更新
 		void clearGimmickData( ) ;
 
-		void setGimmicks( ) ;
+		/*/
+		/*	動く床のデータをセット
+		/*/
+		int setMoveBlocks( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode ) ;
 
 		/*/
-		/*	ギミックのデータをセット
+		/*	まるのこのデータをセット
 		/*/
-		int setMoveBlock( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_Delay , int _mode ) ;
+		int setCircularSaws( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
 		/*	ギミックのデータをゲット
 		/*/
-		GimmickData getMoveBlock( int arg_GimmickNo ) {
+		GimmickData getGimmickData( int arg_GimmickNo ) {
 			return( GimmickData_[ arg_GimmickNo ] ) ;
 		}
 
