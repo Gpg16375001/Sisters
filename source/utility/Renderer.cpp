@@ -9,10 +9,8 @@ ________________________________________________________________________________
 
 ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 */
-
 #include <windows.h>
 #include <stdio.h>	// --- ÉRÉìÉ\Å[Éãóp
-#include <math.h>
 #include "Renderer.h"
 
 /*/
@@ -47,6 +45,11 @@ void Renderer::Initialize( )
 	setAlphaFlg( false ) ;
 	setRotateFlg( false ) ;
 
+	for ( int i = 0 ; i < 360 ; ++i )
+	{
+		sinTbl[ i ] = sin( i * 3.14f / 180.0f ) ;
+	}
+
 }
 
 /*/
@@ -67,7 +70,7 @@ int Renderer::setHDC( HWND arg_hWnd , HDC arg_hDCBack , HDC arg_hDCWork )
 int Renderer::selectBmp(
 		HGDIOBJ arg_bmpData ,						// . âÊëúÉfÅ[É^
 		int arg_anchor ,							// . ÉAÉìÉJÅ[
-		float arg_x , float arg_y ,					// . îzíuç¿ïW
+		float arg_x , float arg_y ,				// . îzíuç¿ïW
 		int arg_u , int arg_v ,						// . êÿÇËéÊÇËà íu
 		int arg_w , int arg_h ,						// . ïùçÇÇ≥
 		float arg_scaleX , float arg_scaleY ,		// . ägëÂó¶
@@ -104,8 +107,9 @@ int Renderer::Render( )
 	static HDC				s_tRBWorkHDC ;
 	static HBITMAP			s_tRBWorkBmp ;
 	static BLENDFUNCTION	s_blendFunc = { AC_SRC_OVER , 0 , 255 , 0 } ;
-	float radian , x , y ;
-	POINT rotatePoint[ 3 ] ;
+	float	radian , x , y ;
+	POS		rotatePoint[ 3 ] ;
+	POINT	rotateP[ 3 ] ;
 	int i ;
 
 	// éwíËÇ≥ÇÍÇƒÇ¢ÇÈÉXÉvÉâÉCÉgÇÃëIë
@@ -118,35 +122,35 @@ int Renderer::Render( )
 
 		// ç∂è„í∏ì_ÇâÒì]ïœä∑
 		// ì_ÇÃà íuÇãÅÇﬂÇÈ
-		rotatePoint[ 0 ].x = -( w_ / 2 ) ;
-		rotatePoint[ 0 ].y = -( h_ / 2 ) ;
-		x = ( float )rotatePoint[ 0 ].x ;
-		y = ( float )rotatePoint[ 0 ].y ;
+		rotatePoint[ 0 ].x = -( w_ / 2.0f ) ;
+		rotatePoint[ 0 ].y = -( h_ / 2.0f ) ;
+		x = rotatePoint[ 0 ].x ;
+		y = rotatePoint[ 0 ].y ;
 		// â¡ñ@ÇÃíËóù
-		rotatePoint[ 0 ].x = ( int )( x * cos(radian) - y * sin(radian)  ) ;
-		rotatePoint[ 0 ].y = ( int )( x * sin(radian) + y * cos(radian)  ) ;
+		rotatePoint[ 0 ].x = ( x * cos(radian) - y * sin(radian)  ) ;
+		rotatePoint[ 0 ].y = ( x * sin(radian) + y * cos(radian)  ) ;
 
 		// âEè„í∏ì_ÇâÒì]ïœä∑
-		rotatePoint[ 1 ].x = ( w_ / 2 ) ;
-		rotatePoint[ 1 ].y = -( h_ / 2 ) ;
-		x = ( float )rotatePoint[ 1 ].x ;
-		y = ( float )rotatePoint[ 1 ].y ;
-		rotatePoint[ 1 ].x = ( int )( x * cos(radian) - y * sin(radian)  ) ;
-		rotatePoint[ 1 ].y = ( int )( x * sin(radian) + y * cos(radian)  ) ;
+		rotatePoint[ 1 ].x = ( w_ / 2.0f ) ;
+		rotatePoint[ 1 ].y = -( h_ / 2.0f ) ;
+		x = rotatePoint[ 1 ].x ;
+		y = rotatePoint[ 1 ].y ;
+		rotatePoint[ 1 ].x = ( x * cos(radian) - y * sin(radian)  ) ;
+		rotatePoint[ 1 ].y = ( x * sin(radian) + y * cos(radian)  ) ;
 
 		// ç∂â∫í∏ì_ÇâÒì]ïœä∑
-		rotatePoint[ 2 ].x = -( w_ / 2 ) ;
-		rotatePoint[ 2 ].y = ( h_ / 2 ) ;
-		x = ( float )rotatePoint[ 2 ].x ;
-		y = ( float )rotatePoint[ 2 ].y ;
-		rotatePoint[ 2 ].x = ( int )( x * cos(radian) - y * sin(radian)  ) ;
-		rotatePoint[ 2 ].y = ( int )( x * sin(radian) + y * cos(radian)  ) ;
+		rotatePoint[ 2 ].x = -( w_ / 2.0f ) ;
+		rotatePoint[ 2 ].y = ( h_ / 2.0f ) ;
+		x = rotatePoint[ 2 ].x ;
+		y = rotatePoint[ 2 ].y ;
+		rotatePoint[ 2 ].x = ( x * cos(radian) - y * sin(radian)  ) ;
+		rotatePoint[ 2 ].y = ( x * sin(radian) + y * cos(radian)  ) ;
 
 		// ïΩçsà⁄ìÆÇ≈íÜêSà íuÇñﬂÇ∑
 		for ( i = 0 ; i < 3 ; i++ )
 		{
-			rotatePoint[ i ].x += ( w_ / 2 ) ;
-			rotatePoint[ i ].y += ( h_ / 2 ) ;
+			rotatePoint[ i ].x += ( w_ / 2.0f ) ;
+			rotatePoint[ i ].y += ( h_ / 2.0f ) ;
 		}
 
 		// çÏã∆ópÉfÉoÉCÉXÉRÉìÉeÉLÉXÉgÇÃê∂ê¨ ( ëÂÇ´ÇﬂÇ…çÏÇÈ )
@@ -167,9 +171,16 @@ int Renderer::Render( )
 		FillRect( s_tRBWorkHDC , &fillBox , hBrush ) ;
 		DeleteObject( hBrush ) ;
 
+		// POINTå^Ç…Ç∑ÇÈ
+		for ( i = 0 ; i < 3 ; i++ )
+		{
+			rotateP[ i ].x = ( int )rotatePoint[ i ].x ;
+			rotateP[ i ].y = ( int )rotatePoint[ i ].y ;
+		}
+
 		// çÏã∆ópÇ…ì]ëó
 		PlgBlt( s_tRBWorkHDC ,
-				rotatePoint ,
+				rotateP ,
 				hDCWork_ ,
 				0 , 0 ,
 				w_ , h_ ,

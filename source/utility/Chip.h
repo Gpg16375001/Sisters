@@ -285,16 +285,18 @@ class Chip
 		/*/
 		/*	sin の取得
 		/*/
-		float sinWave( float arg_time , int arg_width , int arg_strength = 180 )
+		float sinWave( float arg_time , int arg_width )
 		{
-			return( (float)(sin( arg_time * 3.14 / arg_strength ) * arg_width) ) ;
+			int time = ( int )arg_time % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
 		}
 		/*/
 		/*	cos の取得
 		/*/
-		float cosWave( float arg_time , int arg_width , int arg_strength = 180 )
+		float cosWave( float arg_time , int arg_width )
 		{
-			return( (float)(cos( arg_time * 3.14 / arg_strength ) * arg_width) ) ;
+			int time = ( int )(arg_time + 90) % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
 		}
 
 		/*/
@@ -310,13 +312,19 @@ class Chip
 		/*/
 		/*	コンストラクタ
 		/*/
-		Chip( ) {	} ;
+		Chip( ) {
+			for ( int i = 0 ; i < 360 ; ++i )
+			{
+				sinTbl[ i ] = sin( i * 3.14f / 180.0f ) ;
+			}
+		} ;
 
 		ChipData bmpCBGTable_[ MAX_BMP_CBG ] ;							// 画像データ
 		int m_chipTable_[ CHIP_X * CHIP_Y ] ;							// ChipBgData内のマップデータ
 		int map_w_ , map_h_ ;											// マップの幅と高さ
 		int renderMap_w_ , renderMap_h_ ;								// 一画面上のマップの幅と高さ
 		int scrollX_ , scrollY_ ;										// スクロール座標
+		float sinTbl[ 360 ] ;
 
 } ;
 

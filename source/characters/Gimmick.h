@@ -26,6 +26,10 @@ ________________________________________________________________________________
 
 #define		GIMMICK_NAME_CIRCULARSAWS	1
 #define		GIMMICK_NAME_MOVEFLOOR		2
+#define		GIMMICK_NAME_PENDULUM		3
+
+/* Pos To Cell */
+#define		PTC( arg_cell )	( (arg_cell * 64) )
 
 struct GimmickData {
 	int		_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
@@ -68,6 +72,11 @@ class Gimmick
 		/*	まるのこのデータをセット
 		/*/
 		int setCircularSaws( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
+		/*	振り子のデータをセット
+		/*/
+		int setPendulums( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

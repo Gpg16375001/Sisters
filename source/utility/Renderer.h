@@ -34,6 +34,7 @@ ________________________________________________________________________________
 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 */
 #include <windows.h>
+#include <math.h>
 
 /*/
 /*	クラスの宣言
@@ -41,6 +42,11 @@ ________________________________________________________________________________
 class Renderer
 {
 	public :
+		struct POS {
+			float x ;
+			float y ;
+		} ;
+
 		/*/
 		/*	初期化
 		/*/
@@ -51,7 +57,7 @@ class Renderer
 		int setHDC( HWND arg_hWnd , HDC arg_hDCBack , HDC arg_hDCWork ) ;	// 裏画面の描画に必要なものをもらう
 		int selectBmp( HGDIOBJ arg_bmpData ,				// 画像データの取得
 				int arg_anchor ,							 // . アンカー
-				float arg_x , float arg_y ,					 // . 配置座標
+				float arg_x , float arg_y ,				 // . 配置座標
 				int arg_u , int arg_v ,						 // . 切り取り位置
 				int arg_w , int arg_h ,						 // . 幅高さ
 				float arg_scaleX , float arg_scaleY ,		 // . 拡大率
@@ -60,10 +66,10 @@ class Renderer
 			) ;
 		int Render( ) ;										// バックバッファへの出力
 
-		int setPos( float arg_x , float arg_y ) ;				// 座標のセット
+		int setPos( float arg_x , float arg_y ) ;			// 座標のセット
 		int setUV( int arg_u , int arg_v ) ;				// 切り出し座標のセット
 		int setWH( int arg_w , int arg_h ) ;				// 切り出し幅高さのセット
-		int setScale( float arg_w , float arg_h ) ;			// 拡大率のセット
+		int setScale( float arg_w , float arg_h ) ;		// 拡大率のセット
 		int setAnchor( int arg_anchor ) ;					// アンカーのセット
 		int setAlpha( int arg_alpha ) ;						// 透明度のセット
 		int setAngle( float arg_degree ) ;					// 角度のセット
@@ -73,6 +79,26 @@ class Renderer
 		HDC getHDCBack( ) const {
 			return( hDCBack_ ) ;
 		}
+
+		/*/
+		/*	sin の取得
+		/*/
+		float sinWave( float arg_degree )
+		{
+			int degree = ( int )arg_degree ;
+			degree = degree % 360 ;
+			return( sinTbl[ degree ] ) ;
+		}
+		/*/
+		/*	cos の取得
+		/*/
+		float cosWave( float arg_degree )
+		{
+			int degree = ( int )(arg_degree + 90) ;
+			degree = degree % 360 ;
+			return( sinTbl[ degree ] ) ;
+		}
+
 		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/
@@ -86,7 +112,7 @@ class Renderer
 		/*/
 		/*	コンストラクタ
 		/*/
-		Renderer( ) {	}
+		Renderer( ) {	} ;
 
 	private :
 		HGDIOBJ bmpData_ ;
@@ -103,6 +129,7 @@ class Renderer
 		float	degree_ ;				// 角度
 		bool	alphaFlg_ ;				// 透明処理をするかどうかのフラグ
 		bool	rotateFlg_ ;			// 回転処理をするかどうかのフラグ
+		float sinTbl[ 360 ] ;
 
 } ;
 

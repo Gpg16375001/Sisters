@@ -61,11 +61,13 @@ void SceneManager::Update( int arg_state )
 			// ギミックの初期セット
 			Gimmick::GetInstance()->Initialize( ) ;
 			// ギミックをセット
-			Gimmick::GetInstance()->setCircularSaws( 10 , 2216 , 300 , 360 , 10 , GIMMICK_MODE_LEFTRIGHT ) ;
-			Gimmick::GetInstance()->setCircularSaws( 11 , 2408 , 300 , 360 , 10 , GIMMICK_MODE_CYCLE ) ;
-			Gimmick::GetInstance()->setCircularSaws( 12 , 2600 , 200 , 360 , 90 , GIMMICK_MODE_LEFTRIGHT ) ;
-			Gimmick::GetInstance()->setCircularSaws( 13 , 2792 , 200 , 360 , 90 , GIMMICK_MODE_CYCLE ) ;
-			Gimmick::GetInstance()->setCircularSaws( 14 , 2984 , 300 , 360 , 120 , GIMMICK_MODE_UPDOWN ) ;
+//			Gimmick::GetInstance()->setCircularSaws( 10 , PTC(70) , PTC(3) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// 丸鋸
+
+//			Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(70) , PTC(3) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;		// 動く床
+
+			Gimmick::GetInstance()->setPendulums( 100 , PTC(70) , PTC(3) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;		// 振り子
+			Gimmick::GetInstance()->setPendulums( 101 , PTC(76) , PTC(3) , 360 , 192 , GIMMICK_MODE_LEFTRIGHT ) ;
+			Gimmick::GetInstance()->setPendulums( 102 , PTC(82) , PTC(3) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;
 
 			g_state++ ;
 			break ;
