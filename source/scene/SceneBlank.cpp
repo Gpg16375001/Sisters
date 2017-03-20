@@ -73,9 +73,8 @@ void SceneBlank::Update( )
 			2000 , 1000 ,
 			1.0f , 1.0f
 		) ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) )
-		g_state = 0 ;												// ------------------------------- Gvl
+		
+	g_state++ ;												// ------------------------------- Gvl
 
 }
 

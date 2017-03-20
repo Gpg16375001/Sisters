@@ -88,6 +88,8 @@
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
     <ClCompile Include="source\scene\SceneBlank.cpp" />
+    <ClCompile Include="source\scene\SceneGame01.cpp" />
+    <ClCompile Include="source\scene\SceneGame02.cpp" />
     <ClCompile Include="source\scene\SceneTitle.cpp" />
     <ClCompile Include="source\utility\BackGround.cpp" />
     <ClCompile Include="source\utility\Chip.cpp" />
@@ -110,6 +112,8 @@
     <ClInclude Include="source\main\WinMain.h" />
     <ClInclude Include="source\scene\SceneBase.h" />
     <ClInclude Include="source\scene\SceneBlank.h" />
+    <ClInclude Include="source\scene\SceneGame01.h" />
+    <ClInclude Include="source\scene\SceneGame02.h" />
     <ClInclude Include="source\scene\SceneTitle.h" />
     <ClInclude Include="source\utility\BackGround.h" />
     <ClInclude Include="source\utility\Chip.h" />

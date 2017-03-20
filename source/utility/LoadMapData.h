@@ -18,7 +18,7 @@ namespace LoadMapData
 
 	} ;																				
 
-	void ReLoad( ) ;
+	void ReLoad( TCHAR *arg_path ) ;
 
 }
 

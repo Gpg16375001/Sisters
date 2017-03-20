@@ -68,13 +68,15 @@ void Gimmick::clearGimmickData( )
 		GimmickData_[ i ]._spd		= 0 ;		// 速さ
 		GimmickData_[ i ]._Gimmick	= 0 ;		// ギミックの種類
 		GimmickData_[ i ]._mode		= 0 ;		// ギミックのモード
-		GimmickData_[ i ]._off[ 0 ] = 0 ;		// オフセット
-		GimmickData_[ i ]._off[ 1 ] = 0 ;		// オフセット
+		GimmickData_[ i ]._off[ 0 ] = 0 ;		// オフセット 1
+		GimmickData_[ i ]._off[ 1 ] = 0 ;		// オフセット 2
+		GimmickData_[ i ]._off[ 2 ] = 0 ;		// オフセット 3
+		GimmickData_[ i ]._off[ 3 ] = 0 ;		// オフセット 4
 	}
 
 }
 
-/*/
+/*/r
 /*	--+ ギミックのデータをセット +-----
 /*/
 
@@ -90,6 +92,7 @@ int Gimmick::setMoveBlocks( int arg_bmpNo , float arg_x , float arg_y , float ar
 	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
 	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
 	GimmickData_[ GimmickNo_ ]._mode	= arg_mode ;
+	GimmickData_[ GimmickNo_ ]._off[ 2 ]= arg_spd ;
 	GimmickNo_++ ;
 
 	return( true ) ;
@@ -138,6 +141,57 @@ int Gimmick::setPendulums( int arg_bmpNo , float arg_x , float arg_y , float arg
 }
 
 /*/
+/*	電気のデータをセット
+/*/
+int Gimmick::setShockers( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
+{
+	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_SHOCKER ;
+	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
+	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
+	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
+	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
+	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
+	GimmickData_[ GimmickNo_ ]._mode	= arg_mode ;
+	GimmickNo_++ ;
+
+	return( true ) ;
+}
+
+/*/
+/*	SpeedUpのデータをセット
+/*/
+int Gimmick::setSpeedUp( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
+{
+	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_SPEEDUP ;
+	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
+	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
+	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
+	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
+	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
+	GimmickData_[ GimmickNo_ ]._mode	= arg_mode ;
+	GimmickNo_++ ;
+
+	return( true ) ;
+}
+
+/*/
+/*	くものデータをセット
+/*/
+int Gimmick::setClouds( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
+{
+	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_CLOUD ;
+	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
+	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
+	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
+	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
+	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
+	GimmickData_[ GimmickNo_ ]._mode	= arg_mode ;
+	GimmickNo_++ ;
+
+	return( true ) ;
+}
+
+/*/
 /*	Update
 /*
 /*	
@@ -158,12 +212,12 @@ void Gimmick::Update( )
 				/*/
 				/*	まるのこ：静止
 				/*/
-				printf( "GIMMICK_NAME_CIRCULARSAWS\n" ) ;
+//				printf( "GIMMICK_NAME_CIRCULARSAWS\n" ) ;
 				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_STAY )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_STAY\n" ) ;
+//						printf( "GIMMICK_MODE_STAY\n" ) ;
 						GimmickData_[ g ]._off[ 1 ]++ ;
 						Sprite::GetInstance()->setBmpData(
 								GimmickData_[ g ]._bmpNo ,
@@ -196,7 +250,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_UPDOWN\n" ) ;
+//						printf( "GIMMICK_MODE_UPDOWN\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						GimmickData_[ g ]._off[ 1 ]++ ;
@@ -231,7 +285,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
+//						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						GimmickData_[ g ]._off[ 1 ]++ ;
@@ -266,7 +320,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_CYCLE\n" ) ;
+//						printf( "GIMMICK_MODE_CYCLE\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						GimmickData_[ g ]._off[ 1 ]++ ;
@@ -303,12 +357,12 @@ void Gimmick::Update( )
 				/*/
 				/*	動く床：静止
 				/*/
-				printf( "GIMMICK_NAME_MOVEFLOOR\n" ) ;
+//				printf( "GIMMICK_NAME_MOVEFLOOR\n" ) ;
 				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_STAY )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_STAY\n" ) ;
+//						printf( "GIMMICK_MODE_STAY\n" ) ;
 						Sprite::GetInstance()->setBmpData(
 								GimmickData_[ g ]._bmpNo ,
 								0 ,
@@ -340,7 +394,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_UPDOWN\n" ) ;
+//						printf( "GIMMICK_MODE_UPDOWN\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						Sprite::GetInstance()->setBmpData(
@@ -374,7 +428,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
+//						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						Sprite::GetInstance()->setBmpData(
@@ -408,7 +462,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_CYCLE\n" ) ;
+//						printf( "GIMMICK_MODE_CYCLE\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						Sprite::GetInstance()->setBmpData(
@@ -435,6 +489,121 @@ void Gimmick::Update( )
 
 				}
 
+				/*/
+				/*	動く床：落ち
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_DROP )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_DROP\n" ) ;
+
+						GimmickData_[ g ]._off[ 0 ] += (GimmickData_[ g ]._spd / 60) ;
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+						if ( GimmickData_[ g ]._off[ 0 ] >= 700 )
+						{
+							GimmickData_[ g ]._off[ 0 ] = -100 ;
+						}
+
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
+
+				/*/
+				/*	動く床：昇り
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_UPPER )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_UPPER\n" ) ;
+
+						GimmickData_[ g ]._off[ 0 ] -= (GimmickData_[ g ]._spd / 60) ;
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+						if ( GimmickData_[ g ]._off[ 0 ] <= -100 )
+						{
+							GimmickData_[ g ]._off[ 0 ] = 700 ;
+						}
+
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
+
+				/*/
+				/*	動く床：特殊
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_WAVE )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_WAVE\n" ) ;
+						switch ( (int)GimmickData_[ g ]._off[ 2 ] )
+						{
+							case 1 :
+								moveFloor01( g ) ;
+								break ;
+
+							case 2 :
+								moveFloor02( g ) ;
+								break ;
+
+							case 3 :
+								moveFloor03( g ) ;
+								break ;
+
+							case 4 :
+								moveFloor04( g ) ;
+								break ;
+
+						}
+
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
 				break ;
 
 			/*/
@@ -448,7 +617,7 @@ void Gimmick::Update( )
 				{
 					if ( GimmickData_[ g ]._useFlg )
 					{
-						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
+//						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
 
 						GimmickData_[ g ]._off[ 0 ]++ ;
 						GimmickData_[ g ]._off[ 1 ]++ ;
@@ -465,7 +634,7 @@ void Gimmick::Update( )
 							) ;
 						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 128 ;
-						if  ( Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 64 ) < 0 )
+						if  ( Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 128 ) < 0 )
 						{
 							GimmickData_[ g ]._off[ 1 ] = 0 ;
 						}
@@ -499,9 +668,270 @@ void Gimmick::Update( )
 				}
 				break ;
 
+			/*/
+			/*	___/ 電気 /___________________
+			/*/
+			case GIMMICK_NAME_SHOCKER :
+				/*/
+				/*	電気：上下
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_UPDOWN )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_UPDOWN\n" ) ;
+
+						GimmickData_[ g ]._off[ 0 ] += 4 ;
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
+								64 , 0 ,
+								64 , 64 ,
+								1.0f , 1.0f ,
+								255 ,
+								0
+							) ;
+						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 64 ;
+						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 64 ;
+
+						if ( GimmickData_[ g ]._off[ 0 ] >= GimmickData_[ g ]._spd )
+						{
+							GimmickData_[ g ]._off[ 0 ] = 0 ;
+							GimmickData_[ g ]._useFlg = false ;
+							GimmickData_[ g ]._delay = 8 ;
+						}
+						
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
+
+				/*/
+				/*	電気：左右
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_LEFTRIGHT )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
+
+						GimmickData_[ g ]._off[ 0 ] -= 4 ;
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y ,
+								0 , 0 ,
+								64 , 64 ,
+								1.0f , 1.0f ,
+								255 ,
+								0
+							) ;
+						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 64 ;
+						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 64 ;
+
+						if ( GimmickData_[ g ]._off[ 0 ] <= -GimmickData_[ g ]._spd )
+						{
+							GimmickData_[ g ]._off[ 0 ] = 0 ;
+							GimmickData_[ g ]._useFlg = false ;
+							GimmickData_[ g ]._delay = 8 ;
+						}
+						
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
+				break ;
+
+			/*/
+			/*	___/ SPPED UP /___________________
+			/*/
+			case GIMMICK_NAME_SPEEDUP :
+				/*/
+				/*	Speed Up：静止
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_STAY )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_STAY\n" ) ;
+
+						GimmickData_[ g ]._off[ 0 ]++ ;
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 8 ) ,
+								0 , 0 ,
+								128 , 64 ,
+								1.0f , 1.0f ,
+								255 ,
+								0
+							) ;
+						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 64 ;
+						
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
+				break ;
+
+			/*/
+			/*	___/ くも /___________________
+			/*/
+			case GIMMICK_NAME_CLOUD :
+				/*/
+				/*	くも：静止
+				/*/
+				if ( GimmickData_[ g ]._mode == GIMMICK_MODE_STAY )
+				{
+					if ( GimmickData_[ g ]._useFlg )
+					{
+//						printf( "GIMMICK_MODE_STAY\n" ) ;
+
+						GimmickData_[ g ]._off[ 0 ]++ ;
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 4 ) ,
+								0 , 0 ,
+								128 , 64 ,
+								1.0f + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 2 ) / 100 ,
+								1.0f + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 4 ) / 100 ,
+								255 ,
+								0
+							) ;
+						GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+						GimmickData_[ g ]._h = GimmickData_[ g ]._y + 64 ;
+						
+					} else {
+						GimmickData_[ g ]._delay-- ;
+						if ( GimmickData_[ g ]._delay <= 0 )
+						{
+							GimmickData_[ g ]._useFlg = true ;
+						}
+					}
+
+				}
+				break ;
+
 		}
 	}
 
 }
+
+/*/
+/*	動く床：動き1
+/*/
+void Gimmick::moveFloor01( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			GimmickData_[ g ]._off[ 0 ]++ ;
+			GimmickData_[ g ]._off[ 1 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 0 ] , 192) ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+			break ;
+
+	}
+
+}
+
+/*/
+/*	動く床：動き2
+/*/
+void Gimmick::moveFloor02( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
+/*/
+/*	動く床：動き3
+/*/
+void Gimmick::moveFloor03( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
+/*/
+/*	動く床：動き4
+/*/
+void Gimmick::moveFloor04( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
 
 

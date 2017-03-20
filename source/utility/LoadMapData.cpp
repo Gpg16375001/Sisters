@@ -53,9 +53,9 @@ namespace LoadMapData
 		fclose( fp ) ;
 	}
 
-	void ReLoad( )
+	void ReLoad( TCHAR *arg_path )
 	{
-		LoadMapData( TEXT("data/map/mapData.txt") , 21 ) ;
+		LoadMapData( arg_path , lstrlen(arg_path)+1 ) ;
 	}
 }																						
 																						

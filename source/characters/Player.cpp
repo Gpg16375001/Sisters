@@ -71,6 +71,8 @@ void Player::Initialize( )
 	scrollflg[ 1 ]		= false ;
 	scrollx				= 0 ;
 
+	Player_hp_			= 3 ;
+
 	Player_.Finalize( ) ;
 	Player_.Initialize( ) ;
 
@@ -103,11 +105,15 @@ void Player::Initialize( )
 	AnimationData P_drop[ ] = {
 		{ 0 , 4 , {200 * 9 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
+	AnimationData P_deth[ ] = {
+		{ 3 , 4 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
 
 	memcpy( &Panim_stop_ , P_stop , 4 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_walk_ , P_walk , 4 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_jump_ , P_jump , 1 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_drop_ , P_drop , 1 * sizeof( AnimationData ) ) ;
+	memcpy( &Panim_deth_ , P_deth , 1 * sizeof( AnimationData ) ) ;
 
 }
 
@@ -135,11 +141,14 @@ void Player::Finalize( )
 	scrollflg[ 1 ]		= false ;
 	scrollx				= 0 ;
 
+	Player_hp_			= 0 ;
+
 	// アニメーション
 	memset( &Panim_stop_ , 0 , 4 * sizeof( AnimationData ) ) ;
 	memset( &Panim_walk_ , 0 , 4 * sizeof( AnimationData ) ) ;
 	memset( &Panim_jump_ , 0 , 1 * sizeof( AnimationData ) ) ;
 	memset( &Panim_drop_ , 0 , 1 * sizeof( AnimationData ) ) ;
+	memset( &Panim_deth_ , 0 , 1 * sizeof( AnimationData ) ) ;
 
 }
 
@@ -186,6 +195,27 @@ void Player::PlayerAction( )
 		case P_drop :
 			Pjump( ) ;
 			break ;
+
+		// ダメージ初期化
+		case P_dainit :
+			Pdainit( ) ;
+			break ;
+
+		// ダメージ
+		case P_damage :
+			Pdamage( ) ;
+			break ;
+
+		// 死に初期化
+		case P_deinit :
+			Pdeinit( ) ;
+			break ;
+
+		// 死に
+		case P_deth :
+			Pdeth( ) ;
+			break ;
+
 	}
 
 }
@@ -411,6 +441,52 @@ void Player::Pjump( )
 		}
 	}
 
+}
+
+/*/
+/*	6 : ダメージ 初期セット
+/*/
+void Player::Pdainit( )
+{
+
+	Pmode_ = P_damage ;
+}
+
+/*/
+/*	7 : ダメージ
+/*/
+void Player::Pdamage( )
+{
+
+	Pmode_ = P_sinit ;
+}
+
+/*/
+/*	8 : 死	初期セット
+/*/
+void Player::Pdeinit( )
+{
+	Player_mag_.y = -18 ;
+	PlayerAnim_.setAnimData( Panim_deth_ ) ;
+
+	Pmode_ = P_deth ;
+}
+
+/*/
+/*	9 : 死
+/*/
+void Player::Pdeth( )
+{
+	Player_mag_.y += Player_.Weight2D().y / 60 ;
+
+	if ( Player_ypos_ >= 900 )
+	{
+		Finalize( ) ;
+		Initialize( ) ;
+		Gimmick::GetInstance()->Finalize( ) ;
+		Gimmick::GetInstance()->Initialize( ) ;
+		g_state-- ;
+	}
 }
 
 /*/
@@ -723,7 +799,7 @@ float Player::FootCheck( )
 					}
 					break  ;
 
-				case 50 :
+				case 14 :
 					float brad ;	// 丸鋸の半径
 					float x ;
 					float y ;
@@ -731,20 +807,64 @@ float Player::FootCheck( )
 					float c ;		// プレイヤーと丸鋸の距離
 					float rad ;		// 丸鋸の中心からの高さ( Y軸 )
 
-					brad = br - bl ;			// 丸鋸の半径を求める
-					x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
-					y = bb - (bb - bt) - py ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+					bl -= 256 ;
+					bt -= 384 + 64 ;
+					br = bl + 512 ;
+					bb = bt + 512 ;
+
+					brad = (br - bl) / 2 ;		// 丸鋸の半径を求める
+					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+					y = bb - brad - py ;		// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( brad >= c )
+					if ( (bl+brad < px) && (px < br+8) && (bt + 256 < py) )
 					{
-						rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
-						footY = bt + c - rad - 60 ;
-						printf( "px  : %f \n" , px ) ;
-						printf( "rad : %f \n" , rad ) ;
-						printf( "On Hit !! \n" ) ;
+						if ( brad <= c )
+						{
+							Player_vec_.deg = -30.0f ;
+
+							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
+
+							footY = bb - c + rad + 4 ;
+							printf( " c  : %f \n" , c ) ;
+							printf( "rad : %f \n" , rad ) ;
+							printf( "brad : %f \n" , brad ) ;
+							printf( "On Hit !! \n" ) ;
+
+						}
+					}
+					break ;
+
+				case 15 :
+					bl += 0 ;
+					bt -= 384 + 64 ;
+					br = bl + 512 ;
+					bb = bt + 512 ;
+
+					brad = (br - bl) / 2 ;		// 丸鋸の半径を求める
+					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+					y = bb - brad - py ;		// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
+
+					// 半径よりもプレイヤーまでの距離が短い場合
+					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 < py) )
+					{
+						if ( brad <= c )
+						{
+							Player_vec_.deg = -30.0f ;
+
+							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
+
+							footY = bb - c + rad + 4 ;
+							printf( " c  : %f \n" , c ) ;
+							printf( "rad : %f \n" , rad ) ;
+							printf( "brad : %f \n" , brad ) ;
+							printf( "On Hit !! \n" ) ;
+
+						}
 					}
 					break ;
 
@@ -788,7 +908,7 @@ float Player::FootCheck( )
 				if ( brad >= c )
 				{
 					rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
-					footY = bt + c - rad - 60 ;
+//					footY = bt + c - rad - 60 ;
 					printf( "px  : %f \n" , px ) ;
 					printf( "rad : %f \n" , rad ) ;
 					printf( "On Hit !! \n" ) ;
@@ -809,7 +929,10 @@ float Player::FootCheck( )
 					if ( (bl-2 <= pr) && (pl <= br+2) )
 					{
 						Player_vec_.deg = 0.0f ;
-
+						if ( Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] == 0 )
+						{
+							Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] = 1 ;
+						}
 						footY = bt-2 ;
 
 					}
@@ -839,6 +962,31 @@ float Player::FootCheck( )
 					printf( "px  : %f \n" , px ) ;
 					printf( "rad : %f \n" , rad ) ;
 					printf( "On Hit !! \n" ) ;
+				}
+				break ;
+
+			/*/
+			/*	___/ くも /___________________
+			/*/
+			case GIMMICK_NAME_CLOUD :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 10 ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 118 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 70 ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 ;
+
+				if ( (bt-4 <= py) && (py < bb) )
+				{
+					if ( (bl-2 <= pr) && (pl <= br+2) )
+					{
+						Player_vec_.deg = 0.0f ;
+						Player_mag_.x *= 0.965f ;			// 減速率
+						if ( Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] == 0 )
+						{
+							Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] = 1 ;
+						}
+						footY = bt ;
+
+					}
 				}
 				break ;
 
@@ -1013,11 +1161,12 @@ float Player::Collision( )
 				// 通常ブロックの場合
 				case 1 :
 				case 2 :
-					if ( Player_vec_.deg == 0 )
+				case 9 :
+					if ( (bl <= pr) && (pl <= br) )
 					{
 						if ( (bt <= py) && (py < bb) )
 						{
-							if ( (bl <= pr) && (pl <= br) )
+							if ( Player_vec_.deg >= -90 )
 							{
 								if ( center < px )
 								{
@@ -1030,32 +1179,97 @@ float Player::Collision( )
 					}
 					break ;
 
-
-				/*/
-				/*	敵対オブジェクト : ダメージ
-				/*/
-				case 50 :
-					float brad ;
-					float x ;
-					float y ;
-					float c2 ;
-					float c ;
-
-					brad = br - bl ;
-					x = br - (br - bl) - px ;
-					y = bb - (bb - bt) - py ;
-					c2 = x * x + y * y ;
-					c = sqrt( c2 ) ;
-
-					if ( brad >= c )
-					{
-					}
-					break ;
-
 				default :
 					break ;
 
 			}
+		}
+	}
+
+	float brad ;	// 丸鋸の半径
+	float x ;
+	float y ;
+	float c2 ;
+	float c ;		// プレイヤーと丸鋸の距離
+	float rad ;		// 丸鋸の中心からの高さ( Y軸 )
+	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
+	{
+		/*/
+		/*	ぎっみっくの種類分け
+		/*/
+		switch ( Gimmick::GetInstance( )->getGimmickData( g )._Gimmick )
+		{
+			/*/
+			/*	___/ まるのこ /___________________
+			/*/
+			case GIMMICK_NAME_CIRCULARSAWS :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+
+				brad = br - bl ;			// 丸鋸の半径を求める
+				x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+				y = bb - (bb - bt) - py ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+				c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+				c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
+
+				// 半径よりもプレイヤーまでの距離が短い場合
+				if ( brad >= c )
+				{
+					// 衝突
+					Pmode_ = P_deinit ;
+				}
+				break ;
+
+			/*/
+			/*	___/ 電気 /___________________
+			/*/
+			case GIMMICK_NAME_SHOCKER :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 128 ;
+
+				if ( (bt-8 <= py) && (py < bb) )
+				{
+					if ( (bl-2 <= pr) && (pl <= br+2) )
+					{
+						// 衝突
+						if (  Pmode_ != P_deth )
+						{
+							Pmode_ = P_deinit ;
+						}
+					}
+				}
+				break ;
+
+			/*/
+			/*	___/ SPEED UP /___________________
+			/*/
+			case GIMMICK_NAME_SPEEDUP :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 128  ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 ;
+
+				if ( Player_mag_.x > 0 )
+				{
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl-2 <= pr) && (pl <= br+2) )
+						{
+							Player_vec_.deg = 0.0f ;
+
+							Player_mag_.x = 15.0f ;
+							printf( "Speed UP !!! \n" ) ;
+
+						}
+					}
+				}
+				break ;
+
+
 		}
 	}
 	
@@ -1161,9 +1375,7 @@ void Player::Update( )
 	// ゲームオーバー判定
 	if ( Player_ypos_ >= 1000 )
 	{
-		Finalize( ) ;
-		Initialize( ) ;
-		g_state = -1 ;
+		Pmode_ = P_deth ;
 	}
 
 	// プレイヤー描画	アニメーション

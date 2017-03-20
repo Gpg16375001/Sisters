@@ -9,5 +9,3 @@ if exist "source/MapData" (
 	move MapData source/
 	MapEditor.exe
 )
-
-pause

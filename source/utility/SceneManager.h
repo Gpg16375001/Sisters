@@ -21,8 +21,12 @@ class SceneManager
 			S_Blank = -1 ,
 			S_InitTitle = 0 ,
 			S_PlayTitle ,
-			S_InitGame ,
-			S_PlayGame ,
+			S_InitGame01 ,
+			S_PlayGame01 ,
+			S_InitGame02 ,
+			S_PlayGame02 ,
+			S_InitGame03 ,
+			S_PlayGame03 ,
 		} ;
 
 		/*/

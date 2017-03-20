@@ -69,7 +69,8 @@ int ChipBackGround::draw( ) {
 	m_y = 32 ;
 	SelectObject( g_hWorkBuf , g_bDataCBGTable[ m_bmpNo ].getBmpData( ) ) ;
 	for ( i = 0 ; i < ( CHIP_X * CHIP_Y ) ; i++ ) {
-		if ( m_chipTable[ i ] != 0 ) {
+
+		if ( m_chipTable[ i ] <= 11 ) {
 			TransparentBlt(
 				g_hBackBuf ,
 				(( (i - g_scroll) % CHIP_X ) * CHIP_W + m_x) ,
@@ -83,6 +84,71 @@ int ChipBackGround::draw( ) {
 				CHIP_H ,
 				RGB( 0 , 255 , 0 )
 			) ;
+		}
+
+		if ( m_chipTable[ i ] == 12 ) {
+			TransparentBlt(
+				g_hBackBuf ,
+				(( (i - g_scroll) % CHIP_X ) * CHIP_W + m_x) ,
+				(( i / CHIP_X ) * CHIP_H - 0) ,
+				CHIP_W * 4 ,
+				CHIP_H * 2 ,
+				g_hWorkBuf ,
+				0 ,
+				CHIP_H * 1 ,
+				CHIP_W * 4 ,
+				CHIP_H * 2 ,
+				RGB( 0 , 255 , 0 )
+			) ;
+		}
+
+		if ( m_chipTable[ i ] == 13 ) {
+			TransparentBlt(
+				g_hBackBuf ,
+				(( (i - g_scroll) % CHIP_X ) * CHIP_W + m_x) ,
+				(( i / CHIP_X ) * CHIP_H - 0) ,
+				CHIP_W * 4 ,
+				CHIP_H * 2 ,
+				g_hWorkBuf ,
+				CHIP_W * 4 ,
+				CHIP_H * 1 ,
+				CHIP_W * 4 ,
+				CHIP_H * 2 ,
+				RGB( 0 , 255 , 0 )
+			) ;
+		}
+
+		if ( m_chipTable[ i ] == 14 ) {
+			TransparentBlt(
+				g_hBackBuf ,
+				(( (i - g_scroll) % CHIP_X ) * CHIP_W + m_x) ,
+				(( i / CHIP_X ) * CHIP_H - 64) ,
+				CHIP_W * 4 ,
+				CHIP_H * 4 ,
+				g_hWorkBuf ,
+				0 * CHIP_W ,
+				3 * CHIP_H ,
+				4 * CHIP_W ,
+				4 * CHIP_H ,
+				RGB( 0 , 255 , 0 )
+			) ;
+		}
+
+		if ( m_chipTable[ i ] == 15 ) {
+			TransparentBlt(
+				g_hBackBuf ,
+				(( (i - g_scroll) % CHIP_X ) * CHIP_W + m_x) ,
+				(( i / CHIP_X ) * CHIP_H - 64) ,
+				CHIP_W * 4 ,
+				CHIP_H * 4 ,
+				g_hWorkBuf ,
+				4 * CHIP_W ,
+				3 * CHIP_H ,
+				4 * CHIP_W ,
+				4 * CHIP_H ,
+				RGB( 0 , 255 , 0 )
+			) ;
+
 		}
 	}
 

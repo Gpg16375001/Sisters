@@ -282,6 +282,24 @@ void SetLoop( )
 		4 * CHIP_W ,
 		2 * CHIP_H
 	) ;
+	g_Spr[ 14 ].setSprite(
+		1  ,
+		cell( 26 ) ,
+		cell( 29 ) ,
+		0 * CHIP_W ,
+		3 * CHIP_H ,
+		4 * CHIP_W ,
+		4 * CHIP_H
+	) ;
+	g_Spr[ 15 ].setSprite(
+		1  ,
+		cell( 36 ) ,
+		cell( 29 ) ,
+		4 * CHIP_W ,
+		3 * CHIP_H ,
+		4 * CHIP_W ,
+		4 * CHIP_H
+	) ;
 
 	// Arrow
 	g_Spr[ 30 ].setSprite(
@@ -315,6 +333,35 @@ void actionLoop( )
 			g_chip = i ;
 		}
 	}
+
+	if ( (cell( 6 ) < g_mouseX) && (g_mouseX < cell( ( 14 ) ))
+		&& (cell( 32 ) < g_mouseY) && (g_mouseY < cell( 36 )) )
+	{
+		g_chip = 12 ;
+
+	}
+
+	if ( (cell( 16 ) < g_mouseX) && (g_mouseX < cell( ( 24 ) ))
+		&& (cell( 32 ) < g_mouseY) && (g_mouseY < cell( 36 )) )
+	{
+		g_chip = 13 ;
+
+	}
+
+	if ( (cell( 26 ) < g_mouseX) && (g_mouseX < cell( ( 34 ) ))
+		&& (cell( 29 ) < g_mouseY) && (g_mouseY < cell( 38 )) )
+	{
+		g_chip = 14 ;
+
+	}
+
+	if ( (cell( 36 ) < g_mouseX) && (g_mouseX < cell( ( 44 ) ))
+		&& (cell( 29 ) < g_mouseY) && (g_mouseY < cell( 38 )) )
+	{
+		g_chip = 15 ;
+
+	}
+
 }
 
 

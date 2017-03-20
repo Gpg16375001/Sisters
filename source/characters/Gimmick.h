@@ -23,10 +23,15 @@ ________________________________________________________________________________
 #define		GIMMICK_MODE_LEFTRIGHT		3
 #define		GIMMICK_MODE_CYCLE			4
 #define		GIMMICK_MODE_WAVE			5
+#define		GIMMICK_MODE_DROP			6
+#define		GIMMICK_MODE_UPPER			7
 
 #define		GIMMICK_NAME_CIRCULARSAWS	1
 #define		GIMMICK_NAME_MOVEFLOOR		2
 #define		GIMMICK_NAME_PENDULUM		3
+#define		GIMMICK_NAME_SHOCKER		4
+#define		GIMMICK_NAME_SPEEDUP		5
+#define		GIMMICK_NAME_CLOUD			6
 
 /* Pos To Cell */
 #define		PTC( arg_cell )	( (arg_cell * 64) )
@@ -43,7 +48,7 @@ struct GimmickData {
 	float	_spd ;					// 速さ
 	int		_Gimmick ;				// ギミックの種類
 	int		_mode ;					// ギミックのモード
-	float	_off[ 2 ] ;				// オフセット
+	float	_off[ 4 ] ;				// オフセット
 } ;
 
 // クラスの宣言
@@ -77,6 +82,38 @@ class Gimmick
 		/*	振り子のデータをセット
 		/*/
 		int setPendulums( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
+		/*	電気のデータをセット
+		/*/
+		int setShockers( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
+		/*	SpeedUpのデータをセット
+		/*/
+		int setSpeedUp( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
+		/*	雲のデータをセット
+		/*/
+		int setClouds( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
+		/*	動く床：動き1
+		/*/
+		void moveFloor01( int arg_g ) ;
+		/*/
+		/*	動く床：動き2
+		/*/
+		void moveFloor02( int arg_g ) ;
+		/*/
+		/*	動く床：動き3
+		/*/
+		void moveFloor03( int arg_g ) ;
+		/*/
+		/*	動く床：動き4
+		/*/
+		void moveFloor04( int arg_g ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

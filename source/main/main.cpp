@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include "main.h"
 #include "Common.h"
-#include "LoadMapData.h"
 
 int WINAPI WinMain( HINSTANCE , HINSTANCE , LPSTR , int )
 {
@@ -81,6 +80,11 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 6 , TEXT("data/image/bgs/bg02.bmp") , 2000 , 1000 ) ;
 	BitmapData::GetInstance()->loadData( 7 , TEXT("data/image/sprites/gimic/huriko.bmp") , 128 , 128 ) ;
 	BitmapData::GetInstance()->loadData( 8 , TEXT("data/image/sprites/gimic/rope.bmp") , 512 , 512 ) ;
+	BitmapData::GetInstance()->loadData( 9 , TEXT("data/image/sprites/gimic/shock.bmp") , 128 , 64 ) ;
+	BitmapData::GetInstance()->loadData( 10 , TEXT("data/image/sprites/gimic/speedup.bmp") , 128 , 64 ) ;
+	BitmapData::GetInstance()->loadData( 11 , TEXT("data/image/sprites/PlayerDeth.bmp") , 200 , 178 ) ;
+	BitmapData::GetInstance()->loadData( 12 , TEXT("data/image/sprites/hp.bmp") , 200 , 178 ) ;
+	BitmapData::GetInstance()->loadData( 13 , TEXT("data/image/sprites/gimic/cloud.bmp") , 128 , 64 ) ;
 	
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
@@ -94,13 +98,16 @@ void MainApp::Initalize( )
 	// Sprite の読み込み
 	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 4 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 3 , BitmapData::GetInstance()->getBmpData( 11 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 4 , BitmapData::GetInstance()->getBmpData( 11 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 8 , BitmapData::GetInstance()->getBmpData( 12 ) ) ;
 	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 40 ) ;		// 10 ~ 49 まで　まるのこ
 	Sprite::GetInstance()->loadBmpDataFor( 50 , BitmapData::GetInstance()->getBmpData( 5 ) , 40 ) ;		// 50 ~ 89 まで　動く床
 	Sprite::GetInstance()->loadBmpDataFor( 90 , BitmapData::GetInstance()->getBmpData( 8 ) , 10 ) ;		// 90 ~ 99 まで　振り子のくさり
 	Sprite::GetInstance()->loadBmpDataFor( 100 , BitmapData::GetInstance()->getBmpData( 7 ) , 10 ) ;	// 100 ~ 109 まで　振り子
-
-	// マップ読み込み
-	LoadMapData::ReLoad( ) ;
+	Sprite::GetInstance()->loadBmpDataFor( 400 , BitmapData::GetInstance()->getBmpData( 9 ) , 50 ) ;	// 400 ~ 449 まで　電気
+	Sprite::GetInstance()->loadBmpDataFor( 450 , BitmapData::GetInstance()->getBmpData( 10 ) , 10 ) ;	// 450 ~ 459 まで　SpeedUp
+	Sprite::GetInstance()->loadBmpDataFor( 150 , BitmapData::GetInstance()->getBmpData( 13 ) , 20 ) ;	// 150 ~ 199 まで　雲
 
 	// シーン
 	SceneManager::GetInstance()->Initialize() ;

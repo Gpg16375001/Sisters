@@ -46,6 +46,10 @@ class Player
 		void Pwalk( ) ;			// 左右歩き
 		void Pjinit( ) ;		// ジャンプ初期化
 		void Pjump( ) ;			// ジャンプ
+		void Pdainit( ) ;		// ダメージ初期化
+		void Pdamage( ) ;		// ダメージ
+		void Pdeinit( ) ;		// 死に初期化
+		void Pdeth( ) ;			// 死に
 
 		float FootCheck( ) ;	// 足元チェック ( 足元の座標を返す )
 		float HeadCheck( ) ;	// 頭の値判定 ( 頭の座標を返す )
@@ -65,10 +69,15 @@ class Player
 			P_jinit ,
 			P_jump ,
 			P_drop ,
+			P_dainit ,
+			P_damage ,
+			P_deinit ,
+			P_deth ,
 		} ;
 		PlayerMode Pmode_ ;
 
 		// プレイヤーのデータ
+		int				Player_hp_	;	// プレイヤーの体力
 		Vector2D_polar	Player_vec_ ;	// 向きと大きさを持った
 		Vector2D_compo	Player_spd_ ;	// 成分にしたデータ
 		float			Player_xpos_ ;
@@ -90,6 +99,7 @@ class Player
 		AnimationData	Panim_walk_[ 4 ] ;
 		AnimationData	Panim_jump_[ 1 ] ;
 		AnimationData	Panim_drop_[ 1 ] ;
+		AnimationData	Panim_deth_[ 1 ] ;
 
 } ;
 

@@ -329,6 +329,7 @@ void Chip::Update( )
 		/*/
 		/*	チップデータ
 		/*/
+		// 四角い床
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 11 )
 		{
 			setChipData(
@@ -344,6 +345,7 @@ void Chip::Update( )
 				) ;
 		}
 
+		// 坂
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 12 )
 		{
 			setChipData(
@@ -352,7 +354,7 @@ void Chip::Update( )
 					i % map_w_ , i / map_h_ ,
 					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
-					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 11) * CHIP_W) ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 12) * CHIP_W) ,
 					64 ,
 					256 , 128 ,
 					1.0f , 1.0f
@@ -360,6 +362,7 @@ void Chip::Update( )
 
 		}
 
+		// 坂
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 13 )
 		{
 			setChipData(
@@ -368,7 +371,7 @@ void Chip::Update( )
 					i % map_w_ , i / map_h_ ,
 					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 64 ,
-					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 8) * CHIP_W) ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 9) * CHIP_W) ,
 					64 ,
 					256 , 128 ,
 					1.0f , 1.0f
@@ -376,6 +379,7 @@ void Chip::Update( )
 
 		}
 
+		// 大きい坂
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 14 )
 		{
 			setChipData(
@@ -384,7 +388,7 @@ void Chip::Update( )
 					i % map_w_ , i / map_h_ ,
 					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
-					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 13) * CHIP_W) ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 14) * CHIP_W) ,
 					64 + 128 ,
 					256 , 256 ,
 					1.0f , 1.0f
@@ -392,6 +396,7 @@ void Chip::Update( )
 
 		}
 
+		// 大きい坂
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 15 )
 		{
 			setChipData(
@@ -400,10 +405,44 @@ void Chip::Update( )
 					i % map_w_ , i / map_h_ ,
 					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
-					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 10) * CHIP_W) ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 11) * CHIP_W) ,
 					64 + 128 ,
 					256 , 256 ,
 					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( (20 <= m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ])
+			&& (m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 25) )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 20) * CHIP_W) ,
+					7 * CHIP_H ,
+					64 , 64 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 26 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )( (i % renderMap_w_) * CHIP_W + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ) ,
+					( float )( (i / renderMap_w_) * CHIP_H - 128 + scrollY_ ) ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 20) * CHIP_W) ,
+					7 * CHIP_H ,
+					64 , 64 ,
+					1.0f ,
+					1.0f
 				) ;
 
 		}
