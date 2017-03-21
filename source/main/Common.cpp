@@ -10,4 +10,6 @@ float g_px , g_py ;		// デバッグ用 プレイヤーの座標
 
 RECT g_ac ;
 
+bool g_dethflg = true ;
+
 

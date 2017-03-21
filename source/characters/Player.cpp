@@ -108,12 +108,19 @@ void Player::Initialize( )
 	AnimationData P_deth[ ] = {
 		{ 3 , 4 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
+	AnimationData P_ball[ ] = {
+		{ 5 , 8 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 5 , 8 , {200 * 1 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 5 , 4 , {200 * 2 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 5 , 4 , {200 * 2 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
 
 	memcpy( &Panim_stop_ , P_stop , 4 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_walk_ , P_walk , 4 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_jump_ , P_jump , 1 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_drop_ , P_drop , 1 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_deth_ , P_deth , 1 * sizeof( AnimationData ) ) ;
+	memcpy( &Panim_ball_ , P_ball , 4 * sizeof( AnimationData ) ) ;
 
 }
 
@@ -149,6 +156,7 @@ void Player::Finalize( )
 	memset( &Panim_jump_ , 0 , 1 * sizeof( AnimationData ) ) ;
 	memset( &Panim_drop_ , 0 , 1 * sizeof( AnimationData ) ) ;
 	memset( &Panim_deth_ , 0 , 1 * sizeof( AnimationData ) ) ;
+	memset( &Panim_ball_ , 0 , 1 * sizeof( AnimationData ) ) ;
 
 }
 
@@ -239,6 +247,7 @@ void Player::Pinit( )
 			0
 		) ;
 
+	ballAnim_.setAnimData( Panim_ball_ ) ;
 	PlayerAnim_.setAnimData( Panim_stop_ ) ;
 
 	Pmode_ = P_sinit ;
@@ -479,7 +488,7 @@ void Player::Pdeth( )
 {
 	Player_mag_.y += Player_.Weight2D().y / 60 ;
 
-	if ( Player_ypos_ >= 900 )
+	if ( (Player_ypos_ >= 900) && (g_dethflg) )
 	{
 		Finalize( ) ;
 		Initialize( ) ;
@@ -642,10 +651,10 @@ float Player::FootCheck( )
 					{
 						footY = cross[ 1 ] ;
 
-						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.55f ) )
+						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.95f ) )
 						{
 							Player_vec_.deg = -45.0f ;
-							Player_mag_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							Player_mag_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -703,9 +712,9 @@ float Player::FootCheck( )
 						Player_vec_.deg = 45.0f ;
 						footY = cross[ 1 ] ;
 
-						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.55f ) )
+						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.95f ) )
 						{
-							Player_mag_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							Player_mag_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -749,7 +758,7 @@ float Player::FootCheck( )
 						if ( Player_.checkMotion( 30.0f , Player_.Weight2D().y , 0.55f ) )
 						{
 							Player_vec_.deg = -30.0f ;
-							Player_mag_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							Player_mag_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -792,8 +801,8 @@ float Player::FootCheck( )
 
 						if ( Player_.checkMotion( 30.0f , Player_.Weight2D().y , 0.55f ) )
 						{
-							Player_vec_.deg = -30.0f ;
-							Player_mag_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.36f , Player_.getMass() ) ;
+							Player_vec_.deg = -90.0f ;
+							Player_mag_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -819,11 +828,11 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl+brad < px) && (px < br+8) && (bt + 256 < py) )
+					if ( (bl+brad < px) && (px < br + 8) && (bt + 256 < py) )
 					{
 						if ( brad <= c )
 						{
-							Player_vec_.deg = -30.0f ;
+							Player_vec_.deg = -90.0f ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
@@ -854,7 +863,7 @@ float Player::FootCheck( )
 					{
 						if ( brad <= c )
 						{
-							Player_vec_.deg = -30.0f ;
+							Player_vec_.deg = -90.0f ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
@@ -875,13 +884,13 @@ float Player::FootCheck( )
 		}
 	}
 
-
 	float brad ;	// 丸鋸の半径
 	float x ;
 	float y ;
 	float c2 ;
 	float c ;		// プレイヤーと丸鋸の距離
 	float rad ;		// 丸鋸の中心からの高さ( Y軸 )
+
 	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
 	{
 		/*/
@@ -1050,7 +1059,6 @@ float Player::HeadCheck( )
 
 			switch ( chipTable[ i ] )
 			{
-
 				// 通常ブロックの場合
 				case 1 :
 				case 2 :
@@ -1131,8 +1139,8 @@ float Player::Collision( )
 		//  true : 右向き
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
-		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 24 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 32 ;
+		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 22 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 40 ;
 	}
 	else
 	{
@@ -1140,7 +1148,7 @@ float Player::Collision( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 32 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 40 ;
 	}
 
 	// 判定をとる範囲　今は全体
@@ -1166,7 +1174,7 @@ float Player::Collision( )
 					{
 						if ( (bt <= py) && (py < bb) )
 						{
-							if ( Player_vec_.deg >= -90 )
+							if ( Player_vec_.deg > -90 )
 							{
 								if ( center < px )
 								{
@@ -1174,6 +1182,9 @@ float Player::Collision( )
 								} else if ( px < center ) {
 									collisionX = bl + Chip::GetInstance()->getScrollX() - 24 ;
 								}
+							} else {
+								Player_mag_.y = -Player_mag_.x ;
+								Player_mag_.x = 0 ;
 							}
 						}
 					}
@@ -1226,14 +1237,14 @@ float Player::Collision( )
 			/*	___/ 電気 /___________________
 			/*/
 			case GIMMICK_NAME_SHOCKER :
-				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 8 ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
 				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
 				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 128 ;
 
 				if ( (bt-8 <= py) && (py < bb) )
 				{
-					if ( (bl-2 <= pr) && (pl <= br+2) )
+					if ( (bl+2 <= pr) && (pl <= br+2) )
 					{
 						// 衝突
 						if (  Pmode_ != P_deth )
@@ -1269,7 +1280,6 @@ float Player::Collision( )
 				}
 				break ;
 
-
 		}
 	}
 	
@@ -1283,6 +1293,13 @@ float Player::Collision( )
 void Player::Update( )
 {
 	printf( "Player : Action = %d\n" , Pmode_ ) ;
+
+	
+	if ( KeyManager::GetInstance()->getKeyState( VK_F7 ) )
+	{
+		Player_ypos_ = 0 ;
+	}
+
 
 	/*/
 	/*	___/ プレイヤー 描画 /___________________
@@ -1310,6 +1327,7 @@ void Player::Update( )
 		arrayX_ = ( int )( (Player_xpos_) / CHIP_W ) ;		// 配列座標を求める x
 		arrayY_ = 0 ;										// 配列座標を求める y
 	}
+
 	Player_spd_.x = Player_mag_.x ;
 	Chip::GetInstance()->setScrollSize( ( int )-Player_spd_.x , 0 ) ;
 	Player_mag_.x *= 0.995f ;			// 減速率
@@ -1394,6 +1412,25 @@ void Player::Update( )
 			255 ,
 			0
 		) ;
+
+	if ( Player_spd_.x >= 10.0f )
+	{
+		ballAnim_.playAnim( );
+		AnimationData *nowball = ballAnim_.getNowAnim( ) ;
+		Sprite::GetInstance()->setBmpData(
+				nowball->bmpNo ,
+				7 ,
+				Player_xpos_ + 4 ,		// 中心位置を調整
+				Player_ypos_ - 54 ,		// 中心位置を調整
+				nowball->cutRect.left ,
+				nowball->cutRect.top ,
+				nowball->cutRect.right ,
+				nowball->cutRect.bottom ,
+				0.5f , 0.5f ,
+				255 ,
+				0
+			) ;
+	}
 
 	// デバッグ用
 	printf( "Player : left   = %d \n" , nowAnim->cutRect.left ) ;

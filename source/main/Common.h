@@ -23,5 +23,7 @@ extern float g_px , g_py ;		// デバッグ用 プレイヤーの座標
 
 extern RECT g_ac ;
 
+extern bool g_dethflg ;
+
 
 

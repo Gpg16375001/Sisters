@@ -64,6 +64,16 @@ void SceneManager::Update( int arg_state )
 		g_state = -1 ;
 	}
 
+	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
+	{
+		if ( g_dethflg )
+		{
+			g_dethflg = false ;
+		} else {
+			g_dethflg = true ;
+		}
+	}
+
 	// ƒV[ƒ““à—e
 	switch ( arg_state )
 	{

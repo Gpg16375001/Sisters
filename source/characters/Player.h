@@ -100,6 +100,8 @@ class Player
 		AnimationData	Panim_jump_[ 1 ] ;
 		AnimationData	Panim_drop_[ 1 ] ;
 		AnimationData	Panim_deth_[ 1 ] ;
+		Animation		ballAnim_ ;
+		AnimationData	Panim_ball_[ 4 ] ;
 
 } ;
 

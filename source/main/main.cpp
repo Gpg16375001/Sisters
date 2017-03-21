@@ -85,6 +85,7 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 11 , TEXT("data/image/sprites/PlayerDeth.bmp") , 200 , 178 ) ;
 	BitmapData::GetInstance()->loadData( 12 , TEXT("data/image/sprites/hp.bmp") , 200 , 178 ) ;
 	BitmapData::GetInstance()->loadData( 13 , TEXT("data/image/sprites/gimic/cloud.bmp") , 128 , 64 ) ;
+	BitmapData::GetInstance()->loadData( 14 , TEXT("data/image/sprites/vball.bmp") , 200 , 178 ) ;
 	
 	// îwåiì«Ç›çûÇ›
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
@@ -100,6 +101,7 @@ void MainApp::Initalize( )
 	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 3 , BitmapData::GetInstance()->getBmpData( 11 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 4 , BitmapData::GetInstance()->getBmpData( 11 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 5 , BitmapData::GetInstance()->getBmpData( 14 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 8 , BitmapData::GetInstance()->getBmpData( 12 ) ) ;
 	Sprite::GetInstance()->loadBmpDataFor( 10 , BitmapData::GetInstance()->getBmpData( 3 ) , 40 ) ;		// 10 ~ 49 Ç‹Ç≈Å@Ç‹ÇÈÇÃÇ±
 	Sprite::GetInstance()->loadBmpDataFor( 50 , BitmapData::GetInstance()->getBmpData( 5 ) , 40 ) ;		// 50 ~ 89 Ç‹Ç≈Å@ìÆÇ≠è∞
