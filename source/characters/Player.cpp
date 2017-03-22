@@ -356,7 +356,10 @@ void Player::Pwalk( )
 	{
 		Player_ypos_ = fcheck ;
 	} else {
-		PlayerAnim_.setAnimData( Panim_drop_ ) ;
+		if ( Player_mag_.x <= 5.0f )
+		{
+			PlayerAnim_.setAnimData( Panim_drop_ ) ;
+		}
 		Pmode_ = P_drop ;
 	}
 
@@ -595,9 +598,9 @@ float Player::FootCheck( )
 				case 5 :
 					if ( (bt <= py) && (py < bb) )
 					{
-						if ( (bl+4 <= px) && (px <= br) )
+						if ( (bl <= px) && (px <= br) )
 						{
-							footY = bt - 8 ;
+							footY = bt-1 ;
 
 							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
 							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
@@ -647,7 +650,7 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 16 <= px) && (px <= br+12) && (bt-14+Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 32 <= px) && (px <= br+12) && (bt-14+Player_mag_.x <= py) )
 					{
 						footY = cross[ 1 ] ;
 
@@ -664,9 +667,9 @@ float Player::FootCheck( )
 				case 6 :
 					if ( (bt <= py) && (py < bb) )
 					{
-						if ( (bl - 8 <= px) && (px <= br-12) )
+						if ( (bl <= px) && (px <= br) )
 						{
-							footY = bt - 8 ;
+							footY = bt - 1 ;
 
 							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
 							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
@@ -707,7 +710,7 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br+16) && (bt-14-Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br+32) && (bt-14-Player_mag_.x <= py) )
 					{
 						Player_vec_.deg = 45.0f ;
 						footY = cross[ 1 ] ;
@@ -722,11 +725,11 @@ float Player::FootCheck( )
 
 				case 12 :
 					// それぞれに代入
-					P1.x = bl - 4 ;
-					P1.y = bb ;
-					P2.x = br + 196 - 4 ;
-					P2.y = bb ;
-					P3.x = br + 196 - 4 ;
+					P1.x = bl - 64 ;
+					P1.y = bb + 32 ;
+					P2.x = br + 192 + 4 ;
+					P2.y = bb + 32 ;
+					P3.x = br + 192 + 4 ;
 					P3.y = bt - 64 ;
 					P4.x = px ;
 					P4.y = py ;
@@ -751,7 +754,7 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br + 196) && (bt-128+Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 64 <= px) && (px <= br + 196) && (bt-64 <= py) )
 					{
 						footY = cross[ 1 ] ;
 
@@ -766,12 +769,12 @@ float Player::FootCheck( )
 
 				case 13 :
 					// それぞれに代入
-					P1.x = bl + 260 - 4 ;
-					P1.y = bb ;
-					P2.x = br - 4 ;
-					P2.y = bb ;
-					P3.x = br - 4 ;
-					P3.y = bt - 32 ;
+					P1.x = bl + 192 + 96 ;
+					P1.y = bb + 16 ;
+					P2.x = br + 32 ;
+					P2.y = bb + 16 ;
+					P3.x = br + 32 ;
+					P3.y = bt - 16 ;
 					P4.x = px ;
 					P4.y = py ;
 
@@ -795,7 +798,7 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 8 <= px) && (px <= br + 228) && (bt-128+Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 0 <= px) && (px <= br + 260) && (bt-64 <= py) )
 					{
 						footY = cross[ 1 ] ;
 
@@ -1140,7 +1143,7 @@ float Player::Collision( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 22 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 40 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 48 ;
 	}
 	else
 	{
@@ -1148,7 +1151,7 @@ float Player::Collision( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 40 ;
+		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 48 ;
 	}
 
 	// 判定をとる範囲　今は全体
