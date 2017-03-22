@@ -72,6 +72,23 @@ class Gimmick
 		/*	動く床のデータをセット
 		/*/
 		int setMoveBlocks( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode ) ;
+		/*/
+		/*	動く床：動き1
+		/*/
+		void moveFloor01( int arg_g ) ;
+		/*/
+		/*	動く床：動き2
+		/*/
+		void moveFloor02( int arg_g ) ;
+		/*/
+		/*	動く床：動き3
+		/*/
+		void moveFloor03( int arg_g ) ;
+		/*/
+		/*	動く床：動き4
+		/*/
+		void moveFloor04( int arg_g ) ;
+
 
 		/*/
 		/*	まるのこのデータをセット
@@ -99,21 +116,14 @@ class Gimmick
 		int setClouds( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
-		/*	動く床：動き1
+		/*	それぞれのアップデート内処理
 		/*/
-		void moveFloor01( int arg_g ) ;
-		/*/
-		/*	動く床：動き2
-		/*/
-		void moveFloor02( int arg_g ) ;
-		/*/
-		/*	動く床：動き3
-		/*/
-		void moveFloor03( int arg_g ) ;
-		/*/
-		/*	動く床：動き4
-		/*/
-		void moveFloor04( int arg_g ) ;
+		void MoveFloor( ) ;
+		void CircularSaws( ) ;
+		void Pendulums( ) ;
+		void Shockers( ) ;
+		void SpeedUp( ) ;
+		void Clouds( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

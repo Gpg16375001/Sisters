@@ -81,9 +81,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\characters\Animation.cpp" />
-    <ClCompile Include="source\characters\Gimmick.cpp" />
     <ClCompile Include="source\characters\Physics.cpp" />
     <ClCompile Include="source\characters\Player.cpp" />
+    <ClCompile Include="source\gimmick\CircularSaws.cpp" />
+    <ClCompile Include="source\gimmick\Clouds.cpp" />
+    <ClCompile Include="source\gimmick\Gimmick.cpp" />
+    <ClCompile Include="source\gimmick\MoveFloor.cpp" />
+    <ClCompile Include="source\gimmick\Pendulums.cpp" />
+    <ClCompile Include="source\gimmick\Shockers.cpp" />
+    <ClCompile Include="source\gimmick\SpeedUp.cpp" />
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
@@ -104,9 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\characters\Animation.h" />
-    <ClInclude Include="source\characters\Gimmick.h" />
     <ClInclude Include="source\characters\Physics.h" />
     <ClInclude Include="source\characters\Player.h" />
+    <ClInclude Include="source\gimmick\Gimmick.h" />
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />

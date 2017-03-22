@@ -22,6 +22,9 @@
     <Filter Include="source\character">
       <UniqueIdentifier>{ae9b86cd-4693-4444-84b8-7922f50dc81b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\gimmick">
+      <UniqueIdentifier>{3007add9-1b65-4a91-9b0e-7ecac5afe0d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main\WinMain.cpp">
@@ -78,14 +81,32 @@
     <ClCompile Include="source\utility\LoadMapData.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
-    <ClCompile Include="source\characters\Gimmick.cpp">
-      <Filter>source\character</Filter>
-    </ClCompile>
     <ClCompile Include="source\scene\SceneGame01.cpp">
       <Filter>source\scene</Filter>
     </ClCompile>
     <ClCompile Include="source\scene\SceneGame02.cpp">
       <Filter>source\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\SpeedUp.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\CircularSaws.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\Clouds.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\Gimmick.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\MoveFloor.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\Pendulums.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\Shockers.cpp">
+      <Filter>source\gimmick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,14 +167,14 @@
     <ClInclude Include="source\utility\LoadMapData.h">
       <Filter>source\utility</Filter>
     </ClInclude>
-    <ClInclude Include="source\characters\Gimmick.h">
-      <Filter>source\character</Filter>
-    </ClInclude>
     <ClInclude Include="source\scene\SceneGame01.h">
       <Filter>source\scene</Filter>
     </ClInclude>
     <ClInclude Include="source\scene\SceneGame02.h">
       <Filter>source\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gimmick\Gimmick.h">
+      <Filter>source\gimmick</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
