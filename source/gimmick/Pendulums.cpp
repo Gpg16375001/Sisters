@@ -71,17 +71,23 @@ void Gimmick::Pendulums( )
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
 							GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 32 ) ,
+							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 128 ) ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
 							255 ,
 							0
 						) ;
+
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 128 ;
 					if  ( Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 128 ) < 0 )
 					{
+						GimmickData_[ g ]._off[ 1 ] = 0 ;
+					}
+					if  ( Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) <= -180 )
+					{
+						GimmickData_[ g ]._off[ 0 ] = 0 ;
 						GimmickData_[ g ]._off[ 1 ] = 0 ;
 					}
 						
@@ -93,10 +99,10 @@ void Gimmick::Pendulums( )
 						Sprite::GetInstance()->setBmpData(
 								GimmickData_[ g+1 ]._bmpNo ,
 								0 ,
-								GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196 ,
-								GimmickData_[ g+1 ]._y - 448 ,
+								GimmickData_[ g+1 ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 52 ) + Chip::GetInstance()->getScrollX( ) - 196 ,
+								GimmickData_[ g+1 ]._y - 192 ,
 								0 , 0 ,
-								512 , 512 ,
+								512 , 256 ,
 								1.0f , 1.0f ,
 								255 ,
 								-Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 26 )

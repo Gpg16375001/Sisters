@@ -139,8 +139,8 @@ void SceneManager::Update( int arg_state )
 			Gimmick::GetInstance()->setMoveBlocks( 54 , PTC(108) , PTC(0) , 120 ,   0 , GIMMICK_MODE_DROP ) ;		// ìÆÇ≠è∞
 			Gimmick::GetInstance()->setMoveBlocks( 55 , PTC(108) , PTC(0) , 120 , 192 , GIMMICK_MODE_DROP ) ;		// ìÆÇ≠è∞
 			Gimmick::GetInstance()->setMoveBlocks( 56 , PTC(110) , PTC(0) , 120 ,   0 , GIMMICK_MODE_UPPER ) ;		// ìÆÇ≠è∞
-			Gimmick::GetInstance()->setMoveBlocks( 55 , PTC(110) , PTC(0) , 120 , 192 , GIMMICK_MODE_UPPER ) ;		// ìÆÇ≠è∞
-			Gimmick::GetInstance()->setMoveBlocks( 56 , PTC( 89) , PTC(3) ,   1 ,   0 , GIMMICK_MODE_WAVE ) ;		// ìÆÇ≠è∞
+			Gimmick::GetInstance()->setMoveBlocks( 57 , PTC(110) , PTC(0) , 120 , 192 , GIMMICK_MODE_UPPER ) ;		// ìÆÇ≠è∞
+			Gimmick::GetInstance()->setMoveBlocks( 58 , PTC( 89) , PTC(3) ,   1 ,   0 , GIMMICK_MODE_WAVE ) ;		// ìÆÇ≠è∞
 
 			Gimmick::GetInstance()->setPendulums( 100 , PTC(70) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_LEFTRIGHT ) ;	// êUÇËéq
 			Gimmick::GetInstance()->setPendulums( 101 , PTC(76) , PTC(3) ,   0 , 192 , GIMMICK_MODE_LEFTRIGHT ) ;	// êUÇËéq

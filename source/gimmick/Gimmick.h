@@ -32,6 +32,7 @@ ________________________________________________________________________________
 #define		GIMMICK_NAME_SHOCKER		4
 #define		GIMMICK_NAME_SPEEDUP		5
 #define		GIMMICK_NAME_CLOUD			6
+#define		GIMMICK_NAME_SHOOTER		7
 
 /* Pos To Cell */
 #define		PTC( arg_cell )	( (arg_cell * 64) )
@@ -116,6 +117,11 @@ class Gimmick
 		int setClouds( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
+		/*	射撃物のデータをセット
+		/*/
+		int setShooter( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -124,12 +130,21 @@ class Gimmick
 		void Shockers( ) ;
 		void SpeedUp( ) ;
 		void Clouds( ) ;
+		void Shooter( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット
 		/*/
 		GimmickData getGimmickData( int arg_GimmickNo ) {
 			return( GimmickData_[ arg_GimmickNo ] ) ;
+		}
+
+		/*/
+		/*	off[ 3 ]のデータを直接セット
+		/*/
+		int setOff_3( int arg_GimmickNo , float arg_no ) {
+			GimmickData_[ arg_GimmickNo ]._off[ 3 ] = arg_no ;
+			return( true ) ;
 		}
 
 		/*/

@@ -1,11 +1,11 @@
 /*
 ________________________________________________________________________________________________________________
 
-	FILE : MoveFloor.cpp
+	FILE : Shooter.cpp
 
 	________/ Explanation of file /___________________________________________________________
 
-		Gimmick ƒNƒ‰ƒX‚Ì MoveFloor À‘••”
+		Gimmick ƒNƒ‰ƒX‚Ì Shooter À‘••”
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
@@ -17,15 +17,15 @@ ________________________________________________________________________________
 
 
 /*/r
-/*	--+ MoveFloor ‚Ìƒf[ƒ^‚ğƒZƒbƒg +-----
+/*	--+ Shooter ‚Ìƒf[ƒ^‚ğƒZƒbƒg +-----
 /*/
 
 /*/
-/*	“®‚­°‚Ìƒf[ƒ^‚ğƒZƒbƒg
+/*	ËŒ‚•¨‚Ìƒf[ƒ^‚ğƒZƒbƒg
 /*/
-int Gimmick::setMoveBlocks( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
+int Gimmick::setShooter( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
 {
-	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_MOVEFLOOR ;
+	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_SHOOTER ;
 	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
 	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
 	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
@@ -39,19 +39,19 @@ int Gimmick::setMoveBlocks( int arg_bmpNo , float arg_x , float arg_y , float ar
 }
 
 /*/
-/*	MoveFloor Update
+/*	Shooter Update
 /*/
-void Gimmick::MoveFloor( )
+void Gimmick::Shooter( )
 {
 	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
 	{
 		/*/
-		/*	___/ “®‚­° /___________________
+		/*	___/ ËŒ‚•¨ /___________________
 		/*/
 		if ( GimmickData_[ g ]._Gimmick == GIMMICK_NAME_MOVEFLOOR )
 		{
 			/*/
-			/*	“®‚­°FÃ~
+			/*	ËŒ‚•¨FÃ~
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_STAY )
 			{
@@ -83,7 +83,7 @@ void Gimmick::MoveFloor( )
 			}
 
 			/*/
-			/*	“®‚­°Fã‰º
+			/*	ËŒ‚•¨Fã‰º
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_UPDOWN )
 			{
@@ -117,7 +117,7 @@ void Gimmick::MoveFloor( )
 			}
 
 			/*/
-			/*	“®‚­°F¶‰E
+			/*	ËŒ‚•¨F¶‰E
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_LEFTRIGHT )
 			{
@@ -151,7 +151,7 @@ void Gimmick::MoveFloor( )
 			}
 
 			/*/
-			/*	“®‚­°F‰~
+			/*	ËŒ‚•¨F‰~
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_CYCLE )
 			{
@@ -185,7 +185,7 @@ void Gimmick::MoveFloor( )
 			}
 
 			/*/
-			/*	“®‚­°F—‚¿
+			/*	ËŒ‚•¨F—‚¿
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_DROP )
 			{
@@ -224,7 +224,7 @@ void Gimmick::MoveFloor( )
 			}
 
 			/*/
-			/*	“®‚­°F¸‚è
+			/*	ËŒ‚•¨F¸‚è
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_UPPER )
 			{
@@ -262,189 +262,8 @@ void Gimmick::MoveFloor( )
 
 			}
 
-			/*/
-			/*	“®‚­°F“Áê
-			/*/
-			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_WAVE )
-			{
-				if ( GimmickData_[ g ]._useFlg )
-				{
-//						printf( "Gimmick_MODE_WAVE\n" ) ;
-					switch ( (int)GimmickData_[ g ]._off[ 2 ] )
-					{
-						case 1 :
-							moveFloor01( g ) ;
-							break ;
-
-						case 2 :
-							moveFloor02( g ) ;
-							break ;
-
-						case 3 :
-							moveFloor03( g ) ;
-							break ;
-
-						case 4 :
-							moveFloor04( g ) ;
-							break ;
-
-					}
-
-				} else {
-					GimmickData_[ g ]._delay-- ;
-					if ( GimmickData_[ g ]._delay <= 0 )
-					{
-						GimmickData_[ g ]._useFlg = true ;
-					}
-				}
-
-			}
 
 		}
-	}
-
-}
-
-/*/
-/*	“®‚­°F“®‚«1
-/*/
-void Gimmick::moveFloor01( int g )
-{
-	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
-	{
-		case 0 :
-			Sprite::GetInstance()->setBmpData(
-					GimmickData_[ g ]._bmpNo ,
-					0 ,
-					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y ,
-					0 , 0 ,
-					256 , 64 ,
-					0.5f , 0.5f ,
-					255 ,
-					0
-				) ;
-			break ;
-
-		case 1 :
-			GimmickData_[ g ]._off[ 0 ] += 0.4f ;
-			GimmickData_[ g ]._off[ 1 ] += 0.4f ;
-			Sprite::GetInstance()->setBmpData(
-					GimmickData_[ g ]._bmpNo ,
-					0 ,
-					GimmickData_[ g ]._x - Chip::GetInstance()->cosWave(GimmickData_[ g ]._off[ 0 ] , 128) + 128 + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) ,
-					0 , 0 ,
-					256 , 64 ,
-					0.5f , 0.5f ,
-					255 ,
-					0
-				) ;
-			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-			if ( Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) <= -1 )
-			{
-				GimmickData_[ g ]._off[ 3 ]++ ;
-			}
-			break ;
-
-		case 2 :
-			GimmickData_[ g ]._off[ 0 ] += 0.4f ;
-			GimmickData_[ g ]._off[ 1 ] += 0.4f ;
-			Sprite::GetInstance()->setBmpData(
-					GimmickData_[ g ]._bmpNo ,
-					0 ,
-					GimmickData_[ g ]._x + Chip::GetInstance()->cosWave(GimmickData_[ g ]._off[ 0 ] , 128) + 128 + 256 + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) ,
-					0 , 0 ,
-					256 , 64 ,
-					0.5f , 0.5f ,
-					255 ,
-					0
-				) ;
-			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-			if ( Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) >= +1 )
-			{
-				GimmickData_[ g ]._off[ 3 ]++ ;
-			}
-			break ;
-
-		case 3 :
-			GimmickData_[ g ]._off[ 1 ] += 2.2 ;
-			Sprite::GetInstance()->setBmpData(
-					GimmickData_[ g ]._bmpNo ,
-					0 ,
-					GimmickData_[ g ]._x + 256 + 256 + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 1 ] - 352 ,
-					0 , 0 ,
-					256 , 64 ,
-					0.5f , 0.5f ,
-					255 ,
-					0
-				) ;
-			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-			if ( GimmickData_[ g ]._off[ 1 ] >= 900 )
-			{
-				GimmickData_[ g ]._off[ 3 ] = 0 ;
-			}
-			break ;
-
-	}
-
-}
-
-/*/
-/*	“®‚­°F“®‚«2
-/*/
-void Gimmick::moveFloor02( int g )
-{
-	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
-	{
-		case 0 :
-			break ;
-
-		case 1 :
-			break ;
-
-	}
-
-}
-
-/*/
-/*	“®‚­°F“®‚«3
-/*/
-void Gimmick::moveFloor03( int g )
-{
-	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
-	{
-		case 0 :
-			break ;
-
-		case 1 :
-			break ;
-
-	}
-
-}
-
-/*/
-/*	“®‚­°F“®‚«4
-/*/
-void Gimmick::moveFloor04( int g )
-{
-	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
-	{
-		case 0 :
-			break ;
-
-		case 1 :
-			break ;
-
 	}
 
 }

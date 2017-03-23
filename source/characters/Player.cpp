@@ -469,7 +469,6 @@ void Player::Pdainit( )
 /*/
 void Player::Pdamage( )
 {
-
 	Pmode_ = P_sinit ;
 }
 
@@ -478,10 +477,14 @@ void Player::Pdamage( )
 /*/
 void Player::Pdeinit( )
 {
-	Player_mag_.y = -18 ;
-	PlayerAnim_.setAnimData( Panim_deth_ ) ;
-
-	Pmode_ = P_deth ;
+	if ( g_dethflg )
+	{
+		Pmode_ = P_sinit ;
+	} else {
+		Player_mag_.y = -18 ;
+		PlayerAnim_.setAnimData( Panim_deth_ ) ;
+		Pmode_ = P_deth ;
+	}
 }
 
 /*/
@@ -489,15 +492,20 @@ void Player::Pdeinit( )
 /*/
 void Player::Pdeth( )
 {
-	Player_mag_.y += Player_.Weight2D().y / 60 ;
-
-	if ( (Player_ypos_ >= 900) && (g_dethflg) )
+	if ( g_dethflg )
 	{
-		Finalize( ) ;
-		Initialize( ) ;
-		Gimmick::GetInstance()->Finalize( ) ;
-		Gimmick::GetInstance()->Initialize( ) ;
-		g_state-- ;
+		Pmode_ = P_sinit ;
+	} else {
+		Player_mag_.y += Player_.Weight2D().y / 60 ;
+
+		if ( Player_ypos_ >= 900 )
+		{
+			Finalize( ) ;
+			Initialize( ) ;
+			Gimmick::GetInstance()->Finalize( ) ;
+			Gimmick::GetInstance()->Initialize( ) ;
+			g_state-- ;
+		}
 	}
 }
 
@@ -941,9 +949,9 @@ float Player::FootCheck( )
 					if ( (bl-2 <= pr) && (pl <= br+2) )
 					{
 						Player_vec_.deg = 0.0f ;
-						if ( Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] == 0 )
+						if ( (Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] == 0) && (bl+32 <= pr) && (pl <= br-32) )
 						{
-							Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] = 1 ;
+							Gimmick::GetInstance()->setOff_3( g , 1 ) ;
 						}
 						footY = bt-2 ;
 
@@ -1250,10 +1258,7 @@ float Player::Collision( )
 					if ( (bl+2 <= pr) && (pl <= br+2) )
 					{
 						// Õ“Ë
-						if (  Pmode_ != P_deth )
-						{
-							Pmode_ = P_deinit ;
-						}
+						Pmode_ = P_deinit ;
 					}
 				}
 				break ;
@@ -1300,7 +1305,9 @@ void Player::Update( )
 	
 	if ( KeyManager::GetInstance()->getKeyState( VK_F7 ) )
 	{
-		Player_ypos_ = 0 ;
+		Player_ypos_ = 0.0f ;
+		Player_mag_.y = 0.0f ;
+		Player_spd_.y = 0.0f ;
 	}
 
 

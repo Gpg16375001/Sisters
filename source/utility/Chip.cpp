@@ -391,6 +391,7 @@ void Chip::Update( )
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 14) * CHIP_W) ,
 					64 + 128 ,
 					256 , 256 ,
+
 					1.0f , 1.0f
 				) ;
 
