@@ -65,13 +65,14 @@ void Gimmick::Pendulums( )
 				{
 //						printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
 
-					GimmickData_[ g ]._off[ 0 ]++ ;
-					GimmickData_[ g ]._off[ 1 ]++ ;
+					GimmickData_[ g ]._off[ 0 ] += 0.2f ;
+					GimmickData_[ g ]._off[ 1 ] += 0.2f ;
+					GimmickData_[ g ]._off[ 2 ]++ ;
 					Sprite::GetInstance()->setBmpData(
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 128 ) ,
+							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) *  3.1415926f / 180 ) * 320 + Chip::GetInstance()->getScrollX( ) ,
+							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.1415926f / 180 ) * 320 - 256 ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
@@ -81,13 +82,9 @@ void Gimmick::Pendulums( )
 
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 128 ;
-					if  ( Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 1 ] , 128 ) < 0 )
+					if  ( GimmickData_[ g ]._off[ 1 ] >= 50 )		// cos( GimmickData_[ g ]._off[ 0 ] + ??? <- ‚±‚± - 270 * 2  ...)
 					{
-						GimmickData_[ g ]._off[ 1 ] = 0 ;
-					}
-					if  ( Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) <= -180 )
-					{
-						GimmickData_[ g ]._off[ 0 ] = 0 ;
+						GimmickData_[ g ]._off[ 0 ] += 130 ;		// 180 - ª
 						GimmickData_[ g ]._off[ 1 ] = 0 ;
 					}
 						
@@ -99,13 +96,13 @@ void Gimmick::Pendulums( )
 						Sprite::GetInstance()->setBmpData(
 								GimmickData_[ g+1 ]._bmpNo ,
 								0 ,
-								GimmickData_[ g+1 ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 52 ) + Chip::GetInstance()->getScrollX( ) - 196 ,
-								GimmickData_[ g+1 ]._y - 192 ,
+								GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 224 ,
+								GimmickData_[ g+1 ]._y - 192 - 298 ,
 								0 , 0 ,
-								512 , 256 ,
-								1.0f , 1.0f ,
+								320 , 320 ,
+								1.8f , 1.8f ,
 								255 ,
-								-Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 26 )
+								-(cos( (GimmickData_[ g ]._off[ 0 ] + 245) *  3.1415926f / 180 ) * 60)
 							) ;
 					}
 

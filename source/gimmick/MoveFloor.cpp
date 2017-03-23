@@ -406,9 +406,63 @@ void Gimmick::moveFloor02( int g )
 	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
 	{
 		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
 			break ;
 
 		case 1 :
+			GimmickData_[ g ]._off[ 0 ] += 0.6f ;
+			GimmickData_[ g ]._off[ 1 ] += 0.6f ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 0 ] >= 120 )
+			{
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 2 :
+			GimmickData_[ g ]._off[ 0 ] += 0.6f ;
+			GimmickData_[ g ]._off[ 1 ] += 0.6f ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y - GimmickData_[ g ]._off[ 1 ] + 120 ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 0 ] >= 120 )
+			{
+//				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
 			break ;
 
 	}
@@ -423,6 +477,17 @@ void Gimmick::moveFloor03( int g )
 	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
 	{
 		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
 			break ;
 
 		case 1 :
@@ -440,6 +505,17 @@ void Gimmick::moveFloor04( int g )
 	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
 	{
 		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
 			break ;
 
 		case 1 :

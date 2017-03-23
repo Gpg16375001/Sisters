@@ -99,6 +99,8 @@ void SceneManager::Update( int arg_state )
 			Gimmick::GetInstance()->Initialize( ) ;
 
 			// ギミックをセット
+			Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(20) , PTC(6) ,   2 ,   0 , GIMMICK_MODE_WAVE ) ;		// 動く床
+
 			Gimmick::GetInstance()->setCircularSaws( 10 , PTC(208) , PTC(8) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// 丸鋸
 			Gimmick::GetInstance()->setCircularSaws( 11 , PTC(218) , PTC(3) , 360 , 0 , GIMMICK_MODE_CYCLE ) ;		// 丸鋸
 
