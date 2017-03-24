@@ -58,159 +58,24 @@ void Gimmick::Shooter( )
 				if ( GimmickData_[ g ]._useFlg )
 				{
 //						printf( "Gimmick_MODE_STAY\n" ) ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
-					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-				} else {
-					GimmickData_[ g ]._delay-- ;
-					if ( GimmickData_[ g ]._delay <= 0 )
+					switch ( (int)GimmickData_[ g ]._off[ 2 ] )
 					{
-						GimmickData_[ g ]._useFlg = true ;
-					}
-				}
+						case 1 :
+							blockShot01( g ) ;
+							break ;
 
-			}
+						case 2 :
+							blockShot02( g ) ;
+							break ;
 
-			/*/
-			/*	射撃物：上下
-			/*/
-			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_UPDOWN )
-			{
-				if ( GimmickData_[ g ]._useFlg )
-				{
-//						printf( "Gimmick_MODE_UPDOWN\n" ) ;
+						case 3 :
+							blockShot03( g ) ;
+							break ;
 
-					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
-					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+						case 4 :
+							blockShot04( g ) ;
+							break ;
 
-				} else {
-					GimmickData_[ g ]._delay-- ;
-					if ( GimmickData_[ g ]._delay <= 0 )
-					{
-						GimmickData_[ g ]._useFlg = true ;
-					}
-				}
-
-			}
-
-			/*/
-			/*	射撃物：左右
-			/*/
-			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_LEFTRIGHT )
-			{
-				if ( GimmickData_[ g ]._useFlg )
-				{
-//						printf( "Gimmick_MODE_LEFTRIGHT\n" ) ;
-
-					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
-					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-				} else {
-					GimmickData_[ g ]._delay-- ;
-					if ( GimmickData_[ g ]._delay <= 0 )
-					{
-						GimmickData_[ g ]._useFlg = true ;
-					}
-				}
-
-			}
-
-			/*/
-			/*	射撃物：円
-			/*/
-			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_CYCLE )
-			{
-				if ( GimmickData_[ g ]._useFlg )
-				{
-//						printf( "Gimmick_MODE_CYCLE\n" ) ;
-
-					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
-					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-				} else {
-					GimmickData_[ g ]._delay-- ;
-					if ( GimmickData_[ g ]._delay <= 0 )
-					{
-						GimmickData_[ g ]._useFlg = true ;
-					}
-				}
-
-			}
-
-			/*/
-			/*	射撃物：落ち
-			/*/
-			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_DROP )
-			{
-				if ( GimmickData_[ g ]._useFlg )
-				{
-//						printf( "Gimmick_MODE_DROP\n" ) ;
-
-					GimmickData_[ g ]._off[ 0 ] += (GimmickData_[ g ]._spd / 60) ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
-					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-					if ( GimmickData_[ g ]._off[ 0 ] >= 700 )
-					{
-						GimmickData_[ g ]._off[ 0 ] = -100 ;
 					}
 
 				} else {
@@ -222,51 +87,136 @@ void Gimmick::Shooter( )
 				}
 
 			}
-
-			/*/
-			/*	射撃物：昇り
-			/*/
-			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_UPPER )
-			{
-				if ( GimmickData_[ g ]._useFlg )
-				{
-//						printf( "Gimmick_MODE_UPPER\n" ) ;
-
-					GimmickData_[ g ]._off[ 0 ] -= (GimmickData_[ g ]._spd / 60) ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
-					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
-					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
-
-					if ( GimmickData_[ g ]._off[ 0 ] <= -100 )
-					{
-						GimmickData_[ g ]._off[ 0 ] = 700 ;
-					}
-
-				} else {
-					GimmickData_[ g ]._delay-- ;
-					if ( GimmickData_[ g ]._delay <= 0 )
-					{
-						GimmickData_[ g ]._useFlg = true ;
-					}
-				}
-
-			}
-
 
 		}
 	}
 
 }
+
+/*/
+/*	射撃物：動き1
+/*/
+void Gimmick::blockShot01( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					64 , 64 ,
+					1.0f , 1.0f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			break ;
+
+		case 2 :
+			break ;
+
+		case 3 :
+			break ;
+
+	}
+
+}
+
+/*/
+/*	射撃物：動き2
+/*/
+void Gimmick::blockShot02( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					64 , 64 ,
+					1.0f , 1.0f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			break ;
+
+		case 2 :
+			break ;
+
+		case 3 :
+			break ;
+
+	}
+
+}
+
+/*/
+/*	射撃物：動き3
+/*/
+void Gimmick::blockShot03( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					64 , 64 ,
+					1.0f , 1.0f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
+/*/
+/*	射撃物：動き4
+/*/
+void Gimmick::blockShot04( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					64 , 64 ,
+					1.0f , 1.0f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
 
 
 

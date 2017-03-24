@@ -515,6 +515,11 @@ void Player::Pdeth( )
 /*/
 float Player::FootCheck( )
 {
+	if ( Pmode_ == P_deth )
+	{
+		return 0 ;
+	}
+
 	float footY = 0.0f ;
 	float px = 0.0f , py = 0.0f ;
 	float pl = 0.0f , pr = 0.0f ;
@@ -1023,6 +1028,11 @@ float Player::FootCheck( )
 /*/
 float Player::HeadCheck( )
 {
+	if ( Pmode_ == P_deth )
+	{
+		return 0 ;
+	}
+
 	float headY = 0.0f ;
 	float px = 0.0f , py = 0.0f ;
 	float pl = 0.0f , pr = 0.0f ;
@@ -1134,6 +1144,11 @@ float Player::HeadCheck( )
 /*/
 float Player::Collision( )
 {
+	if ( Pmode_ == P_deth )
+	{
+		return 0 ;
+	}
+
 	float collisionX = 0.0f ;
 	float px = 0.0f , py = 0.0f ;
 	float pl = 0.0f , pr = 0.0f ;

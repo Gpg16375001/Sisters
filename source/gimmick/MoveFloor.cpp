@@ -391,6 +391,8 @@ void Gimmick::moveFloor01( int g )
 			if ( GimmickData_[ g ]._off[ 1 ] >= 900 )
 			{
 				GimmickData_[ g ]._off[ 3 ] = 0 ;
+				GimmickData_[ g ]._off[ 0 ] = 0 ;
+				GimmickData_[ g ]._off[ 1 ] = 0 ;
 			}
 			break ;
 
@@ -459,9 +461,33 @@ void Gimmick::moveFloor02( int g )
 			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
-			if ( GimmickData_[ g ]._off[ 0 ] >= 120 )
+			if ( GimmickData_[ g ]._off[ 0 ] >= 240 )
 			{
-//				GimmickData_[ g ]._off[ 3 ]++ ;
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 3 :
+			GimmickData_[ g ]._off[ 1 ] -= 1.2f ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y - GimmickData_[ g ]._off[ 1 ] + 120 ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 1 ] <= -400 )
+			{
+				GimmickData_[ g ]._off[ 3 ] = 0 ;
+				GimmickData_[ g ]._off[ 0 ] = 0 ;
+				GimmickData_[ g ]._off[ 1 ] = 0 ;
 			}
 			break ;
 
