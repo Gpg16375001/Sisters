@@ -74,6 +74,15 @@ void SceneGame01::Update( )
 {
 	static Player	player ;
 		
+	if ( KeyManager::GetInstance()->getKeyState( VK_F1 ) )
+	{
+		player.Finalize( ) ;
+		player.Initialize( ) ;
+		Gimmick::GetInstance()->Finalize( ) ;
+		Gimmick::GetInstance()->Initialize( ) ;
+		g_state = 0 ;
+	}
+		
 	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )
 	{
 		player.Finalize( ) ;
@@ -209,7 +218,7 @@ void SceneGame01::Render( )
 			Renderer::GetInstance()->Render( ) ;
 		}
 	}
-	
+
 	/*/
 	/*	デバッグ用
 	/*/

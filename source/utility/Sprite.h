@@ -34,7 +34,7 @@ ________________________________________________________________________________
 // クラスの宣言
 class Sprite
 {
-	static const int MAX_BMP_SPRITE = 512 ;
+	static const int MAX_BMP_SPRITE = 1024 ;
 
 	public :
 	struct SpriteData {
@@ -65,10 +65,10 @@ class Sprite
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;						// 描画するかどうかのフラグをセット
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;					// 透明処理をするかどうかのフラグをセット
 		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;				// 回転処理するかどうかのフラグをセット
-		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;				// ポジションのセット
-		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;					// 切り取り位置のセット
-		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;					// 幅、高さのセット
-		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;			// 拡大率のセット
+		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;			// ポジションのセット
+		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;				// 切り取り位置のセット
+		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;				// 幅、高さのセット
+		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;		// 拡大率のセット
 		int setAnchor( int arg_bmpNo , int arg_anchor ) ;						// アンカーのセット
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;							// 透明度のセット
 		int setAngle( int arg_bmpNo , float arg_angle ) ;						// 角度のセット

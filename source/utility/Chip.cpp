@@ -431,7 +431,26 @@ void Chip::Update( )
 
 		}
 
+		// çïÇ≠Ç‡
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 26 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )( (i % renderMap_w_) * CHIP_W + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ) ,
+					( float )( (i / renderMap_w_) * CHIP_H - 128 + scrollY_ ) ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 20) * CHIP_W) ,
+					7 * CHIP_H ,
+					64 , 64 ,
+					1.0f ,
+					1.0f
+				) ;
+
+		}
+
+		// êj
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 27 )
 		{
 			setChipData(
 					i ,

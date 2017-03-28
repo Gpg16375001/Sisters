@@ -1015,6 +1015,25 @@ float Player::FootCheck( )
 				}
 				break ;
 
+			/*/
+			/*	___/ てき POD /___________________
+			/*/
+			case GIMMICK_NAME_SHOOTER :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 ;
+				bb = bt + 64 ;
+
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= pr) && (pl <= br) )
+						{
+							Player_vec_.deg = 0.0f ;
+							footY = bt ;
+						}
+					}
+				break ;
+
 
 		}
 	}
@@ -1133,6 +1152,65 @@ float Player::HeadCheck( )
 					break ;
 
 			}
+		}
+	}
+
+	float brad ;	// 丸鋸の半径
+	float x ;
+	float y ;
+	float c2 ;
+	float c ;		// プレイヤーと丸鋸の距離
+	float rad ;		// 丸鋸の中心からの高さ( Y軸 )
+
+	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
+	{
+		/*/
+		/*	ぎっみっくの種類分け
+		/*/
+		switch ( Gimmick::GetInstance( )->getGimmickData( g )._Gimmick )
+		{
+			/*/
+			/*	___/ 振り子 /___________________
+			/*/
+			case GIMMICK_NAME_PENDULUM :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+
+					brad = br - bl ;
+					x = br - (br - bl) - px ;
+					y = bb - (bb - bt) - py ;
+					c2 = x * x + y * y ;
+					c = sqrt( c2 ) ;
+
+					if ( brad >= c )
+					{
+						rad = sqrt( (c2 - x * x) ) ;
+						headY = bt + c + rad ;
+					}
+				break ;
+
+			/*/
+			/*	___/ てき POD /___________________
+			/*/
+			case GIMMICK_NAME_SHOOTER :
+				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
+				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 ;
+				bb = bt + 64 ;
+
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= pr) && (pl <= br) )
+						{
+							Player_vec_.deg = 0.0f ;
+							headY = bb + 64 ;
+						}
+					}
+				break ;
+
+
 		}
 	}
 

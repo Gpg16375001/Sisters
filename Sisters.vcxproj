@@ -106,6 +106,7 @@
     <ClCompile Include="source\utility\BitmapData.cpp" />
     <ClCompile Include="source\utility\ConsoleWindow.cpp" />
     <ClCompile Include="source\utility\KeyManager.cpp" />
+    <ClCompile Include="source\utility\SceneCut.cpp" />
     <ClCompile Include="source\utility\SceneManager.cpp" />
     <ClCompile Include="source\utility\Sprite.cpp" />
   </ItemGroup>
@@ -130,6 +131,7 @@
     <ClInclude Include="source\utility\BitmapData.h" />
     <ClInclude Include="source\utility\ConsoleWindow.h" />
     <ClInclude Include="source\utility\KeyManager.h" />
+    <ClInclude Include="source\utility\SceneCut.h" />
     <ClInclude Include="source\utility\SceneManager.h" />
     <ClInclude Include="source\utility\Sprite.h" />
   </ItemGroup>

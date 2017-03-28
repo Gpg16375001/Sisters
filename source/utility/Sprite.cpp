@@ -195,7 +195,7 @@ int Sprite::setAngle( int arg_bmpNo , float arg_degree )
 }
 
 /*/
-/*	角度のセット
+/*	描画するかのフラグのセット
 /*/
 int Sprite::setUseRender( int arg_bmpNo , bool arg_flg )
 {

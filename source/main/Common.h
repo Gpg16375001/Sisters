@@ -7,6 +7,7 @@
 #include "BackGround.h"
 #include "Sprite.h"
 #include "Chip.h"
+#include "../utility/SceneCut.h"
 #include "SceneManager.h"
 #include "../characters/Animation.h"
 #include "../characters/Physics.h"

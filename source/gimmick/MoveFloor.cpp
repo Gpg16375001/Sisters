@@ -373,7 +373,7 @@ void Gimmick::moveFloor01( int g )
 			break ;
 
 		case 3 :
-			GimmickData_[ g ]._off[ 1 ] += 2.2 ;
+			GimmickData_[ g ]._off[ 1 ] += 2.2f ;
 			Sprite::GetInstance()->setBmpData(
 					GimmickData_[ g ]._bmpNo ,
 					0 ,

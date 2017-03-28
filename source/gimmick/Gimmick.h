@@ -15,6 +15,7 @@ ________________________________________________________________________________
 #include <windows.h>
 #include <stdio.h>
 #include <math.h>
+#include "../characters/Animation.h"
 
 #define		MAX_GIMMICK_NO				256
 
@@ -38,18 +39,22 @@ ________________________________________________________________________________
 #define		PTC( arg_cell )	( (arg_cell * 64) )
 
 struct GimmickData {
-	int		_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
-	bool	_useFlg ;				// 描画するかどうかのフラグ
-	int		_anchor ;				// アンカーの位置
-	float	_x , _y ;				// グローバル座標
-	int		_u , _v ;				// 切り取り座標
-	float	_w , _h ;				// 幅高さ
-	int		_arrayX , _arrayY ;		// 配列座標
-	float	_delay ;				// 遅れ
-	float	_spd ;					// 速さ
-	int		_Gimmick ;				// ギミックの種類
-	int		_mode ;					// ギミックのモード
-	float	_off[ 4 ] ;				// オフセット
+	int				_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
+	bool			_useFlg ;				// 描画するかどうかのフラグ
+	int				_anchor ;				// アンカーの位置
+	float			_x , _y ;				// グローバル座標
+	int				_u , _v ;				// 切り取り座標
+	float			_w , _h ;				// 幅高さ
+	int				_arrayX , _arrayY ;		// 配列座標
+	float			_delay ;				// 遅れ
+	float			_spd ;					// 速さ
+	int				_Gimmick ;				// ギミックの種類
+	int				_mode ;					// ギミックのモード
+	float			_off[ 8 ] ;				// オフセット
+	Animation		_gAnim ;				// animation
+	AnimationData	_gAnim_01[ 4 ] ;		// anim 01
+	AnimationData	_gAnim_02[ 4 ] ;		// anim 02
+	AnimationData	_gAnim_03[ 4 ] ;		// anim 03
 } ;
 
 // クラスの宣言
@@ -68,6 +73,8 @@ class Gimmick
 		~Gimmick( ) ;
 		void Update( ) ;												// チップの更新
 		void clearGimmickData( ) ;
+		void clearBulletData( ) ;
+		void setBulletData( ) ;
 
 		/*/
 		/*	動く床のデータをセット
@@ -111,6 +118,8 @@ class Gimmick
 		/*	射撃物のデータをセット
 		/*/
 		int setShooter( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+		int nullCheck( ) ;
+		int useCheck( int arg_used ) ;
 		/*/
 		/*	射撃物：種類
 		/*/
@@ -162,8 +171,9 @@ class Gimmick
 			Initialize( ) ;
 		} ;
 
-		int			GimmickNo_ ;
-		GimmickData	GimmickData_[ MAX_GIMMICK_NO ] ;							// データ
+		int				GimmickNo_ ;
+		GimmickData		GimmickData_[ MAX_GIMMICK_NO ] ;					// データ
+		GimmickData		BulletData_[ 500 ] ;								// 弾だけのデータ
 
 } ;
 

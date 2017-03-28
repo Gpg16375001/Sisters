@@ -44,6 +44,7 @@ void Renderer::Initialize( )
 	setScale( 1.0f , 1.0f ) ;
 	setAlphaFlg( false ) ;
 	setRotateFlg( false ) ;
+	sceneCut = 0 ;
 
 	for ( int i = 0 ; i < 360 ; ++i )
 	{

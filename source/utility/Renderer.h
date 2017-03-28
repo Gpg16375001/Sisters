@@ -100,6 +100,16 @@ class Renderer
 		}
 
 		/*/
+		/*	sceneCut
+		/*/
+		int setSceneCut( int arg_no )
+		{
+			int oldSceneCut = sceneCut ;
+			sceneCut = arg_no ;
+			return( oldSceneCut ) ;
+		}
+
+		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/
 		static Renderer* GetInstance( )
@@ -129,7 +139,8 @@ class Renderer
 		float	degree_ ;				// 角度
 		bool	alphaFlg_ ;				// 透明処理をするかどうかのフラグ
 		bool	rotateFlg_ ;			// 回転処理をするかどうかのフラグ
-		float sinTbl[ 360 ] ;
+		float	sinTbl[ 360 ] ;
+		int		sceneCut ;				// シーン切り替え時の処理
 
 } ;
 
