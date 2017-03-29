@@ -28,9 +28,9 @@ int Gimmick::setCircularSaws( int arg_bmpNo , float arg_x , float arg_y , float 
 	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
 	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
 	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
-	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
 	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
 	GimmickData_[ GimmickNo_ ]._mode	= arg_mode ;
+	GimmickData_[ GimmickNo_ ]._off[ 2 ]= arg_spd ;
 	GimmickNo_++ ;
 
 	return( true ) ;
@@ -188,10 +188,372 @@ void Gimmick::CircularSaws( )
 
 			}
 
+			/*/
+			/*	まるのこ：特殊
+			/*/
+			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_WAVE )
+			{
+				if ( GimmickData_[ g ]._useFlg )
+				{
+//						printf( "Gimmick_MODE_WAVE\n" ) ;
+					switch ( (int)GimmickData_[ g ]._off[ 2 ] )
+					{
+						case 1 :
+							moveSaws01( g ) ;
+							break ;
+
+						case 2 :
+							moveSaws02( g ) ;
+							break ;
+
+						case 3 :
+							moveSaws03( g ) ;
+							break ;
+
+						case 4 :
+							moveSaws04( g ) ;
+							break ;
+
+					}
+
+				} else {
+					GimmickData_[ g ]._delay-- ;
+					if ( GimmickData_[ g ]._delay <= 0 )
+					{
+						GimmickData_[ g ]._useFlg = true ;
+					}
+				}
+			}
+
 		}
 	}
 
 }
+
+/*/
+/*	まるのこ：動き1
+/*/
+void Gimmick::moveSaws01( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._off[ 3 ]++ ;
+			break ;
+
+		case 1 :
+			GimmickData_[ g ]._off[ 0 ] += 0.8f ;
+			GimmickData_[ g ]._off[ 1 ] += 0.8f ;
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x - Chip::GetInstance()->cosWave(GimmickData_[ g ]._off[ 0 ] , 128) + 128 + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) <= -1 )
+			{
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 2 :
+			GimmickData_[ g ]._off[ 0 ] += 0.8f ;
+			GimmickData_[ g ]._off[ 1 ] += 0.8f ;
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->cosWave(GimmickData_[ g ]._off[ 0 ] , 128) + 128 + 256 + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) >= +1 )
+			{
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 3 :
+			GimmickData_[ g ]._off[ 6 ]++ ;		// stay count
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + 256 + 256 + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 1 ] - 352 ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 6 ] >= 100 )
+			{
+				GimmickData_[ g ]._off[ 6 ] = 0.0f ;
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 4 :
+			GimmickData_[ g ]._off[ 0 ] -= 0.8f ;
+			GimmickData_[ g ]._off[ 1 ] -= 0.8f ;
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->cosWave(GimmickData_[ g ]._off[ 0 ] , 128) + 128 + 256 + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) >= +1 )
+			{
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 5 :
+			GimmickData_[ g ]._off[ 0 ] -= 0.8f ;
+			GimmickData_[ g ]._off[ 1 ] -= 0.8f ;
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x - Chip::GetInstance()->cosWave(GimmickData_[ g ]._off[ 0 ] , 128) + 128 + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( Chip::GetInstance()->sinWave(GimmickData_[ g ]._off[ 1 ] , 320) <= 0 )
+			{
+				GimmickData_[ g ]._off[ 0 ] = 0.0f ;
+				GimmickData_[ g ]._off[ 1 ] = 0.0f ;
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 6 :
+			GimmickData_[ g ]._off[ 6 ]++ ;		// stay count
+			GimmickData_[ g ]._off[ 7 ]++ ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 1 ] ,
+					0 , 0 ,
+					128 , 128 ,
+					1.0f , 1.0f ,
+					255 ,
+					GimmickData_[ g ]._off[ 7 ]
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 6 ] >= 100 )
+			{
+				GimmickData_[ g ]._off[ 6 ] = 0.0f ;
+				GimmickData_[ g ]._off[ 3 ] = 0.0f ;
+			}
+			break ;
+
+	}
+
+}
+
+/*/
+/*	まるのこ：動き2
+/*/
+void Gimmick::moveSaws02( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			GimmickData_[ g ]._off[ 0 ] += 0.6f ;
+			GimmickData_[ g ]._off[ 1 ] += 0.6f ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 0 ] >= 120 )
+			{
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 2 :
+			GimmickData_[ g ]._off[ 0 ] += 0.6f ;
+			GimmickData_[ g ]._off[ 1 ] += 0.6f ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y - GimmickData_[ g ]._off[ 1 ] + 120 ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 0 ] >= 240 )
+			{
+				GimmickData_[ g ]._off[ 3 ]++ ;
+			}
+			break ;
+
+		case 3 :
+			GimmickData_[ g ]._off[ 1 ] -= 1.2f ;
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + GimmickData_[ g ]._off[ 0 ] + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y - GimmickData_[ g ]._off[ 1 ] + 120 ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+			GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
+
+			if ( GimmickData_[ g ]._off[ 1 ] <= -400 )
+			{
+				GimmickData_[ g ]._off[ 3 ] = 0 ;
+				GimmickData_[ g ]._off[ 0 ] = 0 ;
+				GimmickData_[ g ]._off[ 1 ] = 0 ;
+			}
+			break ;
+
+	}
+
+}
+
+/*/
+/*	まるのこ：動き3
+/*/
+void Gimmick::moveSaws03( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
+/*/
+/*	まるのこ：動き4
+/*/
+void Gimmick::moveSaws04( int g )
+{
+	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
+	{
+		case 0 :
+			Sprite::GetInstance()->setBmpData(
+					GimmickData_[ g ]._bmpNo ,
+					0 ,
+					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+					GimmickData_[ g ]._y ,
+					0 , 0 ,
+					256 , 64 ,
+					0.5f , 0.5f ,
+					255 ,
+					0
+				) ;
+			break ;
+
+		case 1 :
+			break ;
+
+	}
+
+}
+
 
 
 

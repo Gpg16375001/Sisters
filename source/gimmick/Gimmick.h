@@ -93,6 +93,13 @@ class Gimmick
 		/*	まるのこのデータをセット
 		/*/
 		int setCircularSaws( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+		/*/
+		/*	まるのこ：動き
+		/*/
+		void moveSaws01( int arg_g ) ;
+		void moveSaws02( int arg_g ) ;
+		void moveSaws03( int arg_g ) ;
+		void moveSaws04( int arg_g ) ;
 
 		/*/
 		/*	振り子のデータをセット

@@ -205,7 +205,7 @@ void Gimmick::blockShot01( int g )
 							0
 						) ;
 					BulletData_[ allcnt ]._delay++ ;	// è¡Ç¶ÇÈÇ‹Ç≈ÇÃéûä‘
-					if ( BulletData_[ allcnt ]._delay >= 600 )
+					if ( BulletData_[ allcnt ]._delay >= 800 )
 					{
 						// è¡ñ≈Ç≥ÇπÇÈ
 						BulletData_[ allcnt ]._useFlg	= false ;
@@ -244,7 +244,7 @@ void Gimmick::blockShot01( int g )
 							0
 						) ;
 					BulletData_[ allcnt ]._delay++ ;	// è¡Ç¶ÇÈÇ‹Ç≈ÇÃéûä‘
-					if ( BulletData_[ allcnt ]._delay >= 600 )
+					if ( BulletData_[ allcnt ]._delay >= 800 )
 					{
 						// è¡ñ≈Ç≥ÇπÇÈ
 						BulletData_[ allcnt ]._useFlg	= false ;

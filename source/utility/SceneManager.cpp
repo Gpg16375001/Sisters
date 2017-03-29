@@ -97,8 +97,9 @@ void SceneManager::Update( int arg_state )
 				// ƒMƒ~ƒbƒN‚ðƒZƒbƒg
 				Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(224) , PTC(7) ,   2 ,   0 , GIMMICK_MODE_WAVE ) ;		// “®‚­°
 
-				Gimmick::GetInstance()->setCircularSaws( 10 , PTC(208) , PTC(8) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// ŠÛ‹˜
-				Gimmick::GetInstance()->setCircularSaws( 11 , PTC(218) , PTC(3) , 360 , 0 , GIMMICK_MODE_CYCLE ) ;		// ŠÛ‹˜
+				Gimmick::GetInstance()->setCircularSaws( 10 , PTC(208) , PTC(8) ,   0 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// ŠÛ‹˜
+				Gimmick::GetInstance()->setCircularSaws( 11 , PTC(218) , PTC(3) ,   0 , 0 , GIMMICK_MODE_CYCLE ) ;		// ŠÛ‹˜
+				Gimmick::GetInstance()->setCircularSaws( 12 , PTC(240) , PTC(4) ,   1 , 0 , GIMMICK_MODE_WAVE ) ;		// ŠÛ‹˜
 
 				Gimmick::GetInstance()->setClouds( 150 , PTC(232) , PTC(6) ,   0 ,   0 , GIMMICK_MODE_STAY ) ;			// ‰_
 				Gimmick::GetInstance()->setClouds( 151 , PTC(235) , PTC(6) ,   0 ,  90 , GIMMICK_MODE_STAY ) ;			// ‰_
@@ -112,8 +113,9 @@ void SceneManager::Update( int arg_state )
 				Gimmick::GetInstance()->setShockers( 400 , PTC(234) , PTC(0) , 448 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// “d‹C
 				Gimmick::GetInstance()->setShockers( 401 , PTC(237) , PTC(0) , 448 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// “d‹C
 
-				Gimmick::GetInstance()->setShooter( 200 , PTC(25) , PTC(6) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
-				Gimmick::GetInstance()->setShooter( 201 , PTC(27) , PTC(5) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
+				Gimmick::GetInstance()->setShooter( 200 , PTC(208) , PTC(3) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
+				Gimmick::GetInstance()->setShooter( 201 , PTC(281) , PTC(6) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
+				Gimmick::GetInstance()->setShooter( 202 , PTC( 27) , PTC(5) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
 
 				g_state++ ;
 			}
@@ -149,7 +151,7 @@ void SceneManager::Update( int arg_state )
 				Gimmick::GetInstance()->setMoveBlocks( 58 , PTC( 89) , PTC(3) ,   1 ,   0 , GIMMICK_MODE_WAVE ) ;		// “®‚­°
 
 				Gimmick::GetInstance()->setPendulums( 100 , PTC(70) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_LEFTRIGHT ) ;	// U‚èŽq
-				Gimmick::GetInstance()->setPendulums( 101 , PTC(76) , PTC(3) ,   0 , 192 , GIMMICK_MODE_LEFTRIGHT ) ;	// U‚èŽq
+				Gimmick::GetInstance()->setPendulums( 101 , PTC(76) , PTC(3) ,   0 , 256 , GIMMICK_MODE_LEFTRIGHT ) ;	// U‚èŽq
 				Gimmick::GetInstance()->setPendulums( 102 , PTC(82) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_LEFTRIGHT ) ;	// U‚èŽq
 
 				Gimmick::GetInstance()->setShockers( 400 , PTC(56) , PTC(6) ,  40 ,   0 , GIMMICK_MODE_LEFTRIGHT ) ;	// “d‹C
