@@ -228,17 +228,15 @@ void Player::PlayerAction( )
 	}
 
 	// コリジョンチェック
-	if ( Pmode_ != P_damage )
+	float collisionCheck ;
+	collisionCheck = Collision( ) ;
+	if ( collisionCheck != 0 )
 	{
-		float collisionCheck ;
-		collisionCheck = Collision( ) ;
-		if ( collisionCheck != 0 )
-		{
-			Player_mag_.x = 0.0f ;
-			Player_spd_.x = 0.0f ;
-			Player_xpos_ = collisionCheck ;
-		}
+		Player_mag_.x = 0.0f ;
+		Player_spd_.x = 0.0f ;
+		Player_xpos_ = collisionCheck ;
 	}
+
 }
 
 /*/
@@ -583,6 +581,12 @@ float Player::FootCheck( )
 		return 0 ;
 	}
 
+	// ジャンプ中
+	if ( Player_spd_.y < 0.0f )
+	{
+		return( 0 ) ;
+	}
+
 	float footY = 0.0f ;
 	float px = 0.0f , py = 0.0f ;
 	float pl = 0.0f , pr = 0.0f ;
@@ -616,12 +620,6 @@ float Player::FootCheck( )
 	// ---+ デバッグ +----------------------------------------------------------------------------------------------- debug
 	g_px = px + Chip::GetInstance()->getScrollX() ;
 	g_py = py - 54 - 8 ;
-
-	// ジャンプ中
-	if ( Player_spd_.y < 0.0f )
-	{
-		return( 0 ) ;
-	}
 
 	// 判定をとる範囲　今は全体
 	for( int i = 0 ; i < (CHIP_X * CHIP_Y) ; ++i )
@@ -1393,23 +1391,27 @@ float Player::Collision( )
 			/*/
 			/*	___/ まるのこ /___________________
 			/*/
-			case GIMMICK_NAME_CIRCULARSAWS :
-				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
-				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+		case GIMMICK_NAME_CIRCULARSAWS :
 
-				brad = br - bl ;			// 丸鋸の半径を求める
-				x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
-				y = bb - (bb - bt) - py ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
-				c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
-				c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
-
-				// 半径よりもプレイヤーまでの距離が短い場合
-				if ( brad >= c )
+				if ( Pmode_ != P_damage )
 				{
-					// 衝突
-					Pmode_ = P_dainit ;
+					bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+					br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
+					bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
+					bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+
+					brad = br - bl ;			// 丸鋸の半径を求める
+					x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+					y = bb - (bb - bt) - py ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
+
+					// 半径よりもプレイヤーまでの距離が短い場合
+					if ( brad >= c )
+					{
+						// 衝突
+						Pmode_ = P_dainit ;
+					}
 				}
 				break ;
 
@@ -1417,17 +1419,21 @@ float Player::Collision( )
 			/*	___/ 電気 /___________________
 			/*/
 			case GIMMICK_NAME_SHOCKER :
-				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 8 ;
-				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 128 ;
-
-				if ( (bt-8 <= py) && (py < bb) )
+				
+				if ( Pmode_ != P_damage )
 				{
-					if ( (bl+2 <= pr) && (pl <= br+2) )
+					bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 8 ;
+					br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
+					bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
+					bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 128 ;
+
+					if ( (bt-8 <= py) && (py < bb) )
 					{
-						// 衝突
-						Pmode_ = P_dainit ;
+						if ( (bl+2 <= pr) && (pl <= br+2) )
+						{
+							// 衝突
+							Pmode_ = P_dainit ;
+						}
 					}
 				}
 				break ;
@@ -1460,28 +1466,31 @@ float Player::Collision( )
 		}
 	}
 
-	// 弾だけのあたり判定
-	for ( int g = 500 ; g < 1000 ; ++g )
+	if ( Pmode_ != P_damage )
 	{
-		bl = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) ;
-		br = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) + 45 ;
-		bt = Sprite::GetInstance()->getBmpYPos( g ) ;
-		bb = Sprite::GetInstance()->getBmpYPos( g ) + 45 ;
-
-		brad = br - bl ;					// 丸鋸の半径を求める
-		x = br - (br - bl) - (px - 32) ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
-		y = bb - (bb - bt) - (py - 96) ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
-		c2 = x * x + y * y ;				// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
-		c = sqrt( c2 ) ;					// 二乗の値なので通常の値に戻す
-
-		// 半径よりもプレイヤーまでの距離が短い場合
-		if ( brad >= c )
+		// 弾だけのあたり判定
+		for ( int g = 500 ; g < 1000 ; ++g )
 		{
-			// 衝突
-			Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
-			Pmode_ = P_dainit ;
-		}
+			bl = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) ;
+			br = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) + 45 ;
+			bt = Sprite::GetInstance()->getBmpYPos( g ) ;
+			bb = Sprite::GetInstance()->getBmpYPos( g ) + 45 ;
 
+			brad = br - bl ;					// 丸鋸の半径を求める
+			x = br - (br - bl) - (px - 32) ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+			y = bb - (bb - bt) - (py - 96) ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+			c2 = x * x + y * y ;				// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+			c = sqrt( c2 ) ;					// 二乗の値なので通常の値に戻す
+
+			// 半径よりもプレイヤーまでの距離が短い場合
+			if ( brad >= c )
+			{
+				// 衝突
+				Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
+				Pmode_ = P_dainit ;
+			}
+
+		}
 	}
 
 	return( collisionX ) ;

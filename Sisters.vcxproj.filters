@@ -114,6 +114,9 @@
     <ClCompile Include="source\utility\SceneCut.cpp">
       <Filter>source\utility</Filter>
     </ClCompile>
+    <ClCompile Include="source\gimmick\Rocks.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">

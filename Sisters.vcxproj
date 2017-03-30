@@ -88,6 +88,7 @@
     <ClCompile Include="source\gimmick\Gimmick.cpp" />
     <ClCompile Include="source\gimmick\MoveFloor.cpp" />
     <ClCompile Include="source\gimmick\Pendulums.cpp" />
+    <ClCompile Include="source\gimmick\Rocks.cpp" />
     <ClCompile Include="source\gimmick\Shockers.cpp" />
     <ClCompile Include="source\gimmick\Shooter.cpp" />
     <ClCompile Include="source\gimmick\SpeedUp.cpp" />
