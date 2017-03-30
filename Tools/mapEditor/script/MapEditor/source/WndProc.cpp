@@ -77,6 +77,11 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 			g_key.update( );	// --- キー情報の更新
 
 			// --------------
+			if ( g_key.getKeyState( VK_F1 ) )
+			{
+				funcFileSave( hWnd ) ;
+				printf( "Created MapData\n" ) ;
+			}
 			if ( g_key.getKeyState( VK_F2 ) )
 			{
 				LoadMapData::ReLoad( ) ;
@@ -190,8 +195,6 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 		|		WM_RBUTTONDOWN
 		+ ----------------------- */
 		case WM_RBUTTONDOWN :
-			funcFileSave( hWnd ) ;
-			printf( "Created MapData\n" ) ;
 			break ;
 
 		/* -------------------------

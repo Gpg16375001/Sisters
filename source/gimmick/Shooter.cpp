@@ -156,9 +156,74 @@ void Gimmick::Shooter( )
 					}
 				}
 
+				// 弾のあたり判定　壁と
+				for ( int allcnt = 0 ; allcnt < 500 ; ++allcnt )
+				{
+					int no = useCheck( allcnt ) ;
+					if ( no != -1 )
+					{
+						int *chipTable = Chip::GetInstance()->getChipTable( ) ;	// あたり判定をとるためのチップデータ
+						float bl = 0.0f , br = 0.0f , bt = 0.0f , bb = 0.0f ;
+						float brad ;	// 弾の半径
+						float x ;
+						float y ;
+
+						bl = BulletData_[ allcnt ]._x - Chip::GetInstance()->getScrollX( ) ;
+						br = BulletData_[ allcnt ]._x - Chip::GetInstance()->getScrollX( ) + 45 ;
+						bt = BulletData_[ allcnt ]._y ;
+						bb = BulletData_[ allcnt ]._y + 45 ;
+
+						brad = br - bl ;			// 弾の半径を求める
+//						x = br - (br - bl) ;		// 弾の中心点 X軸
+//						y = bb - (bb - bt) ;		// 弾の中心点 Y軸
+						x = bl ;					// 弾の中心点 X軸
+						y = bt ;					// 弾の中心点 Y軸
+
+						// 判定をとる範囲　今は全体
+						for( int icnt = 0 ; icnt < (CHIP_X * CHIP_Y) ; ++icnt )
+						{
+							// 何か情報が入っているとき
+							if ( chipTable[ icnt ] != NULL )
+							{
+								bl = ( float )( (icnt % CHIP_X) * CHIP_W ) - RenderScale ;
+								br = ( float )( (icnt % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
+								bt = ( float )( (icnt / CHIP_X) * CHIP_H ) ;
+								bb = ( float )( (icnt / CHIP_X) * CHIP_H + CHIP_H ) ;
+
+								switch ( chipTable[ icnt ] )
+								{
+									// 通常ブロックの場合
+									case 1 :
+									case 2 :
+									case 9 :
+										if ( (bl <= x) && (x <= br) )
+										{
+											if ( (bt <= y) && (y <= bb) )
+											{
+												// 消滅させる
+												//deleteBullet( allcnt ) ;
+
+											}
+										}
+										break ;
+
+									default :
+										break ;
+
+								}
+							}
+
+						}
+
+					}
+
+
+				}
+
 			}
 
 		}
+
 	}
 
 }
@@ -272,6 +337,7 @@ void Gimmick::blockShot01( int g )
 			break ;
 
 	}
+
 
 }
 

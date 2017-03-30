@@ -116,6 +116,60 @@ void Gimmick::Pendulums( )
 
 			}
 
+			/*/
+			/*	U‚èŽqF‰ñ“]
+			/*/
+			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_CYCLE )
+			{
+				if ( GimmickData_[ g ]._useFlg )
+				{
+//					printf( "GIMMICK_MODE_CYCLE\n" ) ;
+
+					GimmickData_[ g ]._off[ 0 ] += 0.2f ;
+					GimmickData_[ g ]._off[ 1 ] += 0.2f ;
+					GimmickData_[ g ]._off[ 2 ]++ ;
+					Sprite::GetInstance()->setBmpData(
+							GimmickData_[ g ]._bmpNo ,
+							0 ,
+							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) *  3.1415926f / 180 ) * 224 + Chip::GetInstance()->getScrollX( ) ,
+							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.1415926f / 180 ) * 224 - 256 ,
+							0 , 0 ,
+							128 , 128 ,
+							1.0f , 1.0f ,
+							255 ,
+							0
+						) ;
+
+					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
+					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 128 ;
+						
+					if ( (-600 < (GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						// ½
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g+1 ]._bmpNo ,
+								0 ,
+								GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 128 ,
+								GimmickData_[ g+1 ]._y - 128 - 256 ,
+								0 , 0 ,
+								320 , 320 ,
+								1.2f , 1.2f ,
+								255 ,
+								-GimmickData_[ g ]._off[ 0 ] + 25
+							) ;
+					}
+
+				} else {
+					GimmickData_[ g ]._delay-- ;
+					if ( GimmickData_[ g ]._delay <= 0 )
+					{
+						GimmickData_[ g ]._useFlg = true ;
+					}
+				}
+			}
+
 		}
 	}
 

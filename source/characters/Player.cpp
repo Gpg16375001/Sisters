@@ -169,6 +169,7 @@ void Player::PlayerAction( )
 	// 各アクションへ
 	switch( Pmode_ )
 	{
+
 		// 初期セット
 		case P_init :
 			Pinit( ) ;
@@ -226,6 +227,18 @@ void Player::PlayerAction( )
 
 	}
 
+	// コリジョンチェック
+	if ( Pmode_ != P_damage )
+	{
+		float collisionCheck ;
+		collisionCheck = Collision( ) ;
+		if ( collisionCheck != 0 )
+		{
+			Player_mag_.x = 0.0f ;
+			Player_spd_.x = 0.0f ;
+			Player_xpos_ = collisionCheck ;
+		}
+	}
 }
 
 /*/
@@ -302,7 +315,10 @@ void Player::Pstop( )
 
 	} else {
 		PlayerAnim_.setAnimData( Panim_drop_ ) ;
-		Pmode_ = P_drop ;
+		if ( Pmode_ != P_damage )
+		{
+			Pmode_ = P_drop ;
+		}
 	}
 
 }
@@ -360,7 +376,10 @@ void Player::Pwalk( )
 		{
 			PlayerAnim_.setAnimData( Panim_drop_ ) ;
 		}
-		Pmode_ = P_drop ;
+		if ( Pmode_ != P_damage )
+		{
+			Pmode_ = P_drop ;
+		}
 	}
 
 }
@@ -460,6 +479,22 @@ void Player::Pjump( )
 /*/
 void Player::Pdainit( )
 {
+	if ( g_dethflg )
+	{
+		Pmode_ = P_sinit ;
+	} else {
+		if ( lrflg_ )
+		{
+			//  true : 右向き
+			Player_mag_.x = -4.0f ;
+		}
+		else
+		{
+			//  false : 左向き
+			Player_mag_.x = 4.0f ;
+		}
+		Player_mag_.y = -16 ;
+	}
 
 	Pmode_ = P_damage ;
 }
@@ -469,7 +504,35 @@ void Player::Pdainit( )
 /*/
 void Player::Pdamage( )
 {
-	Pmode_ = P_sinit ;
+	Player_mag_.y += Player_.Weight2D().y / 60 ;
+
+	// 左右チェック
+	if ( KeyManager::GetInstance()->getKeyState( VK_LEFT ) )
+	{
+		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
+		{
+			Player_mag_.x += -Player_acceration_ ;
+		}
+	}
+
+	if ( KeyManager::GetInstance()->getKeyState( VK_RIGHT ) )
+	{
+		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
+		{
+			Player_mag_.x += Player_acceration_ ;
+		}
+	}
+
+	float fcheck = FootCheck() ;
+	if ( fcheck != 0 )
+	{
+		Player_mag_.y = 0.0f ;
+		Player_spd_.y = 0.0f ;
+		Player_ypos_ = fcheck ;
+		PlayerAnim_.setAnimData( Panim_walk_ ) ;
+		Pmode_ = P_sinit ;
+	}
+
 }
 
 /*/
@@ -893,6 +956,19 @@ float Player::FootCheck( )
 					}
 					break ;
 
+				// 針ブロックの場合
+				case 27 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= pr) && (pl <= br) )
+						{
+							Player_vec_.deg = 0.0f ;
+							footY = bt ;
+							Pmode_ = P_dainit ;	// ------------ 変更予定 ( 死に )
+						}
+					}
+					break ;
+
 				default :
 					break ;
 
@@ -1274,6 +1350,7 @@ float Player::Collision( )
 				case 1 :
 				case 2 :
 				case 9 :
+				case 27 :
 					if ( (bl <= pr) && (pl <= br) )
 					{
 						if ( (bt <= py) && (py < bb) )
@@ -1306,7 +1383,6 @@ float Player::Collision( )
 	float y ;
 	float c2 ;
 	float c ;		// プレイヤーと丸鋸の距離
-	float rad ;		// 丸鋸の中心からの高さ( Y軸 )
 	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
 	{
 		/*/
@@ -1333,7 +1409,7 @@ float Player::Collision( )
 				if ( brad >= c )
 				{
 					// 衝突
-					Pmode_ = P_deinit ;
+					Pmode_ = P_dainit ;
 				}
 				break ;
 
@@ -1351,7 +1427,7 @@ float Player::Collision( )
 					if ( (bl+2 <= pr) && (pl <= br+2) )
 					{
 						// 衝突
-						Pmode_ = P_deinit ;
+						Pmode_ = P_dainit ;
 					}
 				}
 				break ;
@@ -1383,7 +1459,31 @@ float Player::Collision( )
 
 		}
 	}
-	
+
+	// 弾だけのあたり判定
+	for ( int g = 500 ; g < 1000 ; ++g )
+	{
+		bl = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) ;
+		br = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) + 45 ;
+		bt = Sprite::GetInstance()->getBmpYPos( g ) ;
+		bb = Sprite::GetInstance()->getBmpYPos( g ) + 45 ;
+
+		brad = br - bl ;					// 丸鋸の半径を求める
+		x = br - (br - bl) - (px - 32) ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+		y = bb - (bb - bt) - (py - 96) ;	// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+		c2 = x * x + y * y ;				// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+		c = sqrt( c2 ) ;					// 二乗の値なので通常の値に戻す
+
+		// 半径よりもプレイヤーまでの距離が短い場合
+		if ( brad >= c )
+		{
+			// 衝突
+			Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
+			Pmode_ = P_dainit ;
+		}
+
+	}
+
 	return( collisionX ) ;
 
 }
@@ -1408,15 +1508,6 @@ void Player::Update( )
 	/*	___/ プレイヤー 描画 /___________________
 	/*/
 	PlayerAction( ) ;
-
-	// コリジョンチェック
-	float collisionCheck = Collision( ) ;
-	if ( collisionCheck != 0 )
-	{
-		Player_mag_.x = 0.0f ;
-		Player_spd_.x = 0.0f ;
-		Player_xpos_ = collisionCheck ;
-	}
 
 	// プレイヤー位置調整
 	Player_spd_.y += Player_mag_.y ;

@@ -154,6 +154,19 @@ class Gimmick
 		}
 
 		/*/
+		/*	バレットを消滅
+		/*/
+		int deleteBullet( int arg_GimmickNo ) {
+			BulletData_[ arg_GimmickNo ]._useFlg	= false ;
+			BulletData_[ arg_GimmickNo ]._x			= 0.0f ;
+			BulletData_[ arg_GimmickNo ]._y			= 0.0f ;
+			BulletData_[ arg_GimmickNo ]._off[ 0 ]	= 0.0f ;
+			BulletData_[ arg_GimmickNo ]._off[ 1 ]	= 0.0f ;
+			BulletData_[ arg_GimmickNo ]._delay		= 0 ;
+			return( true ) ;
+		}
+
+		/*/
 		/*	off[ 3 ]のデータを直接セット
 		/*/
 		int setOff_3( int arg_GimmickNo , float arg_no ) {

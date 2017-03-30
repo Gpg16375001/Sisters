@@ -96,6 +96,10 @@ void SceneManager::Update( int arg_state )
 
 				// ギミックをセット
 				Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(224) , PTC(7) ,   2 ,   0 , GIMMICK_MODE_WAVE ) ;		// 動く床
+				Gimmick::GetInstance()->setMoveBlocks( 51 , PTC(291) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// 動く床
+
+				Gimmick::GetInstance()->setPendulums( 100 , PTC(298) , PTC(7) ,   0 ,   0 , GIMMICK_MODE_CYCLE ) ;		// 振り子
+				Gimmick::GetInstance()->setPendulums( 101 , PTC(307) , PTC(7) ,   0 ,1024 , GIMMICK_MODE_CYCLE ) ;		// 振り子
 
 				Gimmick::GetInstance()->setCircularSaws( 10 , PTC(208) , PTC(8) ,   0 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// 丸鋸
 				Gimmick::GetInstance()->setCircularSaws( 11 , PTC(218) , PTC(3) ,   0 , 0 , GIMMICK_MODE_CYCLE ) ;		// 丸鋸
