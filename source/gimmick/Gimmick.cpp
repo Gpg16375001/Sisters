@@ -84,6 +84,7 @@ void Gimmick::clearGimmickData( )
 		memset( &GimmickData_[ i ]._gAnim_01 , 0 , 4 * sizeof( AnimationData ) ) ;
 		memset( &GimmickData_[ i ]._gAnim_02 , 0 , 4 * sizeof( AnimationData ) ) ;
 		memset( &GimmickData_[ i ]._gAnim_03 , 0 , 4 * sizeof( AnimationData ) ) ;
+
 	}
 
 }
@@ -172,11 +173,6 @@ void Gimmick::Update( )
 	/*	___/ “GPOD /___________________
 	/*/
 	Shooter( ) ;
-
-	/*/
-	/*	___/ ‚¢‚í /___________________
-	/*/
-	Rocks( ) ;
 
 }
 

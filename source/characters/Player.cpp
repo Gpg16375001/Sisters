@@ -88,25 +88,25 @@ void Player::Initialize( )
 	/*	RECT ( left , top , right , bottom )
 	/*/
 	AnimationData P_stop[ ] = {
-		{ 0 , 8 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 0 , 8 , {200 * 1 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 0 , 8 , {200 * 2 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 0 , 8 , {200 * 3 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 1000 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 1001 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 1002 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 1003 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_walk[ ] = {
-		{ 0 , 8 , {200 * 4 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 0 , 8 , {200 * 5 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 0 , 8 , {200 * 6 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 0 , 8 , {200 * 7 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 1004 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 1005 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 1006 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
+		{ 1007 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_jump[ ] = {
-		{ 0 , 4 , {200 * 8 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 1000 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_drop[ ] = {
-		{ 0 , 4 , {200 * 9 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 1000 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_deth[ ] = {
-		{ 3 , 4 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 3 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_ball[ ] = {
 		{ 5 , 8 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
@@ -1603,7 +1603,7 @@ void Player::Update( )
 	PlayerAnim_.playAnim( ) ;
 	AnimationData *nowAnim = PlayerAnim_.getNowAnim( ) ;
 	Sprite::GetInstance()->setBmpData(
-			nowAnim->bmpNo + lrflg_ ,
+			nowAnim->bmpNo + (lrflg_ * 10) ,
 			7 ,
 			Player_xpos_ + 4 ,		// 中心位置を調整
 			Player_ypos_ - 54 ,		// 中心位置を調整

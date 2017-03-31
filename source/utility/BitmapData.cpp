@@ -59,13 +59,13 @@ int BitmapData::clearData( int arg_bmpNo )
 /*/
 /*	イメージ読み込み
 /*/
-int BitmapData::loadData( int arg_bmpNo , LPCTSTR arg_pStr , int arg_width , int arg_height )
+int BitmapData::loadData( int arg_bmpNo , LPCTSTR arg_pStr , int arg_width , int arg_height , int arg_cx , int arg_cy )
 {
 	// 使用されていたらオブジェクト破棄
 	clearData( arg_bmpNo ) ;
 
 	// データの読み込みと幅と高さをセット
-	bmpDataTable_[ arg_bmpNo ]._hBmp = (HBITMAP)LoadImage( NULL , arg_pStr , IMAGE_BITMAP , 0 , 0 , LR_LOADFROMFILE ) ;
+	bmpDataTable_[ arg_bmpNo ]._hBmp = (HBITMAP)LoadImage( NULL , arg_pStr , IMAGE_BITMAP , arg_cx , arg_cy , LR_LOADFROMFILE ) ;
 
 	setBmpWH( arg_bmpNo , arg_width , arg_height ) ;
 

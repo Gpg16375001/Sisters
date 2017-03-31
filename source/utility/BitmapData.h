@@ -37,7 +37,7 @@ class BitmapData
 
 		~BitmapData( ) ;
 
-		int loadData( int arg_bmpNo_ , LPCTSTR arg_pStr , int arg_width , int arg_height ) ;
+		int loadData( int arg_bmpNo_ , LPCTSTR arg_pStr , int arg_width , int arg_height , int arg_cx = 0 , int arg_cy = 0 ) ;
 		int clearData( int arg_bmpNo ) ;
 		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;
 

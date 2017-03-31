@@ -88,6 +88,7 @@ int Gimmick::setShooter( int arg_bmpNo , float arg_x , float arg_y , float arg_s
 
 	GimmickNo_++ ;
 	return( true ) ;
+
 }
 
 /*/
@@ -346,20 +347,61 @@ void Gimmick::blockShot01( int g )
 /*/
 void Gimmick::blockShot02( int g )
 {
+	static int cc = 0 ;
+
 	switch ( (int)GimmickData_[ g ]._off[ 3 ] )
 	{
 		case 0 :
-			Sprite::GetInstance()->setBmpData(
-					GimmickData_[ g ]._bmpNo ,
-					0 ,
-					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y ,
-					0 , 0 ,
-					64 , 64 ,
-					1.0f , 1.0f ,
-					255 ,
-					0
-				) ;
+			// íe
+			for ( int cyc = 0 ; cyc < 360 ; cyc+=360 )
+			{
+				for ( int cnt = 1 ; cnt <= 6 ; ++cnt )
+				{
+					int no = nullCheck( ) ;
+					if ( no != -1 )
+					{
+						BulletData_[ no ]._x = GimmickData_[ g ]._x ;
+						BulletData_[ no ]._y = GimmickData_[ g ]._y ;
+						BulletData_[ no ]._off[ 0 ] = cos( 3.14159265f / 180.0f * (cyc + cc) ) * (55.0f * cnt) ;
+						BulletData_[ no ]._off[ 1 ] = sin( 3.14159265f / 180.0f * (cyc + cc) ) * (55.0f * cnt) ;
+						BulletData_[ no ]._x += BulletData_[ no ]._off[ 0 ] ;
+						BulletData_[ no ]._y += BulletData_[ no ]._off[ 1 ] ;
+					}
+				}
+			}
+			cc++ ;
+
+			for ( int allcnt = 0 ; allcnt < 500 ; ++allcnt )
+			{
+				int no = useCheck( allcnt ) ;
+				if ( no != -1 )
+				{
+					Sprite::GetInstance()->setBmpData(
+							no ,
+							0 ,
+							BulletData_[ allcnt ]._x + Chip::GetInstance()->getScrollX( ) ,
+							BulletData_[ allcnt ]._y ,
+							0 , 0 ,
+							64 , 64 ,
+							1.0f , 1.0f ,
+							232 ,
+							0
+						) ;
+					BulletData_[ allcnt ]._delay++ ;	// è¡Ç¶ÇÈÇ‹Ç≈ÇÃéûä‘
+					if ( BulletData_[ allcnt ]._delay >= 1 )
+					{
+						// è¡ñ≈Ç≥ÇπÇÈ
+						BulletData_[ allcnt ]._useFlg	= false ;
+						BulletData_[ allcnt ]._x		= 0.0f ;
+						BulletData_[ allcnt ]._y		= 0.0f ;
+						BulletData_[ allcnt ]._off[ 0 ] = 0.0f ;
+						BulletData_[ allcnt ]._off[ 1 ] = 0.0f ;
+						BulletData_[ allcnt ]._delay	= 0 ;
+					}
+				}
+			}
+
+//			GimmickData_[ g ]._off[ 3 ]++ ;
 			break ;
 
 		case 1 :

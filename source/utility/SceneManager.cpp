@@ -119,9 +119,7 @@ void SceneManager::Update( int arg_state )
 
 				Gimmick::GetInstance()->setShooter( 200 , PTC(208) , PTC(3) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
 				Gimmick::GetInstance()->setShooter( 201 , PTC(281) , PTC(6) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
-				Gimmick::GetInstance()->setShooter( 202 , PTC( 27) , PTC(5) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
-
-				Gimmick::GetInstance()->setRocks( 250 , PTC(15) , PTC(3) , 0 ,   0 , GIMMICK_MODE_STAY ) ;				// Šâ
+				Gimmick::GetInstance()->setShooter( 202 , PTC( 27) , PTC(5) , 2 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
 
 				g_state++ ;
 			}

@@ -137,19 +137,6 @@ class Gimmick
 		void blockShot04( int arg_g ) ;
 
 		/*/
-		/*	岩のデータをセット
-		/*/
-		int setRocks( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
-		float footCheck( int arg_no ) ;
-		/*/
-		/*	岩：動き
-		/*/
-		void moveRocks01( int arg_g ) ;
-		void moveRocks02( int arg_g ) ;
-		void moveRocks03( int arg_g ) ;
-		void moveRocks04( int arg_g ) ;
-
-		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -159,7 +146,6 @@ class Gimmick
 		void SpeedUp( ) ;
 		void Clouds( ) ;
 		void Shooter( ) ;
-		void Rocks( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット
