@@ -72,7 +72,7 @@ void MainApp::Initalize( )
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData(  0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;					// 背景01
-	BitmapData::GetInstance()->loadData(  2 , TEXT("data/image/chips/all_grass.bmp") , 640 , 500 ) ;			// 地面 ( チップ )
+	BitmapData::GetInstance()->loadData(  2 , TEXT("data/image/chips/all_grass.bmp") , 1024 , 512 ) ;			// 地面 ( チップ )
 	BitmapData::GetInstance()->loadData(  3 , TEXT("data/image/sprites/gimic/marunoko.bmp") , 128 , 128 ) ;		// 丸鋸
 	BitmapData::GetInstance()->loadData(  5 , TEXT("data/image/sprites/gimic/movefloor.bmp") , 256 , 64 ) ;		// 動く床
 	BitmapData::GetInstance()->loadData(  6 , TEXT("data/image/bgs/bg02.bmp") , 2000 , 1000 ) ;					// 背景02
@@ -89,26 +89,26 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 17 , TEXT("data/image/bgs/bg03.bmp") , 1000 , 800 ) ;					// 背景03 ( 真っ黒 )
 	BitmapData::GetInstance()->loadData( 18 , TEXT("data/image/sprites/gimic/iwa.bmp") , 128 , 128 ) ;			// 岩
 
-	BitmapData::GetInstance()->loadData( 20 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 ) ;			// プレイヤー右向き 静止01
-	BitmapData::GetInstance()->loadData( 21 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 200 ) ;		// プレイヤー右向き 静止02
-	BitmapData::GetInstance()->loadData( 22 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 400 ) ;		// プレイヤー右向き 静止03
-	BitmapData::GetInstance()->loadData( 23 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 600 ) ;		// プレイヤー右向き 静止04
-	BitmapData::GetInstance()->loadData( 24 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 800 ) ;		// プレイヤー右向き 歩き01
-	BitmapData::GetInstance()->loadData( 25 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 1000 ) ;		// プレイヤー右向き 歩き02
-	BitmapData::GetInstance()->loadData( 26 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 1200 ) ;		// プレイヤー右向き 歩き03
-	BitmapData::GetInstance()->loadData( 27 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 1400 ) ;		// プレイヤー右向き 歩き04
-	BitmapData::GetInstance()->loadData( 28 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 1600 ) ;		// プレイヤー右向き ジャンプ
-	BitmapData::GetInstance()->loadData( 29 , TEXT("data/image/sprites/PlayerR.bmp") , 200 , 178 , 1800 ) ;		// プレイヤー右向き 落ち
-	BitmapData::GetInstance()->loadData( 30 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 ) ;			// プレイヤー左向き 静止01
-	BitmapData::GetInstance()->loadData( 31 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 200 ) ;		// プレイヤー左向き 静止02
-	BitmapData::GetInstance()->loadData( 32 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 400 ) ;		// プレイヤー左向き 静止03
-	BitmapData::GetInstance()->loadData( 33 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 600 ) ;		// プレイヤー左向き 静止04
-	BitmapData::GetInstance()->loadData( 34 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 800 ) ;		// プレイヤー左向き 歩き01
-	BitmapData::GetInstance()->loadData( 35 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 1000 ) ;		// プレイヤー左向き 歩き02
-	BitmapData::GetInstance()->loadData( 36 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 1200 ) ;		// プレイヤー左向き 歩き03
-	BitmapData::GetInstance()->loadData( 37 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 1400 ) ;		// プレイヤー左向き 歩き04
-	BitmapData::GetInstance()->loadData( 38 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 1600 ) ;		// プレイヤー左向き ジャンプ
-	BitmapData::GetInstance()->loadData( 39 , TEXT("data/image/sprites/PlayerL.bmp") , 200 , 178 , 1800 ) ;		// プレイヤー左向き 落ち
+	BitmapData::GetInstance()->loadData( 20 , TEXT("data/image/sprites/player/PlayerR01.bmp") , 200 , 178 ) ;	// プレイヤー右向き 静止01
+	BitmapData::GetInstance()->loadData( 21 , TEXT("data/image/sprites/player/PlayerR02.bmp") , 200 , 178 ) ;	// プレイヤー右向き 静止02
+	BitmapData::GetInstance()->loadData( 22 , TEXT("data/image/sprites/player/PlayerR03.bmp") , 200 , 178 ) ;	// プレイヤー右向き 静止03
+	BitmapData::GetInstance()->loadData( 23 , TEXT("data/image/sprites/player/PlayerR04.bmp") , 200 , 178 ) ;	// プレイヤー右向き 静止04
+	BitmapData::GetInstance()->loadData( 24 , TEXT("data/image/sprites/player/PlayerR05.bmp") , 200 , 178 ) ;	// プレイヤー右向き 歩き01
+	BitmapData::GetInstance()->loadData( 25 , TEXT("data/image/sprites/player/PlayerR06.bmp") , 200 , 178 ) ;	// プレイヤー右向き 歩き02
+	BitmapData::GetInstance()->loadData( 26 , TEXT("data/image/sprites/player/PlayerR07.bmp") , 200 , 178 ) ;	// プレイヤー右向き 歩き03
+	BitmapData::GetInstance()->loadData( 27 , TEXT("data/image/sprites/player/PlayerR08.bmp") , 200 , 178 ) ;	// プレイヤー右向き 歩き04
+	BitmapData::GetInstance()->loadData( 28 , TEXT("data/image/sprites/player/PlayerR09.bmp") , 200 , 178 ) ;	// プレイヤー右向き ジャンプ
+	BitmapData::GetInstance()->loadData( 29 , TEXT("data/image/sprites/player/PlayerR10.bmp") , 200 , 178 ) ;	// プレイヤー右向き 落ち
+	BitmapData::GetInstance()->loadData( 30 , TEXT("data/image/sprites/player/PlayerL01.bmp") , 200 , 178 ) ;	// プレイヤー左向き 静止01
+	BitmapData::GetInstance()->loadData( 31 , TEXT("data/image/sprites/player/PlayerL02.bmp") , 200 , 178 ) ;	// プレイヤー左向き 静止02
+	BitmapData::GetInstance()->loadData( 32 , TEXT("data/image/sprites/player/PlayerL03.bmp") , 200 , 178 ) ;	// プレイヤー左向き 静止03
+	BitmapData::GetInstance()->loadData( 33 , TEXT("data/image/sprites/player/PlayerL04.bmp") , 200 , 178 ) ;	// プレイヤー左向き 静止04
+	BitmapData::GetInstance()->loadData( 34 , TEXT("data/image/sprites/player/PlayerL05.bmp") , 200 , 178 ) ;	// プレイヤー左向き 歩き01
+	BitmapData::GetInstance()->loadData( 35 , TEXT("data/image/sprites/player/PlayerL06.bmp") , 200 , 178 ) ;	// プレイヤー左向き 歩き02
+	BitmapData::GetInstance()->loadData( 36 , TEXT("data/image/sprites/player/PlayerL07.bmp") , 200 , 178 ) ;	// プレイヤー左向き 歩き03
+	BitmapData::GetInstance()->loadData( 37 , TEXT("data/image/sprites/player/PlayerL08.bmp") , 200 , 178 ) ;	// プレイヤー左向き 歩き04
+	BitmapData::GetInstance()->loadData( 38 , TEXT("data/image/sprites/player/PlayerL09.bmp") , 200 , 178 ) ;	// プレイヤー左向き ジャンプ
+	BitmapData::GetInstance()->loadData( 39 , TEXT("data/image/sprites/player/PlayerL10.bmp") , 200 , 178 ) ;	// プレイヤー左向き 落ち
 	
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;

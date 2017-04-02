@@ -33,6 +33,7 @@ void Gimmick::Initialize( )
 	clearGimmickData( ) ;
 	clearBulletData( ) ;
 	setBulletData( ) ;
+	physic_.Initialize( ) ;
 
 	GimmickNo_ = 0 ;
 
@@ -45,6 +46,7 @@ void Gimmick::Finalize( )
 {
 	Initialize( ) ;
 
+	physic_.Finalize( ) ;
 	clearGimmickData( ) ;
 	clearBulletData( ) ;
 }

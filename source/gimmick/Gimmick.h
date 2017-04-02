@@ -16,6 +16,7 @@ ________________________________________________________________________________
 #include <stdio.h>
 #include <math.h>
 #include "../characters/Animation.h"
+#include "../characters/Physics.h"
 
 #define		MAX_GIMMICK_NO				256
 
@@ -195,6 +196,8 @@ class Gimmick
 		int				GimmickNo_ ;
 		GimmickData		GimmickData_[ MAX_GIMMICK_NO ] ;					// データ
 		GimmickData		BulletData_[ 500 ] ;								// 弾だけのデータ
+
+		Physics			physic_ ;
 
 } ;
 

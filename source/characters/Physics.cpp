@@ -127,13 +127,19 @@ float Physics::AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time
 }
 
 /*/
-/*	使い方：２点間の傾きを求める
+/*	使い方：２点間の角度を求める
 /*	引数　：点１ と 点２
-/*	返り値：傾き
+/*	返り値：角度
 /*/
-float Physics::slopeTilt( float *arg_p1 , float *arg_p2  )
+float Physics::slopeDeg( float *arg_p1 , float *arg_p2  )
 {
-	return( (arg_p2[ 1 ] - arg_p1[ 1 ]) / (arg_p2[ 0 ] - arg_p1[ 0 ]) ) ;
+	float rad = atan2( -(arg_p2[ 1 ] - arg_p1[ 1 ]) , arg_p2[ 0 ] - arg_p1[ 0 ] ) ;
+	// radianに補正をする
+	if( rad < 0 ) {
+		rad = rad + 2 * RadToDeg ;
+	}
+	float deg = rad * RadToDeg ;
+	return( deg ) ;
 }
 
 /*/

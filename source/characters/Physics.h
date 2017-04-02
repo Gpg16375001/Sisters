@@ -15,6 +15,7 @@ ________________________________________________________________________________
 
 ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 */
+#pragma once
 #include <windows.h>
 
 /*/
@@ -89,7 +90,7 @@ class Physics
 		/*	à¯êîÅ@ÅFì_ÇP Ç∆ ì_ÇQ
 		/*	ï‘ÇËílÅFåXÇ´
 		/*/
-		float slopeTilt( float *arg_p1 , float *arg_p2 ) ;
+		float slopeDeg( float *arg_p1 , float *arg_p2 ) ;
 		/*/
 		/*	égÇ¢ï˚ÅFÇQÇ¬ÇÃíºê¸ÇÃåì_ÇãÅÇﬂÇÈ
 		/*	à¯êîÅ@ÅFì_ÇP , ì_ÇPÇÃåXÇ´ Ç∆ ì_ÇQ , ì_2ÇÃåXÇ´
@@ -149,8 +150,8 @@ class Physics
 
 	private :
 		float Pi ;
-		float RadToDeg ;
-		float DegToRad ;
+		float RadToDeg ;		// Rad -> Deg
+		float DegToRad ;		// Deg -> Rad
 
 		float r2_ ;
 		float r3_ ;

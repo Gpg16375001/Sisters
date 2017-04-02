@@ -82,11 +82,14 @@ class Player
 		Vector2D_compo	Player_spd_ ;	// 成分にしたデータ
 		float			Player_xpos_ ;
 		float			Player_ypos_ ;
+		float			nowPos[ 2 ] ;
+		float			oldPos[ 2 ] ;
 		int				arrayX_ ;
 		int				arrayY_ ;
 		bool			lrflg_ ;
 		bool			scrollflg[ 2 ] ;
 		int				scrollx ;
+		bool			flipMag_ ;		// 左右反転のフラグ
 
 		// プレイヤーの物理的なもの
 		Physics			Player_ ;

@@ -344,6 +344,51 @@ void Chip::Update( )
 					1.0f , 1.0f
 				) ;
 		}
+		// 大きい坂はいる前の特殊な四角い床 左
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 90 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					(2 * CHIP_W) ,
+					0 ,
+					64 , 64 ,
+					1.0f , 1.0f
+				) ;
+		}
+		// 大きい坂はいる前の特殊な四角い床 右
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 91 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					(2 * CHIP_W) ,
+					0 ,
+					64 , 64 ,
+					1.0f , 1.0f
+				) ;
+		}
+		// 大きい坂 周辺の何もしないブロック
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 92 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ ,
+					(2 * CHIP_W) ,
+					0 ,
+					64 , 64 ,
+					1.0f , 1.0f
+				) ;
+		}
 
 		// 坂
 		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 12 )
@@ -407,6 +452,41 @@ void Chip::Update( )
 					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
 					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
 					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 11) * CHIP_W) ,
+					64 + 128 ,
+					256 , 256 ,
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		// 大きい坂
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 16 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 8) * CHIP_W) ,
+					64 + 128 ,
+					256 , 256 ,
+
+					1.0f , 1.0f
+				) ;
+
+		}
+
+		// 大きい坂
+		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == 17 )
+		{
+			setChipData(
+					i ,
+					0 ,
+					i % map_w_ , i / map_h_ ,
+					( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+					( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ - 192 ,
+					((m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] - 5) * CHIP_W) ,
 					64 + 128 ,
 					256 , 256 ,
 					1.0f , 1.0f
