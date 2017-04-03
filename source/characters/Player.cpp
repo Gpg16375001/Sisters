@@ -1002,7 +1002,7 @@ float Player::FootCheck( )
 						if ( brad >= c )
 						{
 							flipMag_ = true ;
-	//						Player_mag_.x = -10 ;
+//							Player_mag_.x = -10 ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
@@ -1031,13 +1031,13 @@ float Player::FootCheck( )
 					// 半径よりもプレイヤーまでの距離が短い場合
 					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 < py) && (py < bt + 256 + brad) )
 					{
-						if ( brad >= (c-8) )
+						if ( brad >= (c-6) )
 						{
 							flipMag_ = true ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-							footY = bt + c - 8 - rad + 8 + 256 ;
+							footY = bt + c - 6 - rad + 8 + 256 ;
 							printf( " c  : %f \n" , c ) ;
 							printf( "rad : %f \n" , rad ) ;
 							printf( "brad : %f \n" , brad ) ;
@@ -1492,7 +1492,7 @@ float Player::Collision( )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-							Player_ypos_ += 64 ;
+							Player_ypos_ += 40 ;
 							flipMag_ = false ;
 							collisionX = br + Chip::GetInstance()->getScrollX() + 8 ;
 
