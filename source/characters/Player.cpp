@@ -999,12 +999,18 @@ float Player::FootCheck( )
 					// 半径よりもプレイヤーまでの距離が短い場合
 					if ( (bl+brad+16 < px) && (px < br + 32 + 16) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 16) )
 					{
-						if ( brad <= c )
+						if ( brad < c )
 						{
 							flipMag_ = true ;
 //							Player_mag_.x = -10 ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
+
+							if ( Player_mag_.x == 0.0f )
+							{
+								Player_mag_.x += Player_mag_.y ;
+								Player_mag_.y = -1.0f ;
+							}
 
 							footY = bt + c - rad - 8 + 256 ;
 							printf( " c  : %f \n" , c ) ;
@@ -1506,14 +1512,14 @@ float Player::Collision( )
 				case 91 :
 					if ( (bt <= py+48) && (py+48 < bb) )
 					{
-						if ( (bl <= px) && (px <= br) )
+						if ( (bl-4 <= px) && (px <= br+4) )
 						{
 							if ( center < px )
 							{
-								collisionX = br + Chip::GetInstance()->getScrollX() + 1 ;
-								Player_mag_.y += Player_mag_.x ;
+								collisionX = br + Chip::GetInstance()->getScrollX() + 4 ;
+								Player_mag_.y += -Player_mag_.x ;
 							} else if ( px < center ) {
-								collisionX = bl + Chip::GetInstance()->getScrollX() ;
+								collisionX = bl + Chip::GetInstance()->getScrollX() - 4 ;
 								Player_mag_.y += -Player_mag_.x ;
 							}
 							Player_mag_.y *= 0.965f ;			// 減速率
