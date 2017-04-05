@@ -997,16 +997,16 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl+brad+16 < px) && (px < br + 32) && (bt + 256 < py) && (py < bt + 256 + brad) )
+					if ( (bl+brad+16 < px) && (px < br + 32 + 16) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 16) )
 					{
-						if ( brad >= c )
+						if ( brad <= c )
 						{
 							flipMag_ = true ;
 //							Player_mag_.x = -10 ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-							footY = bt + c - rad + 8 + 256 ;
+							footY = bt + c - rad - 8 + 256 ;
 							printf( " c  : %f \n" , c ) ;
 							printf( "rad : %f \n" , rad ) ;
 							printf( "brad : %f \n" , brad ) ;
@@ -1029,15 +1029,15 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 < py) && (py < bt + 256 + brad) )
+					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 16) )
 					{
-						if ( brad >= (c-6) )
+						if ( brad <= c )
 						{
 							flipMag_ = true ;
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-							footY = bt + c - 6 - rad + 8 + 256 ;
+							footY = bt + c - rad - 8 + 256 ;
 							printf( " c  : %f \n" , c ) ;
 							printf( "rad : %f \n" , rad ) ;
 							printf( "brad : %f \n" , brad ) ;
@@ -1065,8 +1065,8 @@ float Player::FootCheck( )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-							flipMag_ = false ;
-							footY = bb ;
+//							flipMag_ = false ;
+//							footY = bb ;
 
 						}
 					}
@@ -1077,8 +1077,8 @@ float Player::FootCheck( )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-							flipMag_ = true ;
-							footY = bt ;
+//							flipMag_ = true ;
+							footY = py ;
 
 						}
 					}
@@ -1488,26 +1488,35 @@ float Player::Collision( )
 					break ;
 
 				case 90 :
-					if ( (bt <= py) && (py < bb) )
+					if ( (bt <= py+48) && (py+48 < bb) )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-							Player_ypos_ += 40 ;
-							flipMag_ = false ;
-							collisionX = br + Chip::GetInstance()->getScrollX() + 8 ;
+							if ( center < px )
+							{
+								collisionX = br + Chip::GetInstance()->getScrollX() + 8 ;
+							} else if ( px < center ) {
+								collisionX = bl + Chip::GetInstance()->getScrollX() - 4 ;
+							}
 
 						}
 					}
 					break ;
 
 				case 91 :
-					if ( (bt <= py) && (py < bb) )
+					if ( (bt <= py+48) && (py+48 < bb) )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-							Player_ypos_ += -64 ;
-							flipMag_ = true ;
-							collisionX = bl + Chip::GetInstance()->getScrollX() - 8 ;
+							if ( center < px )
+							{
+								collisionX = br + Chip::GetInstance()->getScrollX() + 1 ;
+								Player_mag_.y += Player_mag_.x ;
+							} else if ( px < center ) {
+								collisionX = bl + Chip::GetInstance()->getScrollX() ;
+								Player_mag_.y += -Player_mag_.x ;
+							}
+							Player_mag_.y *= 0.965f ;			// 減速率
 
 						}
 					}
@@ -1802,7 +1811,7 @@ void Player::Update( )
 			nowAnim->bmpNo + (lrflg_ * 10) ,
 			7 ,
 			Player_xpos_ + 4 ,		// 中心位置を調整
-			Player_ypos_ - 54 + (flipMag_ * 58) ,		// 中心位置を調整
+			Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
 			nowAnim->cutRect.left ,
 			nowAnim->cutRect.top ,
 			nowAnim->cutRect.right ,
