@@ -58,18 +58,23 @@ void Gimmick::Clouds( )
 //						printf( "GIMMICK_MODE_STAY\n" ) ;
 
 					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 4 ) ,
-							0 , 0 ,
-							128 , 64 ,
-							1.0f + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 2 ) / 100 ,
-							1.0f + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 4 ) / 100 ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 4 ) ,
+								0 , 0 ,
+								128 , 64 ,
+								1.0f + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 2 ) / 100 ,
+								1.0f + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 4 ) / 100 ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 64 ;
 						

@@ -58,17 +58,22 @@ void Gimmick::MoveFloor( )
 				if ( GimmickData_[ g ]._useFlg )
 				{
 //						printf( "Gimmick_MODE_STAY\n" ) ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
@@ -92,17 +97,22 @@ void Gimmick::MoveFloor( )
 //						printf( "Gimmick_MODE_UPDOWN\n" ) ;
 
 					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
@@ -126,17 +136,22 @@ void Gimmick::MoveFloor( )
 //						printf( "Gimmick_MODE_LEFTRIGHT\n" ) ;
 
 					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
@@ -160,17 +175,22 @@ void Gimmick::MoveFloor( )
 //						printf( "Gimmick_MODE_CYCLE\n" ) ;
 
 					GimmickData_[ g ]._off[ 0 ]++ ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->cosWave( GimmickData_[ g ]._off[ 0 ] , 128 ) + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 128 ) ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
@@ -194,17 +214,22 @@ void Gimmick::MoveFloor( )
 //						printf( "Gimmick_MODE_DROP\n" ) ;
 
 					GimmickData_[ g ]._off[ 0 ] += (GimmickData_[ g ]._spd / 60) ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
@@ -233,17 +258,22 @@ void Gimmick::MoveFloor( )
 //						printf( "Gimmick_MODE_UPPER\n" ) ;
 
 					GimmickData_[ g ]._off[ 0 ] -= (GimmickData_[ g ]._spd / 60) ;
-					Sprite::GetInstance()->setBmpData(
-							GimmickData_[ g ]._bmpNo ,
-							0 ,
-							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
-							0 , 0 ,
-							256 , 64 ,
-							0.5f , 0.5f ,
-							255 ,
-							0
-						) ;
+					if ( (-600 < (GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+						&& ((GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
+						)
+					{
+						Sprite::GetInstance()->setBmpData(
+								GimmickData_[ g ]._bmpNo ,
+								0 ,
+								GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
+								GimmickData_[ g ]._y + GimmickData_[ g ]._off[ 0 ] ,
+								0 , 0 ,
+								256 , 64 ,
+								0.5f , 0.5f ,
+								255 ,
+								0
+							) ;
+					}
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 32 ;
 
