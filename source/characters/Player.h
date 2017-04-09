@@ -15,6 +15,8 @@ ________________________________________________________________________________
 #include "Common.h"
 #include <stdio.h>
 
+#define		DECELERATION_RATE	0.995f		// 減速率
+
 class Player
 {
 	public :
@@ -90,6 +92,7 @@ class Player
 		bool			scrollflg[ 2 ] ;
 		int				scrollx ;
 		bool			flipMag_ ;		// 左右反転のフラグ
+		bool			barrierFlg_ ;	// バリアのフラグ
 
 		// プレイヤーの物理的なもの
 		Physics			Player_ ;

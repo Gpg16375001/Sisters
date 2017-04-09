@@ -28,6 +28,7 @@ Player::Player( )
 	, Player_acceration_( 0.0f )		// プレイヤーの加速度
 	, scrollx( 0 )
 	, flipMag_( false )					// false : 通常 true : 反転
+	, barrierFlg_( false )				// false : 通常	true : バリア展開中
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -76,6 +77,7 @@ void Player::Initialize( )
 	scrollflg[ 1 ]		= false ;
 	scrollx				= 0 ;
 	flipMag_			= false ;		// false : 通常 true : 反転
+	barrierFlg_			= false ;		// false : 通常	true : バリア展開中
 
 	Player_hp_			= 3 ;
 
@@ -158,6 +160,7 @@ void Player::Finalize( )
 	scrollflg[ 1 ]		= false ;
 	scrollx				= 0 ;
 	flipMag_			= false ;		// false : 通常 true : 反転
+	barrierFlg_			= false ;		// false : 通常	true : バリア展開中
 
 	Player_hp_			= 0 ;
 
@@ -244,7 +247,6 @@ void Player::PlayerAction( )
 	if ( collisionCheck != 0 )
 	{
 		Player_mag_.x = 0.0f ;
-		Player_spd_.x = 0.0f ;
 		Player_xpos_ = collisionCheck ;
 	}
 
@@ -281,11 +283,6 @@ void Player::Pinit( )
 /*/
 void Player::Psinit( )
 {
-	if ( (-1.0f < Player_spd_.x) && (Player_spd_.x < 1.0f) )
-	{
-		PlayerAnim_.setAnimData( Panim_stop_ ) ;
-	}
-
 	Pmode_ = P_stop ;
 
 }
@@ -295,12 +292,13 @@ void Player::Psinit( )
 /*/
 void Player::Pstop( )
 {
-	if ( (-1.0f < Player_spd_.x) && (Player_spd_.x < 1.0f) )
+	if ( Player_spd_.x < 1.0f )
 	{
 		PlayerAnim_.setAnimData( Panim_stop_ ) ;
 	}
 
 	Player_mag_.x *= 0.98f ;
+	Player_spd_.x *= 0.98f ;
 	float fcheck = FootCheck() ;
 	if ( fcheck != 0 )
 	{
@@ -348,13 +346,16 @@ void Player::Pwalk( )
 			{
 				// 左右反転の場合
 				Player_mag_.x += Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			} else {
 				Player_mag_.x += -Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			}
 			// もし右に動いていたら
-			if ( Player_spd_.x > 0 )
+			if ( Player_mag_.x > 0 )
 			{
 				Player_mag_.x *= 0.98f ;
+				Player_spd_.x *= 0.98f ;
 			}
 			// 左右チェック
 			lrflg_ = false ;
@@ -369,13 +370,16 @@ void Player::Pwalk( )
 			{
 				// 左右反転の場合
 				Player_mag_.x += -Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			} else {
 				Player_mag_.x += Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			}
 			// もし左に動いていたら
-			if ( Player_spd_.x < 0 )
+			if ( Player_mag_.x < 0 )
 			{
 				Player_mag_.x *= 0.98f ;
+				Player_spd_.x *= 0.98f ;
 			}
 			// 左右チェック
 			lrflg_ = true ;
@@ -393,7 +397,7 @@ void Player::Pwalk( )
 	{
 		Player_ypos_ = fcheck ;
 	} else {
-		if ( Player_mag_.x <= 5.0f )
+		if ( Player_spd_.x <= 5.0f )
 		{
 			PlayerAnim_.setAnimData( Panim_drop_ ) ;
 		}
@@ -427,6 +431,7 @@ void Player::Pjinit( )
 /*/
 void Player::Pjump( )
 {
+	flipMag_ = false ;
 	Player_mag_.y += Player_.Weight2D().y / 60 ;
 
 	if ( Pmode_ == P_jump )
@@ -440,6 +445,7 @@ void Player::Pjump( )
 				lrflg_ = false ;
 
 				Player_mag_.x += -Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			}
 		}
 
@@ -450,6 +456,7 @@ void Player::Pjump( )
 				// 左右チェック
 				lrflg_ = true ;
 				Player_mag_.x += Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			}
 		}
 
@@ -476,6 +483,7 @@ void Player::Pjump( )
 			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				Player_mag_.x += -Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			}
 		}
 
@@ -484,6 +492,7 @@ void Player::Pjump( )
 			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				Player_mag_.x += Player_acceration_ ;
+				Player_spd_.x += Player_acceration_ ;
 			}
 		}
 
@@ -513,11 +522,13 @@ void Player::Pdainit( )
 		{
 			//  true : 右向き
 			Player_mag_.x = -4.0f ;
+			Player_spd_.x = 4.0f ;
 		}
 		else
 		{
 			//  false : 左向き
 			Player_mag_.x = 4.0f ;
+			Player_spd_.x = 4.0f ;
 		}
 		Player_mag_.y = -16 ;
 	}
@@ -538,6 +549,7 @@ void Player::Pdamage( )
 		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += -Player_acceration_ ;
+			Player_spd_.x += Player_acceration_ ;
 		}
 	}
 
@@ -546,6 +558,7 @@ void Player::Pdamage( )
 		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += Player_acceration_ ;
+			Player_spd_.x += Player_acceration_ ;
 		}
 	}
 
@@ -760,6 +773,7 @@ float Player::FootCheck( )
 						{
 							Player_vec_.deg = -45.0f ;
 							Player_mag_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
+							Player_spd_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -820,6 +834,7 @@ float Player::FootCheck( )
 						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.95f ) )
 						{
 							Player_mag_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
+							Player_spd_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -864,6 +879,7 @@ float Player::FootCheck( )
 						{
 							Player_vec_.deg = -30.0f ;
 							Player_mag_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
+							Player_spd_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -908,6 +924,7 @@ float Player::FootCheck( )
 						{
 							Player_vec_.deg = -90.0f ;
 							Player_mag_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
+							Player_spd_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -937,16 +954,18 @@ float Player::FootCheck( )
 					{
 						if ( brad <= c )
 						{
-							Player_vec_.deg = -90.0f ;
-							flipMag_ = false ;
+							if ( flipMag_ != true )
+							{
+								Player_vec_.deg = -90.0f ;
 
-							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
+								rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-							footY = bb - c + rad + 8 ;
-							printf( " c  : %f \n" , c ) ;
-							printf( "rad : %f \n" , rad ) ;
-							printf( "brad : %f \n" , brad ) ;
-							printf( "On Hit !! \n" ) ;
+								footY = bb - c + rad + 8 ;
+								printf( " c  : %f \n" , c ) ;
+								printf( "rad : %f \n" , rad ) ;
+								printf( "brad : %f \n" , brad ) ;
+								printf( "On Hit !! \n" ) ;
+							}
 
 						}
 					}
@@ -965,7 +984,7 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 < py) )
+					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 - 32 < py) )
 					{
 						if ( brad <= c )
 						{
@@ -997,20 +1016,22 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl+brad+16 < px) && (px < br + 32 + 16) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 16) )
+					if ( (bl+brad+16 < px) && (px < br + 32 + 16) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 32) )
 					{
 						if ( brad < c )
 						{
 							flipMag_ = true ;
-//							Player_mag_.x = -10 ;
+							Player_mag_.x += -0.2f ;
+							Player_spd_.x += 0.2f ;
+
+							//if ( barrierFlg_ )
+							//{
+							//	Pmode_ = P_drop ;
+							//	Player_mag_.y += 6.41f ;
+
+							//}
 
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
-
-							if ( Player_mag_.x == 0.0f )
-							{
-								Player_mag_.x += Player_mag_.y ;
-								Player_mag_.y = -1.0f ;
-							}
 
 							footY = bt + c - rad - 8 + 256 ;
 							printf( " c  : %f \n" , c ) ;
@@ -1035,19 +1056,28 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 16) )
+					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 - 16 < py) && (py < bt + 256 + brad) )
 					{
 						if ( brad <= c )
 						{
-							flipMag_ = true ;
+							if ( flipMag_ != false )
+							{
+								rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
+								// さかさまの時スピード足らないとき
+								if ( Player_spd_.x <= 6.0f )
+								{
+									Pmode_ = P_drop ;
+									Player_mag_.y += 6.41f ;
+								}
 
-							footY = bt + c - rad - 8 + 256 ;
-							printf( " c  : %f \n" , c ) ;
-							printf( "rad : %f \n" , rad ) ;
-							printf( "brad : %f \n" , brad ) ;
-							printf( "On Hit !! \n" ) ;
+								footY = bt + c - rad - 8 + 256 ;
+								printf( " c  : %f \n" , c ) ;
+								printf( "rad : %f \n" , rad ) ;
+								printf( "brad : %f \n" , brad ) ;
+								printf( "On Hit !! \n" ) ;
+							}
+
 
 						}
 					}
@@ -1071,23 +1101,14 @@ float Player::FootCheck( )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
-//							flipMag_ = false ;
-//							footY = bb ;
+
 
 						}
 					}
 					break ;
 
 				case 91 :
-					if ( (bt <= py) && (py < bb) )
-					{
-						if ( (bl <= px) && (px <= br) )
-						{
-//							flipMag_ = true ;
-							footY = py ;
 
-						}
-					}
 					break ;
 
 				default :
@@ -1202,6 +1223,7 @@ float Player::FootCheck( )
 					{
 						Player_vec_.deg = 0.0f ;
 						Player_mag_.x *= 0.965f ;			// 減速率
+						Player_spd_.x *= 0.965f ;			// 減速率
 						if ( Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] == 0 )
 						{
 							Gimmick::GetInstance()->getGimmickData( g )._off[ 3 ] = 1 ;
@@ -1484,25 +1506,27 @@ float Player::Collision( )
 								} else if ( px < center ) {
 									collisionX = bl + Chip::GetInstance()->getScrollX() - 24 ;
 								}
+								Player_spd_.x = 0 ;
 								
 							} else {
 								Player_mag_.y = -Player_mag_.x ;
 								Player_mag_.x = 0 ;
+								Player_spd_.x = 0 ;
 							}
 						}
 					}
 					break ;
 
 				case 90 :
-					if ( (bt <= py+48) && (py+48 < bb) )
+					if ( (bt <= py) && (py < bb) )
 					{
 						if ( (bl <= px) && (px <= br) )
 						{
 							if ( center < px )
 							{
-								collisionX = br + Chip::GetInstance()->getScrollX() + 8 ;
+								collisionX = br + Chip::GetInstance()->getScrollX() ;
 							} else if ( px < center ) {
-								collisionX = bl + Chip::GetInstance()->getScrollX() - 4 ;
+								collisionX = bl + Chip::GetInstance()->getScrollX() ;
 							}
 
 						}
@@ -1510,22 +1534,6 @@ float Player::Collision( )
 					break ;
 
 				case 91 :
-					if ( (bt <= py+48) && (py+48 < bb) )
-					{
-						if ( (bl-4 <= px) && (px <= br+4) )
-						{
-							if ( center < px )
-							{
-								collisionX = br + Chip::GetInstance()->getScrollX() + 4 ;
-								Player_mag_.y += -Player_mag_.x ;
-							} else if ( px < center ) {
-								collisionX = bl + Chip::GetInstance()->getScrollX() - 4 ;
-								Player_mag_.y += -Player_mag_.x ;
-							}
-							Player_mag_.y *= 0.965f ;			// 減速率
-
-						}
-					}
 					break ;
 
 				default :
@@ -1615,6 +1623,7 @@ float Player::Collision( )
 							Player_vec_.deg = 0.0f ;
 
 							Player_mag_.x = 15.0f ;
+							Player_spd_.x = 15.0f ;
 							printf( "Speed UP !!! \n" ) ;
 
 						}
@@ -1647,6 +1656,7 @@ float Player::Collision( )
 							} else {
 								Player_mag_.y = -Player_mag_.x ;
 								Player_mag_.x = 0 ;
+								Player_spd_.x = 0 ;
 							}
 						}
 					}
@@ -1721,9 +1731,13 @@ void Player::Update( )
 	}
 
 	// 速度調整
-	Player_spd_.x = Player_mag_.x ;
-	Chip::GetInstance()->setScrollSize( ( int )-Player_spd_.x , 0 ) ;
-	Player_mag_.x *= 0.995f ;			// 減速率
+//	if (Player_spd_.x < 0.0f )
+//	{
+//		Player_spd_.x *= -1.0f ;
+//	}
+	Chip::GetInstance()->setScrollSize( ( int )-Player_mag_.x , 0 ) ;
+	Player_mag_.x *= DECELERATION_RATE ;			// 減速率
+	Player_spd_.x *= DECELERATION_RATE ;			// 減速率
 
 	// カメラの位置調整
 	if ( lrflg_ )
@@ -1827,8 +1841,11 @@ void Player::Update( )
 			Player_vec_.deg
 		) ;
 
+	// バリアの展開するかどうか
+	barrierFlg_ = false ;
 	if ( Player_spd_.x >= 10.0f )
 	{
+		barrierFlg_ = true ;
 		ballAnim_.playAnim( );
 		AnimationData *nowball = ballAnim_.getNowAnim( ) ;
 		Sprite::GetInstance()->setBmpData(
@@ -1861,7 +1878,7 @@ void Player::Update( )
 	printf( "Player : deg    = %8.4f \n" , Player_vec_.deg ) ;
 
 	// クリア
-	Player_spd_.x = 0.0f ;
+//	Player_spd_.x = 0.0f ;
 	Player_spd_.y = 0.0f ;
 
 }
