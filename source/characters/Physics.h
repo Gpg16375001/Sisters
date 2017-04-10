@@ -148,6 +148,33 @@ class Physics
 			return( r3_ ) ;
 		} ;
 
+		/*/
+		/*	sin ‚Ìæ“¾
+		/*/
+		float Mysin( float arg_time , int arg_width )
+		{
+			int time = ( int )arg_time % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+		float Mysin( int arg_time , int arg_width )
+		{
+			int time = arg_time % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+		/*/
+		/*	cos ‚Ìæ“¾
+		/*/
+		float Mycos( float arg_time , int arg_width )
+		{
+			int time = ( int )(arg_time + 90) % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+		float Mycos( int arg_time , int arg_width )
+		{
+			int time = (arg_time + 90) % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+
 	private :
 		float Pi ;
 		float RadToDeg ;		// Rad -> Deg
@@ -158,6 +185,8 @@ class Physics
 
 		float gravity_ ;	// d—Í‰Á‘¬“x
 		float mass_ ;		// ¿—Ê
+
+		float sinTbl[ 360 ] ;	// sin table
 
 		Vector2D_compo weight_ ;
 

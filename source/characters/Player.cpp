@@ -1830,7 +1830,7 @@ void Player::Update( )
 	Sprite::GetInstance()->setBmpData(
 			nowAnim->bmpNo + (lrflg_ * 10) ,
 			7 ,
-			Player_xpos_ + 4 ,		// 中心位置を調整
+			Player_xpos_ + 4 ,							// 中心位置を調整
 			Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
 			nowAnim->cutRect.left ,
 			nowAnim->cutRect.top ,
@@ -1851,8 +1851,8 @@ void Player::Update( )
 		Sprite::GetInstance()->setBmpData(
 				nowball->bmpNo ,
 				7 ,
-				Player_xpos_ + 4 ,		// 中心位置を調整
-				Player_ypos_ - 54 ,		// 中心位置を調整
+				Player_xpos_ + 4 ,							// 中心位置を調整
+				Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
 				nowball->cutRect.left ,
 				nowball->cutRect.top ,
 				nowball->cutRect.right ,

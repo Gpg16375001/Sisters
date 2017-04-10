@@ -246,8 +246,8 @@ void Gimmick::blockShot01( int g )
 				{
 					BulletData_[ no ]._x = GimmickData_[ g ]._x ;
 					BulletData_[ no ]._y = GimmickData_[ g ]._y ;
-					BulletData_[ no ]._off[ 0 ] = cos( 3.14159265f / 180.0f * cyc ) * 0.8f ;
-					BulletData_[ no ]._off[ 1 ] = sin( 3.14159265f / 180.0f * cyc ) * 0.8f ;
+					BulletData_[ no ]._off[ 0 ] = physic_.Mycos( cyc , 1 ) * 0.8f ;
+					BulletData_[ no ]._off[ 1 ] = physic_.Mysin( cyc , 1 ) * 0.8f ;
 				}
 			}
 
@@ -362,8 +362,8 @@ void Gimmick::blockShot02( int g )
 					{
 						BulletData_[ no ]._x = GimmickData_[ g ]._x ;
 						BulletData_[ no ]._y = GimmickData_[ g ]._y ;
-						BulletData_[ no ]._off[ 0 ] = cos( 3.14159265f / 180.0f * (cyc + cc) ) * (55.0f * cnt) ;
-						BulletData_[ no ]._off[ 1 ] = sin( 3.14159265f / 180.0f * (cyc + cc) ) * (55.0f * cnt) ;
+						BulletData_[ no ]._off[ 0 ] = physic_.Mycos( (cyc + cc) , 1 ) * (55.0f * cnt) ;
+						BulletData_[ no ]._off[ 1 ] = physic_.Mysin( (cyc + cc) , 1 ) * (55.0f * cnt) ;
 						BulletData_[ no ]._x += BulletData_[ no ]._off[ 0 ] ;
 						BulletData_[ no ]._y += BulletData_[ no ]._off[ 1 ] ;
 					}

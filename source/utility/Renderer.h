@@ -81,25 +81,6 @@ class Renderer
 		}
 
 		/*/
-		/*	sin �̎擾
-		/*/
-		float sinWave( float arg_degree )
-		{
-			int degree = ( int )arg_degree ;
-			degree = degree % 360 ;
-			return( sinTbl[ degree ] ) ;
-		}
-		/*/
-		/*	cos �̎擾
-		/*/
-		float cosWave( float arg_degree )
-		{
-			int degree = ( int )(arg_degree + 90) ;
-			degree = degree % 360 ;
-			return( sinTbl[ degree ] ) ;
-		}
-
-		/*/
 		/*	sceneCut
 		/*/
 		int setSceneCut( int arg_no )
@@ -116,6 +97,33 @@ class Renderer
 		{
 			static Renderer v ;
 			return &v ;
+		}
+
+		/*/
+		/*	sin �̎擾
+		/*/
+		float Mysin( float arg_time , int arg_width )
+		{
+			int time = ( int )arg_time % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+		float Mysin( int arg_time , int arg_width )
+		{
+			int time = arg_time % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+		/*/
+		/*	cos �̎擾
+		/*/
+		float Mycos( float arg_time , int arg_width )
+		{
+			int time = ( int )(arg_time + 90) % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+		float Mycos( int arg_time , int arg_width )
+		{
+			int time = (arg_time + 90) % 360 ;
+			return( (sinTbl[ time ] * arg_width) ) ;
 		}
 
 	private :	

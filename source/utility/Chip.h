@@ -316,7 +316,7 @@ class Chip
 		Chip( ) {
 			for ( int i = 0 ; i < 360 ; ++i )
 			{
-				sinTbl[ i ] = sin( i * 3.14f / 180.0f ) ;
+				sinTbl[ i ] = sin( i * 3.14159265f / 180.0f ) ;
 			}
 		} ;
 

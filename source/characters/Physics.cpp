@@ -39,6 +39,11 @@ void Physics::Initialize( )
 	r2_		 = 1.414213562f ;
 	r3_		 = 1.732050807f ;
 
+	for ( int i = 0 ; i < 360 ; ++i )
+	{
+		sinTbl[ i ] = sin( i * Pi / 180.0f ) ;
+	}
+
 	// ŠJŽn‚ðo—Í
 	printf( "Management of a physics is started.\n" ) ;
 //	printf( "gravity = %8.4f\n" , Physics::GetInstance()->getGravity( ) ) ;
@@ -180,8 +185,8 @@ Vector2D_compo Physics::PolarToCompo( Vector2D_polar arg_vector2d )
 {
 	Vector2D_compo temp2d ;
 
-	temp2d.x = arg_vector2d.mag * cos( arg_vector2d.deg * Pi / 180 ) ;
-	temp2d.y = arg_vector2d.mag * sin( arg_vector2d.deg * Pi / 180 ) ;
+	temp2d.x = arg_vector2d.mag * Mycos( arg_vector2d.deg , 1 ) ;
+	temp2d.y = arg_vector2d.mag * Mysin( arg_vector2d.deg , 1 ) ;
 
 	return( temp2d ) ;
 }
