@@ -81,7 +81,7 @@ void SceneGame02::Update( )
 		player.Initialize( ) ;
 		Gimmick::GetInstance()->Finalize( ) ;
 		Gimmick::GetInstance()->Initialize( ) ;
-		g_state = 0 ;
+		g_state = -1 ;
 	}
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )

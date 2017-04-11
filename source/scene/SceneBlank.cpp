@@ -74,8 +74,11 @@ void SceneBlank::Update( )
 			1.0f , 1.0f
 		) ;
 		
-	g_state++ ;												// ------------------------------- Gvl
-
+	// フェイドのセット
+	if ( SceneCut::GetInstance()->BlackOut( ) == 1 )
+	{
+		g_state++ ;												// ------------------------------- Gvl
+	}
 }
 
 /*/

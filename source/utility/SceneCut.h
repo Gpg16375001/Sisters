@@ -55,12 +55,13 @@ class SceneCut
 		int clearData( int arg_bmpNo ) ;
 		int fadeIn( ) ;
 		int fadeOut( ) ;
+		int BlackOut( ) ;
 
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// 透明処理をするかどうかのフラグをセット
-		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;		// ポジションのセット
-		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// 幅、高さのセット
-		int setAlpha( int arg_bmpNo , int arg_alpha ) ;					// 透明度のセット
+		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;	// ポジションのセット
+		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;		// 幅、高さのセット
+		int setAlpha( int arg_bmpNo , int arg_alpha ) ;				// 透明度のセット
 		int setBmpData(													// すべてのセット
 				int arg_bmpNo ,
 				float arg_x , float arg_y ,

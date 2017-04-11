@@ -165,12 +165,23 @@ int SceneCut::fadeIn( )
 	return( iRet ) ;
 }
 
+int SceneCut::BlackOut( )
+{
+	int iRet = -1 ;
+
+	alphaCnt_ = 255 ;
+	SceneCut::GetInstance()->setBmpData( 0 , 0 , 0 , 800 , 700 , alphaCnt_ ) ;
+	iRet = 1 ;
+
+	return( iRet ) ;
+}
+
 int SceneCut::fadeOut( )
 {
 	int iRet = -1 ;
 
 	SceneCut::GetInstance()->setBmpData( 0 , 0 , 0 , 800 , 700 , alphaCnt_ ) ;
-	alphaCnt_ -= 8 ;
+	alphaCnt_ -= 6 ;
 
 	if ( alphaCnt_ <= 0 )
 	{

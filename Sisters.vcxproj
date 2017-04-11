@@ -94,6 +94,7 @@
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
+    <ClCompile Include="source\scene\SceneAnim01.cpp" />
     <ClCompile Include="source\scene\SceneBlank.cpp" />
     <ClCompile Include="source\scene\SceneGame01.cpp" />
     <ClCompile Include="source\scene\SceneGame02.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
+    <ClInclude Include="source\scene\SceneAnim01.h" />
     <ClInclude Include="source\scene\SceneBase.h" />
     <ClInclude Include="source\scene\SceneBlank.h" />
     <ClInclude Include="source\scene\SceneGame01.h" />

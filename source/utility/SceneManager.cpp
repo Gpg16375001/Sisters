@@ -17,6 +17,7 @@ ________________________________________________________________________________
 #include "SceneTitle.h"
 #include "SceneGame01.h"
 #include "SceneGame02.h"
+#include "SceneAnim01.h"
 
 #define		MAP01	TEXT("data/map/mapData01.txt")
 #define		MAP02	TEXT("data/map/mapData02.txt")
@@ -56,6 +57,7 @@ void SceneManager::Update( int arg_state )
 	SceneTitle title ;
 	SceneGame01 game01 ;
 	SceneGame02 game02 ;
+	SceneAnim01 anim01 ;
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
 	{
@@ -80,8 +82,19 @@ void SceneManager::Update( int arg_state )
 			break ;
 
 		case S_PlayTitle :
+			SceneCut::GetInstance()->fadeOut( ) ;
 			title.Update( ) ;
 			title.Render( ) ;
+			break ;
+
+		case S_InitAnim01 :
+			g_state++ ;
+			break ;
+
+		case S_PlayAnim01 :
+			SceneCut::GetInstance()->fadeOut( ) ;
+			anim01.Update( ) ;
+			anim01.Render( ) ;
 			break ;
 
 		case S_InitGame01 :

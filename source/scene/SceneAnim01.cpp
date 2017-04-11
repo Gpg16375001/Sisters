@@ -1,24 +1,24 @@
 /*
 ______________________________________________________________________________________________
 
-	FILE	: SceneGame01.cpp
+	FILE	: SceneAnim01.cpp
 
 	________/ Explanation of file /___________________________________________________________
        
-    SceneGame01クラス
+    SceneAnim01クラス
 
-	SceneGame01クラスの実装部
+	SceneAnim01クラスの実装部
 
 
 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 */
 #include <windows.h>
-#include "SceneGame01.h"
+#include "SceneAnim01.h"
 
 /*/
 /*	コンストラクタ
 /*/
-SceneGame01::SceneGame01( )
+SceneAnim01::SceneAnim01( )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -28,7 +28,7 @@ SceneGame01::SceneGame01( )
 /*/
 /*	デストラクタ
 /*/
-SceneGame01::~SceneGame01( )
+SceneAnim01::~SceneAnim01( )
 {
 	printf( "End.\n" ) ;
 
@@ -37,9 +37,9 @@ SceneGame01::~SceneGame01( )
 /*/
 /*	 初期化
 /*/
-void SceneGame01::Initialize( )
+void SceneAnim01::Initialize( )
 {
-	printf( "SceneGame01 -> " ) ;
+	printf( "SceneAnim01 -> " ) ;
 
 	/*/
 	/*	___/ 背景 /___________________
@@ -58,7 +58,7 @@ void SceneGame01::Initialize( )
 /*/
 /*	 終了化
 /*/
-void SceneGame01::Finalize( )
+void SceneAnim01::Finalize( )
 {
 	Initialize( ) ;
 	g_state = -1 ;
@@ -70,63 +70,22 @@ void SceneGame01::Finalize( )
 /*/
 /*	 更新
 /*/
-void SceneGame01::Update( )
+void SceneAnim01::Update( )
 {
-	static Player	player ;
-		
-	if ( KeyManager::GetInstance()->getKeyState( VK_F1 ) )
+	static int waitTime = 0 ;
+	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 120 )
 	{
-		player.Finalize( ) ;
-		player.Initialize( ) ;
-		Gimmick::GetInstance()->Finalize( ) ;
-		Gimmick::GetInstance()->Initialize( ) ;
-		g_state = -1 ;
-	}
-		
-	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )
-	{
-		player.Finalize( ) ;
-		player.Initialize( ) ;
-		Gimmick::GetInstance()->Finalize( ) ;
-		Gimmick::GetInstance()->Initialize( ) ;
-		g_state-- ;
-	}
-		
-	if ( KeyManager::GetInstance()->getKeyState( VK_F3 ) )
-	{
-		player.Finalize( ) ;
-		player.Initialize( ) ;
-		Gimmick::GetInstance()->Finalize( ) ;
-		Gimmick::GetInstance()->Initialize( ) ;
-		g_state++ ;
+		g_state++ ;												// ------------------------------- Gvl
+		waitTime = 0 ;
 	}
 
-	// シーン内容
-	// 画面内だけチップを配置
-	for ( int i = 0 ; i < Chip::GetInstance()->getMapSizeX() * Chip::GetInstance()->getMapSizeY() ; ++i )
-	{
-		Chip::GetInstance()->setChipMap(
-				(i % Chip::GetInstance()->getMapSizeX()) ,
-				(i / Chip::GetInstance()->getMapSizeX()) ,
-				g_mapData01[ i ]
-			) ;
-	}
-
-	// チップのマップ読み込み
-	Chip::GetInstance()->Update( ) ;
-
-	// ギミックの読み込み
-	Gimmick::GetInstance()->Update( ) ;
-
-	// プレイヤーのアップデート
-	player.Update( ) ;
-
+	waitTime++ ;
 }
 
 /*/
 /*	 描画
 /*/
-void SceneGame01::Render( )
+void SceneAnim01::Render( )
 {
 	// シーン内容
 
@@ -165,6 +124,31 @@ void SceneGame01::Render( )
 	}
 
 	/*/
+	/*	チップ背景描画
+	/*/
+	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( Chip::GetInstance()->getUseFlg( i ) )
+		{
+			Renderer::GetInstance()->selectBmp(
+					Chip::GetInstance()->getBmpData( i ) ,
+					Chip::GetInstance()->getBmpAnchor( i ) ,
+					Chip::GetInstance()->getBmpXPos( i ) ,
+					Chip::GetInstance()->getBmpYPos( i ) ,
+					Chip::GetInstance()->getBmpUPos( i ) ,
+					Chip::GetInstance()->getBmpVPos( i ) ,
+					Chip::GetInstance()->getBmpWidth( i ) ,
+					Chip::GetInstance()->getBmpHeight( i ) ,
+					Chip::GetInstance()->getBmpScaleX( i ) ,
+					Chip::GetInstance()->getBmpScaleY( i ) ,
+					Chip::GetInstance()->getBmpAlpha( i ) ,
+					Chip::GetInstance()->getBmpAngle( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
+
+	/*/
 	/*	Sprite 描画
 	/*/
 	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
@@ -193,32 +177,7 @@ void SceneGame01::Render( )
 			Renderer::GetInstance()->Render( ) ;
 		}
 	}
-
-	/*/
-	/*	チップ背景描画
-	/*/
-	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		if ( Chip::GetInstance()->getUseFlg( i ) )
-		{
-			Renderer::GetInstance()->selectBmp(
-					Chip::GetInstance()->getBmpData( i ) ,
-					Chip::GetInstance()->getBmpAnchor( i ) ,
-					Chip::GetInstance()->getBmpXPos( i ) ,
-					Chip::GetInstance()->getBmpYPos( i ) ,
-					Chip::GetInstance()->getBmpUPos( i ) ,
-					Chip::GetInstance()->getBmpVPos( i ) ,
-					Chip::GetInstance()->getBmpWidth( i ) ,
-					Chip::GetInstance()->getBmpHeight( i ) ,
-					Chip::GetInstance()->getBmpScaleX( i ) ,
-					Chip::GetInstance()->getBmpScaleY( i ) ,
-					Chip::GetInstance()->getBmpAlpha( i ) ,
-					Chip::GetInstance()->getBmpAngle( i )
-				) ;
-			Renderer::GetInstance()->Render( ) ;
-		}
-	}
-
+	
 	/*/
 	/*	デバッグ用
 	/*/
@@ -226,6 +185,15 @@ void SceneGame01::Render( )
 	brush_red = CreateSolidBrush( RGB(255 , 0 , 0) ) ;
 	FillRect( Renderer::GetInstance()->getHDCBack() , &g_ac , brush_red ) ;
 	DeleteObject( brush_red ) ;
+
+	// 画面のクリア
+	/*/
+	/*	背景のクリア
+	/*/
+	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		BackGround::GetInstance()->clearData( i ) ;
+	}
 
 	/*/
 	/*	チップのクリア
@@ -241,15 +209,6 @@ void SceneGame01::Render( )
 	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
 	{
 		Sprite::GetInstance()->clearData( i ) ;
-	}
-
-	// 画面のクリア
-	/*/
-	/*	背景のクリア
-	/*/
-	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		BackGround::GetInstance()->clearData( i ) ;
 	}
 
 

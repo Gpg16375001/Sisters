@@ -126,7 +126,7 @@ float Physics::calcAccel( float arg_angle , float arg_weight , float arg_coeff ,
 /*	引数　：変化前のスピード , 変化後のスピード , 時間(秒)
 /*	返り値：加速度
 /*/
-float Physics::AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time  )
+float Physics::AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time )
 {
 	return( (arg_v2 - arg_v1) / arg_time ) ;
 }
@@ -136,7 +136,7 @@ float Physics::AccelerationSeconds( float arg_v1 , float arg_v2 , float arg_time
 /*	引数　：点１ と 点２
 /*	返り値：角度
 /*/
-float Physics::slopeDeg( float *arg_p1 , float *arg_p2  )
+float Physics::slopeDeg( float *arg_p1 , float *arg_p2 )
 {
 	float rad = atan2( -(arg_p2[ 1 ] - arg_p1[ 1 ]) , arg_p2[ 0 ] - arg_p1[ 0 ] ) ;
 	// radianに補正をする

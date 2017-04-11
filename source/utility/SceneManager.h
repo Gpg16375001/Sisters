@@ -21,6 +21,8 @@ class SceneManager
 			S_Blank = -1 ,
 			S_InitTitle = 0 ,
 			S_PlayTitle ,
+			S_InitAnim01 ,
+			S_PlayAnim01 ,
 			S_InitGame01 ,
 			S_PlayGame01 ,
 			S_InitGame02 ,
