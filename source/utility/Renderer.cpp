@@ -128,24 +128,24 @@ int Renderer::Render( )
 		x = rotatePoint[ 0 ].x ;
 		y = rotatePoint[ 0 ].y ;
 		// 加法の定理
-		rotatePoint[ 0 ].x = ( x * Mycos((radian*57.29577951f) , 1) - y * Mysin((radian*57.29577951f) , 1)  ) ;
-		rotatePoint[ 0 ].y = ( x * Mysin((radian*57.29577951f) , 1) + y * Mycos((radian*57.29577951f) , 1)  ) ;
+		rotatePoint[ 0 ].x = ( x * cos(radian) - y * sin(radian) ) ;
+		rotatePoint[ 0 ].y = ( x * sin(radian) + y * cos(radian) ) ;
 
 		// 右上頂点を回転変換
 		rotatePoint[ 1 ].x = ( w_ / 2.0f ) ;
 		rotatePoint[ 1 ].y = -( h_ / 2.0f ) ;
 		x = rotatePoint[ 1 ].x ;
 		y = rotatePoint[ 1 ].y ;
-		rotatePoint[ 1 ].x = ( x * Mycos((radian*57.29577951f) , 1) - y * Mysin((radian*57.29577951f) , 1)  ) ;
-		rotatePoint[ 1 ].y = ( x * Mysin((radian*57.29577951f) , 1) + y * Mycos((radian*57.29577951f) , 1)  ) ;
+		rotatePoint[ 1 ].x = ( x * cos(radian) - y * sin(radian) ) ;
+		rotatePoint[ 1 ].y = ( x * sin(radian) + y * cos(radian) ) ;
 
 		// 左下頂点を回転変換
 		rotatePoint[ 2 ].x = -( w_ / 2.0f ) ;
 		rotatePoint[ 2 ].y = ( h_ / 2.0f ) ;
 		x = rotatePoint[ 2 ].x ;
 		y = rotatePoint[ 2 ].y ;
-		rotatePoint[ 2 ].x = ( x * Mycos((radian*57.29577951f) , 1) - y * Mysin((radian*57.29577951f) , 1)  ) ;
-		rotatePoint[ 2 ].y = ( x * Mysin((radian*57.29577951f) , 1) + y * Mycos((radian*57.29577951f) , 1)  ) ;
+		rotatePoint[ 2 ].x = ( x * cos(radian) - y * sin(radian) ) ;
+		rotatePoint[ 2 ].y = ( x * sin(radian) + y * cos(radian) ) ;
 
 		// 平行移動で中心位置を戻す
 		for ( i = 0 ; i < 3 ; i++ )

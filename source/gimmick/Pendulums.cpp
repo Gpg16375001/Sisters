@@ -71,8 +71,8 @@ void Gimmick::Pendulums( )
 					Sprite::GetInstance()->setBmpData(
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
-							GimmickData_[ g ]._x + physic_.Mycos( (GimmickData_[ g ]._off[ 0 ] + 245) , 1 ) * 320 + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y - physic_.Mysin( (GimmickData_[ g ]._off[ 1 ] + 245) , 1 ) * 320 - 256 ,
+							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) ) * 320 + Chip::GetInstance()->getScrollX( ) ,
+							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) ) * 320 - 256 ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
@@ -131,8 +131,8 @@ void Gimmick::Pendulums( )
 					Sprite::GetInstance()->setBmpData(
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
-							GimmickData_[ g ]._x + physic_.Mycos( (GimmickData_[ g ]._off[ 0 ] + 245) , 1 ) * 224 + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y - physic_.Mysin( (GimmickData_[ g ]._off[ 1 ] + 245) , 1 ) * 224 - 256 ,
+							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) ) * 224 + Chip::GetInstance()->getScrollX( ) ,
+							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) ) * 224 - 256 ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
