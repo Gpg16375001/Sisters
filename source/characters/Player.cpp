@@ -349,7 +349,7 @@ void Player::Pwalk( )
 				Player_spd_.x += Player_acceration_ ;
 			} else {
 				Player_mag_.x += -Player_acceration_ ;
-				Player_spd_.x += Player_acceration_ ;
+				Player_spd_.x += -Player_acceration_ ;
 			}
 			// もし右に動いていたら
 			if ( Player_mag_.x > 0 )
@@ -370,7 +370,7 @@ void Player::Pwalk( )
 			{
 				// 左右反転の場合
 				Player_mag_.x += -Player_acceration_ ;
-				Player_spd_.x += Player_acceration_ ;
+				Player_spd_.x += -Player_acceration_ ;
 			} else {
 				Player_mag_.x += Player_acceration_ ;
 				Player_spd_.x += Player_acceration_ ;
@@ -445,7 +445,7 @@ void Player::Pjump( )
 				lrflg_ = false ;
 
 				Player_mag_.x += -Player_acceration_ ;
-				Player_spd_.x += Player_acceration_ ;
+				Player_spd_.x += -Player_acceration_ ;
 			}
 		}
 
@@ -483,7 +483,7 @@ void Player::Pjump( )
 			if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 			{
 				Player_mag_.x += -Player_acceration_ ;
-				Player_spd_.x += Player_acceration_ ;
+				Player_spd_.x += -Player_acceration_ ;
 			}
 		}
 
@@ -522,7 +522,7 @@ void Player::Pdainit( )
 		{
 			//  true : 右向き
 			Player_mag_.x = -4.0f ;
-			Player_spd_.x = 4.0f ;
+			Player_spd_.x = -4.0f ;
 		}
 		else
 		{
@@ -549,7 +549,7 @@ void Player::Pdamage( )
 		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += -Player_acceration_ ;
-			Player_spd_.x += Player_acceration_ ;
+			Player_spd_.x += -Player_acceration_ ;
 		}
 	}
 
@@ -773,7 +773,7 @@ float Player::FootCheck( )
 						{
 							Player_vec_.deg = -45.0f ;
 							Player_mag_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
-							Player_spd_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
+							Player_spd_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -879,7 +879,7 @@ float Player::FootCheck( )
 						{
 							Player_vec_.deg = -30.0f ;
 							Player_mag_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
-							Player_spd_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
+							Player_spd_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							printf( "Motion was true. \n" ) ;
 						}
 					}
@@ -1022,7 +1022,7 @@ float Player::FootCheck( )
 						{
 							flipMag_ = true ;
 							Player_mag_.x += -0.2f ;
-							Player_spd_.x += 0.2f ;
+							Player_spd_.x += -0.2f ;
 
 							//if ( barrierFlg_ )
 							//{
@@ -1065,7 +1065,7 @@ float Player::FootCheck( )
 								rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
 								// さかさまの時スピード足らないとき
-								if ( Player_spd_.x <= 6.0f )
+								if ( Player_spd_.x <= -6.0f )
 								{
 									Pmode_ = P_drop ;
 									Player_mag_.y += 6.41f ;
