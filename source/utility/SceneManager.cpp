@@ -21,6 +21,7 @@ ________________________________________________________________________________
 
 #define		MAP01	TEXT("data/map/mapData01.txt")
 #define		MAP02	TEXT("data/map/mapData02.txt")
+#define		MAP03	TEXT("data/map/mapData03.txt")
 
 /*/
 /*	 ‰Šú‰»
@@ -88,6 +89,8 @@ void SceneManager::Update( int arg_state )
 			break ;
 
 		case S_InitAnim01 :
+			// ƒ}ƒbƒv“Ç‚İ‚İ
+			LoadMapData::ReLoad( MAP03 ) ;
 			g_state++ ;
 			break ;
 

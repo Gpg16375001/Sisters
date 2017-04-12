@@ -63,7 +63,7 @@ void SceneAnim01::Finalize( )
 	Initialize( ) ;
 	g_state = -1 ;
 
-	printf( "SceneBlank -> " ) ;
+	printf( "SceneAnim01 -> " ) ;
 
 }
 
@@ -78,8 +78,22 @@ void SceneAnim01::Update( )
 		g_state++ ;												// ------------------------------- Gvl
 		waitTime = 0 ;
 	}
-
 	waitTime++ ;
+
+	// シーン内容
+	// 画面内だけチップを配置
+	for ( int i = 0 ; i < Chip::GetInstance()->getMapSizeX() * Chip::GetInstance()->getMapSizeY() ; ++i )
+	{
+		Chip::GetInstance()->setChipMap(
+				(i % Chip::GetInstance()->getMapSizeX()) ,
+				(i / Chip::GetInstance()->getMapSizeX()) ,
+				g_mapData01[ i ]
+			) ;
+	}
+
+	// チップのマップ読み込み
+	Chip::GetInstance()->Update( ) ;
+
 }
 
 /*/

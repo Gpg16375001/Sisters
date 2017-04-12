@@ -181,7 +181,7 @@ int SceneCut::fadeOut( )
 	int iRet = -1 ;
 
 	SceneCut::GetInstance()->setBmpData( 0 , 0 , 0 , 800 , 700 , alphaCnt_ ) ;
-	alphaCnt_ -= 6 ;
+	alphaCnt_ -= 8 ;
 
 	if ( alphaCnt_ <= 0 )
 	{
