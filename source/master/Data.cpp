@@ -7,11 +7,11 @@ namespace MasterData
 {
 	void DataInfo::Load( const char* s )
 	{
-		sscanf( s , "%*[^,],%[^,],%d,%d" , name , &xpos , &ypos ) ;
+		sscanf( s , "%*[^,],%[^,],%d,%d" , _data.name , &_data.xpos , &_data.ypos ) ;
 	}
 
-	void DataInfo::output( )
+	DATA DataInfo::getData( )
 	{
-		printf( "%-20s %6d %6d\n" , name , xpos , ypos ) ;
+		return( _data ) ;
 	}
 }

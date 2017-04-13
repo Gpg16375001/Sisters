@@ -117,6 +117,12 @@
     <ClCompile Include="source\scene\SceneAnim01.cpp">
       <Filter>source\scene</Filter>
     </ClCompile>
+    <ClCompile Include="source\master\Data.cpp">
+      <Filter>source\master</Filter>
+    </ClCompile>
+    <ClCompile Include="source\master\Master.cpp">
+      <Filter>source\master</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -190,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="source\scene\SceneAnim01.h">
       <Filter>source\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\master\Data.h">
+      <Filter>source\master</Filter>
+    </ClInclude>
+    <ClInclude Include="source\master\Master.hpp">
+      <Filter>source\master</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
