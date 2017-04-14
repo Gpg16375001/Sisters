@@ -14,7 +14,7 @@ ________________________________________________________________________________
 */
 #include <windows.h>
 #include "SceneGame02.h"
-#include "../master/Data.h"
+#include "../master/Master.hpp"
 
 /*/
 /*	コンストラクタ
@@ -24,7 +24,7 @@ SceneGame02::SceneGame02( )
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
 
-	MasterData::DataInfo temp ;
+//	MasterData::Data. ;
 
 }
 

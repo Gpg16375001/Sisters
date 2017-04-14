@@ -34,7 +34,7 @@ ________________________________________________________________________________
 #define CHIP_W		64
 #define CHIP_H		64
 
-#define RenderScale	320
+#define RenderScale	320				// •`‰æŽž‚Ì‚¸‚ê‚Ì‘å‚«‚³
 
 struct ChipData {
 	HBITMAP _hBmp ;

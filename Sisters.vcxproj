@@ -94,7 +94,7 @@
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
-    <ClCompile Include="source\master\Data.cpp" />
+    <ClCompile Include="source\master\ChipData.cpp" />
     <ClCompile Include="source\master\Master.cpp" />
     <ClCompile Include="source\scene\SceneAnim01.cpp" />
     <ClCompile Include="source\scene\SceneBlank.cpp" />
@@ -121,7 +121,7 @@
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
-    <ClInclude Include="source\master\Data.h" />
+    <ClInclude Include="source\master\ChipData.h" />
     <ClInclude Include="source\master\Master.hpp" />
     <ClInclude Include="source\scene\SceneAnim01.h" />
     <ClInclude Include="source\scene\SceneBase.h" />

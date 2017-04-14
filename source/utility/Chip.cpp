@@ -87,7 +87,7 @@ int Chip::loadBmpData( int arg_bmpNo , HBITMAP arg_hbmp )
 	// 使用されていたらオブジェクト破棄
 	clearData( arg_bmpNo ) ;
 
-	// データの読み込みと幅と高さをセット
+	// BMPのハンドルをセット
 	bmpCBGTable_[ arg_bmpNo ]._hBmp = arg_hbmp ;
 
 	return ( true ) ;

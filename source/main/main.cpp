@@ -109,7 +109,7 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 37 , TEXT("data/image/sprites/player/PlayerL08.bmp") , 200 , 178 ) ;	// プレイヤー左向き 歩き04
 	BitmapData::GetInstance()->loadData( 38 , TEXT("data/image/sprites/player/PlayerL09.bmp") , 200 , 178 ) ;	// プレイヤー左向き ジャンプ
 	BitmapData::GetInstance()->loadData( 39 , TEXT("data/image/sprites/player/PlayerL10.bmp") , 200 , 178 ) ;	// プレイヤー左向き 落ち
-	
+
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
 	BackGround::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 6 ) ) ;

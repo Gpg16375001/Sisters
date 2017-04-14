@@ -117,10 +117,10 @@
     <ClCompile Include="source\scene\SceneAnim01.cpp">
       <Filter>source\scene</Filter>
     </ClCompile>
-    <ClCompile Include="source\master\Data.cpp">
+    <ClCompile Include="source\master\Master.cpp">
       <Filter>source\master</Filter>
     </ClCompile>
-    <ClCompile Include="source\master\Master.cpp">
+    <ClCompile Include="source\master\ChipData.cpp">
       <Filter>source\master</Filter>
     </ClCompile>
   </ItemGroup>
@@ -197,10 +197,10 @@
     <ClInclude Include="source\scene\SceneAnim01.h">
       <Filter>source\scene</Filter>
     </ClInclude>
-    <ClInclude Include="source\master\Data.h">
+    <ClInclude Include="source\master\Master.hpp">
       <Filter>source\master</Filter>
     </ClInclude>
-    <ClInclude Include="source\master\Master.hpp">
+    <ClInclude Include="source\master\ChipData.h">
       <Filter>source\master</Filter>
     </ClInclude>
   </ItemGroup>

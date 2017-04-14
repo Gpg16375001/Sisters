@@ -1,6 +1,7 @@
 #pragma once
+
 #include <vector>
-#include "Data.h"
+#include "ChipData.h"
 
 namespace MasterData
 {

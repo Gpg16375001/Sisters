@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include "Master.hpp"
 #include <stdio.h>
@@ -7,12 +8,15 @@ namespace MasterData
 {
 	std::vector<DataInfo> Data ;
 
-	void LoadData( const char* s )
+	void Load( )
 	{
 		char path[256] ;
 		char buf[1024] ;
 
-		sprintf( path , "%s/Data.csv" , s ) ;
+		/*/
+		/*	ChipData
+		/*/
+		sprintf( path , "data/masterdata/ChipData.csv" ) ;
 		FILE *fp = fopen( path , "r" ) ;
 		if ( fp == nullptr )
 		{
@@ -34,9 +38,9 @@ namespace MasterData
 		fclose( fp ) ;
 	}
 
-	void ReLoad( const char* s )
+	void ReLoad( )
 	{
-		LoadData( s ) ;
+		Load( ) ;
 	}
 
 }
