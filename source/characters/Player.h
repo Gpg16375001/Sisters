@@ -43,7 +43,7 @@ class Player
 		void PlayerAction( ) ;
 
 		void Pinit( ) ;			// 初期
-		void Psinit( ) ;			// 止まり時 初期セット
+		void Psinit( ) ;		// 止まり時 初期セット
 		void Pstop( ) ;			// 止まり時
 		void Pwalk( ) ;			// 左右歩き
 		void Pjinit( ) ;		// ジャンプ初期化
@@ -93,6 +93,7 @@ class Player
 		int				scrollx ;
 		bool			flipMag_ ;		// 左右反転のフラグ
 		bool			barrierFlg_ ;	// バリアのフラグ
+		bool			cycleFlg_ ;		// 回る坂に上るかづかのフラグ
 
 		// プレイヤーの物理的なもの
 		Physics			Player_ ;

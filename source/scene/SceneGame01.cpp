@@ -165,6 +165,31 @@ void SceneGame01::Render( )
 	}
 
 	/*/
+	/*	チップ背景描画
+	/*/
+	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( Chip::GetInstance()->getUseFlg( i ) )
+		{
+			Renderer::GetInstance()->selectBmp(
+					Chip::GetInstance()->getBmpData( i ) ,
+					Chip::GetInstance()->getBmpAnchor( i ) ,
+					Chip::GetInstance()->getBmpXPos( i ) ,
+					Chip::GetInstance()->getBmpYPos( i ) ,
+					Chip::GetInstance()->getBmpUPos( i ) ,
+					Chip::GetInstance()->getBmpVPos( i ) ,
+					Chip::GetInstance()->getBmpWidth( i ) ,
+					Chip::GetInstance()->getBmpHeight( i ) ,
+					Chip::GetInstance()->getBmpScaleX( i ) ,
+					Chip::GetInstance()->getBmpScaleY( i ) ,
+					Chip::GetInstance()->getBmpAlpha( i ) ,
+					Chip::GetInstance()->getBmpAngle( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
+
+	/*/
 	/*	Sprite 描画
 	/*/
 	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
@@ -195,37 +220,12 @@ void SceneGame01::Render( )
 	}
 
 	/*/
-	/*	チップ背景描画
+	/*	Sprite のクリア
 	/*/
-	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
 	{
-		if ( Chip::GetInstance()->getUseFlg( i ) )
-		{
-			Renderer::GetInstance()->selectBmp(
-					Chip::GetInstance()->getBmpData( i ) ,
-					Chip::GetInstance()->getBmpAnchor( i ) ,
-					Chip::GetInstance()->getBmpXPos( i ) ,
-					Chip::GetInstance()->getBmpYPos( i ) ,
-					Chip::GetInstance()->getBmpUPos( i ) ,
-					Chip::GetInstance()->getBmpVPos( i ) ,
-					Chip::GetInstance()->getBmpWidth( i ) ,
-					Chip::GetInstance()->getBmpHeight( i ) ,
-					Chip::GetInstance()->getBmpScaleX( i ) ,
-					Chip::GetInstance()->getBmpScaleY( i ) ,
-					Chip::GetInstance()->getBmpAlpha( i ) ,
-					Chip::GetInstance()->getBmpAngle( i )
-				) ;
-			Renderer::GetInstance()->Render( ) ;
-		}
+		Sprite::GetInstance()->clearData( i ) ;
 	}
-
-	/*/
-	/*	デバッグ用
-	/*/
-	HBRUSH brush_red ;
-	brush_red = CreateSolidBrush( RGB(255 , 0 , 0) ) ;
-	FillRect( Renderer::GetInstance()->getHDCBack() , &g_ac , brush_red ) ;
-	DeleteObject( brush_red ) ;
 
 	/*/
 	/*	チップのクリア
@@ -233,14 +233,6 @@ void SceneGame01::Render( )
 	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
 	{
 		Chip::GetInstance()->clearData( i ) ;
-	}
-
-	/*/
-	/*	Sprite のクリア
-	/*/
-	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		Sprite::GetInstance()->clearData( i ) ;
 	}
 
 	// 画面のクリア

@@ -138,31 +138,6 @@ void SceneAnim01::Render( )
 	}
 
 	/*/
-	/*	チップ背景描画
-	/*/
-	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		if ( Chip::GetInstance()->getUseFlg( i ) )
-		{
-			Renderer::GetInstance()->selectBmp(
-					Chip::GetInstance()->getBmpData( i ) ,
-					Chip::GetInstance()->getBmpAnchor( i ) ,
-					Chip::GetInstance()->getBmpXPos( i ) ,
-					Chip::GetInstance()->getBmpYPos( i ) ,
-					Chip::GetInstance()->getBmpUPos( i ) ,
-					Chip::GetInstance()->getBmpVPos( i ) ,
-					Chip::GetInstance()->getBmpWidth( i ) ,
-					Chip::GetInstance()->getBmpHeight( i ) ,
-					Chip::GetInstance()->getBmpScaleX( i ) ,
-					Chip::GetInstance()->getBmpScaleY( i ) ,
-					Chip::GetInstance()->getBmpAlpha( i ) ,
-					Chip::GetInstance()->getBmpAngle( i )
-				) ;
-			Renderer::GetInstance()->Render( ) ;
-		}
-	}
-
-	/*/
 	/*	Sprite 描画
 	/*/
 	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
@@ -191,22 +166,38 @@ void SceneAnim01::Render( )
 			Renderer::GetInstance()->Render( ) ;
 		}
 	}
+
+	/*/
+	/*	チップ背景描画
+	/*/
+	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( Chip::GetInstance()->getUseFlg( i ) )
+		{
+			Renderer::GetInstance()->selectBmp(
+					Chip::GetInstance()->getBmpData( i ) ,
+					Chip::GetInstance()->getBmpAnchor( i ) ,
+					Chip::GetInstance()->getBmpXPos( i ) ,
+					Chip::GetInstance()->getBmpYPos( i ) ,
+					Chip::GetInstance()->getBmpUPos( i ) ,
+					Chip::GetInstance()->getBmpVPos( i ) ,
+					Chip::GetInstance()->getBmpWidth( i ) ,
+					Chip::GetInstance()->getBmpHeight( i ) ,
+					Chip::GetInstance()->getBmpScaleX( i ) ,
+					Chip::GetInstance()->getBmpScaleY( i ) ,
+					Chip::GetInstance()->getBmpAlpha( i ) ,
+					Chip::GetInstance()->getBmpAngle( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
 	
 	/*/
-	/*	デバッグ用
+	/*	Sprite のクリア
 	/*/
-	HBRUSH brush_red ;
-	brush_red = CreateSolidBrush( RGB(255 , 0 , 0) ) ;
-	FillRect( Renderer::GetInstance()->getHDCBack() , &g_ac , brush_red ) ;
-	DeleteObject( brush_red ) ;
-
-	// 画面のクリア
-	/*/
-	/*	背景のクリア
-	/*/
-	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
+	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
 	{
-		BackGround::GetInstance()->clearData( i ) ;
+		Sprite::GetInstance()->clearData( i ) ;
 	}
 
 	/*/
@@ -217,12 +208,13 @@ void SceneAnim01::Render( )
 		Chip::GetInstance()->clearData( i ) ;
 	}
 
+	// 画面のクリア
 	/*/
-	/*	Sprite のクリア
+	/*	背景のクリア
 	/*/
-	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
+	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )
 	{
-		Sprite::GetInstance()->clearData( i ) ;
+		BackGround::GetInstance()->clearData( i ) ;
 	}
 
 

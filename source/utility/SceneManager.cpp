@@ -85,9 +85,13 @@ void SceneManager::Update( int arg_state )
 			break ;
 
 		case S_InitAnim01 :
-			// マップ読み込み
-			LoadMapData::ReLoad( MAP03 ) ;
-			g_state++ ;
+			// フェイドのセット
+			if ( SceneCut::GetInstance()->fadeIn( ) == 1 )
+			{
+				// マップ読み込み
+				LoadMapData::ReLoad( MAP03 ) ;
+				g_state++ ;
+			}
 			break ;
 
 		case S_PlayAnim01 :

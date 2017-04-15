@@ -29,6 +29,7 @@ Player::Player( )
 	, scrollx( 0 )
 	, flipMag_( false )					// false : 通常 true : 反転
 	, barrierFlg_( false )				// false : 通常	true : バリア展開中
+	, cycleFlg_( false )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -78,6 +79,7 @@ void Player::Initialize( )
 	scrollx				= 0 ;
 	flipMag_			= false ;		// false : 通常 true : 反転
 	barrierFlg_			= false ;		// false : 通常	true : バリア展開中
+	cycleFlg_			= true ;		// false : さかのぼれない	true : さかのぼれる
 
 	Player_hp_			= 3 ;
 
@@ -161,6 +163,7 @@ void Player::Finalize( )
 	scrollx				= 0 ;
 	flipMag_			= false ;		// false : 通常 true : 反転
 	barrierFlg_			= false ;		// false : 通常	true : バリア展開中
+	cycleFlg_			= false ;		// false : さかのぼれない	true : さかのぼれる
 
 	Player_hp_			= 0 ;
 
@@ -717,6 +720,13 @@ float Player::FootCheck( )
 						{
 							footY = bt-1 ;
 
+							if (cycleFlg_)
+							{
+
+							} else {
+								footY = bt ;
+							}
+
 							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
 							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
@@ -938,6 +948,13 @@ float Player::FootCheck( )
 					float c ;		// プレイヤーと丸鋸の距離
 					float rad ;		// 丸鋸の中心からの高さ( Y軸 )
 
+					if (cycleFlg_)
+					{
+
+					} else {
+						break ;
+					}
+
 					bl -= 256 ;
 					bt -= 384 + 64 ;
 					br = bl + 512 ;
@@ -1062,6 +1079,8 @@ float Player::FootCheck( )
 						{
 							if ( flipMag_ != false )
 							{
+								cycleFlg_ = false ;
+
 								rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
 								// さかさまの時スピード足らないとき
@@ -1534,6 +1553,17 @@ float Player::Collision( )
 					break ;
 
 				case 91 :
+					break ;
+
+				case 92 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+							cycleFlg_ = true ;
+
+						}
+					}
 					break ;
 
 				default :
