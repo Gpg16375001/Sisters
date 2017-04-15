@@ -109,7 +109,7 @@ int SceneCut::setBmpXY( int arg_bmpNo , float arg_x , float arg_y )
 /*/
 /*	幅、高さのセット
 /*/
-int SceneCut::setBmpWH( int arg_bmpNo , int arg_w , int arg_h )
+int SceneCut::setBmpWH( int arg_bmpNo , float arg_w , float arg_h )
 {
 	bmpTable_[ arg_bmpNo ]._w = arg_w ;
 	bmpTable_[ arg_bmpNo ]._h = arg_h ;
@@ -133,7 +133,7 @@ int SceneCut::setAlpha( int arg_bmpNo , int arg_alpha )
 int SceneCut::setBmpData(
 		int arg_bmpNo ,
 		float arg_x , float arg_y ,
-		int arg_w , int arg_h ,
+		float arg_w , float arg_h ,
 		int arg_alpha
 	) 
 {

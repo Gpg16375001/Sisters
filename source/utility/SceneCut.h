@@ -39,7 +39,7 @@ class SceneCut
 			HBITMAP _hBmp ;
 			bool	_useFlg ;				// 描画するかどうかのフラグ
 			float	_x , _y ;				// 座標
-			int		_w , _h ;				// 幅高さ
+			float	_w , _h ;				// 幅高さ
 			bool	_useAlpha  ;			// 透明処理を行うかどうかのフラグ
 			int		_alpha ;				// 透明度
 		} ;
@@ -60,12 +60,12 @@ class SceneCut
 		int setUseFlg( int arg_bmpNo , bool arg_useFlg ) ;				// 描画するかどうかのフラグをセット
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// 透明処理をするかどうかのフラグをセット
 		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;	// ポジションのセット
-		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;		// 幅、高さのセット
+		int setBmpWH( int arg_bmpNo , float arg_w , float arg_h ) ;	// 幅、高さのセット
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;				// 透明度のセット
 		int setBmpData(													// すべてのセット
 				int arg_bmpNo ,
 				float arg_x , float arg_y ,
-				int arg_w , int arg_h ,
+				float arg_w , float arg_h ,
 				int arg_alpha = 255
 			) ;
 
@@ -115,14 +115,14 @@ class SceneCut
 		/*/
 		/*	幅の取得
 		/*/
-		int getBmpWidth( int arg_bmpNo ) const
+		float getBmpWidth( int arg_bmpNo ) const
 		{
 			return ( bmpTable_[ arg_bmpNo ]._w ) ;
 		}
 		/*/
 		/*	高さの取得
 		/*/
-		int getBmpHeight( int arg_bmpNo ) const
+		float getBmpHeight( int arg_bmpNo ) const
 		{
 			return ( bmpTable_[ arg_bmpNo ]._h ) ;
 		}

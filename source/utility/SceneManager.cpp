@@ -62,12 +62,8 @@ void SceneManager::Update( int arg_state )
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
 	{
-		if ( g_dethflg )
-		{
-			g_dethflg = false ;
-		} else {
-			g_dethflg = true ;
-		}
+		Chip::GetInstance()->Reload( ) ;
+		printf( "Was ReLoading !\n" ) ;
 	}
 
 	// ƒV[ƒ““à—e

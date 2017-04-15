@@ -42,8 +42,8 @@ class Sprite
 		bool	_useFlg ;				// 描画するかどうかのフラグ
 		int		_anchor ;				// アンカーの位置
 		float	_x , _y ;				// 座標
-		int		_u , _v ;				// 切り取り座標
-		int		_w , _h ;				// 幅高さ
+		float	_u , _v ;				// 切り取り座標
+		float	_w , _h ;				// 幅高さ
 		float	_scaleX , _scaleY ;		// 拡大率
 		bool	_useAlpha  ;			// 透明処理を行うかどうかのフラグ
 		int		_alpha ;				// 透明度
@@ -66,8 +66,8 @@ class Sprite
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;					// 透明処理をするかどうかのフラグをセット
 		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;				// 回転処理するかどうかのフラグをセット
 		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;			// ポジションのセット
-		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;				// 切り取り位置のセット
-		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;				// 幅、高さのセット
+		int setBmpUV( int arg_bmpNo , float arg_u , float arg_v ) ;			// 切り取り位置のセット
+		int setBmpWH( int arg_bmpNo , float arg_w , float arg_h ) ;			// 幅、高さのセット
 		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;		// 拡大率のセット
 		int setAnchor( int arg_bmpNo , int arg_anchor ) ;						// アンカーのセット
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;							// 透明度のセット
@@ -77,8 +77,8 @@ class Sprite
 				int arg_bmpNo ,
 				int arg_anchor ,
 				float arg_x , float arg_y ,
-				int arg_u , int arg_v ,
-				int arg_w , int arg_h ,
+				float arg_u , float arg_v ,
+				float arg_w , float arg_h ,
 				float arg_scaleX , float arg_scaleY ,
 				int arg_alpha = 255 ,
 				float arg_degree = 0
@@ -144,28 +144,28 @@ class Sprite
 		/*/
 		/*	X軸の切り取り位置の取得
 		/*/
-		int getBmpUPos( int arg_bmpNo ) const
+		float getBmpUPos( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._u ) ;
 		}
 		/*/
 		/*	Y軸の切り取り位置の取得
 		/*/
-		int getBmpVPos( int arg_bmpNo ) const
+		float getBmpVPos( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._v ) ;
 		}
 		/*/
 		/*	幅の取得
 		/*/
-		int getBmpWidth( int arg_bmpNo ) const
+		float getBmpWidth( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._w ) ;
 		}
 		/*/
 		/*	高さの取得
 		/*/
-		int getBmpHeight( int arg_bmpNo ) const
+		float getBmpHeight( int arg_bmpNo ) const
 		{
 			return ( bmpBGTable_[ arg_bmpNo ]._h ) ;
 		}

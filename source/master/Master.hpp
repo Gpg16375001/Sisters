@@ -7,7 +7,7 @@ namespace MasterData
 {
 	extern std::vector<DataInfo> Data ;
 
-	void ReLoad(const char* s) ;
+	void ReLoad( ) ;
 
 }
 

@@ -1832,10 +1832,10 @@ void Player::Update( )
 			7 ,
 			Player_xpos_ + 4 ,							// 中心位置を調整
 			Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
-			nowAnim->cutRect.left ,
-			nowAnim->cutRect.top ,
-			nowAnim->cutRect.right ,
-			nowAnim->cutRect.bottom ,
+			(float)nowAnim->cutRect.left ,
+			(float)nowAnim->cutRect.top ,
+			(float)nowAnim->cutRect.right ,
+			(float)nowAnim->cutRect.bottom ,
 			0.5f , 0.5f ,
 			255 ,
 			Player_vec_.deg
@@ -1853,10 +1853,10 @@ void Player::Update( )
 				7 ,
 				Player_xpos_ + 4 ,							// 中心位置を調整
 				Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
-				nowball->cutRect.left ,
-				nowball->cutRect.top ,
-				nowball->cutRect.right ,
-				nowball->cutRect.bottom ,
+				(float)nowball->cutRect.left ,
+				(float)nowball->cutRect.top ,
+				(float)nowball->cutRect.right ,
+				(float)nowball->cutRect.bottom ,
 				0.5f , 0.5f ,
 				255 ,
 				0

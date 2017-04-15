@@ -134,7 +134,7 @@ int Sprite::setBmpXY( int arg_bmpNo , float arg_x , float arg_y )
 /*/
 /*	切り取り位置のセット
 /*/
-int Sprite::setBmpUV( int arg_bmpNo , int arg_u , int arg_v )
+int Sprite::setBmpUV( int arg_bmpNo , float arg_u , float arg_v )
 {
 	bmpBGTable_[ arg_bmpNo ]._u = arg_u ;
 	bmpBGTable_[ arg_bmpNo ]._v = arg_v ;
@@ -145,7 +145,7 @@ int Sprite::setBmpUV( int arg_bmpNo , int arg_u , int arg_v )
 /*/
 /*	幅、高さのセット
 /*/
-int Sprite::setBmpWH( int arg_bmpNo , int arg_w , int arg_h )
+int Sprite::setBmpWH( int arg_bmpNo , float arg_w , float arg_h )
 {
 	bmpBGTable_[ arg_bmpNo ]._w = arg_w ;
 	bmpBGTable_[ arg_bmpNo ]._h = arg_h ;
@@ -211,8 +211,8 @@ int Sprite::setBmpData(
 		int arg_bmpNo ,
 		int arg_anchor ,
 		float arg_x , float arg_y ,
-		int arg_u , int arg_v ,
-		int arg_w , int arg_h ,
+		float arg_u , float arg_v ,
+		float arg_w , float arg_h ,
 		float arg_scaleX , float arg_scaleY ,
 		int arg_alpha ,
 		float arg_degree

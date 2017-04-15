@@ -112,7 +112,7 @@ void SceneAnim01::Render( )
 			(Chip::GetInstance()->getScrollX() / 4) % 856 ,
 			0 ,
 			0 , 0 ,
-			2000 , 1000 ,
+			2000.0f , 1000.0f ,
 			1.0f , 1.0f
 		) ;
 	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )

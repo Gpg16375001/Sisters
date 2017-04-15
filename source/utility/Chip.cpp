@@ -48,6 +48,7 @@ void Chip::Initialize( )
 	scrollX_ = 0 ;
 	scrollY_ = 0 ;
 	clearChipMap( ) ;
+	MasterData::ReLoad( ) ;		// Chipデータの読み込み
 
 }
 
@@ -173,7 +174,7 @@ int Chip::setBmpXY( int arg_bmpNo , float arg_x , float arg_y )
 /*/
 /*	切り取り位置のセット
 /*/
-int Chip::setBmpUV( int arg_bmpNo , int arg_u , int arg_v )
+int Chip::setBmpUV( int arg_bmpNo , float arg_u , float arg_v )
 {
 	bmpCBGTable_[ arg_bmpNo ]._u = arg_u ;
 	bmpCBGTable_[ arg_bmpNo ]._v = arg_v ;
@@ -184,7 +185,7 @@ int Chip::setBmpUV( int arg_bmpNo , int arg_u , int arg_v )
 /*/
 /*	幅、高さのセット
 /*/
-int Chip::setBmpWH( int arg_bmpNo , int arg_w , int arg_h )
+int Chip::setBmpWH( int arg_bmpNo , float arg_w , float arg_h )
 {
 	bmpCBGTable_[ arg_bmpNo ]._w = arg_w ;
 	bmpCBGTable_[ arg_bmpNo ]._h = arg_h ;
@@ -253,8 +254,8 @@ int Chip::setChipData(
 		int arg_anchor ,
 		int arg_arrayX , int arg_arrayY ,
 		float arg_x , float arg_y ,
-		int arg_u , int arg_v ,
-		int arg_w , int arg_h ,
+		float arg_u , float arg_v ,
+		float arg_w , float arg_h ,
 		float arg_scaleX , float arg_scaleY ,
 		int arg_alpha ,
 		float arg_degree
@@ -323,6 +324,32 @@ int Chip::setScrollSize( int arg_x , int arg_y  )
 /*/
 void Chip::Update( )
 {
+	for ( auto it = MasterData::Data.begin() ; it != MasterData::Data.end() ; ++it )
+	{
+		for ( int i = 0 - (scrollX_ / map_w_) ; i < renderMap_w_ * renderMap_h_ - (scrollX_ / map_w_) ; ++i )
+		{
+			/*/
+			/*	チップデータ
+			/*/
+			if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] == it->getData()._mapNo )
+			{
+				setChipData(
+						i ,
+						0 ,
+						i % map_w_ , i / map_h_ ,
+						( float )((i % renderMap_w_) * CHIP_W) + scrollX_ - (scrollX_ / CHIP_W * CHIP_W) - RenderScale ,
+						( float )((i / renderMap_w_) * CHIP_H - 128) + scrollY_ + it->getData()._off[ 0 ]  ,
+						it->getData()._upos ,
+						it->getData()._vpos ,
+						it->getData()._width ,
+						it->getData()._height ,
+						1.0f , 1.0f
+					) ;
+			}
+		}
+
+	}
+
 	printf( "	%d , %d \n" , scrollX_ , -(scrollX_ / 25) ) ;
 	for ( int i = 0 - (scrollX_ / map_w_) ; i < renderMap_w_ * renderMap_h_ - (scrollX_ / map_w_) ; ++i )
 	{
@@ -330,7 +357,7 @@ void Chip::Update( )
 		/*	チップデータ
 		/*/
 		// 四角い床
-		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 11 )
+/*		if ( m_chipTable_[ CHIP_X * (i / renderMap_w_) - (scrollX_ / CHIP_W) + (i % renderMap_w_) ] <= 11 )
 		{
 			setChipData(
 					i ,
@@ -546,7 +573,7 @@ void Chip::Update( )
 				) ;
 
 		}
-
+*/
 	}
 
 }

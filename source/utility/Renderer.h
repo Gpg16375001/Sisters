@@ -58,8 +58,8 @@ class Renderer
 		int selectBmp( HGDIOBJ arg_bmpData ,				// 画像データの取得
 				int arg_anchor ,							 // . アンカー
 				float arg_x , float arg_y ,				 // . 配置座標
-				int arg_u , int arg_v ,						 // . 切り取り位置
-				int arg_w , int arg_h ,						 // . 幅高さ
+				float arg_u , float arg_v ,						 // . 切り取り位置
+				float arg_w , float arg_h ,						 // . 幅高さ
 				float arg_scaleX , float arg_scaleY ,		 // . 拡大率
 				int arg_alpha = 255 ,						 // . 透明度
 				float arg_degree = 0						 // . 角度
@@ -67,8 +67,8 @@ class Renderer
 		int Render( ) ;										// バックバッファへの出力
 
 		int setPos( float arg_x , float arg_y ) ;			// 座標のセット
-		int setUV( int arg_u , int arg_v ) ;				// 切り出し座標のセット
-		int setWH( int arg_w , int arg_h ) ;				// 切り出し幅高さのセット
+		int setUV( float arg_u , float arg_v ) ;			// 切り出し座標のセット
+		int setWH( float arg_w , float arg_h ) ;			// 切り出し幅高さのセット
 		int setScale( float arg_w , float arg_h ) ;		// 拡大率のセット
 		int setAnchor( int arg_anchor ) ;					// アンカーのセット
 		int setAlpha( int arg_alpha ) ;						// 透明度のセット
@@ -139,8 +139,8 @@ class Renderer
 		HWND	hWnd_ ;					// 親のウィンドウハンドル
 
 		float	x_ , y_ ;				// 描画座標
-		int		u_ , v_ ;				// 切り取り座標
-		int		w_ , h_ ;				// 幅高さ
+		float	u_ , v_ ;				// 切り取り座標
+		float	w_ , h_ ;				// 幅高さ
 		int		anchorX_ , anchorY_ ;	// アンカーの位置
 		float	scaleX_ , scaleY_ ;		// 拡大率
 		int		alpha_ ;				// 透明度

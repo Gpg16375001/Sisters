@@ -72,8 +72,8 @@ int Renderer::selectBmp(
 		HGDIOBJ arg_bmpData ,						// . 画像データ
 		int arg_anchor ,							// . アンカー
 		float arg_x , float arg_y ,				// . 配置座標
-		int arg_u , int arg_v ,						// . 切り取り位置
-		int arg_w , int arg_h ,						// . 幅高さ
+		float arg_u , float arg_v ,						// . 切り取り位置
+		float arg_w , float arg_h ,						// . 幅高さ
 		float arg_scaleX , float arg_scaleY ,		// . 拡大率
 		int arg_alpha ,								// . 透明度
 		float arg_degree							// . 角度
@@ -157,7 +157,7 @@ int Renderer::Render( )
 		// 作業用デバイスコンテキストの生成 ( 大きめに作る )
 		hDC = GetDC( hWnd_ ) ;
 		s_tRBWorkHDC = CreateCompatibleDC( hDC ) ;
-		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , w_ , h_ ) ;
+		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , (int)w_ , (int)h_ ) ;
 		SelectObject( s_tRBWorkHDC , s_tRBWorkBmp ) ;	// 真っ白
 		ReleaseDC( hWnd_ , hDC ) ;
 
@@ -165,8 +165,8 @@ int Renderer::Render( )
 		RECT fillBox ;
 		fillBox.left = 0 ;
 		fillBox.top = 0 ;
-		fillBox.right = w_ ;
-		fillBox.bottom = h_ ;
+		fillBox.right = (LONG)w_ ;
+		fillBox.bottom = (LONG)h_ ;
 		HBRUSH hBrush ;
 		hBrush = CreateSolidBrush( RGB(0 , 255 , 0) ) ;
 		FillRect( s_tRBWorkHDC , &fillBox , hBrush ) ;
@@ -184,7 +184,8 @@ int Renderer::Render( )
 				rotateP ,
 				hDCWork_ ,
 				0 , 0 ,
-				w_ , h_ ,
+				(int)w_ ,
+				(int)h_ ,
 				NULL ,
 				0 , 0
 			) ;
@@ -195,8 +196,8 @@ int Renderer::Render( )
 				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
 				(int)( w_ * scaleX_ ) , (int)( h_ * scaleY_ ) ,
 				s_tRBWorkHDC ,
-				u_ , v_ ,
-				w_ , h_ ,
+				(int)u_ , (int)v_ ,
+				(int)w_ , (int)h_ ,
 				RGB( 0 , 255 , 0 )
 			) ;
 
@@ -228,7 +229,7 @@ int Renderer::Render( )
 				0 , 0 ,
 				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
 				hDCWork_ ,
-				u_ , v_ ,
+				(int)u_ , (int)v_ ,
 				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
 				RGB( 0 , 255 , 0 )
 			) ;
@@ -257,8 +258,8 @@ int Renderer::Render( )
 			(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
 			(int)( w_ * scaleX_ ) , (int)( h_ * scaleY_ ) ,
 			hDCWork_ ,
-			u_ , v_ ,
-			w_ , h_ ,
+			(int)u_ , (int)v_ ,
+			(int)w_ , (int)h_ ,
 			RGB( 0 , 255 , 0 )
 		) ;
 
@@ -285,7 +286,7 @@ int Renderer::setPos( float arg_x , float arg_y )
 /*/
 /*	切り出し座標のセット
 /*/
-int Renderer::setUV( int arg_u , int arg_v )
+int Renderer::setUV( float arg_u , float arg_v )
 {
 	u_ = arg_u ;
 	v_ = arg_v ;
@@ -296,7 +297,7 @@ int Renderer::setUV( int arg_u , int arg_v )
 /*/
 /*	切り出し幅高さのセット
 /*/
-int Renderer::setWH( int arg_w , int arg_h )
+int Renderer::setWH( float arg_w , float arg_h )
 {
 	w_ = arg_w ;
 	h_ = arg_h ;

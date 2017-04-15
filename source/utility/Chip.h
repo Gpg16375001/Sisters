@@ -25,9 +25,13 @@ ________________________________________________________________________________
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
+#pragma once
+
 #include <windows.h>
 #include <stdio.h>
 #include <math.h>
+
+#include "../master/Master.hpp"
 
 #define CHIP_X		1024
 #define CHIP_Y		32
@@ -42,8 +46,8 @@ struct ChipData {
 	bool	_useFlg ;				// •`‰æ‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
 	int		_anchor ;				// ƒAƒ“ƒJ[‚ÌˆÊ’u
 	float	_x , _y ;				// ƒOƒ[ƒoƒ‹À•W
-	int		_u , _v ;				// Ø‚èæ‚èÀ•W
-	int		_w , _h ;				// •‚‚³
+	float	_u , _v ;				// Ø‚èæ‚èÀ•W
+	float	_w , _h ;				// •‚‚³
 	int		_arrayX , _arrayY ;		// ”z—ñÀ•W
 	float	_scaleX , _scaleY ;		// Šg‘å—¦
 	bool	_useAlpha  ;			// “§–¾ˆ—‚ğs‚¤‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
@@ -84,8 +88,8 @@ class Chip
 		int setUseAlpha( int arg_bmpNo , bool arg_useAlpha ) ;			// “§–¾ˆ—‚ğ‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚ğƒZƒbƒg
 		int setUseRotate( int arg_bmpNo , bool arg_useRotate ) ;		// ‰ñ“]ˆ—‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚ğƒZƒbƒg
 		int setBmpXY( int arg_bmpNo , float arg_x , float arg_y ) ;		// ƒ|ƒWƒVƒ‡ƒ“‚ÌƒZƒbƒg
-		int setBmpUV( int arg_bmpNo , int arg_u , int arg_v ) ;			// Ø‚èæ‚èˆÊ’u‚ÌƒZƒbƒg
-		int setBmpWH( int arg_bmpNo , int arg_w , int arg_h ) ;			// •A‚‚³‚ÌƒZƒbƒg
+		int setBmpUV( int arg_bmpNo , float arg_u , float arg_v ) ;			// Ø‚èæ‚èˆÊ’u‚ÌƒZƒbƒg
+		int setBmpWH( int arg_bmpNo , float arg_w , float arg_h ) ;			// •A‚‚³‚ÌƒZƒbƒg
 		int setBmpScale( int arg_bmpNo , float arg_w , float arg_h ) ;	// Šg‘å—¦‚ÌƒZƒbƒg
 		int setAnchor( int arg_bmpNo , int arg_anchor ) ;				// ƒAƒ“ƒJ[‚ÌƒZƒbƒg
 		int setAlpha( int arg_bmpNo , int arg_alpha ) ;					// “§–¾“x‚ÌƒZƒbƒg
@@ -96,8 +100,8 @@ class Chip
 				int arg_anchor ,
 				int arg_arrayX , int arg_arrauY ,
 				float arg_x , float arg_y ,
-				int arg_u , int arg_v ,
-				int arg_w , int arg_h ,
+				float arg_u , float arg_v ,
+				float arg_w , float arg_h ,
 				float arg_scaleX , float arg_scaleY ,
 				int arg_alpha = 255 ,
 				float arg_degree = 0
@@ -187,28 +191,28 @@ class Chip
 		/*/
 		/*	X²‚ÌØ‚èæ‚èˆÊ’u‚Ìæ“¾
 		/*/
-		int getBmpUPos( int arg_bmpNo ) const
+		float getBmpUPos( int arg_bmpNo ) const
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._u ) ;
 		}
 		/*/
 		/*	Y²‚ÌØ‚èæ‚èˆÊ’u‚Ìæ“¾
 		/*/
-		int getBmpVPos( int arg_bmpNo ) const
+		float getBmpVPos( int arg_bmpNo ) const
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._v ) ;
 		}
 		/*/
 		/*	•‚Ìæ“¾
 		/*/
-		int getBmpWidth( int arg_bmpNo ) const
+		float getBmpWidth( int arg_bmpNo ) const
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._w ) ;
 		}
 		/*/
 		/*	‚‚³‚Ìæ“¾
 		/*/
-		int getBmpHeight( int arg_bmpNo ) const
+		float getBmpHeight( int arg_bmpNo ) const
 		{
 			return ( bmpCBGTable_[ arg_bmpNo ]._h ) ;
 		}
@@ -298,6 +302,14 @@ class Chip
 		{
 			int time = ( int )(arg_time + 90) % 360 ;
 			return( (sinTbl[ time ] * arg_width) ) ;
+		}
+
+		/*/
+		/*	ReLoad ChipData
+		/*/
+		void Reload( )
+		{
+			MasterData::ReLoad( ) ;
 		}
 
 		/*/
