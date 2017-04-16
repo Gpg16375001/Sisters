@@ -960,7 +960,7 @@ float Player::FootCheck( )
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
-					brad = (br - bl) / 2 ;		// 丸鋸の半径を求める
+					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
 					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
 					y = bb - brad - py ;		// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
@@ -994,7 +994,7 @@ float Player::FootCheck( )
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
-					brad = (br - bl) / 2 ;		// 丸鋸の半径を求める
+					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
 					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
 					y = bb - brad - py ;		// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
@@ -1026,7 +1026,7 @@ float Player::FootCheck( )
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
-					brad = (br - bl) / 2 ;		// 丸鋸の半径を求める
+					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
 					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
 					y = bb - py ;				// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
@@ -1066,7 +1066,7 @@ float Player::FootCheck( )
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
-					brad = (br - bl) / 2 ;		// 丸鋸の半径を求める
+					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
 					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
 					y = bb - py ;				// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
@@ -1262,14 +1262,14 @@ float Player::FootCheck( )
 				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 ;
 				bb = bt + 64 ;
 
-					if ( (bt <= py) && (py < bb) )
+				if ( (bt <= py) && (py < bb) )
+				{
+					if ( (bl <= pr) && (pl <= br) )
 					{
-						if ( (bl <= pr) && (pl <= br) )
-						{
-							Player_vec_.deg = 0.0f ;
-							footY = bt ;
-						}
+						Player_vec_.deg = 0.0f ;
+						footY = bt ;
 					}
+				}
 				break ;
 
 
@@ -1868,7 +1868,7 @@ void Player::Update( )
 			(float)nowAnim->cutRect.bottom ,
 			0.5f , 0.5f ,
 			255 ,
-			Player_vec_.deg
+			flipMag_ * 180//Player_vec_.deg
 		) ;
 
 	// バリアの展開するかどうか

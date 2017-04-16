@@ -123,6 +123,12 @@
     <ClCompile Include="source\master\ChipData.cpp">
       <Filter>source\master</Filter>
     </ClCompile>
+    <ClCompile Include="source\master\SceneGame01Data.cpp">
+      <Filter>source\master</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\Grass.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -201,6 +207,9 @@
       <Filter>source\master</Filter>
     </ClInclude>
     <ClInclude Include="source\master\ChipData.h">
+      <Filter>source\master</Filter>
+    </ClInclude>
+    <ClInclude Include="source\master\SceneGame01Data.h">
       <Filter>source\master</Filter>
     </ClInclude>
   </ItemGroup>

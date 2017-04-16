@@ -23,6 +23,10 @@ ________________________________________________________________________________
 #define		MAP02	TEXT("data/map/mapData02.txt")
 #define		MAP03	TEXT("data/map/mapData03.txt")
 
+#define		SCENE_GAME01	1
+#define		SCENE_GAME02	2
+#define		SCENE_GAME03	3
+
 /*/
 /*	 ‰Šú‰»
 /*/
@@ -63,6 +67,7 @@ void SceneManager::Update( int arg_state )
 	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
 	{
 		Chip::GetInstance()->Reload( ) ;
+		Gimmick::GetInstance()->Reload( ) ;
 		printf( "Was ReLoading !\n" ) ;
 	}
 
@@ -111,6 +116,8 @@ void SceneManager::Update( int arg_state )
 				Gimmick::GetInstance()->Initialize( ) ;
 
 				// ƒMƒ~ƒbƒN‚ðƒZƒbƒg
+				Gimmick::GetInstance()->setGimmickData( SCENE_GAME01 ) ;
+/*
 				Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(224) , PTC(7) ,   2 ,   0 , GIMMICK_MODE_WAVE ) ;		// “®‚­°
 				Gimmick::GetInstance()->setMoveBlocks( 51 , PTC(291) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// “®‚­°
 
@@ -137,7 +144,7 @@ void SceneManager::Update( int arg_state )
 				Gimmick::GetInstance()->setShooter( 201 , PTC(281) , PTC(6) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
 
 //				Gimmick::GetInstance()->setShooter( 202 , PTC( 32) , PTC(5) , 2 ,   0 , GIMMICK_MODE_STAY ) ;			// “GPOD
-
+*/
 				g_state++ ;
 			}
 			break ;

@@ -12,11 +12,15 @@ ________________________________________________________________________________
 
 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 */
+#pragma once
+
 #include <windows.h>
 #include <stdio.h>
 #include <math.h>
 #include "../characters/Animation.h"
 #include "../characters/Physics.h"
+
+#include "../master/Master.hpp"
 
 #define		MAX_GIMMICK_NO				256
 
@@ -36,9 +40,10 @@ ________________________________________________________________________________
 #define		GIMMICK_NAME_CLOUD			6
 #define		GIMMICK_NAME_SHOOTER		7
 #define		GIMMICK_NAME_ROCK			8
+#define		GIMMICK_NAME_GRASS			9
 
 /* Pos To Cell */
-#define		PTC( arg_cell )	( (arg_cell * 64) )
+#define		PTC( arg_cell )			( (arg_cell * 64) )
 
 struct GimmickData {
 	int				_bmpNo ;				// 自分の要素番号 ( _hBmp と関連付けるため )
@@ -73,10 +78,12 @@ class Gimmick
 		void Finalize( ) ; 
 
 		~Gimmick( ) ;
-		void Update( ) ;												// チップの更新
+		void Update( ) ;							// チップの更新
 		void clearGimmickData( ) ;
+		void setGimmickData( int arg_SceneNo ) ;	// ギミックデータのロード
 		void clearBulletData( ) ;
 		void setBulletData( ) ;
+		int	strToDefineName( const char* arg_mode ) ;		// defineにある文字と同じ場合登録されている数字を返す
 
 		/*/
 		/*	動く床のデータをセット
@@ -138,6 +145,11 @@ class Gimmick
 		void blockShot04( int arg_g ) ;
 
 		/*/
+		/*	草のデータをセット
+		/*/
+		int setGrass( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -147,6 +159,7 @@ class Gimmick
 		void SpeedUp( ) ;
 		void Clouds( ) ;
 		void Shooter( ) ;
+		void Grass( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット
@@ -176,6 +189,16 @@ class Gimmick
 			return( true ) ;
 		}
 
+		/*/
+		/*	ReLoad GimmickData
+		/*/
+		void Reload( )
+		{
+			Finalize( ) ;
+			Initialize( ) ;
+			setGimmickData( 1 ) ;
+		}
+		
 		/*/
 		/*	Shingleton -> インスタンスの取得
 		/*/

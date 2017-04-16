@@ -5,7 +5,7 @@
 
 namespace MasterData
 {
-	void DataInfo::Load( const char* s )
+	void ChipDataInfo::Load( const char* s )
 	{
 		//				ON | mapNo | u | v | width | height | off[0] | off[1] | off[2]
 		sscanf( s , "%*[^,],%d,%g,%g,%g,%g,%g,%g,%g" ,
@@ -20,7 +20,7 @@ namespace MasterData
 			) ;
 	}
 
-	CHIPDATA DataInfo::getData( )
+	CHIPDATA ChipDataInfo::getData( )
 	{
 		return( _data ) ;
 	}

@@ -87,7 +87,7 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 15 , TEXT("data/image/sprites/gimic/ammo.bmp") , 64 , 64 ) ;			// 弾
 	BitmapData::GetInstance()->loadData( 16 , TEXT("data/image/sprites/gimic/enemy_pod.bmp") , 256 , 64 ) ;		// 敵Pod
 	BitmapData::GetInstance()->loadData( 17 , TEXT("data/image/bgs/bg03.bmp") , 1000 , 800 ) ;					// 背景03 ( 真っ黒 )
-	BitmapData::GetInstance()->loadData( 18 , TEXT("data/image/sprites/gimic/iwa.bmp") , 128 , 128 ) ;			// 岩
+	BitmapData::GetInstance()->loadData( 18 , TEXT("data/image/sprites/object/grass.bmp") , 200 , 64 ) ;		// くさ
 
 	BitmapData::GetInstance()->loadData( 20 , TEXT("data/image/sprites/player/PlayerR01.bmp") , 200 , 178 ) ;	// プレイヤー右向き 静止01
 	BitmapData::GetInstance()->loadData( 21 , TEXT("data/image/sprites/player/PlayerR02.bmp") , 200 , 178 ) ;	// プレイヤー右向き 静止02
@@ -110,6 +110,11 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 38 , TEXT("data/image/sprites/player/PlayerL09.bmp") , 200 , 178 ) ;	// プレイヤー左向き ジャンプ
 	BitmapData::GetInstance()->loadData( 39 , TEXT("data/image/sprites/player/PlayerL10.bmp") , 200 , 178 ) ;	// プレイヤー左向き 落ち
 
+	BitmapData::GetInstance()->loadData( 60 , TEXT("data/image/sprites/start2.bmp") , 256 , 40 ) ;				// スタート
+	BitmapData::GetInstance()->loadData( 61 , TEXT("data/image/sprites/object/hunsui.bmp") , 800 , 178 ) ;		// 噴水
+	BitmapData::GetInstance()->loadData( 62 , TEXT("data/image/sprites/object/kanban.bmp") , 200 , 178 ) ;		// 看板
+	BitmapData::GetInstance()->loadData( 63 , TEXT("data/image/sprites/waiwai.bmp") , 400 , 178 ) ;				// リアクション（わいわい）
+
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
 	BackGround::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 6 ) ) ;
@@ -123,7 +128,7 @@ void MainApp::Initalize( )
 
 	// Sprite の読み込み
 //	Sprite::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 4 ) ) ;
-//	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 60 ) ) ;	// スタート
 	Sprite::GetInstance()->loadBmpData( 3 , BitmapData::GetInstance()->getBmpData( 11 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 4 , BitmapData::GetInstance()->getBmpData( 11 ) ) ;
 	Sprite::GetInstance()->loadBmpData( 5 , BitmapData::GetInstance()->getBmpData( 14 ) ) ;
@@ -134,7 +139,12 @@ void MainApp::Initalize( )
 	Sprite::GetInstance()->loadBmpDataFor( 100 , BitmapData::GetInstance()->getBmpData( 7 ) , 10 ) ;	// 100 ~ 109 まで　振り子
 	Sprite::GetInstance()->loadBmpDataFor( 150 , BitmapData::GetInstance()->getBmpData( 13 ) , 20 ) ;	// 150 ~ 199 まで　雲
 	Sprite::GetInstance()->loadBmpDataFor( 200 , BitmapData::GetInstance()->getBmpData( 16 ) , 20 ) ;	// 200 ~ 219 まで　敵ポッド
-	Sprite::GetInstance()->loadBmpDataFor( 250 , BitmapData::GetInstance()->getBmpData( 18 ) , 20 ) ;	// 250 ~ 269 まで　岩
+
+	Sprite::GetInstance()->loadBmpDataFor( 250 , BitmapData::GetInstance()->getBmpData( 18 ) , 50 ) ;	// 250 ~ 299 まで　草
+	Sprite::GetInstance()->loadBmpDataFor( 300 , BitmapData::GetInstance()->getBmpData( 61 ) , 10 ) ;	// 300 ~ 309 まで　噴水
+	Sprite::GetInstance()->loadBmpDataFor( 310 , BitmapData::GetInstance()->getBmpData( 62 ) , 10 ) ;	// 309 ~ 319 まで　看板
+	Sprite::GetInstance()->loadBmpDataFor( 320 , BitmapData::GetInstance()->getBmpData( 63 ) , 10 ) ;	// 319 ~ 329 まで　わいわい
+
 	Sprite::GetInstance()->loadBmpDataFor( 400 , BitmapData::GetInstance()->getBmpData( 9 ) , 50 ) ;	// 400 ~ 449 まで　電気
 	Sprite::GetInstance()->loadBmpDataFor( 450 , BitmapData::GetInstance()->getBmpData( 10 ) , 10 ) ;	// 450 ~ 459 まで　SpeedUp
 	Sprite::GetInstance()->loadBmpDataFor( 500 , BitmapData::GetInstance()->getBmpData( 15 ) , 500 ) ;	// 500 ~ 999 まで　弾

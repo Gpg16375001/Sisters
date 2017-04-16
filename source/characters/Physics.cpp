@@ -254,7 +254,7 @@ int Physics::setMass( float arg_mass )
 }
 
 /*/
-/*	キー情報の更新
+/*	情報の更新
 /*/
 void Physics::update( )
 {

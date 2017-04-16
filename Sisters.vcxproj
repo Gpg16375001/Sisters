@@ -86,6 +86,7 @@
     <ClCompile Include="source\gimmick\CircularSaws.cpp" />
     <ClCompile Include="source\gimmick\Clouds.cpp" />
     <ClCompile Include="source\gimmick\Gimmick.cpp" />
+    <ClCompile Include="source\gimmick\Grass.cpp" />
     <ClCompile Include="source\gimmick\MoveFloor.cpp" />
     <ClCompile Include="source\gimmick\Pendulums.cpp" />
     <ClCompile Include="source\gimmick\Shockers.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="source\main\WinMain.cpp" />
     <ClCompile Include="source\master\ChipData.cpp" />
     <ClCompile Include="source\master\Master.cpp" />
+    <ClCompile Include="source\master\SceneGame01Data.cpp" />
     <ClCompile Include="source\scene\SceneAnim01.cpp" />
     <ClCompile Include="source\scene\SceneBlank.cpp" />
     <ClCompile Include="source\scene\SceneGame01.cpp" />
@@ -123,6 +125,7 @@
     <ClInclude Include="source\main\WinMain.h" />
     <ClInclude Include="source\master\ChipData.h" />
     <ClInclude Include="source\master\Master.hpp" />
+    <ClInclude Include="source\master\SceneGame01Data.h" />
     <ClInclude Include="source\scene\SceneAnim01.h" />
     <ClInclude Include="source\scene\SceneBase.h" />
     <ClInclude Include="source\scene\SceneBlank.h" />

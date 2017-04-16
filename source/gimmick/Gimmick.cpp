@@ -14,6 +14,7 @@ ________________________________________________________________________________
 #include "Chip.h"
 #include "Sprite.h"
 #include "KeyManager.h"
+#include <locale.h>
 
 /*/
 /*	デストラクタ
@@ -34,6 +35,7 @@ void Gimmick::Initialize( )
 	clearBulletData( ) ;
 	setBulletData( ) ;
 	physic_.Initialize( ) ;
+	MasterData::ReLoad( ) ;
 
 	GimmickNo_ = 0 ;
 
@@ -89,6 +91,116 @@ void Gimmick::clearGimmickData( )
 
 	}
 
+}
+
+/*/
+/*	ギミックデータのロード
+/*/
+void Gimmick::setGimmickData( int arg_SceneNo )
+{
+	if ( arg_SceneNo == 1 )
+	{
+		for ( auto it = MasterData::SceneGame01.begin() ; it != MasterData::SceneGame01.end() ; ++it )
+		{
+			// 動く床の時
+			if ( _strcmpi("MoveFloor" , it->getData()._name) == 0 )
+			{
+				setMoveBlocks( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// まるのこの時
+			if ( _strcmpi("CircularSaws" , it->getData()._name) == 0 )
+			{
+				setCircularSaws( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 振り子の時
+			if ( _strcmpi("Pendulum" , it->getData()._name) == 0 )
+			{
+				setPendulums( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 電気の時
+			if ( _strcmpi("Shocker" , it->getData()._name) == 0 )
+			{
+				setShockers( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// スピードアップの時
+			if ( _strcmpi("SpeedUp" , it->getData()._name) == 0 )
+			{
+				setSpeedUp( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 雲の時
+			if ( _strcmpi("Cloud" , it->getData()._name) == 0 )
+			{
+				setClouds( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 射撃物の時
+			if ( _strcmpi("Shooter" , it->getData()._name) == 0 )
+			{
+				setShooter( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 草の時
+			if ( _strcmpi("Grass" , it->getData()._name) == 0 )
+			{
+				setGrass( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+		}
+	}
+
+
+}
+
+/*/
+/*	defineにある文字と同じ場合登録されている数字を返す
+/*/
+int	Gimmick::strToDefineName( const char* arg_mode )
+{
+	int iRet = 1 ;
+	
+	printf( "%s\n" , arg_mode ) ;
+
+	if ( _strcmpi("GIMMICK_MODE_STAY\n" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_STAY ;
+	}
+
+	if ( _strcmpi("GIMMICK_MODE_UPDOWN" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_UPDOWN ;
+	}
+
+	if ( _strcmpi("GIMMICK_MODE_LEFTRIGHT" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_LEFTRIGHT ;
+	}
+
+	if ( _strcmpi("GIMMICK_MODE_CYCLE\0" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_CYCLE ;
+	}
+
+	if ( _strcmpi("GIMMICK_MODE_WAVE" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_WAVE ;
+	}
+
+	if ( _strcmpi("GIMMICK_MODE_DROP" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_DROP ;
+	}
+
+	if ( _strcmpi("GIMMICK_MODE_UPPER" , arg_mode) == 0 )
+	{
+		iRet = GIMMICK_MODE_UPPER ;
+	}
+
+	return( iRet ) ;
 }
 
 /*/
@@ -175,6 +287,11 @@ void Gimmick::Update( )
 	/*	___/ 敵POD /___________________
 	/*/
 	Shooter( ) ;
+
+	/*/
+	/*	___/ くさ /___________________
+	/*/
+	Grass( ) ;
 
 }
 
