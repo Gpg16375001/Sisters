@@ -72,6 +72,8 @@ void SceneAnim01::Finalize( )
 /*/
 void SceneAnim01::Update( )
 {
+	static Player	player ;
+
 	static int waitTime = 0 ;
 	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 120 )
 	{
@@ -93,6 +95,12 @@ void SceneAnim01::Update( )
 
 	// チップのマップ読み込み
 	Chip::GetInstance()->Update( ) ;
+
+	// ギミックの読み込み
+	Gimmick::GetInstance()->Update( ) ;
+
+	// プレイヤーのアップデート
+	player.Update( ) ;
 
 }
 
@@ -138,6 +146,31 @@ void SceneAnim01::Render( )
 	}
 
 	/*/
+	/*	チップ背景描画
+	/*/
+	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
+	{
+		if ( Chip::GetInstance()->getUseFlg( i ) )
+		{
+			Renderer::GetInstance()->selectBmp(
+					Chip::GetInstance()->getBmpData( i ) ,
+					Chip::GetInstance()->getBmpAnchor( i ) ,
+					Chip::GetInstance()->getBmpXPos( i ) ,
+					Chip::GetInstance()->getBmpYPos( i ) ,
+					Chip::GetInstance()->getBmpUPos( i ) ,
+					Chip::GetInstance()->getBmpVPos( i ) ,
+					Chip::GetInstance()->getBmpWidth( i ) ,
+					Chip::GetInstance()->getBmpHeight( i ) ,
+					Chip::GetInstance()->getBmpScaleX( i ) ,
+					Chip::GetInstance()->getBmpScaleY( i ) ,
+					Chip::GetInstance()->getBmpAlpha( i ) ,
+					Chip::GetInstance()->getBmpAngle( i )
+				) ;
+			Renderer::GetInstance()->Render( ) ;
+		}
+	}
+
+	/*/
 	/*	Sprite 描画
 	/*/
 	for ( int i = 0 ; i < Sprite::GetInstance()->getMaxBmp( ) ; ++i )
@@ -162,31 +195,6 @@ void SceneAnim01::Render( )
 					Sprite::GetInstance()->getBmpScaleY( i ) ,
 					Sprite::GetInstance()->getBmpAlpha( i ) ,
 					Sprite::GetInstance()->getBmpAngle( i )
-				) ;
-			Renderer::GetInstance()->Render( ) ;
-		}
-	}
-
-	/*/
-	/*	チップ背景描画
-	/*/
-	for ( int i = 0 ; i < Chip::GetInstance()->getMaxBmp( ) ; ++i )
-	{
-		if ( Chip::GetInstance()->getUseFlg( i ) )
-		{
-			Renderer::GetInstance()->selectBmp(
-					Chip::GetInstance()->getBmpData( i ) ,
-					Chip::GetInstance()->getBmpAnchor( i ) ,
-					Chip::GetInstance()->getBmpXPos( i ) ,
-					Chip::GetInstance()->getBmpYPos( i ) ,
-					Chip::GetInstance()->getBmpUPos( i ) ,
-					Chip::GetInstance()->getBmpVPos( i ) ,
-					Chip::GetInstance()->getBmpWidth( i ) ,
-					Chip::GetInstance()->getBmpHeight( i ) ,
-					Chip::GetInstance()->getBmpScaleX( i ) ,
-					Chip::GetInstance()->getBmpScaleY( i ) ,
-					Chip::GetInstance()->getBmpAlpha( i ) ,
-					Chip::GetInstance()->getBmpAngle( i )
 				) ;
 			Renderer::GetInstance()->Render( ) ;
 		}

@@ -95,6 +95,13 @@ void SceneManager::Update( int arg_state )
 			{
 				// マップ読み込み
 				LoadMapData::ReLoad( MAP03 ) ;
+
+				// ギミックの初期セット
+//				Gimmick::GetInstance()->Initialize( ) ;
+
+				// ギミックをセット
+//				Gimmick::GetInstance()->setGimmickData( SCENE_GAME01 ) ;
+
 				g_state++ ;
 			}
 			break ;

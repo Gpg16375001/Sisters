@@ -82,7 +82,7 @@ void SceneGame01::Update( )
 		Gimmick::GetInstance()->Initialize( ) ;
 		g_state = -1 ;
 	}
-		
+	
 	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )
 	{
 		player.Finalize( ) ;

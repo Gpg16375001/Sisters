@@ -73,7 +73,7 @@ void SceneTitle::Finalize( )
 void SceneTitle::Update( )
 {
 
-	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) )
+//	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) )
 		g_state++ ;												// ------------------------------- Gvl
 
 }
