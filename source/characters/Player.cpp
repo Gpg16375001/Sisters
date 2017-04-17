@@ -955,7 +955,7 @@ float Player::FootCheck( )
 						break ;
 					}
 
-					bl -= 256 ;
+					bl -= 256 + 64 ;
 					bt -= 384 + 64 ;
 					br = bl + 512 ;
 					bb = bt + 512 ;
@@ -967,7 +967,7 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl+brad < px) && (px < br + 8) && (bt + 256 < py) )
+					if ( (bl+brad < px) && (px < br + 16) && (bt + 256 < py) )
 					{
 						if ( brad <= c )
 						{
@@ -989,19 +989,25 @@ float Player::FootCheck( )
 					break ;
 
 				case 15 :
-					bl += 0 ;
+					bl += 0 - 44 ;
 					bt -= 384 + 64 ;
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
-					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
+					// スピード足らないとき
+					if ( Player_spd_.x <= 1.0f )
+					{
+						break ;
+					}
+
+					brad = (br - bl) / 2 - 50 ;	// 丸鋸の半径を求める
 					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
 					y = bb - brad - py ;		// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 - 32 < py) )
+					if ( (bl+40 < px) && (px < br-brad) && (bt + 256 - 32 < py) )
 					{
 						if ( brad <= c )
 						{
@@ -1021,8 +1027,8 @@ float Player::FootCheck( )
 					break ;
 
 				case 16 :
-					bl -= 256 ;
-					bt -= 384 + 64 ;
+					bl -= 256 + 64 + 32 ;
+					bt -= 384 + 32 ;
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
@@ -1033,13 +1039,13 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl+brad+16 < px) && (px < br + 32 + 16) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 32) )
+					if ( (bl+brad+128 < px) && (px < br + 32 + 16) && (bt + 256 - 16 < py) && (py < bt + 256 + brad + 16) )
 					{
 						if ( brad < c )
 						{
 							flipMag_ = true ;
-							Player_mag_.x += -0.2f ;
-							Player_spd_.x += -0.2f ;
+							//Player_mag_.x += -0.2f ;
+							//Player_spd_.x += -0.2f ;
 
 							//if ( barrierFlg_ )
 							//{
@@ -1062,18 +1068,18 @@ float Player::FootCheck( )
 
 				case 17 :
 					bl += 0 ;
-					bt -= 384 + 64 ;
+					bt -= 384 + 40 ;
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
 					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
-					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
-					y = bb - py ;				// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
-					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
-					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
+					x = br - brad - px ;			// 丸鋸の中心点からプレイヤーまでの X軸 の距離
+					y = bb - py ;					// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
+					c2 = x * x + y * y ;			// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
+					c = sqrt( c2 ) ;				// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl-8 < px) && (px < br-brad) && (bt + 256 - 16 < py) && (py < bt + 256 + brad) )
+					if ( (bl-128 < px) && (px < br-brad) && (bt + 256 - 16 < py) && (py < bt + 256 + brad) )
 					{
 						if ( brad <= c )
 						{
@@ -1083,12 +1089,12 @@ float Player::FootCheck( )
 
 								rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-								// さかさまの時スピード足らないとき
-								if ( Player_spd_.x <= -6.0f )
-								{
-									Pmode_ = P_drop ;
-									Player_mag_.y += 6.41f ;
-								}
+								//// さかさまの時スピード足らないとき
+								//if ( Player_spd_.x <= -6.0f )
+								//{
+								//	Pmode_ = P_drop ;
+								//	Player_mag_.y += 6.41f ;
+								//}
 
 								footY = bt + c - rad - 8 + 256 ;
 								printf( " c  : %f \n" , c ) ;

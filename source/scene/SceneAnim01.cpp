@@ -75,7 +75,7 @@ void SceneAnim01::Update( )
 	static Player	player ;
 
 	static int waitTime = 0 ;
-	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 120 )
+	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 20 )
 	{
 		g_state++ ;												// ------------------------------- Gvl
 		waitTime = 0 ;
