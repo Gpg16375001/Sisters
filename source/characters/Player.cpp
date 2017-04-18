@@ -400,7 +400,7 @@ void Player::Pwalk( )
 	{
 		Player_ypos_ = fcheck ;
 	} else {
-		if ( (Player_spd_.x <= 5.0f) || (Player_spd_.x >= -5.0f) )
+		if ( (Player_spd_.x <= 5.0f) && (Player_spd_.x >= -5.0f) )
 		{
 			PlayerAnim_.setAnimData( Panim_drop_ ) ;
 		}
@@ -967,7 +967,7 @@ float Player::FootCheck( )
 					c = sqrt( c2 ) ;			// 二乗の値なので通常の値に戻す
 
 					// 半径よりもプレイヤーまでの距離が短い場合
-					if ( (bl+brad < px) && (px < br + 64) && (bt + 256 < py) )
+					if ( (bl+brad < px) && (px < br + 64) && (bt + 256 + 32 < py) )
 					{
 						if ( brad <= c )
 						{
@@ -1025,7 +1025,10 @@ float Player::FootCheck( )
 							Player_vec_.deg = -90.0f ;
 							if ( flipMag_ )
 							{
-								Player_mag_.x *= -1.0f ;
+								if ( Player_mag_.x < 0 )
+								{
+									Player_mag_.x *= -1.0f ;
+								}
 								flipMag_ = false ;
 							}
 
@@ -1068,8 +1071,11 @@ float Player::FootCheck( )
 							// スピードが足りてないとき
 							if ( !barrierFlg_ )
 							{
-								Player_ypos_ += 32.0f ;
-								Player_mag_.x = 1.0f ;
+								Player_mag_.y += 9.81f / 60 ;
+								if ( (-1.0f >= Player_mag_.x) && (Player_mag_.x >= 1.0f) )
+								{
+									Player_mag_.x = 1.0f ;
+								}
 								break ;
 							}
 
@@ -1112,12 +1118,12 @@ float Player::FootCheck( )
 
 								rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
-								//// さかさまの時スピード足らないとき
-								//if ( Player_spd_.x <= -6.0f )
-								//{
-								//	Pmode_ = P_drop ;
-								//	Player_mag_.y += 6.41f ;
-								//}
+								// さかさまの時スピード足らないとき
+								if ( Player_spd_.x >= -6.0f )
+								{
+									Pmode_ = P_drop ;
+									Player_mag_.y += 6.41f ;
+								}
 
 								footY = bt + c - rad - 8 + 256 ;
 
