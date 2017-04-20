@@ -20,7 +20,7 @@ ________________________________________________________________________________
 SceneBlank::SceneBlank( )
 {
 	Initialize( ) ;
-	printf( "Start.\n" ) ;
+	//printf( "Start.\n" ) ;
 
 }
 
@@ -29,7 +29,7 @@ SceneBlank::SceneBlank( )
 /*/
 SceneBlank::~SceneBlank( )
 {
-	printf( "End.\n" ) ;
+	//printf( "End.\n" ) ;
 
 }
 
@@ -38,7 +38,7 @@ SceneBlank::~SceneBlank( )
 /*/
 void SceneBlank::Initialize( )
 {
-	printf( "SceneBlank -> " ) ;
+	//printf( "SceneBlank -> " ) ;
 
 }
 
@@ -55,7 +55,7 @@ void SceneBlank::Finalize( )
 		BackGround::GetInstance()->clearData( i ) ;
 	}
 
-	printf( "SceneBlank -> " ) ;
+	//printf( "SceneBlank -> " ) ;
 
 }
 

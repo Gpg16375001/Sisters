@@ -639,7 +639,7 @@ float Player::FootCheck( )
 	// あたり判定をとるためのチップデータ
 	int *chipTable = Chip::GetInstance()->getChipTable( ) ;
 
-	printf( "arrayX = %d  arrayY = %d \n" , arrayX_ , arrayY_ - 1 ) ;	// 次のフレームの自分の座標位置
+	//printf( "arrayX = %d  arrayY = %d \n" , arrayX_ , arrayY_ - 1 ) ;	// 次のフレームの自分の座標位置
 
 	/*/
 	/*	player 判定位置の調整
@@ -688,8 +688,8 @@ float Player::FootCheck( )
 							Chip::GetInstance()->setScrollSize( -896 , 0 ) ;
 							footY = 1 ;
 
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+							//printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							//printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
 					}
@@ -705,8 +705,8 @@ float Player::FootCheck( )
 							Player_vec_.deg = 0.0f ;
 							footY = bt ;
 
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+							//printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							//printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
 					}
@@ -727,8 +727,8 @@ float Player::FootCheck( )
 								footY = bt ;
 							}
 
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+							//printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							//printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
 					}
@@ -784,7 +784,7 @@ float Player::FootCheck( )
 							Player_vec_.deg = -45.0f ;
 							Player_mag_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							Player_spd_.x -= Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
-							printf( "Motion was true. \n" ) ;
+							//printf( "Motion was true. \n" ) ;
 						}
 					}
 					break  ;
@@ -797,8 +797,8 @@ float Player::FootCheck( )
 						{
 							footY = bt - 1 ;
 
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
+							//printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							//printf( "footY = %8.4f \n" , footY ) ;		// blockの座標位置
 
 						}
 					}
@@ -845,7 +845,7 @@ float Player::FootCheck( )
 						{
 							Player_mag_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 							Player_spd_.x += Player_.calcAccel( 45.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
-							printf( "Motion was true. \n" ) ;
+							//printf( "Motion was true. \n" ) ;
 						}
 					}
 					break ;
@@ -890,7 +890,7 @@ float Player::FootCheck( )
 							Player_vec_.deg = -30.0f ;
 							Player_mag_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							Player_spd_.x -= Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
-							printf( "Motion was true. \n" ) ;
+							//printf( "Motion was true. \n" ) ;
 						}
 					}
 					break  ;
@@ -935,7 +935,7 @@ float Player::FootCheck( )
 							Player_vec_.deg = -90.0f ;
 							Player_mag_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
 							Player_spd_.x += Player_.calcAccel( 30.0f , Player_.Weight2D().y / 60 , 0.60f , Player_.getMass() ) ;
-							printf( "Motion was true. \n" ) ;
+							//printf( "Motion was true. \n" ) ;
 						}
 					}
 					break  ;
@@ -989,10 +989,10 @@ float Player::FootCheck( )
 									Player_spd_.x -= Player_.calcAccel( 70.0f , Player_.Weight2D().y / 60 , 0.66f , Player_.getMass() ) ;
 								}
 
-								printf( " c  : %f \n" , c ) ;
-								printf( "rad : %f \n" , rad ) ;
-								printf( "brad : %f \n" , brad ) ;
-								printf( "On Hit !! \n" ) ;
+								//printf( " c  : %f \n" , c ) ;
+								//printf( "rad : %f \n" , rad ) ;
+								//printf( "brad : %f \n" , brad ) ;
+								//printf( "On Hit !! \n" ) ;
 							}
 
 						}
@@ -1041,10 +1041,10 @@ float Player::FootCheck( )
 								Player_mag_.x += 0.2f ;
 							}
 
-							printf( " c  : %f \n" , c ) ;
-							printf( "rad : %f \n" , rad ) ;
-							printf( "brad : %f \n" , brad ) ;
-							printf( "On Hit !! \n" ) ;
+							//printf( " c  : %f \n" , c ) ;
+							//printf( "rad : %f \n" , rad ) ;
+							//printf( "brad : %f \n" , brad ) ;
+							//printf( "On Hit !! \n" ) ;
 
 						}
 					}
@@ -1085,10 +1085,10 @@ float Player::FootCheck( )
 							rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 
 							footY = bt + c - rad - 8 + 256 ;
-							printf( " c  : %f \n" , c ) ;
-							printf( "rad : %f \n" , rad ) ;
-							printf( "brad : %f \n" , brad ) ;
-							printf( "On Hit !! \n" ) ;
+							//printf( " c  : %f \n" , c ) ;
+							//printf( "rad : %f \n" , rad ) ;
+							//printf( "brad : %f \n" , brad ) ;
+							//printf( "On Hit !! \n" ) ;
 
 						}
 					}
@@ -1127,10 +1127,10 @@ float Player::FootCheck( )
 
 								footY = bt + c - rad - 8 + 256 ;
 
-								printf( " c  : %f \n" , c ) ;
-								printf( "rad : %f \n" , rad ) ;
-								printf( "brad : %f \n" , brad ) ;
-								printf( "On Hit !! \n" ) ;
+								//printf( " c  : %f \n" , c ) ;
+								//printf( "rad : %f \n" , rad ) ;
+								//printf( "brad : %f \n" , brad ) ;
+								//printf( "On Hit !! \n" ) ;
 							}
 
 
@@ -1207,9 +1207,10 @@ float Player::FootCheck( )
 				{
 					rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 //					footY = bt + c - rad - 60 ;
-					printf( "px  : %f \n" , px ) ;
-					printf( "rad : %f \n" , rad ) ;
-					printf( "On Hit !! \n" ) ;
+
+					//printf( "px  : %f \n" , px ) ;
+					//printf( "rad : %f \n" , rad ) ;
+					//printf( "On Hit !! \n" ) ;
 				}
 				break ;
 
@@ -1257,9 +1258,10 @@ float Player::FootCheck( )
 				{
 					rad = sqrt( (c2 - x * x) ) ;	// 当たった位置の高さを求める
 					footY = bt + c - rad - 66 ;
-					printf( "px  : %f \n" , px ) ;
-					printf( "rad : %f \n" , rad ) ;
-					printf( "On Hit !! \n" ) ;
+
+					//printf( "px  : %f \n" , px ) ;
+					//printf( "rad : %f \n" , rad ) ;
+					//printf( "On Hit !! \n" ) ;
 				}
 				break ;
 
@@ -1391,8 +1393,8 @@ float Player::HeadCheck( )
 						{
 							headY = bb + 64 ;
 
-							printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
-							printf( "footY = %8.4f \n" , headY ) ;		// blockの座標位置
+							//printf( "chipTable = %d : x = %d y = %d \n" , i , i % CHIP_X , i / CHIP_X ) ;	// 自分の座標位置の番号
+							//printf( "footY = %8.4f \n" , headY ) ;		// blockの座標位置
 
 						}
 					}
@@ -1416,9 +1418,10 @@ float Player::HeadCheck( )
 					{
 						rad = sqrt( (c2 - x * x) ) ;
 						headY = bt + c + rad ;
-						printf( "px  : %f \n" , px ) ;
-						printf( "rad : %f \n" , rad ) ;
-						printf( "On Hit !! \n" ) ;
+
+						//printf( "px  : %f \n" , px ) ;
+						//printf( "rad : %f \n" , rad ) ;
+						//printf( "On Hit !! \n" ) ;
 					}
 					break ;
 
@@ -1689,7 +1692,7 @@ float Player::Collision( )
 							Player_vec_.deg = 0.0f ;
 
 							Player_mag_.x = 15.0f ;
-							printf( "Speed UP !!! \n" ) ;
+							//printf( "Speed UP !!! \n" ) ;
 
 						}
 					}
@@ -1765,7 +1768,7 @@ float Player::Collision( )
 /*/
 void Player::Update( )
 {
-	printf( "Player : Action = %d\n" , Pmode_ ) ;
+	//printf( "Player : Action = %d\n" , Pmode_ ) ;
 
 	
 	if ( KeyManager::GetInstance()->getKeyState( VK_F7 ) )
@@ -1928,18 +1931,18 @@ void Player::Update( )
 	}
 
 	// デバッグ用
-	printf( "Player : left   = %d \n" , nowAnim->cutRect.left ) ;
-	printf( "Player : top    = %d \n" , nowAnim->cutRect.top ) ;
-	printf( "Player : right  = %d \n" , nowAnim->cutRect.right ) ;
-	printf( "Player : bottom = %d \n" , nowAnim->cutRect.bottom ) ;
-	printf( "Player : Xpos   = %8.4f \n" , Player_xpos_ ) ;
-	printf( "Player : Ypos   = %8.4f \n" , Player_ypos_ ) ;
-	printf( "Player : Xspd   = %8.4f \n" , Player_spd_.x ) ;
-	printf( "Player : Yspd   = %8.4f \n" , Player_spd_.y ) ;
-	printf( "Player : Xmag   = %8.4f \n" , Player_mag_.x ) ;
-	printf( "Player : Ymag   = %8.4f \n" , Player_mag_.y ) ;
-	printf( "Player : mag    = %8.4f \n" , Player_vec_.mag ) ;
-	printf( "Player : deg    = %8.4f \n" , Player_vec_.deg ) ;
+	//printf( "Player : left   = %d \n" , nowAnim->cutRect.left ) ;
+	//printf( "Player : top    = %d \n" , nowAnim->cutRect.top ) ;
+	//printf( "Player : right  = %d \n" , nowAnim->cutRect.right ) ;
+	//printf( "Player : bottom = %d \n" , nowAnim->cutRect.bottom ) ;
+	//printf( "Player : Xpos   = %8.4f \n" , Player_xpos_ ) ;
+	//printf( "Player : Ypos   = %8.4f \n" , Player_ypos_ ) ;
+	//printf( "Player : Xspd   = %8.4f \n" , Player_spd_.x ) ;
+	//printf( "Player : Yspd   = %8.4f \n" , Player_spd_.y ) ;
+	//printf( "Player : Xmag   = %8.4f \n" , Player_mag_.x ) ;
+	//printf( "Player : Ymag   = %8.4f \n" , Player_mag_.y ) ;
+	//printf( "Player : mag    = %8.4f \n" , Player_vec_.mag ) ;
+	//printf( "Player : deg    = %8.4f \n" , Player_vec_.deg ) ;
 
 	// クリア
 //	Player_spd_.x = 0.0f ;

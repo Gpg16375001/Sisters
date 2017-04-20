@@ -30,6 +30,7 @@ Gimmick::~Gimmick( )
 void Gimmick::Initialize( )
 {
 	printf( "Gimmick was created.\n" ) ;
+	printf( "Gimmick -> " ) ;
 
 	clearGimmickData( ) ;
 	clearBulletData( ) ;
@@ -165,7 +166,7 @@ int	Gimmick::strToDefineName( const char* arg_mode )
 	
 	printf( "%s\n" , arg_mode ) ;
 
-	if ( _strcmpi("GIMMICK_MODE_STAY\n" , arg_mode) == 0 )
+	if ( _strcmpi("GIMMICK_MODE_STAY" , arg_mode) == 0 )
 	{
 		iRet = GIMMICK_MODE_STAY ;
 	}
@@ -180,7 +181,7 @@ int	Gimmick::strToDefineName( const char* arg_mode )
 		iRet = GIMMICK_MODE_LEFTRIGHT ;
 	}
 
-	if ( _strcmpi("GIMMICK_MODE_CYCLE\0" , arg_mode) == 0 )
+	if ( _strcmpi("GIMMICK_MODE_CYCLE" , arg_mode) == 0 )
 	{
 		iRet = GIMMICK_MODE_CYCLE ;
 	}

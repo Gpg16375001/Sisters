@@ -63,10 +63,6 @@ void Physics::Finalize( )
 	r2_		 = 0.0f ;
 	r3_		 = 0.0f ;
 
-	// ŠJŽn‚ðo—Í
-	printf( "Management of a physics is started.\n" ) ;
-//	printf( "gravity = %8.4f\n" , Physics::GetInstance()->getGravity( ) ) ;
-
 }
 
 /*/

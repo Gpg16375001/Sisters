@@ -132,6 +132,9 @@
     <ClCompile Include="source\characters\AnimChara.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
+    <ClCompile Include="source\master\AnimData.cpp">
+      <Filter>source\master</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="source\characters\AnimChara.h">
       <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="source\master\AnimData.h">
+      <Filter>source\master</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

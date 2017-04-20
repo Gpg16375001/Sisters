@@ -37,6 +37,7 @@ struct AnimationData
 	int		holdTime ;	// 保持時間
 	RECT	cutRect ;	// 切り取り矩形
 	int		animMode ;	// アニメーションモード
+
 } ;
 
 /*/

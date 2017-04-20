@@ -21,7 +21,7 @@ ________________________________________________________________________________
 SceneTitle::SceneTitle( )
 {
 	Initialize( ) ;
-	printf( "Start.\n" ) ;
+	//printf( "Start.\n" ) ;
 
 }
 
@@ -30,7 +30,7 @@ SceneTitle::SceneTitle( )
 /*/
 SceneTitle::~SceneTitle( )
 {
-	printf( "End.\n" ) ;
+	//printf( "End.\n" ) ;
 
 }
 
@@ -39,7 +39,7 @@ SceneTitle::~SceneTitle( )
 /*/
 void SceneTitle::Initialize( )
 {
-	printf( "SceneTitle -> " ) ;
+	//printf( "SceneTitle -> " ) ;
 
 	/*/
 	/*	___/ ”wŒi /___________________
@@ -63,7 +63,7 @@ void SceneTitle::Finalize( )
 	Initialize( ) ;
 	g_state = -1 ;
 
-	printf( "SceneBlank -> " ) ;
+	//printf( "SceneBlank -> " ) ;
 
 }
 

@@ -281,7 +281,7 @@ void WinMain::Draw_( )
 	PAINTSTRUCT ps ;
 	HDC hDC = BeginPaint( hWnd_ , &ps ) ;
 
-	printf( "WM_PAINTイベントが発行されました\n" );
+	//printf( "WM_PAINTイベントが発行されました\n" );
 	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , hDCBack_ , 0 , 0 , SRCCOPY ) ;
 
 	// プレイヤーの座標位置の点

@@ -72,6 +72,7 @@ void MainApp::Initalize( )
 
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData(  0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;					// 背景01
+	BitmapData::GetInstance()->loadData(  1 , TEXT("data/image/bgs/bg04.bmp") , 2000 , 1000 ) ;					// 背景02
 	BitmapData::GetInstance()->loadData(  2 , TEXT("data/image/chips/all_grass.bmp") , 1024 , 512 ) ;			// 地面 ( チップ )
 	BitmapData::GetInstance()->loadData(  3 , TEXT("data/image/sprites/gimic/marunoko.bmp") , 128 , 128 ) ;		// 丸鋸
 	BitmapData::GetInstance()->loadData(  5 , TEXT("data/image/sprites/gimic/movefloor.bmp") , 256 , 64 ) ;		// 動く床
@@ -118,6 +119,7 @@ void MainApp::Initalize( )
 	// 背景読み込み
 	BackGround::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 0 ) ) ;
 	BackGround::GetInstance()->loadBmpData( 1 , BitmapData::GetInstance()->getBmpData( 6 ) ) ;
+	BackGround::GetInstance()->loadBmpData( 2 , BitmapData::GetInstance()->getBmpData( 1 ) ) ;
 
 	SceneCut::GetInstance()->loadBmpData( 0 , BitmapData::GetInstance()->getBmpData( 17 ) ) ;
 
@@ -188,8 +190,8 @@ void MainApp::Finalize( )
 /*/
 void MainApp::Update( )
 {
-	printf( "//-----------------------------------\n" ) ;
-	printf( "メインループ : Updateイベントが発行されました\n" );
+	//printf( "//-----------------------------------\n" ) ;
+	//printf( "メインループ : Updateイベントが発行されました\n" );
 	// キー情報更新
 	KeyManager::GetInstance()->update( ) ;
 
@@ -215,7 +217,7 @@ void MainApp::Update_( )
 /*/
 void MainApp::Render_( )
 {
-	printf( "Main::Render_ が発行されました\n" ) ;
+	//printf( "Main::Render_ が発行されました\n" ) ;
 
 	// シーン描画の配置
 //	SceneManager::GetInstance()->Render( ) ;

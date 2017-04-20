@@ -21,7 +21,7 @@ ________________________________________________________________________________
 SceneAnim01::SceneAnim01( )
 {
 	Initialize( ) ;
-	printf( "Start.\n" ) ;
+	//printf( "Start.\n" ) ;
 
 }
 
@@ -30,7 +30,7 @@ SceneAnim01::SceneAnim01( )
 /*/
 SceneAnim01::~SceneAnim01( )
 {
-	printf( "End.\n" ) ;
+	//printf( "End.\n" ) ;
 
 }
 
@@ -39,7 +39,7 @@ SceneAnim01::~SceneAnim01( )
 /*/
 void SceneAnim01::Initialize( )
 {
-	printf( "SceneAnim01 -> " ) ;
+	//printf( "SceneAnim01 -> " ) ;
 
 	/*/
 	/*	___/ ”wŒi /___________________
@@ -63,7 +63,7 @@ void SceneAnim01::Finalize( )
 	Initialize( ) ;
 	g_state = -1 ;
 
-	printf( "SceneAnim01 -> " ) ;
+	//printf( "SceneAnim01 -> " ) ;
 
 }
 

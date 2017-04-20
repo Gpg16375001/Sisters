@@ -96,6 +96,7 @@
     <ClCompile Include="source\main\Common.cpp" />
     <ClCompile Include="source\main\main.cpp" />
     <ClCompile Include="source\main\WinMain.cpp" />
+    <ClCompile Include="source\master\AnimData.cpp" />
     <ClCompile Include="source\master\ChipData.cpp" />
     <ClCompile Include="source\master\Master.cpp" />
     <ClCompile Include="source\master\SceneGame01Data.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="source\main\Common.h" />
     <ClInclude Include="source\main\main.h" />
     <ClInclude Include="source\main\WinMain.h" />
+    <ClInclude Include="source\master\AnimData.h" />
     <ClInclude Include="source\master\ChipData.h" />
     <ClInclude Include="source\master\Master.hpp" />
     <ClInclude Include="source\master\SceneGame01Data.h" />

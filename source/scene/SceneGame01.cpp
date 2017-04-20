@@ -21,7 +21,7 @@ ________________________________________________________________________________
 SceneGame01::SceneGame01( )
 {
 	Initialize( ) ;
-	printf( "Start.\n" ) ;
+	//printf( "Start.\n" ) ;
 
 }
 
@@ -30,7 +30,7 @@ SceneGame01::SceneGame01( )
 /*/
 SceneGame01::~SceneGame01( )
 {
-	printf( "End.\n" ) ;
+	//printf( "End.\n" ) ;
 
 }
 
@@ -39,7 +39,7 @@ SceneGame01::~SceneGame01( )
 /*/
 void SceneGame01::Initialize( )
 {
-	printf( "SceneGame01 -> " ) ;
+	//printf( "SceneGame01 -> " ) ;
 
 	/*/
 	/*	___/ ”wŒi /___________________
@@ -63,7 +63,7 @@ void SceneGame01::Finalize( )
 	Initialize( ) ;
 	g_state = -1 ;
 
-	printf( "SceneBlank -> " ) ;
+	//printf( "SceneBlank -> " ) ;
 
 }
 

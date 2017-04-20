@@ -8,7 +8,7 @@ namespace MasterData
 	void SceneGame01Info::Load( const char* s )
 	{
 		//				ON | name | bmpNo | x | y | off[0] | off[1] | mode
-		sscanf( s , "%*[^,],%[^,],%d,%g,%g,%g,%g,%[^\n]" ,
+		sscanf( s , "%*[^,],%[^,],%d,%g,%g,%g,%g,%[^,\n]" ,
 				_data._name ,
 				&_data._bmpNo ,
 				&_data._xpos ,

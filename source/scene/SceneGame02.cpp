@@ -21,7 +21,7 @@ ________________________________________________________________________________
 SceneGame02::SceneGame02( )
 {
 	Initialize( ) ;
-	printf( "Start.\n" ) ;
+	//printf( "Start.\n" ) ;
 
 }
 
@@ -30,7 +30,7 @@ SceneGame02::SceneGame02( )
 /*/
 SceneGame02::~SceneGame02( )
 {
-	printf( "End.\n" ) ;
+	//printf( "End.\n" ) ;
 
 }
 
@@ -39,7 +39,7 @@ SceneGame02::~SceneGame02( )
 /*/
 void SceneGame02::Initialize( )
 {
-	printf( "SceneGame02 -> " ) ;
+	//printf( "SceneGame02 -> " ) ;
 
 	/*/
 	/*	___/ ”wŒi /___________________
@@ -63,7 +63,7 @@ void SceneGame02::Finalize( )
 	Initialize( ) ;
 	g_state = -1 ;
 
-	printf( "SceneBlank -> " ) ;
+	//printf( "SceneBlank -> " ) ;
 
 }
 
@@ -135,9 +135,9 @@ void SceneGame02::Render( )
 	/*	”wŒi•`‰æ
 	/*/
 	BackGround::GetInstance()->setBmpData(
-			1 ,
+			2 ,
 			0 ,
-			(Chip::GetInstance()->getScrollX() / 4) % 856 ,
+			(Chip::GetInstance()->getScrollX() / 4) % 1000 ,
 			0 ,
 			0 , 0 ,
 			2000 , 1000 ,
