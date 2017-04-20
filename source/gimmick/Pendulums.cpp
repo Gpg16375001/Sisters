@@ -72,7 +72,7 @@ void Gimmick::Pendulums( )
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
 							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) * 3.141592f / 180 ) * 320 + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.141592f / 180 ) * 320 - 256 ,
+							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.141592f / 180 ) * 320 - 256 + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
@@ -88,7 +88,7 @@ void Gimmick::Pendulums( )
 						GimmickData_[ g ]._off[ 1 ] = 0 ;
 					}
 						
-					if ( (-380 < (GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196))
+					if ( (-600 < (GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196))
 						&& ((GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
 						)
 					{
@@ -97,7 +97,7 @@ void Gimmick::Pendulums( )
 								GimmickData_[ g+1 ]._bmpNo ,
 								0 ,
 								GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 224 ,
-								GimmickData_[ g+1 ]._y - 192 - 298 ,
+								GimmickData_[ g+1 ]._y - 192 - 298 + Chip::GetInstance()->getScrollY( ) ,
 								0 , 0 ,
 								320 , 320 ,
 								1.8f , 1.8f ,
@@ -132,7 +132,7 @@ void Gimmick::Pendulums( )
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
 							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) * 3.141592f / 180 ) * 224 + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.141592f / 180 ) * 224 - 256 ,
+							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.141592f / 180 ) * 224 - 256 + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
@@ -152,7 +152,7 @@ void Gimmick::Pendulums( )
 								GimmickData_[ g+1 ]._bmpNo ,
 								0 ,
 								GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 128 ,
-								GimmickData_[ g+1 ]._y - 128 - 256 ,
+								GimmickData_[ g+1 ]._y - 128 - 256 + Chip::GetInstance()->getScrollY( ) ,
 								0 , 0 ,
 								320 , 320 ,
 								1.2f , 1.2f ,

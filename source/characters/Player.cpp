@@ -115,6 +115,9 @@ void Player::Initialize( )
 	AnimationData P_drop[ ] = {
 		{ 1009 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
+	AnimationData P_damg[ ] = {
+		{ 1010 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+	} ;
 	AnimationData P_deth[ ] = {
 		{ 3 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
 	} ;
@@ -130,6 +133,7 @@ void Player::Initialize( )
 	memcpy( &Panim_jump_ , P_jump , 1 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_drop_ , P_drop , 1 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_deth_ , P_deth , 1 * sizeof( AnimationData ) ) ;
+	memcpy( &Panim_damg_ , P_damg , 1 * sizeof( AnimationData ) ) ;
 	memcpy( &Panim_ball_ , P_ball , 4 * sizeof( AnimationData ) ) ;
 
 }
@@ -173,6 +177,7 @@ void Player::Finalize( )
 	memset( &Panim_jump_ , 0 , 1 * sizeof( AnimationData ) ) ;
 	memset( &Panim_drop_ , 0 , 1 * sizeof( AnimationData ) ) ;
 	memset( &Panim_deth_ , 0 , 1 * sizeof( AnimationData ) ) ;
+	memset( &Panim_damg_ , 0 , 1 * sizeof( AnimationData ) ) ;
 	memset( &Panim_ball_ , 0 , 1 * sizeof( AnimationData ) ) ;
 
 }
@@ -244,15 +249,21 @@ void Player::PlayerAction( )
 
 	}
 
-	// コリジョンチェック
-	float collisionCheck ;
-	collisionCheck = Collision( ) ;
-	if ( collisionCheck != 0 )
-	{
-		Player_mag_.x = 0.0f ;
-		Player_xpos_ = collisionCheck ;
-	}
 
+	if ( g_dethflg )
+	{
+		
+	} else {
+
+		// コリジョンチェック
+		float collisionCheck ;
+		collisionCheck = Collision( ) ;
+		if ( collisionCheck != 0 )
+		{
+			Player_mag_.x = 0.0f ;
+			Player_xpos_ = collisionCheck ;
+		}
+	}
 }
 
 /*/
@@ -517,9 +528,11 @@ void Player::Pjump( )
 /*/
 void Player::Pdainit( )
 {
+	Pmode_ = P_damage ;
+
 	if ( g_dethflg )
 	{
-		Pmode_ = P_sinit ;
+		Pmode_ = P_deth ;
 	} else {
 		if ( lrflg_ )
 		{
@@ -534,9 +547,9 @@ void Player::Pdainit( )
 			Player_spd_.x = 4.0f ;
 		}
 		Player_mag_.y = -16 ;
+		PlayerAnim_.setAnimData( Panim_damg_ ) ;
 	}
 
-	Pmode_ = P_damage ;
 }
 
 /*/
@@ -552,7 +565,6 @@ void Player::Pdamage( )
 		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += -Player_acceration_ ;
-			Player_spd_.x += -Player_acceration_ ;
 		}
 	}
 
@@ -561,18 +573,20 @@ void Player::Pdamage( )
 		if ( Chip::GetInstance()->getScrollX() <= 32 + RenderScale )
 		{
 			Player_mag_.x += Player_acceration_ ;
-			Player_spd_.x += Player_acceration_ ;
 		}
 	}
 
-	float fcheck = FootCheck() ;
-	if ( fcheck != 0 )
+	if ( Player_mag_.y > 0 )
 	{
-		Player_mag_.y = 0.0f ;
-		Player_spd_.y = 0.0f ;
-		Player_ypos_ = fcheck ;
-		PlayerAnim_.setAnimData( Panim_walk_ ) ;
-		Pmode_ = P_sinit ;
+		float fcheck = FootCheck() ;
+		if ( fcheck != 0 )
+		{
+			Player_mag_.y = 0.0f ;
+			Player_spd_.y = 0.0f ;
+			Player_ypos_ = fcheck ;
+			PlayerAnim_.setAnimData( Panim_walk_ ) ;
+			Pmode_ = P_sinit ;
+		}
 	}
 
 }
@@ -584,7 +598,7 @@ void Player::Pdeinit( )
 {
 	if ( g_dethflg )
 	{
-		Pmode_ = P_sinit ;
+		Pmode_ = P_deth ;
 	} else {
 		Player_mag_.y = -18 ;
 		PlayerAnim_.setAnimData( Panim_deth_ ) ;
@@ -599,7 +613,7 @@ void Player::Pdeth( )
 {
 	if ( g_dethflg )
 	{
-		Pmode_ = P_sinit ;
+
 	} else {
 		Player_mag_.y += Player_.Weight2D().y / 60 ;
 
@@ -650,7 +664,7 @@ float Player::FootCheck( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 16 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() ;
+		py = Player_ypos_ + Player_mag_.y ;
 	}
 	else
 	{
@@ -658,7 +672,7 @@ float Player::FootCheck( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 12 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() ;
+		py = Player_ypos_ + Player_mag_.y ;
 	}
 
 	// ---+ デバッグ +----------------------------------------------------------------------------------------------- debug
@@ -673,8 +687,8 @@ float Player::FootCheck( )
 		{
 			bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
 			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
-			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
+			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) + Chip::GetInstance()->getScrollY( ) ;
+			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) + Chip::GetInstance()->getScrollY( ) ;
 
 			switch ( chipTable[ i ] )
 			{
@@ -960,7 +974,7 @@ float Player::FootCheck( )
 					br = bl + 512 ;
 					bb = bt + 512 ;
 
-					brad = (br - bl) / 2 - 50 ;		// 丸鋸の半径を求める
+					brad = (br - bl) / 2 - 50 ;	// 丸鋸の半径を求める
 					x = br - brad - px ;		// 丸鋸の中心点からプレイヤーまでの X軸 の距離
 					y = bb - brad - py ;		// 丸鋸の中心点からプレイヤーまでの Y軸 の距離
 					c2 = x * x + y * y ;		// ピタゴラスの定理より斜辺の長さ(プレイヤーまでの距離)を求める
@@ -981,6 +995,13 @@ float Player::FootCheck( )
 								if ( rad < 30 )
 								{
 									Player_mag_.x *= -1 ;
+								}
+
+								if ( (rad < 40) && (!barrierFlg_) )
+								{
+									Player_mag_.x *= -1 ;
+									Player_mag_.x -= 0.78f ;
+
 								}
 
 								if ( (rad < 120) && (Pmode_ != P_jump) && (Pmode_ != P_drop) )
@@ -1009,6 +1030,11 @@ float Player::FootCheck( )
 					if ( !barrierFlg_ )
 					{
 						break ;
+					}
+
+					if ( (Pmode_ == P_jump) || (Pmode_ == P_drop) )
+					{
+						break  ;
 					}
 
 					brad = (br - bl) / 2 - 50 ;	// 丸鋸の半径を求める
@@ -1193,8 +1219,8 @@ float Player::FootCheck( )
 			case GIMMICK_NAME_CIRCULARSAWS :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 + Chip::GetInstance()->getScrollY( ) ;
 
 				brad = br - bl ;			// 丸鋸の半径を求める
 				x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
@@ -1220,8 +1246,8 @@ float Player::FootCheck( )
 			case GIMMICK_NAME_MOVEFLOOR :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 128 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 + Chip::GetInstance()->getScrollY( ) ;
 
 				if ( (bt-8 <= py) && (py < bb) )
 				{
@@ -1244,8 +1270,8 @@ float Player::FootCheck( )
 			case GIMMICK_NAME_PENDULUM :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 + Chip::GetInstance()->getScrollY( ) ;
 
 				brad = br - bl ;			// 丸鋸の半径を求める
 				x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
@@ -1271,8 +1297,8 @@ float Player::FootCheck( )
 			case GIMMICK_NAME_CLOUD :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 10 ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 118 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 70 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 70 + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 + Chip::GetInstance()->getScrollY( ) ;
 
 				if ( (bt-4 <= py) && (py < bb) )
 				{
@@ -1297,7 +1323,7 @@ float Player::FootCheck( )
 			case GIMMICK_NAME_SHOOTER :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 + Chip::GetInstance()->getScrollY( ) ;
 				bb = bt + 64 ;
 
 				if ( (bt <= py) && (py < bb) )
@@ -1345,7 +1371,7 @@ float Player::HeadCheck( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 16 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 64 ;
+		py = Player_ypos_ + Player_mag_.y - 64 ;
 	}
 	else
 	{
@@ -1353,7 +1379,7 @@ float Player::HeadCheck( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 12 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 64 ;
+		py = Player_ypos_ + Player_mag_.y - 64 ;
 	}
 
 	// ジャンプ中
@@ -1370,8 +1396,8 @@ float Player::HeadCheck( )
 		{
 			bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
 			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
-			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
+			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 + Chip::GetInstance()->getScrollY( ) ) ;
+			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H + Chip::GetInstance()->getScrollY( ) ) ;
 
 			switch ( chipTable[ i ] )
 			{
@@ -1452,8 +1478,8 @@ float Player::HeadCheck( )
 			case GIMMICK_NAME_PENDULUM :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 + Chip::GetInstance()->getScrollY( ) ;
 
 					brad = br - bl ;
 					x = br - (br - bl) - px ;
@@ -1474,7 +1500,7 @@ float Player::HeadCheck( )
 			case GIMMICK_NAME_SHOOTER :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 66 + Chip::GetInstance()->getScrollY( ) ;
 				bb = bt + 64 ;
 
 					if ( (bt <= py) && (py < bb) )
@@ -1521,7 +1547,7 @@ float Player::Collision( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 22 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 48 ;
+		py = Player_ypos_ + Player_mag_.y - 48 ;
 	}
 	else
 	{
@@ -1529,7 +1555,7 @@ float Player::Collision( )
 		px = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 8 ;
 		pl = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() - 20 ;
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
-		py = Player_ypos_ + Player_mag_.y - Chip::GetInstance()->getScrollY() - 48 ;
+		py = Player_ypos_ + Player_mag_.y - 48 ;
 	}
 
 	// 判定をとる範囲　今は全体
@@ -1540,8 +1566,8 @@ float Player::Collision( )
 		{
 			bl = ( float )( (i % CHIP_X) * CHIP_W ) - RenderScale ;
 			br = ( float )( (i % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 ) ;
-			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H ) ;
+			bt = ( float )( (i / CHIP_X) * CHIP_H - 64 + Chip::GetInstance()->getScrollY( ) ) ;
+			bb = ( float )( (i / CHIP_X) * CHIP_H - 64 + CHIP_H + Chip::GetInstance()->getScrollY( ) ) ;
 			float center = bl + (br - bl) / 2 ;
 
 			switch ( chipTable[ i ] )
@@ -1605,6 +1631,18 @@ float Player::Collision( )
 					}
 					break ;
 
+				// Next Stage
+				case 99 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+							g_state++ ;
+
+						}
+					}
+					break ;
+
 				default :
 					break ;
 
@@ -1633,8 +1671,8 @@ float Player::Collision( )
 				{
 					bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
 					br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 + 64 ;
-					bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 ;
-					bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 ;
+					bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 - 64 + Chip::GetInstance()->getScrollY( ) ;
+					bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 192 + Chip::GetInstance()->getScrollY( ) ;
 
 					brad = br - bl ;			// 丸鋸の半径を求める
 					x = br - (br - bl) - px ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
@@ -1660,8 +1698,8 @@ float Player::Collision( )
 				{
 					bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 8 ;
 					br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64 ;
-					bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
-					bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 128 ;
+					bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 + Chip::GetInstance()->getScrollY( ) ;
+					bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 128 + Chip::GetInstance()->getScrollY( ) ;
 
 					if ( (bt-8 <= py) && (py < bb) )
 					{
@@ -1680,8 +1718,8 @@ float Player::Collision( )
 			case GIMMICK_NAME_SPEEDUP :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 128  ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 96 + Chip::GetInstance()->getScrollY( ) ;
 
 				if ( Player_mag_.x > 0 )
 				{
@@ -1705,8 +1743,8 @@ float Player::Collision( )
 			case GIMMICK_NAME_SHOOTER :
 				bl = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) ;
 				br = Sprite::GetInstance()->getBmpXPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) - Chip::GetInstance()->getScrollX( ) + 64  ;
-				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) ;
-				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 ;
+				bt = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + Chip::GetInstance()->getScrollY( ) ;
+				bb = Sprite::GetInstance()->getBmpYPos( Gimmick::GetInstance()->getGimmickData( g )._bmpNo ) + 64 + Chip::GetInstance()->getScrollY( ) ;
 				float center = bl + (br - bl) / 2 ;
 
 					if ( (bl <= pr) && (pl <= br) )
@@ -1739,8 +1777,8 @@ float Player::Collision( )
 		{
 			bl = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) ;
 			br = Sprite::GetInstance()->getBmpXPos( g ) - Chip::GetInstance()->getScrollX( ) + 45 ;
-			bt = Sprite::GetInstance()->getBmpYPos( g ) ;
-			bb = Sprite::GetInstance()->getBmpYPos( g ) + 45 ;
+			bt = Sprite::GetInstance()->getBmpYPos( g ) + Chip::GetInstance()->getScrollY( ) ;
+			bb = Sprite::GetInstance()->getBmpYPos( g ) + 45 + Chip::GetInstance()->getScrollY( ) ;
 
 			brad = br - bl ;					// 丸鋸の半径を求める
 			x = br - (br - bl) - (px - 32) ;	// 丸鋸の中心点からプレイヤーまでの X軸 の距離
@@ -1805,12 +1843,22 @@ void Player::Update( )
 	}
 
 	// 速度調整
-//	if (Player_spd_.x < 0.0f )
-//	{
-//		Player_spd_.x *= -1.0f ;
-//	}
+	float camera_y = 0.0f ;
+	if ( KeyManager::GetInstance()->getKeyState( VK_UP ) )
+	{
+//		camera_y++ ;
+	}
+	if ( KeyManager::GetInstance()->getKeyState( VK_DOWN ) )
+	{
+//		camera_y-- ;
+
+		/*/
+		/*	縦に動いた時のギミックの
+		/*	あたり判定が終わっていない
+		/*/
+	}
 	Player_spd_.x = Player_mag_.x ;
-	Chip::GetInstance()->setScrollSize( ( int )-Player_mag_.x , 0 ) ;
+	Chip::GetInstance()->setScrollSize( ( int )-Player_mag_.x , (int)-camera_y ) ;
 	Player_mag_.x *= DECELERATION_RATE ;			// 減速率
 
 	// カメラの位置調整
@@ -1889,7 +1937,6 @@ void Player::Update( )
 	if ( flipMag_ )
 	{
 		Player_vec_.deg = 180 ;
-
 	}
 
 	// ゲームオーバー判定
@@ -1902,7 +1949,7 @@ void Player::Update( )
 	PlayerAnim_.playAnim( ) ;
 	AnimationData *nowAnim = PlayerAnim_.getNowAnim( ) ;
 	Sprite::GetInstance()->setBmpData(
-			nowAnim->bmpNo + (lrflg_ * 10) ,
+			nowAnim->bmpNo + (lrflg_ * 11) ,
 			7 ,
 			Player_xpos_ + 4 ,							// 中心位置を調整
 			Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整

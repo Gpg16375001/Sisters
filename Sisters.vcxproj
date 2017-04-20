@@ -84,8 +84,10 @@
     <ClCompile Include="source\characters\AnimChara.cpp" />
     <ClCompile Include="source\characters\Physics.cpp" />
     <ClCompile Include="source\characters\Player.cpp" />
+    <ClCompile Include="source\gimmick\Board.cpp" />
     <ClCompile Include="source\gimmick\CircularSaws.cpp" />
     <ClCompile Include="source\gimmick\Clouds.cpp" />
+    <ClCompile Include="source\gimmick\Fountain.cpp" />
     <ClCompile Include="source\gimmick\Gimmick.cpp" />
     <ClCompile Include="source\gimmick\Grass.cpp" />
     <ClCompile Include="source\gimmick\MoveFloor.cpp" />

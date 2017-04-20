@@ -153,6 +153,18 @@ void Gimmick::setGimmickData( int arg_SceneNo )
 				setGrass( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
 			}
 
+			// ŠÅ”Â‚ÌŽž
+			if ( _strcmpi("Board" , it->getData()._name) == 0 )
+			{
+				setBoard( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// •¬…‚ÌŽž
+			if ( _strcmpi("Fountain" , it->getData()._name) == 0 )
+			{
+				setFountain( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
 		}
 	}
 
@@ -293,6 +305,16 @@ void Gimmick::Update( )
 	/*	___/ ‚­‚³ /___________________
 	/*/
 	Grass( ) ;
+
+	/*/
+	/*	___/ ‚©‚ñ‚Î‚ñ /___________________
+	/*/
+	Board( ) ;
+
+	/*/
+	/*	___/ ‚Ó‚ñ‚·‚¢ /___________________
+	/*/
+	Fountain( ) ;
 
 }
 

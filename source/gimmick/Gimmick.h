@@ -41,6 +41,8 @@ ________________________________________________________________________________
 #define		GIMMICK_NAME_SHOOTER		7
 #define		GIMMICK_NAME_ROCK			8
 #define		GIMMICK_NAME_GRASS			9
+#define		GIMMICK_NAME_BOARD			10
+#define		GIMMICK_NAME_FOUNTAIN		11
 
 /* Pos To Cell */
 #define		PTC( arg_cell )			( (arg_cell * 64) )
@@ -150,6 +152,16 @@ class Gimmick
 		int setGrass( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
+		/*	看板のデータをセット
+		/*/
+		int setBoard( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
+		/*	噴水のデータをセット
+		/*/
+		int setFountain( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -160,6 +172,8 @@ class Gimmick
 		void Clouds( ) ;
 		void Shooter( ) ;
 		void Grass( ) ;
+		void Board( ) ;
+		void Fountain( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

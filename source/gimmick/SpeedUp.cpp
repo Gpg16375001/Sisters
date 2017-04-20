@@ -62,7 +62,7 @@ void Gimmick::SpeedUp( )
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
 							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 8 ) ,
+							GimmickData_[ g ]._y + Chip::GetInstance()->sinWave( GimmickData_[ g ]._off[ 0 ] , 8 ) + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							128 , 64 ,
 							1.0f , 1.0f ,

@@ -119,7 +119,7 @@ void Gimmick::Shooter( )
 							nowAnim->bmpNo ,
 							0 ,
 							GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y ,
+							GimmickData_[ g ]._y + Chip::GetInstance()->getScrollY( ) ,
 							(float)nowAnim->cutRect.left ,
 							(float)nowAnim->cutRect.top ,
 							64 ,
@@ -171,8 +171,8 @@ void Gimmick::Shooter( )
 
 						bl = BulletData_[ allcnt ]._x - Chip::GetInstance()->getScrollX( ) ;
 						br = BulletData_[ allcnt ]._x - Chip::GetInstance()->getScrollX( ) + 45 ;
-						bt = BulletData_[ allcnt ]._y ;
-						bb = BulletData_[ allcnt ]._y + 45 ;
+						bt = BulletData_[ allcnt ]._y + Chip::GetInstance()->getScrollY( ) ;
+						bb = BulletData_[ allcnt ]._y + 45 + Chip::GetInstance()->getScrollY( ) ;
 
 						brad = br - bl ;			// ’e‚Ì”¼Œa‚ð‹‚ß‚é
 //						x = br - (br - bl) ;		// ’e‚Ì’†S“_ XŽ²
@@ -188,8 +188,8 @@ void Gimmick::Shooter( )
 							{
 								bl = ( float )( (icnt % CHIP_X) * CHIP_W ) - RenderScale ;
 								br = ( float )( (icnt % CHIP_X) * CHIP_W + CHIP_W ) - RenderScale ;
-								bt = ( float )( (icnt / CHIP_X) * CHIP_H ) ;
-								bb = ( float )( (icnt / CHIP_X) * CHIP_H + CHIP_H ) ;
+								bt = ( float )( (icnt / CHIP_X) * CHIP_H + Chip::GetInstance()->getScrollY( ) ) ;
+								bb = ( float )( (icnt / CHIP_X) * CHIP_H + CHIP_H + Chip::GetInstance()->getScrollY( ) ) ;
 
 								switch ( chipTable[ icnt ] )
 								{
@@ -263,7 +263,7 @@ void Gimmick::blockShot01( int g )
 							no ,
 							0 ,
 							BulletData_[ allcnt ]._x + Chip::GetInstance()->getScrollX( ) ,
-							BulletData_[ allcnt ]._y ,
+							BulletData_[ allcnt ]._y + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							64 , 64 ,
 							1.0f , 1.0f ,
@@ -302,7 +302,7 @@ void Gimmick::blockShot01( int g )
 							no ,
 							0 ,
 							BulletData_[ allcnt ]._x + Chip::GetInstance()->getScrollX( ) ,
-							BulletData_[ allcnt ]._y ,
+							BulletData_[ allcnt ]._y + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							64 , 64 ,
 							1.0f , 1.0f ,
@@ -380,7 +380,7 @@ void Gimmick::blockShot02( int g )
 							no ,
 							0 ,
 							BulletData_[ allcnt ]._x + Chip::GetInstance()->getScrollX( ) ,
-							BulletData_[ allcnt ]._y ,
+							BulletData_[ allcnt ]._y + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							64 , 64 ,
 							1.0f , 1.0f ,
@@ -429,7 +429,7 @@ void Gimmick::blockShot03( int g )
 					GimmickData_[ g ]._bmpNo ,
 					0 ,
 					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->getScrollY( ) ,
 					0 , 0 ,
 					64 , 64 ,
 					1.0f , 1.0f ,
@@ -457,7 +457,7 @@ void Gimmick::blockShot04( int g )
 					GimmickData_[ g ]._bmpNo ,
 					0 ,
 					GimmickData_[ g ]._x + Chip::GetInstance()->getScrollX( ) ,
-					GimmickData_[ g ]._y ,
+					GimmickData_[ g ]._y + Chip::GetInstance()->getScrollY( ) ,
 					0 , 0 ,
 					64 , 64 ,
 					1.0f , 1.0f ,

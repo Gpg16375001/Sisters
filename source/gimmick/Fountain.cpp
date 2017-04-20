@@ -1,11 +1,11 @@
 /*
 ________________________________________________________________________________________________________________
 
-	FILE : Grass.cpp
+	FILE : Fountain.cpp
 
 	________/ Explanation of file /___________________________________________________________
 
-		Gimmick ÉNÉâÉXÇÃ Grass é¿ëïïî
+		Gimmick ÉNÉâÉXÇÃ Fountain é¿ëïïî
 
 ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 */
@@ -16,11 +16,11 @@ ________________________________________________________________________________
 #include "KeyManager.h"
 
 /*/
-/*	Grass ÇÃÉfÅ[É^ÇÉZÉbÉg
+/*	Fountain ÇÃÉfÅ[É^ÇÉZÉbÉg
 /*/
-int Gimmick::setGrass( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
+int Gimmick::setFountain( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int arg_mode )
 {
-	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_GRASS ;
+	GimmickData_[ GimmickNo_ ]._Gimmick	= GIMMICK_NAME_FOUNTAIN ;
 	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
 	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
 	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
@@ -30,34 +30,34 @@ int Gimmick::setGrass( int arg_bmpNo , float arg_x , float arg_y , float arg_spd
 	GimmickData_[ GimmickNo_ ]._off[ 2 ]= arg_spd ;
 	
 	AnimationData grass_anim[ ] = {
-		{ arg_bmpNo , 16 , {50 * 0 , 0 , 50 , 64} , ANIM_MODE_NEXT } ,
-		{ arg_bmpNo , 16 , {50 * 1 , 0 , 50 , 64} , ANIM_MODE_NEXT } ,
-		{ arg_bmpNo , 32 , {50 * 2 , 0 , 50 , 64} , ANIM_MODE_NEXT } ,
-		{ arg_bmpNo , 12 , {50 * 1 , 0 , 50 , 64} , ANIM_MODE_LOOP } ,
+		{ arg_bmpNo , ( int )arg_spd , {400 * 0 , 0 , 400 , 178} , ANIM_MODE_NEXT } ,
+		{ arg_bmpNo , ( int )arg_spd , {400 * 1 , 0 , 400 , 178} , ANIM_MODE_NEXT } ,
+		{ arg_bmpNo , ( int )arg_spd , {400 * 2 , 0 , 400 , 178} , ANIM_MODE_NEXT } ,
+		{ arg_bmpNo , ( int )arg_spd , {400 * 3 , 0 , 400 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	memcpy( &GimmickData_[ GimmickNo_ ]._gAnim_01 , grass_anim , 4 * sizeof( AnimationData ) ) ;
 
 	GimmickData_[ GimmickNo_ ]._gAnim.setAnimData( GimmickData_[ GimmickNo_ ]._gAnim_01 ) ;
-
+	
 	GimmickNo_++ ;
 	return( true ) ;
 
 }
 
 /*/
-/*	Grass Update
+/*	Fountain Update
 /*/
-void Gimmick::Grass( )
+void Gimmick::Fountain( )
 {
 	for ( int g = 0 ; g < MAX_GIMMICK_NO ; ++g )
 	{
 		/*/
-		/*	___/ Grass /___________________
+		/*	___/ Fountain /___________________
 		/*/
-		if ( GimmickData_[ g ]._Gimmick == GIMMICK_NAME_GRASS )
+		if ( GimmickData_[ g ]._Gimmick == GIMMICK_NAME_FOUNTAIN )
 		{
 			/*/
-			/*	GrassÅFí èÌ
+			/*	FountainÅFí èÌ
 			/*/
 			if ( GimmickData_[ g ]._mode == GIMMICK_MODE_STAY )
 			{
@@ -82,7 +82,7 @@ void Gimmick::Grass( )
 								(float)nowAnim->cutRect.right ,
 								(float)nowAnim->cutRect.bottom ,
 								1.0f , 1.0f ,
-								210 ,
+								255 ,
 								0
 							) ;
 					}

@@ -135,6 +135,12 @@
     <ClCompile Include="source\master\AnimData.cpp">
       <Filter>source\master</Filter>
     </ClCompile>
+    <ClCompile Include="source\gimmick\Board.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gimmick\Fountain.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
