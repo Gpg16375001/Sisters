@@ -98,7 +98,9 @@ void Gimmick::clearGimmickData( )
 /*	ギミックデータのロード
 /*/
 void Gimmick::setGimmickData( int arg_SceneNo )
-{
+{	
+	printf( "GimmickData was loaded.\n" ) ;
+
 	if ( arg_SceneNo == 1 )
 	{
 		for ( auto it = MasterData::SceneGame01.begin() ; it != MasterData::SceneGame01.end() ; ++it )
@@ -163,8 +165,6 @@ void Gimmick::setGimmickData( int arg_SceneNo )
 int	Gimmick::strToDefineName( const char* arg_mode )
 {
 	int iRet = 1 ;
-	
-	printf( "%s\n" , arg_mode ) ;
 
 	if ( _strcmpi("GIMMICK_MODE_STAY" , arg_mode) == 0 )
 	{

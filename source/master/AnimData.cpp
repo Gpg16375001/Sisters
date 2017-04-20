@@ -12,10 +12,7 @@ namespace MasterData
 				_data._name ,
 				&_data._bmpNo ,
 				&_data._xpos ,
-				&_data._ypos ,
-				&_data._off[ 0 ] ,
-				&_data._off[ 1 ] ,
-				_data._mode
+				&_data._ypos 
 			) ;
 	}
 

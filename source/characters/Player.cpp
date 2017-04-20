@@ -1594,7 +1594,7 @@ float Player::Collision( )
 				case 91 :
 					break ;
 
-				case 92 :
+				case 93 :
 					if ( (bt <= py) && (py < bb) )
 					{
 						if ( (bl <= px) && (px <= br) )
@@ -1717,13 +1717,13 @@ float Player::Collision( )
 							{
 								if ( center < px )
 								{
-									collisionX = br + Chip::GetInstance()->getScrollX() + 20 ;
+									//collisionX = br + Chip::GetInstance()->getScrollX() + 20 ;
 								} else if ( px < center ) {
-									collisionX = bl + Chip::GetInstance()->getScrollX() - 24 ;
+									//collisionX = bl + Chip::GetInstance()->getScrollX() - 24 ;
 								}
 							} else {
-								Player_mag_.y = -Player_mag_.x ;
-								Player_mag_.x = 0 ;
+								//Player_mag_.y = -Player_mag_.x ;
+								//Player_mag_.x = 0 ;
 							}
 						}
 					}
@@ -1753,7 +1753,14 @@ float Player::Collision( )
 			{
 				// Õ“Ë
 				Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
-				Pmode_ = P_dainit ;
+
+				if ( barrierFlg_ )
+				{
+
+				} else {
+					Pmode_ = P_dainit ;
+				}
+
 			}
 
 		}
