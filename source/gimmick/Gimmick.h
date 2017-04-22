@@ -43,6 +43,7 @@ ________________________________________________________________________________
 #define		GIMMICK_NAME_GRASS			9
 #define		GIMMICK_NAME_BOARD			10
 #define		GIMMICK_NAME_FOUNTAIN		11
+#define		GIMMICK_NAME_ENEMY			12
 
 /* Pos To Cell */
 #define		PTC( arg_cell )			( (arg_cell * 64) )
@@ -64,6 +65,7 @@ struct GimmickData {
 	AnimationData	_gAnim_01[ 4 ] ;		// anim 01
 	AnimationData	_gAnim_02[ 4 ] ;		// anim 02
 	AnimationData	_gAnim_03[ 4 ] ;		// anim 03
+
 } ;
 
 // クラスの宣言
@@ -98,7 +100,6 @@ class Gimmick
 		void moveFloor02( int arg_g ) ;
 		void moveFloor03( int arg_g ) ;
 		void moveFloor04( int arg_g ) ;
-
 
 		/*/
 		/*	まるのこのデータをセット
@@ -162,6 +163,11 @@ class Gimmick
 		int setFountain( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
+		/*	敵のデータをセット
+		/*/
+		int setEnemy( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -174,6 +180,7 @@ class Gimmick
 		void Grass( ) ;
 		void Board( ) ;
 		void Fountain( ) ;
+		void Enemy( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

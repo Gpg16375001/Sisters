@@ -89,6 +89,7 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 16 , TEXT("data/image/sprites/gimic/enemy_pod.bmp") , 256 , 64 ) ;			// 敵Pod
 	BitmapData::GetInstance()->loadData( 17 , TEXT("data/image/bgs/bg03.bmp") , 1000 , 800 ) ;						// 背景03 ( 真っ黒 )
 	BitmapData::GetInstance()->loadData( 18 , TEXT("data/image/sprites/object/grass.bmp") , 200 , 64 ) ;			// くさ
+	BitmapData::GetInstance()->loadData( 19 , TEXT("data/image/sprites/Enemy/Enemy.bmp") , 900 , 80 ) ;				// てき
 
 	BitmapData::GetInstance()->loadData( 20 , TEXT("data/image/sprites/player/PlayerR01.bmp") , 200 , 178 ) ;		// プレイヤー右向き 静止01
 	BitmapData::GetInstance()->loadData( 21 , TEXT("data/image/sprites/player/PlayerR02.bmp") , 200 , 178 ) ;		// プレイヤー右向き 静止02
@@ -148,6 +149,7 @@ void MainApp::Initalize( )
 	Sprite::GetInstance()->loadBmpDataFor( 300 , BitmapData::GetInstance()->getBmpData( 61 ) , 10 ) ;	// 300 ~ 309 まで　噴水
 	Sprite::GetInstance()->loadBmpDataFor( 310 , BitmapData::GetInstance()->getBmpData( 62 ) , 10 ) ;	// 310 ~ 319 まで　看板
 	Sprite::GetInstance()->loadBmpDataFor( 320 , BitmapData::GetInstance()->getBmpData( 63 ) , 10 ) ;	// 320 ~ 329 まで　わいわい
+	Sprite::GetInstance()->loadBmpDataFor( 330 , BitmapData::GetInstance()->getBmpData( 19 ) , 10 ) ;	// 330 ~ 339 まで　敵
 
 	Sprite::GetInstance()->loadBmpDataFor( 400 , BitmapData::GetInstance()->getBmpData( 9 ) , 50 ) ;	// 400 ~ 449 まで　電気
 	Sprite::GetInstance()->loadBmpDataFor( 450 , BitmapData::GetInstance()->getBmpData( 10 ) , 10 ) ;	// 450 ~ 459 まで　SpeedUp
