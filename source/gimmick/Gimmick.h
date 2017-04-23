@@ -166,6 +166,7 @@ class Gimmick
 		/*	敵のデータをセット
 		/*/
 		int setEnemy( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+		float FootCheck( ) ;	// 足元チェック ( 足元の座標を返す )
 
 		/*/
 		/*	それぞれのアップデート内処理
