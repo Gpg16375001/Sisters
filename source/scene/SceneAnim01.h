@@ -48,6 +48,9 @@ class SceneAnim01
 		/*/
 		void Render( ) ;
 
+	private :
+		Animation player_ ;
+
 } ;
 
 

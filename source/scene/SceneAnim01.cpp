@@ -53,6 +53,9 @@ void SceneAnim01::Initialize( )
 			1.0f , 1.0f
 		) ;
 
+	MasterData::ReLoad( ) ;
+	player_.setAnimData( ) ;
+
 }
 
 /*/
@@ -72,8 +75,6 @@ void SceneAnim01::Finalize( )
 /*/
 void SceneAnim01::Update( )
 {
-	static Player	player ;
-
 	static int waitTime = 0 ;
 	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 20 )
 	{
@@ -81,6 +82,13 @@ void SceneAnim01::Update( )
 		waitTime = 0 ;
 	}
 	waitTime++ ;
+
+	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
+	{
+		Chip::GetInstance()->Reload( ) ;
+		Initialize( ) ;
+		printf( "Was ReLoading !\n" ) ;
+	}
 
 	// シーン内容
 	// 画面内だけチップを配置
@@ -99,8 +107,25 @@ void SceneAnim01::Update( )
 	// ギミックの読み込み
 	Gimmick::GetInstance()->Update( ) ;
 
-	// プレイヤーのアップデート
-	player.Update( ) ;
+	/*/
+	/*	アニメーションのアップデート
+	/*/
+	// --/ プレイヤー /--
+	player_._playAnim( ) ;
+	Anim_Data *nowPlayer = player_.getNowAnimation( ) ;
+	Sprite::GetInstance()->setBmpData(
+				nowPlayer->bmpNo ,
+				7 ,
+				nowPlayer->x ,
+				nowPlayer->y ,
+				(float)nowPlayer->cutRect.left ,
+				(float)nowPlayer->cutRect.top ,
+				(float)nowPlayer->cutRect.right ,
+				(float)nowPlayer->cutRect.bottom ,
+				0.5f , 0.5f ,
+				255 ,
+				0
+		) ;
 
 }
 

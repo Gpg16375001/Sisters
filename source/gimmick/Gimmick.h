@@ -214,11 +214,11 @@ class Gimmick
 		/*/
 		/*	ReLoad GimmickData
 		/*/
-		void Reload( )
+		void Reload( int arg_reNo )
 		{
 			Finalize( ) ;
 			Initialize( ) ;
-			setGimmickData( 1 ) ;
+			setGimmickData( arg_reNo ) ;
 		}
 		
 		/*/

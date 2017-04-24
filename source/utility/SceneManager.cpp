@@ -62,14 +62,7 @@ void SceneManager::Update( int arg_state )
 	SceneTitle title ;
 	SceneGame01 game01 ;
 	SceneGame02 game02 ;
-	SceneAnim01 anim01 ;
-
-	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
-	{
-		Chip::GetInstance()->Reload( ) ;
-		Gimmick::GetInstance()->Reload( ) ;
-		printf( "Was ReLoading !\n" ) ;
-	}
+	static SceneAnim01 anim01 ;
 
 	// ƒV[ƒ““à—e
 	switch ( arg_state )

@@ -81,7 +81,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\characters\Animation.cpp" />
-    <ClCompile Include="source\characters\AnimChara.cpp" />
     <ClCompile Include="source\characters\Physics.cpp" />
     <ClCompile Include="source\characters\Player.cpp" />
     <ClCompile Include="source\gimmick\Board.cpp" />
@@ -122,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\characters\Animation.h" />
-    <ClInclude Include="source\characters\AnimChara.h" />
     <ClInclude Include="source\characters\Physics.h" />
     <ClInclude Include="source\characters\Player.h" />
     <ClInclude Include="source\gimmick\Gimmick.h" />
