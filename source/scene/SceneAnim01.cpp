@@ -85,8 +85,8 @@ void SceneAnim01::Update( )
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
 	{
+		Reload( ) ;
 		Chip::GetInstance()->Reload( ) ;
-		Initialize( ) ;
 		printf( "Was ReLoading !\n" ) ;
 	}
 

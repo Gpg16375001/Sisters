@@ -48,6 +48,16 @@ class SceneAnim01
 		/*/
 		void Render( ) ;
 
+		/*/
+		/*	ReLoad GimmickData
+		/*/
+		void Reload( )
+		{
+			Initialize( ) ;
+			Finalize( ) ;
+			player_.setAnimData( ) ;
+		}
+
 	private :
 		Animation player_ ;
 
