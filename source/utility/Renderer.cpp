@@ -116,7 +116,52 @@ int Renderer::Render( )
 	// 指定されているスプライトの選択
 	SelectObject( hDCWork_ , bmpData_ ) ;
 
-	if ( rotateFlg_ )
+	if ( alphaFlg_ ) {
+
+		// 新規作業用デバイスコンテキストの生成 ( 大きめに作る )
+		hDC = GetDC( hWnd_ ) ;
+		s_tRBWorkHDC = CreateCompatibleDC( hDC ) ;
+		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , (int)(w_ * scaleX_) , (int)(h_ * scaleY_) ) ;
+		SelectObject( s_tRBWorkHDC , s_tRBWorkBmp ) ;	// 真っ白
+		ReleaseDC( hWnd_ , hDC ) ;
+
+		// 描画からバックバッファを切り取る ( 背景 )
+		BitBlt( s_tRBWorkHDC ,
+				0 , 0 ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
+				hDCBack_ ,
+				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
+				SRCCOPY
+			) ;
+
+		// 切り取ったDCに描画したい画像を張り付ける【ここで上に張り付けるビットマップが完成する】
+		TransparentBlt(
+				s_tRBWorkHDC ,
+				0 , 0 ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
+				hDCWork_ ,
+				(int)u_ , (int)v_ ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
+				RGB( 0 , 255 , 0 )
+			) ;
+
+		// アルファブレンド【半透明処理】
+		s_blendFunc.SourceConstantAlpha = alpha_ ;		// アルファ値を入れる
+		AlphaBlend(
+				hDCBack_ ,
+				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
+				s_tRBWorkHDC ,
+				0 , 0 ,
+				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
+				s_blendFunc
+			) ;
+
+		// DC と ビットマップ領域の解放
+		DeleteDC( s_tRBWorkHDC ) ;
+		DeleteObject( s_tRBWorkBmp ) ;
+	}
+	else if ( rotateFlg_ )
 	{
 		// 角度を radian に変換
 		radian = degree_ * 3.14f / 180.0f ;
@@ -199,51 +244,6 @@ int Renderer::Render( )
 				(int)u_ , (int)v_ ,
 				(int)w_ , (int)h_ ,
 				RGB( 0 , 255 , 0 )
-			) ;
-
-		// DC と ビットマップ領域の解放
-		DeleteDC( s_tRBWorkHDC ) ;
-		DeleteObject( s_tRBWorkBmp ) ;
-
-	} else if ( alphaFlg_ ) {
-
-		// 新規作業用デバイスコンテキストの生成 ( 大きめに作る )
-		hDC = GetDC( hWnd_ ) ;
-		s_tRBWorkHDC = CreateCompatibleDC( hDC ) ;
-		s_tRBWorkBmp = CreateCompatibleBitmap( hDC , (int)(w_ * scaleX_) , (int)(h_ * scaleY_) ) ;
-		SelectObject( s_tRBWorkHDC , s_tRBWorkBmp ) ;	// 真っ白
-		ReleaseDC( hWnd_ , hDC ) ;
-
-		// 描画からバックバッファを切り取る ( 背景 )
-		BitBlt( s_tRBWorkHDC ,
-				0 , 0 ,
-				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
-				hDCBack_ ,
-				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
-				SRCCOPY
-			) ;
-
-		// 切り取ったDCに描画したい画像を張り付ける【ここで上に張り付けるビットマップが完成する】
-		TransparentBlt(
-				s_tRBWorkHDC ,
-				0 , 0 ,
-				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
-				hDCWork_ ,
-				(int)u_ , (int)v_ ,
-				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
-				RGB( 0 , 255 , 0 )
-			) ;
-
-		// アルファブレンド【半透明処理】
-		s_blendFunc.SourceConstantAlpha = alpha_ ;		// アルファ値を入れる
-		AlphaBlend(
-				hDCBack_ ,
-				(int)( x_ - ((w_*scaleX_/2)*anchorX_) ) , (int)( y_ - ((h_*scaleX_/2)*anchorY_) ) ,
-				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
-				s_tRBWorkHDC ,
-				0 , 0 ,
-				(int)(w_ * scaleX_) , (int)(h_ * scaleY_) ,
-				s_blendFunc
 			) ;
 
 		// DC と ビットマップ領域の解放

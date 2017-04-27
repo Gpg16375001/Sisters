@@ -44,6 +44,7 @@ ________________________________________________________________________________
 #define		GIMMICK_NAME_BOARD			10
 #define		GIMMICK_NAME_FOUNTAIN		11
 #define		GIMMICK_NAME_ENEMY			12
+#define		GIMMICK_NAME_WAIWAI			13
 
 /* Pos To Cell */
 #define		PTC( arg_cell )			( (arg_cell * 64) )
@@ -169,6 +170,11 @@ class Gimmick
 		float FootCheck( ) ;	// 足元チェック ( 足元の座標を返す )
 
 		/*/
+		/*	笑いのデータをセット
+		/*/
+		int setwaiwai( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -182,6 +188,7 @@ class Gimmick
 		void Board( ) ;
 		void Fountain( ) ;
 		void Enemy( ) ;
+		void Waiwai( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

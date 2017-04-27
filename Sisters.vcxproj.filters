@@ -144,6 +144,9 @@
     <ClCompile Include="source\characters\Afterimage.cpp">
       <Filter>source\character</Filter>
     </ClCompile>
+    <ClCompile Include="source\gimmick\waiwai.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">

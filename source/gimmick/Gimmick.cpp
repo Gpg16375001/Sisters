@@ -171,6 +171,12 @@ void Gimmick::setGimmickData( int arg_SceneNo )
 				setEnemy( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
 			}
 
+			// Î‚¢‚ÌŽž
+			if ( _strcmpi("WaiWai" , it->getData()._name) == 0 )
+			{
+				setwaiwai( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
 		}
 	}
 
@@ -326,6 +332,11 @@ void Gimmick::Update( )
 	/*	___/ ‚Ä‚« /___________________
 	/*/
 	Enemy( ) ;
+
+	/*/
+	/*	___/ ‚í‚ç‚¢ /___________________
+	/*/
+	Waiwai( ) ;
 
 }
 
