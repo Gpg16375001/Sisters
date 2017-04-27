@@ -91,28 +91,28 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 18 , TEXT("data/image/sprites/object/grass.bmp") , 200 , 64 ) ;			// くさ
 	BitmapData::GetInstance()->loadData( 19 , TEXT("data/image/sprites/Enemy/Enemy.bmp") , 900 , 80 ) ;				// てき
 
-	BitmapData::GetInstance()->loadData( 20 , TEXT("data/image/sprites/player/PlayerR01.bmp") , 200 , 178 ) ;		// プレイヤー右向き 静止01
-	BitmapData::GetInstance()->loadData( 21 , TEXT("data/image/sprites/player/PlayerR02.bmp") , 200 , 178 ) ;		// プレイヤー右向き 静止02
-	BitmapData::GetInstance()->loadData( 22 , TEXT("data/image/sprites/player/PlayerR03.bmp") , 200 , 178 ) ;		// プレイヤー右向き 静止03
-	BitmapData::GetInstance()->loadData( 23 , TEXT("data/image/sprites/player/PlayerR04.bmp") , 200 , 178 ) ;		// プレイヤー右向き 静止04
-	BitmapData::GetInstance()->loadData( 24 , TEXT("data/image/sprites/player/PlayerR05.bmp") , 200 , 178 ) ;		// プレイヤー右向き 歩き01
-	BitmapData::GetInstance()->loadData( 25 , TEXT("data/image/sprites/player/PlayerR06.bmp") , 200 , 178 ) ;		// プレイヤー右向き 歩き02
-	BitmapData::GetInstance()->loadData( 26 , TEXT("data/image/sprites/player/PlayerR07.bmp") , 200 , 178 ) ;		// プレイヤー右向き 歩き03
-	BitmapData::GetInstance()->loadData( 27 , TEXT("data/image/sprites/player/PlayerR08.bmp") , 200 , 178 ) ;		// プレイヤー右向き 歩き04
-	BitmapData::GetInstance()->loadData( 28 , TEXT("data/image/sprites/player/PlayerR09.bmp") , 200 , 178 ) ;		// プレイヤー右向き ジャンプ
-	BitmapData::GetInstance()->loadData( 29 , TEXT("data/image/sprites/player/PlayerR10.bmp") , 200 , 178 ) ;		// プレイヤー右向き 落ち
-	BitmapData::GetInstance()->loadData( 30 , TEXT("data/image/sprites/player/PlayerL01.bmp") , 200 , 178 ) ;		// プレイヤー左向き 静止01
-	BitmapData::GetInstance()->loadData( 31 , TEXT("data/image/sprites/player/PlayerL02.bmp") , 200 , 178 ) ;		// プレイヤー左向き 静止02
-	BitmapData::GetInstance()->loadData( 32 , TEXT("data/image/sprites/player/PlayerL03.bmp") , 200 , 178 ) ;		// プレイヤー左向き 静止03
-	BitmapData::GetInstance()->loadData( 33 , TEXT("data/image/sprites/player/PlayerL04.bmp") , 200 , 178 ) ;		// プレイヤー左向き 静止04
-	BitmapData::GetInstance()->loadData( 34 , TEXT("data/image/sprites/player/PlayerL05.bmp") , 200 , 178 ) ;		// プレイヤー左向き 歩き01
-	BitmapData::GetInstance()->loadData( 35 , TEXT("data/image/sprites/player/PlayerL06.bmp") , 200 , 178 ) ;		// プレイヤー左向き 歩き02
-	BitmapData::GetInstance()->loadData( 36 , TEXT("data/image/sprites/player/PlayerL07.bmp") , 200 , 178 ) ;		// プレイヤー左向き 歩き03
-	BitmapData::GetInstance()->loadData( 37 , TEXT("data/image/sprites/player/PlayerL08.bmp") , 200 , 178 ) ;		// プレイヤー左向き 歩き04
-	BitmapData::GetInstance()->loadData( 38 , TEXT("data/image/sprites/player/PlayerL09.bmp") , 200 , 178 ) ;		// プレイヤー左向き ジャンプ
-	BitmapData::GetInstance()->loadData( 39 , TEXT("data/image/sprites/player/PlayerL10.bmp") , 200 , 178 ) ;		// プレイヤー左向き 落ち
-	BitmapData::GetInstance()->loadData( 40 , TEXT("data/image/sprites/player/PlayerRDamage.bmp") , 200 , 178 ) ;	// プレイヤー右向き ダメージ
-	BitmapData::GetInstance()->loadData( 41 , TEXT("data/image/sprites/player/PlayerLDamage.bmp") , 200 , 178 ) ;	// プレイヤー左向き ダメージ
+	BitmapData::GetInstance()->loadData( 20 , TEXT("data/image/sprites/player/PlayerR01.bmp") , 100 , 89 ) ;		// プレイヤー右向き 静止01
+	BitmapData::GetInstance()->loadData( 21 , TEXT("data/image/sprites/player/PlayerR02.bmp") , 100 , 89 ) ;		// プレイヤー右向き 静止02
+	BitmapData::GetInstance()->loadData( 22 , TEXT("data/image/sprites/player/PlayerR03.bmp") , 100 , 89 ) ;		// プレイヤー右向き 静止03
+	BitmapData::GetInstance()->loadData( 23 , TEXT("data/image/sprites/player/PlayerR04.bmp") , 100 , 89 ) ;		// プレイヤー右向き 静止04
+	BitmapData::GetInstance()->loadData( 24 , TEXT("data/image/sprites/player/PlayerR05.bmp") , 100 , 89 ) ;		// プレイヤー右向き 歩き01
+	BitmapData::GetInstance()->loadData( 25 , TEXT("data/image/sprites/player/PlayerR06.bmp") , 100 , 89 ) ;		// プレイヤー右向き 歩き02
+	BitmapData::GetInstance()->loadData( 26 , TEXT("data/image/sprites/player/PlayerR07.bmp") , 100 , 89 ) ;		// プレイヤー右向き 歩き03
+	BitmapData::GetInstance()->loadData( 27 , TEXT("data/image/sprites/player/PlayerR08.bmp") , 100 , 89 ) ;		// プレイヤー右向き 歩き04
+	BitmapData::GetInstance()->loadData( 28 , TEXT("data/image/sprites/player/PlayerR09.bmp") , 100 , 89 ) ;		// プレイヤー右向き ジャンプ
+	BitmapData::GetInstance()->loadData( 29 , TEXT("data/image/sprites/player/PlayerR10.bmp") , 100 , 89 ) ;		// プレイヤー右向き 落ち
+	BitmapData::GetInstance()->loadData( 30 , TEXT("data/image/sprites/player/PlayerL01.bmp") , 100 , 89 ) ;		// プレイヤー左向き 静止01
+	BitmapData::GetInstance()->loadData( 31 , TEXT("data/image/sprites/player/PlayerL02.bmp") , 100 , 89 ) ;		// プレイヤー左向き 静止02
+	BitmapData::GetInstance()->loadData( 32 , TEXT("data/image/sprites/player/PlayerL03.bmp") , 100 , 89 ) ;		// プレイヤー左向き 静止03
+	BitmapData::GetInstance()->loadData( 33 , TEXT("data/image/sprites/player/PlayerL04.bmp") , 100 , 89 ) ;		// プレイヤー左向き 静止04
+	BitmapData::GetInstance()->loadData( 34 , TEXT("data/image/sprites/player/PlayerL05.bmp") , 100 , 89 ) ;		// プレイヤー左向き 歩き01
+	BitmapData::GetInstance()->loadData( 35 , TEXT("data/image/sprites/player/PlayerL06.bmp") , 100 , 89 ) ;		// プレイヤー左向き 歩き02
+	BitmapData::GetInstance()->loadData( 36 , TEXT("data/image/sprites/player/PlayerL07.bmp") , 100 , 89 ) ;		// プレイヤー左向き 歩き03
+	BitmapData::GetInstance()->loadData( 37 , TEXT("data/image/sprites/player/PlayerL08.bmp") , 100 , 89 ) ;		// プレイヤー左向き 歩き04
+	BitmapData::GetInstance()->loadData( 38 , TEXT("data/image/sprites/player/PlayerL09.bmp") , 100 , 89 ) ;		// プレイヤー左向き ジャンプ
+	BitmapData::GetInstance()->loadData( 39 , TEXT("data/image/sprites/player/PlayerL10.bmp") , 100 , 89 ) ;		// プレイヤー左向き 落ち
+	BitmapData::GetInstance()->loadData( 40 , TEXT("data/image/sprites/player/PlayerRDamage.bmp") , 100 , 89 ) ;	// プレイヤー右向き ダメージ
+	BitmapData::GetInstance()->loadData( 41 , TEXT("data/image/sprites/player/PlayerLDamage.bmp") , 100 , 89 ) ;	// プレイヤー左向き ダメージ
 
 	BitmapData::GetInstance()->loadData( 60 , TEXT("data/image/sprites/start2.bmp") , 256 , 40 ) ;					// スタート
 	BitmapData::GetInstance()->loadData( 61 , TEXT("data/image/sprites/object/hunsui.bmp") , 1600 , 178 ) ;			// 噴水
@@ -155,29 +155,222 @@ void MainApp::Initalize( )
 	Sprite::GetInstance()->loadBmpDataFor( 450 , BitmapData::GetInstance()->getBmpData( 10 ) , 10 ) ;	// 450 ~ 459 まで　SpeedUp
 	Sprite::GetInstance()->loadBmpDataFor( 500 , BitmapData::GetInstance()->getBmpData( 15 ) , 500 ) ;	// 500 ~ 999 まで　弾
 
-	Sprite::GetInstance()->loadBmpData( 1000 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1001 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1002 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1003 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1004 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1005 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1006 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1007 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1008 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1009 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1010 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2000 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2001 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2002 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2003 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2004 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2005 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2006 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2007 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2008 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2009 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2010 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
 
-	Sprite::GetInstance()->loadBmpData( 1011 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1012 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1013 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1014 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1015 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1016 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1017 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1018 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1019 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1020 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 1021 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2011 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2012 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2013 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2014 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2015 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2016 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2017 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2018 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2019 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2020 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 2021 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	// 残像たち
+	Sprite::GetInstance()->loadBmpData( 1100 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1101 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1102 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1103 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1104 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1105 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1106 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1107 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1108 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1109 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1110 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1111 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1112 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1113 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1114 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1115 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1116 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1117 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1118 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1119 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1120 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1121 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1200 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1201 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1202 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1203 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1204 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1205 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1206 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1207 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1208 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1209 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1210 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1211 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1212 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1213 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1214 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1215 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1216 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1217 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1218 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1219 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1220 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1221 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1300 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1301 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1302 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1303 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1304 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1305 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1306 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1307 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1308 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1309 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1310 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1311 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1312 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1313 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1314 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1315 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1316 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1317 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1318 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1319 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1320 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1321 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1400 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1401 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1402 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1403 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1404 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1405 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1406 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1407 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1408 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1409 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1410 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1411 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1412 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1413 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1414 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1415 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1416 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1417 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1418 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1419 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1420 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1421 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1500 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1501 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1502 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1503 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1504 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1505 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1506 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1507 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1508 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1509 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1510 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1511 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1512 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1513 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1514 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1515 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1516 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1517 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1518 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1519 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1520 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1521 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1600 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1601 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1602 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1603 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1604 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1605 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1606 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1607 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1608 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1609 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1610 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1611 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1612 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1613 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1614 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1615 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1616 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1617 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1618 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1619 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1620 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1621 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1700 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1701 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1702 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1703 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1704 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1705 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1706 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1707 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1708 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1709 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1710 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1711 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1712 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1713 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1714 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1715 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1716 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1717 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1718 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1719 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1720 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1721 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1800 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1801 , BitmapData::GetInstance()->getBmpData( 31 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1802 , BitmapData::GetInstance()->getBmpData( 32 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1803 , BitmapData::GetInstance()->getBmpData( 33 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1804 , BitmapData::GetInstance()->getBmpData( 34 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1805 , BitmapData::GetInstance()->getBmpData( 35 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1806 , BitmapData::GetInstance()->getBmpData( 36 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1807 , BitmapData::GetInstance()->getBmpData( 37 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1808 , BitmapData::GetInstance()->getBmpData( 38 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1809 , BitmapData::GetInstance()->getBmpData( 39 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1810 , BitmapData::GetInstance()->getBmpData( 41 ) ) ;
+
+	Sprite::GetInstance()->loadBmpData( 1811 , BitmapData::GetInstance()->getBmpData( 20 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1812 , BitmapData::GetInstance()->getBmpData( 21 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1813 , BitmapData::GetInstance()->getBmpData( 22 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1814 , BitmapData::GetInstance()->getBmpData( 23 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1815 , BitmapData::GetInstance()->getBmpData( 24 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1816 , BitmapData::GetInstance()->getBmpData( 25 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1817 , BitmapData::GetInstance()->getBmpData( 26 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1818 , BitmapData::GetInstance()->getBmpData( 27 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1819 , BitmapData::GetInstance()->getBmpData( 28 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1820 , BitmapData::GetInstance()->getBmpData( 29 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1821 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
 
 	// シーン
 	SceneManager::GetInstance()->Initialize() ;

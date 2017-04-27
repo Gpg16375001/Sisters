@@ -59,7 +59,8 @@ class SceneAnim01
 		}
 
 	private :
-		Animation player_ ;
+		Animation	player_ ;
+//		float		_sx ;			// ƒXƒNƒ[ƒ‹
 
 } ;
 

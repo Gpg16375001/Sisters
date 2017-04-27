@@ -11,6 +11,7 @@
 #include "SceneManager.h"
 #include "../characters/Animation.h"
 #include "../characters/Physics.h"
+#include "../characters/Afterimage.h"
 #include "../characters/Player.h"
 #include "../gimmick/Gimmick.h"
 
@@ -19,12 +20,5 @@
 
 extern int g_mapData01[ CHIP_MAP_SIZE_X * CHIP_MAP_SIZE_Y ] ;
 extern int g_state ;
-
-extern float g_px , g_py ;		// デバッグ用 プレイヤーの座標
-
-extern RECT g_ac ;
-
-extern bool g_dethflg ;
-
 
 

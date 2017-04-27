@@ -136,6 +136,7 @@ class Renderer
 		HGDIOBJ bmpData_ ;
 		HDC		hDCBack_ ;				// 裏画面
 		HDC		hDCWork_ ;				// 作業用画面
+		HDC		hDCHold_ ;				// 作業用画面2 一度ここに集める
 		HWND	hWnd_ ;					// 親のウィンドウハンドル
 
 		float	x_ , y_ ;				// 描画座標

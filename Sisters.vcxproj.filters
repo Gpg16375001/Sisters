@@ -141,6 +141,9 @@
     <ClCompile Include="source\gimmick\Enemy.cpp">
       <Filter>source\gimmick</Filter>
     </ClCompile>
+    <ClCompile Include="source\characters\Afterimage.cpp">
+      <Filter>source\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="source\master\AnimData.h">
       <Filter>source\master</Filter>
+    </ClInclude>
+    <ClInclude Include="source\characters\Afterimage.h">
+      <Filter>source\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -56,6 +56,10 @@ void SceneAnim01::Initialize( )
 	MasterData::ReLoad( ) ;
 	player_.setAnimData( ) ;
 
+	// ƒJƒƒ‰‚Ì‰ŠúˆÊ’u
+//	Anim_Data *initPlayer = player_.getNowAnimation() ;
+//	_sx = initPlayer->x ;
+
 }
 
 /*/

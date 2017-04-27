@@ -173,14 +173,6 @@ void SceneTitle::Render( )
 			Renderer::GetInstance()->Render( ) ;
 		}
 	}
-	
-	/*/
-	/*	デバッグ用
-	/*/
-	HBRUSH brush_red ;
-	brush_red = CreateSolidBrush( RGB(255 , 0 , 0) ) ;
-	FillRect( Renderer::GetInstance()->getHDCBack() , &g_ac , brush_red ) ;
-	DeleteObject( brush_red ) ;
 
 	// 画面のクリア
 	/*/

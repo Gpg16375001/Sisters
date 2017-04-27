@@ -30,6 +30,8 @@ Player::Player( )
 	, flipMag_( false )					// false : 通常 true : 反転
 	, barrierFlg_( false )				// false : 通常	true : バリア展開中
 	, cycleFlg_( false )
+	, ai( 0 )
+	, deth_flg_( false )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -98,28 +100,28 @@ void Player::Initialize( )
 	/*	RECT ( left , top , right , bottom )
 	/*/
 	AnimationData P_stop[ ] = {
-		{ 1000 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 1001 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 1002 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 1003 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 2000 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_NEXT } ,
+		{ 2001 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_NEXT } ,
+		{ 2002 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_NEXT } ,
+		{ 2003 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_walk[ ] = {
-		{ 1004 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 1005 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 1006 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
-		{ 1007 , 8 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 2004 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_NEXT } ,
+		{ 2005 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_NEXT } ,
+		{ 2006 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_NEXT } ,
+		{ 2007 , 8 , {0 , 0 , 100 , 89} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_jump[ ] = {
-		{ 1008 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 2008 , 4 , {0 , 0 , 100 , 89} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_drop[ ] = {
-		{ 1009 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 2009 , 4 , {0 , 0 , 100 , 89} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_damg[ ] = {
-		{ 1010 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 2010 , 4 , {0 , 0 , 100 , 89} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_deth[ ] = {
-		{ 3 , 4 , {0 , 0 , 200 , 178} , ANIM_MODE_LOOP } ,
+		{ 3 , 4 , {0 , 0 , 100 , 178} , ANIM_MODE_LOOP } ,
 	} ;
 	AnimationData P_ball[ ] = {
 		{ 5 , 8 , {200 * 0 , 0 , 200 , 178} , ANIM_MODE_NEXT } ,
@@ -250,7 +252,7 @@ void Player::PlayerAction( )
 	}
 
 
-	if ( g_dethflg )
+	if ( deth_flg_ )
 	{
 		
 	} else {
@@ -530,7 +532,7 @@ void Player::Pdainit( )
 {
 	Pmode_ = P_damage ;
 
-	if ( g_dethflg )
+	if ( deth_flg_ )
 	{
 		Pmode_ = P_deth ;
 	} else {
@@ -596,7 +598,7 @@ void Player::Pdamage( )
 /*/
 void Player::Pdeinit( )
 {
-	if ( g_dethflg )
+	if ( deth_flg_ )
 	{
 		Pmode_ = P_deth ;
 	} else {
@@ -611,7 +613,7 @@ void Player::Pdeinit( )
 /*/
 void Player::Pdeth( )
 {
-	if ( g_dethflg )
+	if ( deth_flg_ )
 	{
 
 	} else {
@@ -674,10 +676,6 @@ float Player::FootCheck( )
 		pr = Player_xpos_ + Player_mag_.x - Chip::GetInstance()->getScrollX() + 16 ;
 		py = Player_ypos_ + Player_mag_.y ;
 	}
-
-	// ---+ デバッグ +----------------------------------------------------------------------------------------------- debug
-	g_px = px + Chip::GetInstance()->getScrollX() ;
-	g_py = py - 54 - 8 ;
 
 	// 判定をとる範囲　今は全体
 	for( int i = 0 ; i < (CHIP_X * CHIP_Y) ; ++i )
@@ -1957,7 +1955,7 @@ void Player::Update( )
 			(float)nowAnim->cutRect.top ,
 			(float)nowAnim->cutRect.right ,
 			(float)nowAnim->cutRect.bottom ,
-			0.5f , 0.5f ,
+			1.0f , 1.0f ,
 			255 ,
 			flipMag_ * 180//Player_vec_.deg
 		) ;
@@ -1982,6 +1980,27 @@ void Player::Update( )
 				255 ,
 				0
 			) ;
+
+		ai++ ;
+		ai = ai % 8 ;
+		if ( afterimage[ ai ].create_flg_ )
+		{
+		} else {
+			afterimage[ ai ].AfterimageAction(
+					nowAnim->bmpNo - 900 + (100 * ai) + (lrflg_ * 11) ,
+					Player_xpos_ + 4 - Chip::GetInstance()->getScrollX( ) ,							// 中心位置を調整
+					Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
+					nowAnim->cutRect ,
+					flipMag_
+				) ;
+		}
+	}
+	for ( int aicnt = 0 ; aicnt < 8 ; ++aicnt )
+	{
+		if ( afterimage[ aicnt ].create_flg_ )
+		{
+			afterimage[ aicnt ].Update( ) ;
+		} 
 	}
 
 	// デバッグ用

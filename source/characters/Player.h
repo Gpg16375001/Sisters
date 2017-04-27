@@ -79,7 +79,7 @@ class Player
 		PlayerMode Pmode_ ;
 
 		// プレイヤーのデータ
-		int				Player_hp_	;	// プレイヤーの体力
+		int				Player_hp_ ;	// プレイヤーの体力
 		Vector2D_polar	Player_vec_ ;	// 向きと大きさを持った
 		Vector2D_compo	Player_spd_ ;	// 成分にしたデータ
 		float			Player_xpos_ ;
@@ -94,6 +94,10 @@ class Player
 		bool			flipMag_ ;		// 左右反転のフラグ
 		bool			barrierFlg_ ;	// バリアのフラグ
 		bool			cycleFlg_ ;		// 回る坂に上るかづかのフラグ
+		bool			deth_flg_ ;
+
+		Afterimage afterimage[ 8 ] ;
+		int ai ;
 
 		// プレイヤーの物理的なもの
 		Physics			Player_ ;

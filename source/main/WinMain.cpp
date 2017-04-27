@@ -284,25 +284,6 @@ void WinMain::Draw_( )
 	//printf( "WM_PAINTイベントが発行されました\n" );
 	BitBlt( hDC , 0 , 0 , wSize_w_ , wSize_h_ , hDCBack_ , 0 , 0 , SRCCOPY ) ;
 
-	// プレイヤーの座標位置の点
-	SetPixel( hDC , (int)g_px   , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px-1 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px+1 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px   , (int)g_py-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px   , (int)g_py+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_px   - 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px-1 - 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px+1 - 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px   - 16 , (int)g_py-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px   - 16 , (int)g_py+1 , RGB(255 , 0 , 0) ) ;
-
-	SetPixel( hDC , (int)g_px   + 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px-1 + 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px+1 + 16 , (int)g_py   , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px   + 16 , (int)g_py-1 , RGB(255 , 0 , 0) ) ;
-	SetPixel( hDC , (int)g_px   + 16 , (int)g_py+1 , RGB(255 , 0 , 0) ) ;
-
 	EndPaint( hWnd_ , &ps );
 
 }

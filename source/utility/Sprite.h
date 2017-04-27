@@ -34,7 +34,7 @@ ________________________________________________________________________________
 // ƒNƒ‰ƒX‚ÌéŒ¾
 class Sprite
 {
-	static const int MAX_BMP_SPRITE = 1024 ;
+	static const int MAX_BMP_SPRITE = 2048 ;
 
 	public :
 	struct SpriteData {
