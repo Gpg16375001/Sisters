@@ -57,8 +57,8 @@ void SceneAnim01::Initialize( )
 	player_.setAnimData( ) ;
 
 	// カメラの初期位置
-//	Anim_Data *initPlayer = player_.getNowAnimation() ;
-//	_sx = initPlayer->x ;
+	Anim_Data *initPlayer = player_.getNowAnimation() ;
+	_sx = initPlayer->x ;
 
 }
 
@@ -91,6 +91,7 @@ void SceneAnim01::Update( )
 	{
 		Reload( ) ;
 		Chip::GetInstance()->Reload( ) ;
+		Chip::GetInstance()->setScrollSize( ( int )110 , 0 ) ;
 		printf( "Was ReLoading !\n" ) ;
 	}
 
@@ -117,16 +118,24 @@ void SceneAnim01::Update( )
 	// --/ プレイヤー /--
 	player_._playAnim( ) ;
 	Anim_Data *nowPlayer = player_.getNowAnimation( ) ;
+
+	_sx = nowPlayer->x - _sx ;
+	if ( nowPlayer->x >= 300 )
+	{
+		Chip::GetInstance()->setScrollSize( ( int )-_sx , 0 ) ;
+	}
+	_sx = nowPlayer->x ;
+
 	Sprite::GetInstance()->setBmpData(
 				nowPlayer->bmpNo ,
 				7 ,
-				nowPlayer->x ,
+				nowPlayer->x + Chip::GetInstance()->getScrollX( ) ,
 				nowPlayer->y ,
 				(float)nowPlayer->cutRect.left ,
 				(float)nowPlayer->cutRect.top ,
 				(float)nowPlayer->cutRect.right ,
 				(float)nowPlayer->cutRect.bottom ,
-				0.5f , 0.5f ,
+				1.0f , 1.0f ,
 				255 ,
 				0
 		) ;

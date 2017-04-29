@@ -60,7 +60,7 @@ class SceneAnim01
 
 	private :
 		Animation	player_ ;
-//		float		_sx ;			// スクロール
+		float		_sx ;			// スクロール
 
 } ;
 
