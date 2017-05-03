@@ -59,6 +59,7 @@ void SceneAnim01::Initialize( )
 	// ƒJƒƒ‰‚Ì‰ŠúˆÊ’u
 	Anim_Data *initPlayer = player_.getNowAnimation() ;
 	_sx = initPlayer->x ;
+	_allsx = 0.0f ;
 
 }
 
@@ -91,7 +92,7 @@ void SceneAnim01::Update( )
 	{
 		Reload( ) ;
 		Chip::GetInstance()->Reload( ) ;
-		Chip::GetInstance()->setScrollSize( ( int )110 , 0 ) ;
+		Chip::GetInstance()->setScrollSize( ( int )_allsx , 0 ) ;
 		printf( "Was ReLoading !\n" ) ;
 	}
 
@@ -124,6 +125,7 @@ void SceneAnim01::Update( )
 	{
 		Chip::GetInstance()->setScrollSize( ( int )-_sx , 0 ) ;
 	}
+	_allsx += _sx ;
 	_sx = nowPlayer->x ;
 
 	Sprite::GetInstance()->setBmpData(
