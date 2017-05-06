@@ -259,6 +259,15 @@ class Chip
 			return ( scrollY_ ) ;
 		}
 		/*/
+		/*	スクロールのクリア
+		/*/
+		bool clearScroll( )
+		{
+			scrollX_ = 0 ;
+			scrollY_ = 0 ;
+			return ( true ) ;
+		}
+		/*/
 		/*	RENDER MAP SIZE X の取得
 		/*/
 		int getRenderMapSizeX( ) const

@@ -50,18 +50,60 @@ int Animation::setAnimData( AnimationData *argp_animData )
 /*/
 /*	外部からのアニメーションデータのセット
 /*/
-int Animation::setAnimData( )
+int Animation::setAnimData( int arg_no )
 {
-	auto it = MasterData::AnimPlayer.begin() ;
+	auto itplayer1 = MasterData::AnimPlayer.begin() ;
+	auto itplayer2 = MasterData::AnimPlayer2.begin() ;
+	auto itwaiwai = MasterData::AnimWaiwai.begin() ;
+	auto itboss = MasterData::AnimBoss.begin() ;
 
-	m_nowAnimation.animMode = modeToNumber( it->getData()._mode ) ;
-	m_nowAnimation.bmpNo = it->getData()._bmpNo ;
-	m_nowAnimation.x = it->getData()._xpos ;
-	m_nowAnimation.y = it->getData()._ypos ;
-	m_nowAnimation.cutRect = it->getData()._rect ;
-	m_nowAnimation.holdTime = it->getData()._holdTime ;
+	if ( arg_no == 0 )
+	{
+		m_nowAnimation.animMode = modeToNumber( itplayer1->getData()._mode ) ;
+		m_nowAnimation.bmpNo = itplayer1->getData()._bmpNo ;
+		m_nowAnimation.x = itplayer1->getData()._xpos ;
+		m_nowAnimation.y = itplayer1->getData()._ypos ;
+		m_nowAnimation.cutRect = itplayer1->getData()._rect ;
+		m_nowAnimation.holdTime = itplayer1->getData()._holdTime ;
+
+	}
+
+	if ( arg_no == 1 )
+	{
+		m_nowAnimation.animMode = modeToNumber( itplayer2->getData()._mode ) ;
+		m_nowAnimation.bmpNo = itplayer2->getData()._bmpNo ;
+		m_nowAnimation.x = itplayer2->getData()._xpos ;
+		m_nowAnimation.y = itplayer2->getData()._ypos ;
+		m_nowAnimation.cutRect = itplayer2->getData()._rect ;
+		m_nowAnimation.holdTime = itplayer2->getData()._holdTime ;
+
+	}
+
+	if ( arg_no == 2 )
+	{
+		m_nowAnimation.animMode = modeToNumber( itwaiwai->getData()._mode ) ;
+		m_nowAnimation.bmpNo = itwaiwai->getData()._bmpNo ;
+		m_nowAnimation.x = itwaiwai->getData()._xpos ;
+		m_nowAnimation.y = itwaiwai->getData()._ypos ;
+		m_nowAnimation.cutRect = itwaiwai->getData()._rect ;
+		m_nowAnimation.holdTime = itwaiwai->getData()._holdTime ;
+
+	}
+
+	if ( arg_no == 3 )
+	{
+		m_nowAnimation.animMode = modeToNumber( itboss->getData()._mode ) ;
+		m_nowAnimation.bmpNo = itboss->getData()._bmpNo ;
+		m_nowAnimation.x = itboss->getData()._xpos ;
+		m_nowAnimation.y = itboss->getData()._ypos ;
+		m_nowAnimation.cutRect = itboss->getData()._rect ;
+		m_nowAnimation.holdTime = itboss->getData()._holdTime ;
+
+	}
+
 	m_animCnt = 0 ;
 	m_animState = ANIM_STATE_PLAY ;
+
 
 	return( true );
 }
@@ -122,42 +164,160 @@ int Animation::playAnim( )
 /*/
 /*	外部データからのアニメーションの再生
 /*/
-int Animation::_playAnim( )
+int Animation::_playAnim( int arg_no )
 {
-	auto it = MasterData::AnimPlayer.begin() ;
+	auto itplayer1 = MasterData::AnimPlayer.begin() ;
+	auto itplayer2 = MasterData::AnimPlayer2.begin() ;
+	auto itwaiwai = MasterData::AnimWaiwai.begin() ;
+	auto itboss = MasterData::AnimBoss.begin() ;
 
-	if( m_animState == ANIM_STATE_PLAY )
+	if ( arg_no == 0 )
 	{
-		m_nowAnimation.holdTime-- ;
-		if( m_nowAnimation.holdTime == 0 )
+		if( m_animState == ANIM_STATE_PLAY )
 		{
-			if( m_nowAnimation.animMode == ANIM_MODE_STOP )
+			m_nowAnimation.holdTime-- ;
+			if( m_nowAnimation.holdTime == 0 )
 			{
-				m_animState = ANIM_STATE_STOP ;
-			}
-			else if( m_nowAnimation.animMode == ANIM_MODE_NEXT )
-			{
-				m_animCnt++;
-				it += m_animCnt ;
-				m_nowAnimation.animMode = modeToNumber( it->getData()._mode ) ;
-				m_nowAnimation.bmpNo = it->getData()._bmpNo ;
-				m_nowAnimation.x = it->getData()._xpos ;
-				m_nowAnimation.y = it->getData()._ypos ;
-				m_nowAnimation.cutRect = it->getData()._rect ;
-				m_nowAnimation.holdTime = it->getData()._holdTime ;
-			}
-			else if( m_nowAnimation.animMode == ANIM_MODE_LOOP )
-			{
-				it = MasterData::AnimPlayer.begin() ;
-				m_animCnt = 0 ;
-				m_nowAnimation.animMode = modeToNumber( it->getData()._mode ) ;
-				m_nowAnimation.bmpNo = it->getData()._bmpNo ;
-				m_nowAnimation.x = it->getData()._xpos ;
-				m_nowAnimation.y = it->getData()._ypos ;
-				m_nowAnimation.cutRect = it->getData()._rect ;
-				m_nowAnimation.holdTime = it->getData()._holdTime ;
+				if( m_nowAnimation.animMode == ANIM_MODE_STOP )
+				{
+					m_animState = ANIM_STATE_STOP ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_NEXT )
+				{
+					m_animCnt++;
+					itplayer1 += m_animCnt ;
+					m_nowAnimation.animMode = modeToNumber( itplayer1->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itplayer1->getData()._bmpNo ;
+					m_nowAnimation.x = itplayer1->getData()._xpos ;
+					m_nowAnimation.y = itplayer1->getData()._ypos ;
+					m_nowAnimation.cutRect = itplayer1->getData()._rect ;
+					m_nowAnimation.holdTime = itplayer1->getData()._holdTime ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_LOOP )
+				{
+					itplayer1 = MasterData::AnimPlayer.begin() ;
+					m_animCnt = 0 ;
+					m_nowAnimation.animMode = modeToNumber( itplayer1->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itplayer1->getData()._bmpNo ;
+					m_nowAnimation.x = itplayer1->getData()._xpos ;
+					m_nowAnimation.y = itplayer1->getData()._ypos ;
+					m_nowAnimation.cutRect = itplayer1->getData()._rect ;
+					m_nowAnimation.holdTime = itplayer1->getData()._holdTime ;
+				}
 			}
 		}
+
+	}
+	if ( arg_no == 1 )
+	{
+		if( m_animState == ANIM_STATE_PLAY )
+		{
+			m_nowAnimation.holdTime-- ;
+			if( m_nowAnimation.holdTime == 0 )
+			{
+				if( m_nowAnimation.animMode == ANIM_MODE_STOP )
+				{
+					m_animState = ANIM_STATE_STOP ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_NEXT )
+				{
+					m_animCnt++;
+					itplayer2 += m_animCnt ;
+					m_nowAnimation.animMode = modeToNumber( itplayer2->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itplayer2->getData()._bmpNo ;
+					m_nowAnimation.x = itplayer2->getData()._xpos ;
+					m_nowAnimation.y = itplayer2->getData()._ypos ;
+					m_nowAnimation.cutRect = itplayer2->getData()._rect ;
+					m_nowAnimation.holdTime = itplayer2->getData()._holdTime ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_LOOP )
+				{
+					itplayer2 = MasterData::AnimPlayer.begin() ;
+					m_animCnt = 0 ;
+					m_nowAnimation.animMode = modeToNumber( itplayer2->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itplayer2->getData()._bmpNo ;
+					m_nowAnimation.x = itplayer2->getData()._xpos ;
+					m_nowAnimation.y = itplayer2->getData()._ypos ;
+					m_nowAnimation.cutRect = itplayer2->getData()._rect ;
+					m_nowAnimation.holdTime = itplayer2->getData()._holdTime ;
+				}
+			}
+		}
+
+	}
+	if ( arg_no == 2 )
+	{
+		if( m_animState == ANIM_STATE_PLAY )
+		{
+			m_nowAnimation.holdTime-- ;
+			if( m_nowAnimation.holdTime == 0 )
+			{
+				if( m_nowAnimation.animMode == ANIM_MODE_STOP )
+				{
+					m_animState = ANIM_STATE_STOP ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_NEXT )
+				{
+					m_animCnt++;
+					itwaiwai += m_animCnt ;
+					m_nowAnimation.animMode = modeToNumber( itwaiwai->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itwaiwai->getData()._bmpNo ;
+					m_nowAnimation.x = itwaiwai->getData()._xpos ;
+					m_nowAnimation.y = itwaiwai->getData()._ypos ;
+					m_nowAnimation.cutRect = itwaiwai->getData()._rect ;
+					m_nowAnimation.holdTime = itwaiwai->getData()._holdTime ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_LOOP )
+				{
+					itwaiwai = MasterData::AnimPlayer.begin() ;
+					m_animCnt = 0 ;
+					m_nowAnimation.animMode = modeToNumber( itwaiwai->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itwaiwai->getData()._bmpNo ;
+					m_nowAnimation.x = itwaiwai->getData()._xpos ;
+					m_nowAnimation.y = itwaiwai->getData()._ypos ;
+					m_nowAnimation.cutRect = itwaiwai->getData()._rect ;
+					m_nowAnimation.holdTime = itwaiwai->getData()._holdTime ;
+				}
+			}
+		}
+
+	}
+	if ( arg_no == 3 )
+	{
+		if( m_animState == ANIM_STATE_PLAY )
+		{
+			m_nowAnimation.holdTime-- ;
+			if( m_nowAnimation.holdTime == 0 )
+			{
+				if( m_nowAnimation.animMode == ANIM_MODE_STOP )
+				{
+					m_animState = ANIM_STATE_STOP ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_NEXT )
+				{
+					m_animCnt++;
+					itboss += m_animCnt ;
+					m_nowAnimation.animMode = modeToNumber( itboss->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itboss->getData()._bmpNo ;
+					m_nowAnimation.x = itboss->getData()._xpos ;
+					m_nowAnimation.y = itboss->getData()._ypos ;
+					m_nowAnimation.cutRect = itboss->getData()._rect ;
+					m_nowAnimation.holdTime = itboss->getData()._holdTime ;
+				}
+				else if( m_nowAnimation.animMode == ANIM_MODE_LOOP )
+				{
+					itboss = MasterData::AnimPlayer.begin() ;
+					m_animCnt = 0 ;
+					m_nowAnimation.animMode = modeToNumber( itboss->getData()._mode ) ;
+					m_nowAnimation.bmpNo = itboss->getData()._bmpNo ;
+					m_nowAnimation.x = itboss->getData()._xpos ;
+					m_nowAnimation.y = itboss->getData()._ypos ;
+					m_nowAnimation.cutRect = itboss->getData()._rect ;
+					m_nowAnimation.holdTime = itboss->getData()._holdTime ;
+				}
+			}
+		}
+
 	}
 
 	return( true );

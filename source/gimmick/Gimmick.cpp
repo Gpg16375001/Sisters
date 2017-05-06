@@ -101,6 +101,84 @@ void Gimmick::setGimmickData( int arg_SceneNo )
 {	
 	printf( "GimmickData was loaded.\n" ) ;
 
+	if ( arg_SceneNo == 0 )
+	{
+		for ( auto it = MasterData::SceneAnim.begin() ; it != MasterData::SceneAnim.end() ; ++it )
+		{
+			// 動く床の時
+			if ( _strcmpi("MoveFloor" , it->getData()._name) == 0 )
+			{
+				setMoveBlocks( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// まるのこの時
+			if ( _strcmpi("CircularSaws" , it->getData()._name) == 0 )
+			{
+				setCircularSaws( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 振り子の時
+			if ( _strcmpi("Pendulum" , it->getData()._name) == 0 )
+			{
+				setPendulums( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 電気の時
+			if ( _strcmpi("Shocker" , it->getData()._name) == 0 )
+			{
+				setShockers( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// スピードアップの時
+			if ( _strcmpi("SpeedUp" , it->getData()._name) == 0 )
+			{
+				setSpeedUp( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 雲の時
+			if ( _strcmpi("Cloud" , it->getData()._name) == 0 )
+			{
+				setClouds( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 射撃物の時
+			if ( _strcmpi("Shooter" , it->getData()._name) == 0 )
+			{
+				setShooter( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 草の時
+			if ( _strcmpi("Grass" , it->getData()._name) == 0 )
+			{
+				setGrass( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 看板の時
+			if ( _strcmpi("Board" , it->getData()._name) == 0 )
+			{
+				setBoard( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 噴水の時
+			if ( _strcmpi("Fountain" , it->getData()._name) == 0 )
+			{
+				setFountain( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 敵の時
+			if ( _strcmpi("Enemy" , it->getData()._name) == 0 )
+			{
+				setEnemy( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 笑いの時
+			if ( _strcmpi("WaiWai" , it->getData()._name) == 0 )
+			{
+				setwaiwai( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+		}
+	}
 	if ( arg_SceneNo == 1 )
 	{
 		for ( auto it = MasterData::SceneGame01.begin() ; it != MasterData::SceneGame01.end() ; ++it )
@@ -179,7 +257,162 @@ void Gimmick::setGimmickData( int arg_SceneNo )
 
 		}
 	}
+	if ( arg_SceneNo == 2 )
+	{
+		for ( auto it = MasterData::SceneGame02.begin() ; it != MasterData::SceneGame02.end() ; ++it )
+		{
+			// 動く床の時
+			if ( _strcmpi("MoveFloor" , it->getData()._name) == 0 )
+			{
+				setMoveBlocks( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
 
+			// まるのこの時
+			if ( _strcmpi("CircularSaws" , it->getData()._name) == 0 )
+			{
+				setCircularSaws( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 振り子の時
+			if ( _strcmpi("Pendulum" , it->getData()._name) == 0 )
+			{
+				setPendulums( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 電気の時
+			if ( _strcmpi("Shocker" , it->getData()._name) == 0 )
+			{
+				setShockers( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// スピードアップの時
+			if ( _strcmpi("SpeedUp" , it->getData()._name) == 0 )
+			{
+				setSpeedUp( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 雲の時
+			if ( _strcmpi("Cloud" , it->getData()._name) == 0 )
+			{
+				setClouds( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 射撃物の時
+			if ( _strcmpi("Shooter" , it->getData()._name) == 0 )
+			{
+				setShooter( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 草の時
+			if ( _strcmpi("Grass" , it->getData()._name) == 0 )
+			{
+				setGrass( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 看板の時
+			if ( _strcmpi("Board" , it->getData()._name) == 0 )
+			{
+				setBoard( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 噴水の時
+			if ( _strcmpi("Fountain" , it->getData()._name) == 0 )
+			{
+				setFountain( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 敵の時
+			if ( _strcmpi("Enemy" , it->getData()._name) == 0 )
+			{
+				setEnemy( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 笑いの時
+			if ( _strcmpi("WaiWai" , it->getData()._name) == 0 )
+			{
+				setwaiwai( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+		}
+	}
+	if ( arg_SceneNo == 3 )
+	{
+		for ( auto it = MasterData::SceneGame03.begin() ; it != MasterData::SceneGame03.end() ; ++it )
+		{
+			// 動く床の時
+			if ( _strcmpi("MoveFloor" , it->getData()._name) == 0 )
+			{
+				setMoveBlocks( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// まるのこの時
+			if ( _strcmpi("CircularSaws" , it->getData()._name) == 0 )
+			{
+				setCircularSaws( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 振り子の時
+			if ( _strcmpi("Pendulum" , it->getData()._name) == 0 )
+			{
+				setPendulums( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 電気の時
+			if ( _strcmpi("Shocker" , it->getData()._name) == 0 )
+			{
+				setShockers( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// スピードアップの時
+			if ( _strcmpi("SpeedUp" , it->getData()._name) == 0 )
+			{
+				setSpeedUp( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 雲の時
+			if ( _strcmpi("Cloud" , it->getData()._name) == 0 )
+			{
+				setClouds( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 射撃物の時
+			if ( _strcmpi("Shooter" , it->getData()._name) == 0 )
+			{
+				setShooter( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 草の時
+			if ( _strcmpi("Grass" , it->getData()._name) == 0 )
+			{
+				setGrass( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 看板の時
+			if ( _strcmpi("Board" , it->getData()._name) == 0 )
+			{
+				setBoard( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 噴水の時
+			if ( _strcmpi("Fountain" , it->getData()._name) == 0 )
+			{
+				setFountain( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 敵の時
+			if ( _strcmpi("Enemy" , it->getData()._name) == 0 )
+			{
+				setEnemy( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+			// 笑いの時
+			if ( _strcmpi("WaiWai" , it->getData()._name) == 0 )
+			{
+				setwaiwai( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
+		}
+	}
 
 }
 

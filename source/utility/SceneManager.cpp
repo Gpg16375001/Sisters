@@ -17,12 +17,15 @@ ________________________________________________________________________________
 #include "SceneTitle.h"
 #include "SceneGame01.h"
 #include "SceneGame02.h"
+#include "SceneGame03.h"
 #include "SceneAnim01.h"
 
 #define		MAP01	TEXT("data/map/mapData01.txt")
 #define		MAP02	TEXT("data/map/mapData02.txt")
 #define		MAP03	TEXT("data/map/mapData03.txt")
+#define		MAP04	TEXT("data/map/mapData04.txt")
 
+#define		SCENE_ANIM01	0
 #define		SCENE_GAME01	1
 #define		SCENE_GAME02	2
 #define		SCENE_GAME03	3
@@ -62,6 +65,7 @@ void SceneManager::Update( int arg_state )
 	SceneTitle title ;
 	SceneGame01 game01 ;
 	SceneGame02 game02 ;
+	SceneGame03 game03 ;
 	static SceneAnim01 anim01 ;
 
 	// シーン内容
@@ -87,13 +91,13 @@ void SceneManager::Update( int arg_state )
 			if ( SceneCut::GetInstance()->fadeIn( ) == 1 )
 			{
 				// マップ読み込み
-				LoadMapData::ReLoad( MAP03 ) ;
+				LoadMapData::ReLoad( MAP04 ) ;
 
 				// ギミックの初期セット
-//				Gimmick::GetInstance()->Initialize( ) ;
+				Gimmick::GetInstance()->Initialize( ) ;
 
 				// ギミックをセット
-//				Gimmick::GetInstance()->setGimmickData( SCENE_GAME01 ) ;
+				Gimmick::GetInstance()->setGimmickData( SCENE_ANIM01 ) ;
 
 				g_state++ ;
 			}
@@ -117,34 +121,7 @@ void SceneManager::Update( int arg_state )
 
 				// ギミックをセット
 				Gimmick::GetInstance()->setGimmickData( SCENE_GAME01 ) ;
-/*
-				Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(224) , PTC(7) ,   2 ,   0 , GIMMICK_MODE_WAVE ) ;		// 動く床
-				Gimmick::GetInstance()->setMoveBlocks( 51 , PTC(291) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// 動く床
 
-				Gimmick::GetInstance()->setPendulums( 100 , PTC(298) , PTC(7) ,   0 ,   0 , GIMMICK_MODE_CYCLE ) ;		// 振り子
-				Gimmick::GetInstance()->setPendulums( 101 , PTC(307) , PTC(7) ,   0 ,1024 , GIMMICK_MODE_CYCLE ) ;		// 振り子
-
-				Gimmick::GetInstance()->setCircularSaws( 10 , PTC(208) , PTC(8) ,   0 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// 丸鋸
-				Gimmick::GetInstance()->setCircularSaws( 11 , PTC(218) , PTC(3) ,   0 , 0 , GIMMICK_MODE_CYCLE ) ;		// 丸鋸
-				Gimmick::GetInstance()->setCircularSaws( 12 , PTC(240) , PTC(4) ,   1 , 0 , GIMMICK_MODE_WAVE ) ;		// 丸鋸
-
-				Gimmick::GetInstance()->setClouds( 150 , PTC(232) , PTC(6) ,   0 ,   0 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 151 , PTC(235) , PTC(6) ,   0 ,  90 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 152 , PTC(238) , PTC(6) ,   0 ,  40 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 153 , PTC(242) , PTC(6) ,   0 ,  20 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 154 , PTC(246) , PTC(6) ,   0 , 130 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 155 , PTC(255) , PTC(4) ,   0 ,   0 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 156 , PTC(278) , PTC(4) ,   0 ,   0 , GIMMICK_MODE_STAY ) ;			// 雲
-				Gimmick::GetInstance()->setClouds( 157 , PTC(281) , PTC(1) ,   0 ,  90 , GIMMICK_MODE_STAY ) ;			// 雲
-
-				Gimmick::GetInstance()->setShockers( 400 , PTC(234) , PTC(0) , 448 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// 電気
-				Gimmick::GetInstance()->setShockers( 401 , PTC(237) , PTC(0) , 448 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// 電気
-
-				Gimmick::GetInstance()->setShooter( 200 , PTC(208) , PTC(3) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// 敵POD
-				Gimmick::GetInstance()->setShooter( 201 , PTC(281) , PTC(6) , 1 ,   0 , GIMMICK_MODE_STAY ) ;			// 敵POD
-
-//				Gimmick::GetInstance()->setShooter( 202 , PTC( 32) , PTC(5) , 2 ,   0 , GIMMICK_MODE_STAY ) ;			// 敵POD
-*/
 				g_state++ ;
 			}
 			break ;
@@ -166,8 +143,11 @@ void SceneManager::Update( int arg_state )
 				Gimmick::GetInstance()->Initialize( ) ;
 
 				// ギミックをセット
-	//			Gimmick::GetInstance()->setCircularSaws( 10 , PTC(70) , PTC(3) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// 丸鋸
+				Gimmick::GetInstance()->setGimmickData( SCENE_GAME02 ) ;
 
+				// ギミックをセット
+	//			Gimmick::GetInstance()->setCircularSaws( 10 , PTC(70) , PTC(3) , 360 , 0 , GIMMICK_MODE_LEFTRIGHT ) ;	// 丸鋸
+/*
 				Gimmick::GetInstance()->setMoveBlocks( 50 , PTC(104) , PTC(3) ,   0 ,   0 , GIMMICK_MODE_CYCLE ) ;		// 動く床
 				Gimmick::GetInstance()->setMoveBlocks( 51 , PTC(104) , PTC(3) ,   0 ,  96 , GIMMICK_MODE_CYCLE ) ;		// 動く床
 				Gimmick::GetInstance()->setMoveBlocks( 52 , PTC(104) , PTC(3) ,   0 , 192 , GIMMICK_MODE_CYCLE ) ;		// 動く床
@@ -192,7 +172,7 @@ void SceneManager::Update( int arg_state )
 				Gimmick::GetInstance()->setShockers( 407 , PTC(92) , PTC(4) , 256 ,   0 , GIMMICK_MODE_UPDOWN ) ;		// 電気
 
 				Gimmick::GetInstance()->setSpeedUp( 450 , PTC(45) , PTC(6) ,   0 ,   0 , GIMMICK_MODE_STAY ) ;			// Speed Up
-
+*/
 				g_state++ ;
 			}
 			break ;
@@ -203,11 +183,27 @@ void SceneManager::Update( int arg_state )
 			game02.Render( ) ;
 			break ;
 
-		case S_InitGame03 :	
-			g_state = S_InitGame02 ;
+		case S_InitGame03 :
+			// フェイドのセット
+			if ( SceneCut::GetInstance()->fadeIn( ) == 1 )
+			{
+				// マップ読み込み
+				LoadMapData::ReLoad( MAP03 ) ;
+
+				// ギミックの初期セット
+				Gimmick::GetInstance()->Initialize( ) ;
+
+				// ギミックをセット
+				Gimmick::GetInstance()->setGimmickData( SCENE_GAME03 ) ;
+
+				g_state++ ;
+			}
 			break ;
 
 		case S_PlayGame03 :
+			SceneCut::GetInstance()->fadeOut( ) ;
+			game03.Update( ) ;
+			game03.Render( ) ;
 			break ;
 
 	}

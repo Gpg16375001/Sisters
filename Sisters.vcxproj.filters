@@ -123,9 +123,6 @@
     <ClCompile Include="source\master\ChipData.cpp">
       <Filter>source\master</Filter>
     </ClCompile>
-    <ClCompile Include="source\master\SceneGame01Data.cpp">
-      <Filter>source\master</Filter>
-    </ClCompile>
     <ClCompile Include="source\gimmick\Grass.cpp">
       <Filter>source\gimmick</Filter>
     </ClCompile>
@@ -146,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="source\gimmick\waiwai.cpp">
       <Filter>source\gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="source\master\SceneGameData.cpp">
+      <Filter>source\master</Filter>
+    </ClCompile>
+    <ClCompile Include="source\scene\SceneGame03.cpp">
+      <Filter>source\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,14 +230,17 @@
     <ClInclude Include="source\master\ChipData.h">
       <Filter>source\master</Filter>
     </ClInclude>
-    <ClInclude Include="source\master\SceneGame01Data.h">
-      <Filter>source\master</Filter>
-    </ClInclude>
     <ClInclude Include="source\master\AnimData.h">
       <Filter>source\master</Filter>
     </ClInclude>
     <ClInclude Include="source\characters\Afterimage.h">
       <Filter>source\character</Filter>
+    </ClInclude>
+    <ClInclude Include="source\master\SceneGameData.h">
+      <Filter>source\master</Filter>
+    </ClInclude>
+    <ClInclude Include="source\scene\SceneGame03.h">
+      <Filter>source\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,11 +1,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "SceneGame01Data.h"
+#include "SceneGameData.h"
 
 namespace MasterData
 {
-	void SceneGame01Info::Load( const char* s )
+	void SceneGameInfo::Load( const char* s )
 	{
 		//				ON | name | bmpNo | x | y | off[0] | off[1] | mode
 		sscanf( s , "%*[^,],%[^,],%d,%g,%g,%g,%g,%[^,\n]" ,
@@ -19,7 +19,7 @@ namespace MasterData
 			) ;
 	}
 
-	GIMMICKDATA SceneGame01Info::getData( )
+	GIMMICKDATA SceneGameInfo::getData( )
 	{
 		return( _data ) ;
 	}

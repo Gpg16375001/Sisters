@@ -96,7 +96,9 @@ class Player
 		bool			cycleFlg_ ;		// 回る坂に上るかづかのフラグ
 		bool			deth_flg_ ;
 
+		// 残像用
 		Afterimage afterimage[ 8 ] ;
+		bool ai_disp_flg_ ;				// 残像を出すかどうか
 		int ai ;
 
 		// プレイヤーの物理的なもの
@@ -104,7 +106,7 @@ class Player
 		float			Player_acceration_ ;
 		Vector2D_compo	Player_mag_ ;
 
-		// アニメーション
+		// アニメーション用の型
 		Animation		PlayerAnim_ ;
 		AnimationData	Panim_stop_[ 4 ] ;
 		AnimationData	Panim_walk_[ 4 ] ;

@@ -11,7 +11,7 @@ namespace MasterData
 		char	_mode[ 32 ] ;	// ギミックのモード
 	} ;
 
-	class SceneGame01Info {
+	class SceneGameInfo {
 		public :
 			void Load( const char* s ) ;
 			GIMMICKDATA getData( void ) ;

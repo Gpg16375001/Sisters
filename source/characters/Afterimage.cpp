@@ -100,6 +100,7 @@ void Afterimage::AfterimageAction( int arg_bmpno , float arg_xpos , float arg_yp
 
 		// Žc‘œ’†
 		case e_anim :
+			printf( "e_anim\n" ) ;
 			break ;
 
 	}
@@ -111,7 +112,7 @@ void Afterimage::AfterimageAction( int arg_bmpno , float arg_xpos , float arg_yp
 /*/
 void Afterimage::Update( )
 {
-	alpha_ -= 32.0f ;
+	alpha_ -= 16.0f ;
 	if ( alpha_ <= 0.0f )
 	{
 		Finalize( ) ;

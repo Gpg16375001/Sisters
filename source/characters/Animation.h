@@ -64,9 +64,9 @@ class Animation
 		~Animation( ) ;
 	
 		int setAnimData( AnimationData *argp_animData ) ;	// アニメーションデータのセット
-		int setAnimData( ) ;								// 外部からのアニメーションデータのセット
+		int setAnimData( int arg_no ) ;						// 外部からのアニメーションデータのセット
 		int playAnim( ) ;									// アニメーションの再生
-		int _playAnim( ) ;									// アニメーションの再生
+		int _playAnim( int arg_no ) ;						// アニメーションの再生
 		int getAnimState( ) ;								// アニメーション情報の取得
 		int modeToNumber( char *arg_mode ) ;				// モードを数字へ変える
 		AnimationData* getNowAnim( ) ;						// 現在のアニメーションデータの取得

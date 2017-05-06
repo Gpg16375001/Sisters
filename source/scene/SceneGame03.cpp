@@ -1,24 +1,24 @@
 /*
 ______________________________________________________________________________________________
 
-	FILE	: SceneAnim01.cpp
+	FILE	: SceneGame03.cpp
 
 	________/ Explanation of file /___________________________________________________________
        
-    SceneAnim01クラス
+    SceneGame03クラス
 
-	SceneAnim01クラスの実装部
+	SceneGame03クラスの実装部
 
 
 ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 */
 #include <windows.h>
-#include "SceneAnim01.h"
+#include "SceneGame03.h"
 
 /*/
 /*	コンストラクタ
 /*/
-SceneAnim01::SceneAnim01( )
+SceneGame03::SceneGame03( )
 {
 	Initialize( ) ;
 	//printf( "Start.\n" ) ;
@@ -28,7 +28,7 @@ SceneAnim01::SceneAnim01( )
 /*/
 /*	デストラクタ
 /*/
-SceneAnim01::~SceneAnim01( )
+SceneGame03::~SceneGame03( )
 {
 	//printf( "End.\n" ) ;
 
@@ -37,9 +37,9 @@ SceneAnim01::~SceneAnim01( )
 /*/
 /*	 初期化
 /*/
-void SceneAnim01::Initialize( )
+void SceneGame03::Initialize( )
 {
-	//printf( "SceneAnim01 -> " ) ;
+	//printf( "SceneGame03 -> " ) ;
 
 	/*/
 	/*	___/ 背景 /___________________
@@ -53,48 +53,53 @@ void SceneAnim01::Initialize( )
 			1.0f , 1.0f
 		) ;
 
-	MasterData::ReLoad( ) ;
-	player_.setAnimData( 0 ) ;
-	player2_.setAnimData( 1 ) ;
-	waiwai_.setAnimData( 2 ) ;
-	boss_.setAnimData( 3 ) ;
-
-	// カメラの初期位置
-	Chip::GetInstance()->clearScroll( ) ;
-
 }
 
 /*/
 /*	 終了化
 /*/
-void SceneAnim01::Finalize( )
+void SceneGame03::Finalize( )
 {
 	Initialize( ) ;
 	g_state = -1 ;
 
-	//printf( "SceneAnim01 -> " ) ;
+	//printf( "SceneBlank -> " ) ;
 
 }
 
 /*/
 /*	 更新
 /*/
-void SceneAnim01::Update( )
+void SceneGame03::Update( )
 {
-	static int waitTime = 0 ;
-	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 20 )
-	{
-		g_state++ ;												// ------------------------------- Gvl
-		waitTime = 0 ;
-	}
-	waitTime++ ;
+	static Player	player ;
+	
 
-	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
+	if ( KeyManager::GetInstance()->getKeyState( VK_F1 ) )
 	{
-		Reload( ) ;
-		Chip::GetInstance()->Reload( ) ;
-		Chip::GetInstance()->clearScroll( ) ;
-		printf( "Was ReLoading !\n" ) ;
+		player.Finalize( ) ;
+		player.Initialize( ) ;
+		Gimmick::GetInstance()->Finalize( ) ;
+		Gimmick::GetInstance()->Initialize( ) ;
+		g_state = -1 ;
+	}
+
+	if ( KeyManager::GetInstance()->getKeyState( VK_F2 ) )
+	{
+		player.Finalize( ) ;
+		player.Initialize( ) ;
+		Gimmick::GetInstance()->Finalize( ) ;
+		Gimmick::GetInstance()->Initialize( ) ;
+		g_state-- ;
+	}
+		
+	if ( KeyManager::GetInstance()->getKeyState( VK_F3 ) )
+	{
+		player.Finalize( ) ;
+		player.Initialize( ) ;
+		Gimmick::GetInstance()->Finalize( ) ;
+		Gimmick::GetInstance()->Initialize( ) ;
+		g_state-- ;
 	}
 
 	// シーン内容
@@ -114,97 +119,15 @@ void SceneAnim01::Update( )
 	// ギミックの読み込み
 	Gimmick::GetInstance()->Update( ) ;
 
-	/*/
-	/*	アニメーションのアップデート
-	/*/
-	// --/ プレイヤー1 /--
-	player_._playAnim( 0 ) ;
-	Anim_Data *nowPlayer = player_.getNowAnimation( ) ;
-
-	// カメラ位置をプレイヤーに合わせる
-	_sx = nowPlayer->x - _sx ;
-	if ( nowPlayer->x >= 300 )
-	{
-		Chip::GetInstance()->setScrollSize( ( int )-_sx , 0 ) ;
-	}
-	_sx = nowPlayer->x ;
-	// もしループしたらカメラ位置を最初に戻す
-	if ( nowPlayer->animMode == ANIM_MODE_LOOP )
-	{
-		Chip::GetInstance()->clearScroll( ) ;
-	}
-
-	Sprite::GetInstance()->setBmpData(
-				nowPlayer->bmpNo ,
-				7 ,
-				nowPlayer->x + Chip::GetInstance()->getScrollX( ) ,
-				nowPlayer->y ,
-				(float)nowPlayer->cutRect.left ,
-				(float)nowPlayer->cutRect.top ,
-				(float)nowPlayer->cutRect.right ,
-				(float)nowPlayer->cutRect.bottom ,
-				1.0f , 1.0f ,
-				255 ,
-				0
-		) ;
-
-	// --/ プレイヤー2 /--
-	player2_._playAnim( 1 ) ;
-	Anim_Data *nowPlayer2 = player2_.getNowAnimation( ) ;
-	Sprite::GetInstance()->setBmpData(
-				nowPlayer2->bmpNo ,
-				7 ,
-				nowPlayer2->x + Chip::GetInstance()->getScrollX( ) ,
-				nowPlayer2->y ,
-				(float)nowPlayer2->cutRect.left ,
-				(float)nowPlayer2->cutRect.top ,
-				(float)nowPlayer2->cutRect.right ,
-				(float)nowPlayer2->cutRect.bottom ,
-				1.0f , 1.0f ,
-				255 ,
-				0
-		) ;
-
-	// --/ リアクション /--
-	waiwai_._playAnim( 2 ) ;
-	Anim_Data *nowWaiwai = waiwai_.getNowAnimation( ) ;
-	Sprite::GetInstance()->setBmpData(
-				nowPlayer2->bmpNo ,
-				7 ,
-				nowWaiwai->x + Chip::GetInstance()->getScrollX( ) ,
-				nowWaiwai->y ,
-				(float)nowWaiwai->cutRect.left ,
-				(float)nowWaiwai->cutRect.top ,
-				(float)nowWaiwai->cutRect.right ,
-				(float)nowWaiwai->cutRect.bottom ,
-				1.0f , 1.0f ,
-				255 ,
-				0
-		) ;
-
-	// --/ BOSS /--
-	boss_._playAnim( 3 ) ;
-	Anim_Data *nowBoss = boss_.getNowAnimation( ) ;
-	Sprite::GetInstance()->setBmpData(
-				nowBoss->bmpNo ,
-				7 ,
-				nowBoss->x + Chip::GetInstance()->getScrollX( ) ,
-				nowBoss->y ,
-				(float)nowBoss->cutRect.left ,
-				(float)nowBoss->cutRect.top ,
-				(float)nowBoss->cutRect.right ,
-				(float)nowBoss->cutRect.bottom ,
-				0.5f , 0.5f ,
-				255 ,
-				0
-		) ;
+	// プレイヤーのアップデート
+	player.Update( ) ;
 
 }
 
 /*/
 /*	 描画
 /*/
-void SceneAnim01::Render( )
+void SceneGame03::Render( )
 {
 	// シーン内容
 
@@ -217,7 +140,7 @@ void SceneAnim01::Render( )
 			(Chip::GetInstance()->getScrollX() / 4) % 856 ,
 			0 ,
 			0 , 0 ,
-			2000.0f , 1000.0f ,
+			2000 , 1000 ,
 			1.0f , 1.0f
 		) ;
 	for ( int i = 0 ; i < BackGround::GetInstance()->getMaxBmp( ) ; ++i )

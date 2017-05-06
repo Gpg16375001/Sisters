@@ -32,6 +32,7 @@ Player::Player( )
 	, cycleFlg_( false )
 	, ai( 0 )
 	, deth_flg_( false )
+	, ai_disp_flg_( false )
 {
 	Initialize( ) ;
 	printf( "Start.\n" ) ;
@@ -82,6 +83,7 @@ void Player::Initialize( )
 	flipMag_			= false ;		// false : 通常 true : 反転
 	barrierFlg_			= false ;		// false : 通常	true : バリア展開中
 	cycleFlg_			= true ;		// false : さかのぼれない	true : さかのぼれる
+	ai_disp_flg_		= false ;
 
 	Player_hp_			= 3 ;
 
@@ -170,6 +172,7 @@ void Player::Finalize( )
 	flipMag_			= false ;		// false : 通常 true : 反転
 	barrierFlg_			= false ;		// false : 通常	true : バリア展開中
 	cycleFlg_			= false ;		// false : さかのぼれない	true : さかのぼれる
+	ai_disp_flg_		= false ;
 
 	Player_hp_			= 0 ;
 
@@ -1981,18 +1984,25 @@ void Player::Update( )
 				0
 			) ;
 
+		// 残像の描画
 		ai++ ;
-		ai = ai % 8 ;
+		ai = ai % 8 ;	// 8体まで出せる
 		if ( afterimage[ ai ].create_flg_ )
 		{
 		} else {
-			afterimage[ ai ].AfterimageAction(
-					nowAnim->bmpNo - 900 + (100 * ai) + (lrflg_ * 11) ,
-					Player_xpos_ + 4 - Chip::GetInstance()->getScrollX( ) ,							// 中心位置を調整
-					Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
-					nowAnim->cutRect ,
-					flipMag_
-				) ;
+			if ( !ai_disp_flg_ )
+			{
+				afterimage[ ai ].AfterimageAction(
+						nowAnim->bmpNo - 900 + (100 * ai) + (lrflg_ * 11) ,
+						Player_xpos_ + 4 - Chip::GetInstance()->getScrollX( ) ,							// 中心位置を調整
+						Player_ypos_ - 54 + (flipMag_ * 72) ,		// 中心位置を調整
+						nowAnim->cutRect ,
+						flipMag_
+					) ;
+				ai_disp_flg_ = true ;
+			} else {
+				ai_disp_flg_ = false ;
+			}
 		}
 	}
 	for ( int aicnt = 0 ; aicnt < 8 ; ++aicnt )

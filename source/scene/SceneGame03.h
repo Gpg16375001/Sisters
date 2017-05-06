@@ -1,13 +1,13 @@
 /*
 ______________________________________________________________________________________________
 
-	FILE	: SceneAnim01.cpp
+	FILE	: SceneGame03.cpp
 
 	________/ Explanation of file /___________________________________________________________
        
-    SceneAnim01ƒNƒ‰ƒX
+    SceneGame03ƒNƒ‰ƒX
 
-	SceneAnim01ƒNƒ‰ƒX‚ÌÀ‘••”
+	SceneGame03ƒNƒ‰ƒX‚ÌÀ‘••”
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
@@ -15,18 +15,18 @@ ________________________________________________________________________________
 #include <stdio.h>
 #include "Common.h"
 
-class SceneAnim01
+class SceneGame03
 {
 	public :
 		/*/
 		/*	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 		/*/
-		SceneAnim01( ) ;
+		SceneGame03( ) ;
 
 		/*/
 		/*	ƒfƒXƒgƒ‰ƒNƒ^
 		/*/
-		~SceneAnim01( ) ;
+		~SceneGame03( ) ;
 
 		/*/
 		/*	 ‰Šú‰»
@@ -47,23 +47,6 @@ class SceneAnim01
 		/*	 •`‰æ
 		/*/
 		void Render( ) ;
-
-		/*/
-		/*	ReLoad GimmickData
-		/*/
-		void Reload( )
-		{
-			Initialize( ) ;
-			Finalize( ) ;
-			player_.setAnimData( 0 ) ;
-		}
-
-	private :
-		Animation	player_ ;
-		Animation	player2_ ;
-		Animation	waiwai_ ;
-		Animation	boss_ ;
-		float		_sx ;			// ƒXƒNƒ[ƒ‹
 
 } ;
 
