@@ -150,6 +150,9 @@
     <ClCompile Include="source\scene\SceneGame03.cpp">
       <Filter>source\scene</Filter>
     </ClCompile>
+    <ClCompile Include="source\gimmick\Home.cpp">
+      <Filter>source\gimmick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\main\WinMain.h">

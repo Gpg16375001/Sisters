@@ -177,6 +177,12 @@ void Gimmick::setGimmickData( int arg_SceneNo )
 				setwaiwai( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
 			}
 
+			// ‰Æ‚ÌŽž
+			if ( _strcmpi("Home" , it->getData()._name) == 0 )
+			{
+				setHome( it->getData()._bmpNo , PTC(it->getData()._xpos) , PTC(it->getData()._ypos) , it->getData()._off[ 0 ] , it->getData()._off[ 1 ] , strToDefineName(it->getData()._mode) ) ;
+			}
+
 		}
 	}
 	if ( arg_SceneNo == 1 )
@@ -570,6 +576,11 @@ void Gimmick::Update( )
 	/*	___/ ‚í‚ç‚¢ /___________________
 	/*/
 	Waiwai( ) ;
+
+	/*/
+	/*	___/ ‚¢‚¦ /___________________
+	/*/
+	Home( ) ;
 
 }
 

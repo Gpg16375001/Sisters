@@ -91,6 +91,7 @@
     <ClCompile Include="source\gimmick\Fountain.cpp" />
     <ClCompile Include="source\gimmick\Gimmick.cpp" />
     <ClCompile Include="source\gimmick\Grass.cpp" />
+    <ClCompile Include="source\gimmick\Home.cpp" />
     <ClCompile Include="source\gimmick\MoveFloor.cpp" />
     <ClCompile Include="source\gimmick\Pendulums.cpp" />
     <ClCompile Include="source\gimmick\Shockers.cpp" />

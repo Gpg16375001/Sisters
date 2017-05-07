@@ -169,7 +169,7 @@ void SceneAnim01::Update( )
 	waiwai_._playAnim( 2 ) ;
 	Anim_Data *nowWaiwai = waiwai_.getNowAnimation( ) ;
 	Sprite::GetInstance()->setBmpData(
-				nowPlayer2->bmpNo ,
+				nowWaiwai->bmpNo ,
 				7 ,
 				nowWaiwai->x + Chip::GetInstance()->getScrollX( ) ,
 				nowWaiwai->y ,

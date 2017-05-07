@@ -56,6 +56,9 @@ class SceneAnim01
 			Initialize( ) ;
 			Finalize( ) ;
 			player_.setAnimData( 0 ) ;
+			player2_.setAnimData( 1 ) ;
+			waiwai_.setAnimData( 2 ) ;
+			boss_.setAnimData( 3 ) ;
 		}
 
 	private :

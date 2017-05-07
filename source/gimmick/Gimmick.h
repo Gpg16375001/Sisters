@@ -45,6 +45,7 @@ ________________________________________________________________________________
 #define		GIMMICK_NAME_FOUNTAIN		11
 #define		GIMMICK_NAME_ENEMY			12
 #define		GIMMICK_NAME_WAIWAI			13
+#define		GIMMICK_NAME_HOME			14
 
 /* Pos To Cell */
 #define		PTC( arg_cell )			( (arg_cell * 64) )
@@ -175,6 +176,11 @@ class Gimmick
 		int setwaiwai( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
 
 		/*/
+		/*	家のデータをセット
+		/*/
+		int setHome( int arg_bmpNo , float arg_x , float arg_y , float arg_spd , float arg_delay , int aeg_mode ) ;
+
+		/*/
 		/*	それぞれのアップデート内処理
 		/*/
 		void MoveFloor( ) ;
@@ -189,6 +195,7 @@ class Gimmick
 		void Fountain( ) ;
 		void Enemy( ) ;
 		void Waiwai( ) ;
+		void Home( ) ;
 
 		/*/
 		/*	ギミックのデータをゲット

@@ -119,7 +119,7 @@ void MainApp::Initalize( )
 	BitmapData::GetInstance()->loadData( 62 , TEXT("data/image/sprites/object/kanban.bmp") , 200 , 178 ) ;			// 看板
 	BitmapData::GetInstance()->loadData( 63 , TEXT("data/image/sprites/waiwai.bmp") , 200 , 89 ) ;					// リアクション（わいわい）
 	BitmapData::GetInstance()->loadData( 64 , TEXT("data/image/sprites/home.bmp") , 400 , 300 ) ;					// 家
-	BitmapData::GetInstance()->loadData( 65 , TEXT("data/image/sprites/enemy/Boss.bmp") , 400 , 300 ) ;				// ボス
+	BitmapData::GetInstance()->loadData( 65 , TEXT("data/image/sprites/enemy/Boss.bmp") , 1240 , 242 ) ;			// ボス
 
 	BitmapData::GetInstance()->loadData( 70 , TEXT("data/image/sprites/player2/PlayerR01.bmp") , 100 , 89 ) ;		// プレイヤー右向き 静止01
 	BitmapData::GetInstance()->loadData( 71 , TEXT("data/image/sprites/player2/PlayerR02.bmp") , 100 , 89 ) ;		// プレイヤー右向き 静止02
@@ -198,17 +198,17 @@ void MainApp::Initalize( )
 	Sprite::GetInstance()->loadBmpData( 2021 , BitmapData::GetInstance()->getBmpData( 40 ) ) ;
 
 	// Player02
-	Sprite::GetInstance()->loadBmpData( 2031 , BitmapData::GetInstance()->getBmpData( 70 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2032 , BitmapData::GetInstance()->getBmpData( 71 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2033 , BitmapData::GetInstance()->getBmpData( 72 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2034 , BitmapData::GetInstance()->getBmpData( 73 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2035 , BitmapData::GetInstance()->getBmpData( 74 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2036 , BitmapData::GetInstance()->getBmpData( 75 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2037 , BitmapData::GetInstance()->getBmpData( 76 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2038 , BitmapData::GetInstance()->getBmpData( 77 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2039 , BitmapData::GetInstance()->getBmpData( 78 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2040 , BitmapData::GetInstance()->getBmpData( 79 ) ) ;
-	Sprite::GetInstance()->loadBmpData( 2041 , BitmapData::GetInstance()->getBmpData( 80 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1911 , BitmapData::GetInstance()->getBmpData( 70 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1912 , BitmapData::GetInstance()->getBmpData( 71 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1913 , BitmapData::GetInstance()->getBmpData( 72 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1914 , BitmapData::GetInstance()->getBmpData( 73 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1915 , BitmapData::GetInstance()->getBmpData( 74 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1916 , BitmapData::GetInstance()->getBmpData( 75 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1917 , BitmapData::GetInstance()->getBmpData( 76 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1918 , BitmapData::GetInstance()->getBmpData( 77 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1919 , BitmapData::GetInstance()->getBmpData( 78 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1920 , BitmapData::GetInstance()->getBmpData( 79 ) ) ;
+	Sprite::GetInstance()->loadBmpData( 1921 , BitmapData::GetInstance()->getBmpData( 80 ) ) ;
 
 	// 残像たち
 	Sprite::GetInstance()->loadBmpData( 1100 , BitmapData::GetInstance()->getBmpData( 30 ) ) ;
