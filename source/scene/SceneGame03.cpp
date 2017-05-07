@@ -102,6 +102,13 @@ void SceneGame03::Update( )
 		g_state-- ;
 	}
 
+	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
+	{
+		Chip::GetInstance()->Reload( ) ;
+		Gimmick::GetInstance()->Reload( 3 ) ;
+		printf( "Was ReLoading !\n" ) ;
+	}
+
 	// シーン内容
 	// 画面内だけチップを配置
 	for ( int i = 0 ; i < Chip::GetInstance()->getMapSizeX() * Chip::GetInstance()->getMapSizeY() ; ++i )

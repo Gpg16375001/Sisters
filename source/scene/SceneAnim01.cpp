@@ -84,6 +84,9 @@ void SceneAnim01::Update( )
 	static int waitTime = 0 ;
 	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 20 )
 	{
+		// 開始地点の修正
+		Chip::GetInstance()->setScrollSize( -600 + RenderScale , 0 ) ;
+
 		g_state++ ;												// ------------------------------- Gvl
 		waitTime = 0 ;
 	}
@@ -132,6 +135,13 @@ void SceneAnim01::Update( )
 	if ( nowPlayer->animMode == ANIM_MODE_LOOP )
 	{
 		Chip::GetInstance()->clearScroll( ) ;
+	}
+	// もしストップしたらつぎのステージへ
+	if ( nowPlayer->animMode == ANIM_MODE_STOP )
+	{
+		Chip::GetInstance()->clearScroll( ) ;
+		g_state++ ;												// ------------------------------- Gvl
+		waitTime = 0 ;
 	}
 
 	Sprite::GetInstance()->setBmpData(

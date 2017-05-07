@@ -99,6 +99,9 @@ void SceneManager::Update( int arg_state )
 				// ギミックをセット
 				Gimmick::GetInstance()->setGimmickData( SCENE_ANIM01 ) ;
 
+				// アニメの初期化
+				anim01.Initialize( ) ;
+
 				g_state++ ;
 			}
 			break ;
