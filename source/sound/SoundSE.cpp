@@ -14,7 +14,7 @@ ________________________________________________________________________________
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
 
-#include "Common.h"
+#include "SoundSE.h"
 
 // コンストラクタ
 SoundSE::SoundSE( ) {		}
@@ -26,9 +26,10 @@ SoundSE::~SoundSE( ) {
 }
 
 // 音楽再生
-int SoundSE::play( LPCTSTR arg_pStr ) {
+int SoundSE::play( LPCTSTR arg_pStr , HWND arg_hWindow ) {
+	stop( ) ;
 	mciSendString( arg_pStr , NULL , 0 , NULL ) ;
-	mciSendString( TEXT( "play se notify" ) , NULL , 0 , g_hWindow ) ;
+	mciSendString( TEXT( "play se notify" ) , NULL , 0 , arg_hWindow ) ;
 	return( true ) ;
 }
 

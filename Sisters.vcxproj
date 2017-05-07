@@ -111,6 +111,8 @@
     <ClCompile Include="source\scene\SceneGame02.cpp" />
     <ClCompile Include="source\scene\SceneGame03.cpp" />
     <ClCompile Include="source\scene\SceneTitle.cpp" />
+    <ClCompile Include="source\sound\SoundBGM.cpp" />
+    <ClCompile Include="source\sound\SoundSE.cpp" />
     <ClCompile Include="source\utility\BackGround.cpp" />
     <ClCompile Include="source\utility\Chip.cpp" />
     <ClCompile Include="source\utility\Collider.cpp" />
@@ -143,6 +145,8 @@
     <ClInclude Include="source\scene\SceneGame02.h" />
     <ClInclude Include="source\scene\SceneGame03.h" />
     <ClInclude Include="source\scene\SceneTitle.h" />
+    <ClInclude Include="source\sound\SoundBGM.h" />
+    <ClInclude Include="source\sound\SoundSE.h" />
     <ClInclude Include="source\utility\BackGround.h" />
     <ClInclude Include="source\utility\Chip.h" />
     <ClInclude Include="source\utility\Collider.h" />

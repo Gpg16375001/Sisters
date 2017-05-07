@@ -231,6 +231,13 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 			}
 			break;
 
+		case MM_MCINOTIFY :
+			if ( arg_wParam == MCI_NOTIFY_SUCCESSFUL ) {
+				printf( "SEçƒê∂èIóπ\n" ) ;
+				g_sSE[ use_se ].stop( ) ;
+			}
+			break ;
+
 	}
 
 	// âΩÇ©ÇµÇÁñΩóﬂÇ™Ç†Ç¡ÇΩéû

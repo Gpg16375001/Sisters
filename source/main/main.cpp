@@ -425,6 +425,12 @@ void MainApp::Update( )
 	// キー情報更新
 	KeyManager::GetInstance()->update( ) ;
 
+	// SEの管理
+	if ( use_se >= 8 )
+	{
+		use_se = 0 ;
+	}
+
 	// 更新
 	Update_( ) ;
 

@@ -336,6 +336,8 @@ void Player::Pstop( )
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 		{
+			g_sSE[ use_se ].play( TEXT("open data/sound/jump.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
+			use_se++ ;
 			Pmode_ = P_jinit ;
 		}
 
@@ -408,6 +410,8 @@ void Player::Pwalk( )
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 	{
+		g_sSE[ use_se ].play( TEXT("open data/sound/jump.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
+		use_se++ ;
 		Pmode_ = P_jinit ;
 	}
 
@@ -579,6 +583,14 @@ void Player::Pdamage( )
 		{
 			Player_mag_.x += Player_acceration_ ;
 		}
+	}
+
+	float hcheck = HeadCheck() ;
+	if ( hcheck != 0 )
+	{
+		Player_mag_.y = 0.0f ;
+		Player_spd_.y = 0.0f ;
+		Player_ypos_ = hcheck ;
 	}
 
 	if ( Player_mag_.y > 0 )
@@ -1579,6 +1591,7 @@ float Player::Collision( )
 				case 2 :
 				case 9 :
 				case 27 :
+				case 97 :
 					if ( (bl <= pr) && (pl <= br) )
 					{
 						if ( (bt <= py) && (py < bb) )
@@ -1589,7 +1602,7 @@ float Player::Collision( )
 								{
 									collisionX = br + Chip::GetInstance()->getScrollX() + 20 ;
 								} else if ( px < center ) {
-									collisionX = bl + Chip::GetInstance()->getScrollX() - 24 ;
+									collisionX = bl + Chip::GetInstance()->getScrollX() - 23 ;
 								}
 								Player_spd_.x = 0 ;
 								
@@ -1628,6 +1641,18 @@ float Player::Collision( )
 						{
 							cycleFlg_ = true ;
 
+						}
+					}
+					break ;
+
+				// 最初に戻る
+				case 96 :
+					if ( (bt <= py) && (py < bb) )
+					{
+						if ( (bl <= px) && (px <= br) )
+						{
+							SceneCut::GetInstance()->fadeIn( ) ;
+							g_state = -1 ;
 						}
 					}
 					break ;
@@ -1685,6 +1710,7 @@ float Player::Collision( )
 					if ( brad >= c )
 					{
 						// 衝突
+						g_sSE [ 3 ].play( TEXT("open data/sound/damage6.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 						Pmode_ = P_dainit ;
 					}
 				}
@@ -1707,6 +1733,8 @@ float Player::Collision( )
 						if ( (bl+2 <= pr) && (pl <= br+2) )
 						{
 							// 衝突
+							g_sSE [ use_se ].play( TEXT("open data/sound/damage6.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
+							use_se++ ;
 							Pmode_ = P_dainit ;
 						}
 					}
@@ -1728,6 +1756,8 @@ float Player::Collision( )
 					{
 						if ( (bl-2 <= pr) && (pl <= br+2) )
 						{
+							g_sSE[ use_se ].play( TEXT("open data/sound/powerup05.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
+							use_se++ ;
 							Player_vec_.deg = 0.0f ;
 
 							Player_mag_.x = 15.0f ;
@@ -1792,6 +1822,8 @@ float Player::Collision( )
 			{
 				// 衝突
 				Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
+				g_sSE [ use_se ].play( TEXT("open data/sound/damage6.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
+				use_se++ ;
 
 				if ( barrierFlg_ )
 				{
@@ -1967,6 +1999,7 @@ void Player::Update( )
 	barrierFlg_ = false ;
 	if ( (Player_spd_.x >= 8.0f) || ((Player_spd_.x <= -8.0f)) )
 	{
+//		g_sSE[ 5 ].play( TEXT("open data/sound/swish1.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 		barrierFlg_ = true ;
 		ballAnim_.playAnim( );
 		AnimationData *nowball = ballAnim_.getNowAnim( ) ;
@@ -2012,20 +2045,6 @@ void Player::Update( )
 			afterimage[ aicnt ].Update( ) ;
 		} 
 	}
-
-	// デバッグ用
-	//printf( "Player : left   = %d \n" , nowAnim->cutRect.left ) ;
-	//printf( "Player : top    = %d \n" , nowAnim->cutRect.top ) ;
-	//printf( "Player : right  = %d \n" , nowAnim->cutRect.right ) ;
-	//printf( "Player : bottom = %d \n" , nowAnim->cutRect.bottom ) ;
-	//printf( "Player : Xpos   = %8.4f \n" , Player_xpos_ ) ;
-	//printf( "Player : Ypos   = %8.4f \n" , Player_ypos_ ) ;
-	//printf( "Player : Xspd   = %8.4f \n" , Player_spd_.x ) ;
-	//printf( "Player : Yspd   = %8.4f \n" , Player_spd_.y ) ;
-	//printf( "Player : Xmag   = %8.4f \n" , Player_mag_.x ) ;
-	//printf( "Player : Ymag   = %8.4f \n" , Player_mag_.y ) ;
-	//printf( "Player : mag    = %8.4f \n" , Player_vec_.mag ) ;
-	//printf( "Player : deg    = %8.4f \n" , Player_vec_.deg ) ;
 
 	// クリア
 //	Player_spd_.x = 0.0f ;

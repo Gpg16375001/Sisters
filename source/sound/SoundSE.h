@@ -22,6 +22,8 @@ ________________________________________________________________________________
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
+#include <windows.h>
+#include <stdio.h>	// --- ƒRƒ“ƒ\[ƒ‹—p
 
 // ƒNƒ‰ƒX‚ÌéŒ¾
 class SoundSE
@@ -29,7 +31,7 @@ class SoundSE
 	public :
 		SoundSE( ) ;													// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 		~SoundSE( ) ;													// ƒfƒXƒgƒ‰ƒNƒ^
-		int play( LPCTSTR arg_pStr ) ;									// ‰¹ŠyÄ¶
+		int play( LPCTSTR arg_pStr , HWND arg_hWindow ) ;				// ‰¹ŠyÄ¶
 		int stop( ) ;													// ‰¹Šy’â~
 
 } ;

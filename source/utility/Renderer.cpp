@@ -46,11 +46,6 @@ void Renderer::Initialize( )
 	setRotateFlg( false ) ;
 	sceneCut = 0 ;
 
-	for ( int i = 0 ; i < 360 ; ++i )
-	{
-		sinTbl[ i ] = sin( i * 3.14f / 180.0f ) ;
-	}
-
 }
 
 /*/

@@ -14,7 +14,7 @@ ________________________________________________________________________________
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
 
-#include "Common.h"
+#include "SoundBGM.h"
 
 // コンストラクタ
 SoundBGM::SoundBGM( ) {		}

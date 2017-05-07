@@ -22,6 +22,8 @@ ________________________________________________________________________________
 
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
+#include <windows.h>
+#include <stdio.h>	// --- ƒRƒ“ƒ\[ƒ‹—p
 
 // ƒNƒ‰ƒX‚ÌéŒ¾
 class SoundBGM

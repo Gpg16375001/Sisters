@@ -18,6 +18,8 @@ ________________________________________________________________________________
 /*/
 /*	--+ ギミックのデータをセット +-----
 /*/
+#define PEN_RAD1	320								// 振り子の半径		
+#define PEN_SPD		1.0								// 振り子の往復速度
 
 /*/
 /*	振り子のデータをセット
@@ -28,7 +30,7 @@ int Gimmick::setPendulums( int arg_bmpNo , float arg_x , float arg_y , float arg
 	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo ;
 	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
 	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
-	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
+	GimmickData_[ GimmickNo_ ]._spd		= arg_spd / 10 ;			// 往復幅
 	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
 	GimmickData_[ GimmickNo_ ]._mode	= arg_mode ;
 	GimmickNo_++ ;
@@ -36,7 +38,7 @@ int Gimmick::setPendulums( int arg_bmpNo , float arg_x , float arg_y , float arg
 	GimmickData_[ GimmickNo_ ]._bmpNo	= arg_bmpNo - 10 ;
 	GimmickData_[ GimmickNo_ ]._x		= arg_x ;
 	GimmickData_[ GimmickNo_ ]._y		= arg_y ;
-	GimmickData_[ GimmickNo_ ]._spd		= arg_spd ;
+	GimmickData_[ GimmickNo_ ]._spd		= arg_spd / 10 ;			// 往復幅
 	GimmickData_[ GimmickNo_ ]._delay	= arg_delay ;
 	GimmickData_[ GimmickNo_ ]._mode	= -1 ;
 	GimmickNo_++ ;
@@ -65,28 +67,26 @@ void Gimmick::Pendulums( )
 				{
 //					printf( "GIMMICK_MODE_LEFTRIGHT\n" ) ;
 
-					GimmickData_[ g ]._off[ 0 ] += 0.2f ;
-					GimmickData_[ g ]._off[ 1 ] += 0.2f ;
-					GimmickData_[ g ]._off[ 2 ]++ ;
+					GimmickData_[ g ]._off[ 0 ] += PEN_SPD ;
+					if ( GimmickData_[ g ]._off[ 1 ] > 0 )
+					{
+						GimmickData_[ g ]._off[ 1 ] *= -1 ;
+					}
 					Sprite::GetInstance()->setBmpData(
 							GimmickData_[ g ]._bmpNo ,
 							0 ,
-							GimmickData_[ g ]._x + cos( (GimmickData_[ g ]._off[ 0 ] + 245) * 3.141592f / 180 ) * 320 + Chip::GetInstance()->getScrollX( ) ,
-							GimmickData_[ g ]._y - sin( (GimmickData_[ g ]._off[ 1 ] + 245) * 3.141592f / 180 ) * 320 - 256 + Chip::GetInstance()->getScrollY( ) ,
+							GimmickData_[ g ]._x + sin( sin( GimmickData_[ g ]._off[ 0 ] * 3.141592f / 180 ) * GimmickData_[ g ]._spd ) * PEN_RAD1 + Chip::GetInstance()->getScrollX( ) ,
+							GimmickData_[ g ]._y + cos( sin( GimmickData_[ g ]._off[ 0 ] * 3.141592f / 180 ) * GimmickData_[ g ]._spd ) * PEN_RAD1 - 256 + Chip::GetInstance()->getScrollY( ) ,
 							0 , 0 ,
 							128 , 128 ,
 							1.0f , 1.0f ,
 							255 ,
 							0
 						) ;
+					printf( "%f\n" , GimmickData_[ g ]._off[ 1 ] ) ;
 
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 128 ;
-					if  ( GimmickData_[ g ]._off[ 1 ] >= 50 )		// cos( GimmickData_[ g ]._off[ 0 ] + ??? <- ここ - 270 * 2  ...)
-					{
-						GimmickData_[ g ]._off[ 0 ] += 130 ;		// 180 - ↑
-						GimmickData_[ g ]._off[ 1 ] = 0 ;
-					}
 						
 					if ( (-600 < (GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196))
 						&& ((GimmickData_[ g+1 ]._x + Chip::GetInstance()->getScrollX( ) - 196) < 800)
@@ -102,7 +102,7 @@ void Gimmick::Pendulums( )
 								320 , 320 ,
 								1.8f , 1.8f ,
 								255 ,
-								-(cos( (GimmickData_[ g ]._off[ 0 ] + 245) *  3.1415926f / 180 ) * 60)
+								-(cos( (GimmickData_[ g ]._off[ 0 ] - 90) *  3.1415926f / 180 ) * (GimmickData_[ g ]._spd * 57.29577951f)) // 一番右の数値 : 初期位置からの角度
 							) ;
 					}
 
