@@ -17,7 +17,7 @@ namespace LoadMapData
 		//ロケール指定
 		setlocale(LC_ALL,"japanese") ;
 		size_t wLen = 0 ;
-		wcstombs_s( &wLen , path , arg_size , s  , _TRUNCATE) ;
+		wcstombs_s( &wLen , path , arg_size , s , _TRUNCATE) ;
 		printf( "読み込んだファイル : %s\n" , path ) ;
 
 		FILE *fp = fopen( path , "r" ) ;

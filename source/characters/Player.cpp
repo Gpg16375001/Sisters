@@ -336,7 +336,6 @@ void Player::Pstop( )
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 		{
-			g_sSE[ use_se ].play( TEXT("open data/sound/jump.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 			use_se++ ;
 			Pmode_ = P_jinit ;
 		}
@@ -410,7 +409,6 @@ void Player::Pwalk( )
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 	{
-		g_sSE[ use_se ].play( TEXT("open data/sound/jump.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 		use_se++ ;
 		Pmode_ = P_jinit ;
 	}
@@ -1710,7 +1708,6 @@ float Player::Collision( )
 					if ( brad >= c )
 					{
 						// Õ“Ë
-						g_sSE [ 3 ].play( TEXT("open data/sound/damage6.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 						Pmode_ = P_dainit ;
 					}
 				}
@@ -1733,7 +1730,6 @@ float Player::Collision( )
 						if ( (bl+2 <= pr) && (pl <= br+2) )
 						{
 							// Õ“Ë
-							g_sSE [ use_se ].play( TEXT("open data/sound/damage6.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 							use_se++ ;
 							Pmode_ = P_dainit ;
 						}
@@ -1756,7 +1752,6 @@ float Player::Collision( )
 					{
 						if ( (bl-2 <= pr) && (pl <= br+2) )
 						{
-							g_sSE[ use_se ].play( TEXT("open data/sound/powerup05.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 							use_se++ ;
 							Player_vec_.deg = 0.0f ;
 
@@ -1822,7 +1817,6 @@ float Player::Collision( )
 			{
 				// Õ“Ë
 				Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
-				g_sSE [ use_se ].play( TEXT("open data/sound/damage6.mp3 alias se") , Renderer::GetInstance()->getHWnd( ) ) ;
 				use_se++ ;
 
 				if ( barrierFlg_ )

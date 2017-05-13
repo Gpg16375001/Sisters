@@ -70,6 +70,10 @@ void MainApp::Initalize( )
 	Chip::GetInstance()->Initialize( ) ;
 	Sprite::GetInstance()->Initialize( ) ;
 
+	// SE
+	g_sSE.load( 0 , TEXT("data/sound/swish1.mp3") ) ;
+	g_sSE.load( 1 , TEXT("data/sound/jump.mp3") ) ;
+
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
 	BitmapData::GetInstance()->loadData(  0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;						// ”wŒi01
 	BitmapData::GetInstance()->loadData(  1 , TEXT("data/image/bgs/bg04.bmp") , 2000 , 1000 ) ;						// ”wŒi02

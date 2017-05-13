@@ -16,6 +16,7 @@ WinMain::WinMain( TCHAR* arg_szClassName , TCHAR* arg_szTitleName )
 	, hDCBackBmp_	( NULL )
 	, hDCBack_		( NULL )
 {
+
 	// 時間の精度を上げる
 	timeBeginPeriod( 1 ) ;
 	fps_  = true ;
@@ -68,6 +69,10 @@ WinMain::~WinMain( )
 	timeKillEvent( timerID_ ) ;
 	timeEndPeriod( 1 ) ;
 	DeleteObject( TimerProc ) ;
+
+	// DxLibの終了化
+	DxLib_End( ) ;
+
 
 }
 
@@ -139,6 +144,12 @@ bool WinMain::Start( )
 	{
 		return( FALSE ) ;
 	}
+
+	// DxLibの初期化
+	SetUserWindow( hWnd_ ) ;										// Dxのウインドウを乗っ取る
+	DxLib_Init( ) ;
+	ChangeWindowMode( TRUE ) ;
+	SetDrawScreen( DX_SCREEN_BACK );
 
 	/* ____ ウィンドウを表示 ____ */
 	ShowWindow ( hWnd_ , SW_SHOWNORMAL ) ;
@@ -231,11 +242,12 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 			}
 			break;
 
-		case MM_MCINOTIFY :
-			if ( arg_wParam == MCI_NOTIFY_SUCCESSFUL ) {
-				printf( "SE再生終了\n" ) ;
-				g_sSE[ use_se ].stop( ) ;
-			}
+		case WM_LBUTTONDOWN :
+			g_sSE.play( 0 ) ;
+			break ;
+
+		case WM_RBUTTONDOWN :
+			g_sSE.play( 1 ) ;
 			break ;
 
 	}

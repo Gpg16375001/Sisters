@@ -83,7 +83,6 @@ void Gimmick::Pendulums( )
 							255 ,
 							0
 						) ;
-					printf( "%f\n" , GimmickData_[ g ]._off[ 1 ] ) ;
 
 					GimmickData_[ g ]._w = GimmickData_[ g ]._x + 128 ;
 					GimmickData_[ g ]._h = GimmickData_[ g ]._y + 128 ;

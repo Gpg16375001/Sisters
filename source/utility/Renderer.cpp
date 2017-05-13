@@ -66,9 +66,9 @@ int Renderer::setHDC( HWND arg_hWnd , HDC arg_hDCBack , HDC arg_hDCWork )
 int Renderer::selectBmp(
 		HGDIOBJ arg_bmpData ,						// . 画像データ
 		int arg_anchor ,							// . アンカー
-		float arg_x , float arg_y ,				// . 配置座標
-		float arg_u , float arg_v ,						// . 切り取り位置
-		float arg_w , float arg_h ,						// . 幅高さ
+		float arg_x , float arg_y ,					// . 配置座標
+		float arg_u , float arg_v ,					// . 切り取り位置
+		float arg_w , float arg_h ,					// . 幅高さ
 		float arg_scaleX , float arg_scaleY ,		// . 拡大率
 		int arg_alpha ,								// . 透明度
 		float arg_degree							// . 角度

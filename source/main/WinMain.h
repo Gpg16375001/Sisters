@@ -1,5 +1,6 @@
 
 #include <windows.h>
+#include <DxLib.h>
 
 class WinMain {
 	public :

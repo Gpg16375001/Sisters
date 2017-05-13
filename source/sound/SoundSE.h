@@ -23,6 +23,7 @@ ________________________________________________________________________________
 PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 */
 #include <windows.h>
+#include <DxLib.h>
 #include <stdio.h>	// --- ƒRƒ“ƒ\[ƒ‹—p
 
 // ƒNƒ‰ƒX‚ÌéŒ¾
@@ -31,8 +32,11 @@ class SoundSE
 	public :
 		SoundSE( ) ;													// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 		~SoundSE( ) ;													// ƒfƒXƒgƒ‰ƒNƒ^
-		int play( LPCTSTR arg_pStr , HWND arg_hWindow ) ;				// ‰¹ŠyÄ¶
-		int stop( ) ;													// ‰¹Šy’â~
+		int play( int arg_hSound ) ;									// ‰¹ŠyÄ¶
+		int load( int arg_hSound , const TCHAR* arg_fileName ) ;		// ‰¹Šy‚Ì“Ç‚İ‚İ
+
+	private :
+		int htrack_[ 8 ] ;
 
 } ;
 

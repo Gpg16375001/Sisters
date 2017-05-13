@@ -17,26 +17,27 @@ ________________________________________________________________________________
 #include "SoundSE.h"
 
 // コンストラクタ
-SoundSE::SoundSE( ) {		}
+SoundSE::SoundSE( ) {
+	for ( int i = 0 ; i < 8 ; ++i )
+	{
+		htrack_[ i ] = 0 ;
+	}
+}
 
 // デストラクタ
 SoundSE::~SoundSE( ) {
-	// SEの終了
-	stop( ) ;
+
 }
 
 // 音楽再生
-int SoundSE::play( LPCTSTR arg_pStr , HWND arg_hWindow ) {
-	stop( ) ;
-	mciSendString( arg_pStr , NULL , 0 , NULL ) ;
-	mciSendString( TEXT( "play se notify" ) , NULL , 0 , arg_hWindow ) ;
+int SoundSE::play( int arg_hSound ) {
+	PlaySoundMem( htrack_[ arg_hSound ] , DX_PLAYTYPE_BACK , 0 ) ;
 	return( true ) ;
 }
 
-// 音楽停止
-int SoundSE::stop( ) {
-	mciSendString( TEXT( "stop se" ) , NULL , 0 , NULL ) ;
-	mciSendString( TEXT( "close se" ) , NULL , 0 , NULL ) ;
+// 音楽読み込み
+int SoundSE::load( int arg_hSound , const TCHAR* arg_fileName ) {
+	htrack_[ arg_hSound ] = LoadSoundMem( arg_fileName ) ;
 	return( true ) ;
 }
 
