@@ -76,8 +76,6 @@ void MainApp::Initalize( )
 	g_sSE.load( 2 , TEXT("data/sound/damage6.mp3") ) ;
 	g_sSE.load( 3 , TEXT("data/sound/powerup05.mp3") ) ;
 
-
-
 	// 画像の読み込み
 	BitmapData::GetInstance()->loadData(  0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;						// 背景01
 	BitmapData::GetInstance()->loadData(  1 , TEXT("data/image/bgs/bg04.bmp") , 2000 , 1000 ) ;						// 背景02
@@ -432,12 +430,6 @@ void MainApp::Update( )
 	//printf( "メインループ : Updateイベントが発行されました\n" );
 	// キー情報更新
 	KeyManager::GetInstance()->update( ) ;
-
-	// SEの管理
-	if ( use_se >= 8 )
-	{
-		use_se = 0 ;
-	}
 
 	// 更新
 	Update_( ) ;

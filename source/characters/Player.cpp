@@ -334,7 +334,7 @@ void Player::Pstop( )
 			Pmode_ = P_walk ;
 		}
 
-		if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
+		if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) && (!flipMag_) )
 		{
 			g_sSE.play( 1 ) ;
 			Pmode_ = P_jinit ;
@@ -407,7 +407,7 @@ void Player::Pwalk( )
 		}
 	}
 
-	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
+	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) && (!flipMag_) )
 	{
 		g_sSE.play( 1 ) ;
 		Pmode_ = P_jinit ;
@@ -801,9 +801,9 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 32 <= px) && (px <= br+12) && (bt-14+Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 32 <= px) && (px <= br+12) && (bt-14 <= py) )
 					{
-						footY = cross[ 1 ] ;
+						footY = cross[ 1 ] + Player_mag_.y ;
 
 						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.95f ) )
 						{
@@ -862,10 +862,10 @@ float Player::FootCheck( )
 					P2p = ax * ax + ay * ay ;
 					P2p = sqrt( P2a ) ;
 
-					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br+32) && (bt-14-Player_mag_.x <= py) )
+					if ( (P2p <= P2a) && (bl - 4 <= px) && (px <= br+32) && (bt-14 <= py) )
 					{
 						Player_vec_.deg = 45.0f ;
-						footY = cross[ 1 ] ;
+						footY = cross[ 1 ] + Player_mag_.y ;
 
 						if ( Player_.checkMotion( 45.0f , Player_.Weight2D().y , 0.95f ) )
 						{
@@ -1731,7 +1731,6 @@ float Player::Collision( )
 						if ( (bl+2 <= pr) && (pl <= br+2) )
 						{
 							// Õ“Ë
-							use_se++ ;
 							Pmode_ = P_dainit ;
 						}
 					}
@@ -1818,7 +1817,6 @@ float Player::Collision( )
 			{
 				// Õ“Ë
 				Gimmick::GetInstance()->deleteBullet( (g - 500) ) ;
-				use_se++ ;
 
 				if ( barrierFlg_ )
 				{
