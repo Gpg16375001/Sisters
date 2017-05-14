@@ -336,7 +336,7 @@ void Player::Pstop( )
 
 		if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 		{
-			use_se++ ;
+			g_sSE.play( 1 ) ;
 			Pmode_ = P_jinit ;
 		}
 
@@ -409,7 +409,7 @@ void Player::Pwalk( )
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_SPACE ) )
 	{
-		use_se++ ;
+		g_sSE.play( 1 ) ;
 		Pmode_ = P_jinit ;
 	}
 
@@ -554,6 +554,7 @@ void Player::Pdainit( )
 			Player_spd_.x = 4.0f ;
 		}
 		Player_mag_.y = -16 ;
+		g_sSE.play( 2 ) ;
 		PlayerAnim_.setAnimData( Panim_damg_ ) ;
 	}
 
@@ -1752,7 +1753,7 @@ float Player::Collision( )
 					{
 						if ( (bl-2 <= pr) && (pl <= br+2) )
 						{
-							use_se++ ;
+							g_sSE.play( 3 ) ;
 							Player_vec_.deg = 0.0f ;
 
 							Player_mag_.x = 15.0f ;

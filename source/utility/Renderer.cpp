@@ -11,6 +11,7 @@ ________________________________________________________________________________
 */
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
+#include <DxLib.h>
 #include "Renderer.h"
 
 /*/
@@ -264,6 +265,16 @@ int Renderer::Render( )
 	Initialize( ) ;
 
 	return ( true ) ;
+}
+
+int Renderer::DrawRote( const TCHAR* url )
+{
+	int Handle;     // 画像格納用ハンドル
+	Handle = LoadGraph( url ) ;
+	DrawRotaGraph( x_ ,  y_ , 1.0f , degree_ , Handle , FALSE ) ;
+
+	return( true ) ;
+
 }
 
 

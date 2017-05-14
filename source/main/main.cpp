@@ -73,6 +73,10 @@ void MainApp::Initalize( )
 	// SE
 	g_sSE.load( 0 , TEXT("data/sound/swish1.mp3") ) ;
 	g_sSE.load( 1 , TEXT("data/sound/jump.mp3") ) ;
+	g_sSE.load( 2 , TEXT("data/sound/damage6.mp3") ) ;
+	g_sSE.load( 3 , TEXT("data/sound/powerup05.mp3") ) ;
+
+
 
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
 	BitmapData::GetInstance()->loadData(  0 , TEXT("data/image/bgs/bg01.bmp") , 2000 , 1000 ) ;						// ”wŒi01

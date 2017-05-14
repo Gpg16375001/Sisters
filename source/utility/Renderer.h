@@ -64,6 +64,7 @@ class Renderer
 				int arg_alpha = 255 ,						 // . 透明度
 				float arg_degree = 0						 // . 角度
 			) ;
+		int DrawRote( const TCHAR* url ) ;
 		int Render( ) ;										// バックバッファへの出力
 
 		int setPos( float arg_x , float arg_y ) ;			// 座標のセット

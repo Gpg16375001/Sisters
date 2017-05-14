@@ -242,14 +242,6 @@ LRESULT CALLBACK WinMain::WndProc_( HWND arg_hWnd , UINT arg_msg , UINT arg_wPar
 			}
 			break;
 
-		case WM_LBUTTONDOWN :
-			g_sSE.play( 0 ) ;
-			break ;
-
-		case WM_RBUTTONDOWN :
-			g_sSE.play( 1 ) ;
-			break ;
-
 	}
 
 	// ‰½‚©‚µ‚ç–½—ß‚ª‚ ‚Á‚½Žž
