@@ -31,8 +31,11 @@ class SoundBGM
 	public :
 		SoundBGM( ) ;													// コンストラクタ
 		~SoundBGM( ) ;													// デストラクタ
-		int play( LPCTSTR arg_pStr ) ;									// 音楽再生
-		int stop( ) ;													// 音楽停止
+		int play( int arg_hSound ) ;									// 音楽再生
+		int load( int arg_hSound , const TCHAR* arg_fileName ) ;		// 音楽読み込み
+
+	private :
+		int htrack_ ;
 
 } ;
 

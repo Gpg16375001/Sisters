@@ -57,9 +57,9 @@ class Renderer
 		int setHDC( HWND arg_hWnd , HDC arg_hDCBack , HDC arg_hDCWork ) ;	// 裏画面の描画に必要なものをもらう
 		int selectBmp( HGDIOBJ arg_bmpData ,				// 画像データの取得
 				int arg_anchor ,							 // . アンカー
-				float arg_x , float arg_y ,				 // . 配置座標
-				float arg_u , float arg_v ,						 // . 切り取り位置
-				float arg_w , float arg_h ,						 // . 幅高さ
+				float arg_x , float arg_y ,					 // . 配置座標
+				float arg_u , float arg_v ,					 // . 切り取り位置
+				float arg_w , float arg_h ,					 // . 幅高さ
 				float arg_scaleX , float arg_scaleY ,		 // . 拡大率
 				int arg_alpha = 255 ,						 // . 透明度
 				float arg_degree = 0						 // . 角度
@@ -71,7 +71,7 @@ class Renderer
 		int setPos( float arg_x , float arg_y ) ;			// 座標のセット
 		int setUV( float arg_u , float arg_v ) ;			// 切り出し座標のセット
 		int setWH( float arg_w , float arg_h ) ;			// 切り出し幅高さのセット
-		int setScale( float arg_w , float arg_h ) ;		// 拡大率のセット
+		int setScale( float arg_w , float arg_h ) ;			// 拡大率のセット
 		int setAnchor( int arg_anchor ) ;					// アンカーのセット
 		int setAlpha( int arg_alpha ) ;						// 透明度のセット
 		int setAngle( float arg_degree ) ;					// 角度のセット

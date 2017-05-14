@@ -13,27 +13,30 @@ ________________________________________________________________________________
 
 #include <windows.h>
 #include <stdio.h>	// --- コンソール用
-
+#include <DxLib.h>
 #include "SoundBGM.h"
 
 // コンストラクタ
-SoundBGM::SoundBGM( ) {		}
+SoundBGM::SoundBGM( ) {
+	htrack_ = 0 ;
+}
 
 // デストラクタ
 SoundBGM::~SoundBGM( ) {
-	// BGMの終了
-	stop( ) ;
+
 }
 
 // 音楽再生
-int SoundBGM::play( LPCTSTR arg_pStr ) {
-	PlaySound( arg_pStr , NULL , SND_FILENAME | SND_ASYNC | SND_LOOP ) ;
+int SoundBGM::play( int arg_hSound ) {
+	PlaySoundMem( htrack_ , DX_PLAYTYPE_LOOP , 1 ) ;
 	return( true ) ;
 }
 
-// 音楽停止
-int SoundBGM::stop( ) {
-	PlaySound( NULL , NULL , SND_PURGE ) ;
+// 音楽読み込み
+int SoundBGM::load( int arg_hSound , const TCHAR* arg_fileName ) {
+	StopSoundMem( htrack_ ) ;
+	htrack_ = LoadSoundMem( arg_fileName ) ;
+	play( htrack_ ) ;
 	return( true ) ;
 }
 

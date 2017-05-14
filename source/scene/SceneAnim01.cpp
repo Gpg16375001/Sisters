@@ -62,6 +62,9 @@ void SceneAnim01::Initialize( )
 	// カメラの初期位置
 	Chip::GetInstance()->clearScroll( ) ;
 
+	// BGM
+	g_bgm.load( 0 , TEXT("data/sound/bgm1.mp3") ) ;
+
 }
 
 /*/
@@ -81,20 +84,30 @@ void SceneAnim01::Finalize( )
 /*/
 void SceneAnim01::Update( )
 {
+	static float old_y = 0 ;
+	static bool bgm_flg = false ;
 	static int waitTime = 0 ;
-	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 20 )
+
+	if ( KeyManager::GetInstance()->getKeyState( VK_RETURN ) && waitTime >= 50 )
 	{
+		Initialize( ) ;
+
 		// 開始地点の修正
+		Chip::GetInstance()->clearScroll( ) ;
 		Chip::GetInstance()->setScrollSize( -600 + RenderScale , 0 ) ;
+
+		// BGM
+		g_bgm.load( 0 , TEXT("data/sound/bgm2.mp3") ) ;
 
 		g_state++ ;												// ------------------------------- Gvl
 		waitTime = 0 ;
+		old_y = 0 ;
+		bgm_flg = false ;
 	}
 	waitTime++ ;
 
 	if ( KeyManager::GetInstance()->getKeyState( VK_F5 ) )
 	{
-		Reload( ) ;
 		Chip::GetInstance()->Reload( ) ;
 		Chip::GetInstance()->clearScroll( ) ;
 		printf( "Was ReLoading !\n" ) ;
@@ -139,9 +152,16 @@ void SceneAnim01::Update( )
 	// もしストップしたらつぎのステージへ
 	if ( nowPlayer->animMode == ANIM_MODE_STOP )
 	{
+		Initialize( ) ;
+		// BGM
+		g_bgm.load( 0 , TEXT("data/sound/bgm2.mp3") ) ;
+
 		Chip::GetInstance()->clearScroll( ) ;
+		Chip::GetInstance()->setScrollSize( -600 + RenderScale , 0 ) ;
 		g_state++ ;												// ------------------------------- Gvl
 		waitTime = 0 ;
+		old_y = 0 ;
+		bgm_flg = false ;
 	}
 
 	Sprite::GetInstance()->setBmpData(
@@ -174,6 +194,20 @@ void SceneAnim01::Update( )
 				255 ,
 				0
 		) ;
+	// プレイヤー2が連れ去られるとき
+	if ( (nowPlayer2->y != old_y) && (bgm_flg) )
+	{
+		// BGM
+		g_bgm.load( 0 , TEXT("data/sound/bgm2.mp3") ) ;
+		g_sSE.play( 2 ) ;
+		old_y = -1 ;
+		bgm_flg = false ;
+	}
+	if ( old_y != -1 )
+	{
+		old_y = nowPlayer2->y ;
+		bgm_flg = true ;
+	}
 
 	// --/ リアクション /--
 	waiwai_._playAnim( 2 ) ;
